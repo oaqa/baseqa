@@ -1,0 +1,4 @@
+inherit: eval.trace-consumer
+name: retrieval-measures-evaluator 
+experiment-listeners: |
+  - inherit: eval.passage-map-evaluator

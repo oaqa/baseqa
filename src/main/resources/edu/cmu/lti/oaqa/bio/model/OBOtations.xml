@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <name>OBOtations</name>
+  <description/>
+  <version>1.0</version>
+  <vendor/>
+  <types>
+    <typeDescription>
+      <name>edu.cmu.lti.bio.ie.OBOtation</name>
+      <description>Ontology annotation from Open Biological Ontology format file.  Labels a word as having been found in the list of [Term]s contained in an OBO format ontology, as well as the name of the ontology file in which it was found.</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>OntologyFile</name>
+          <description>OBO format ontology file name in which the term is found.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+  </types>
+</typeSystemDescription>

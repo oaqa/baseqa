@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <name>TypeSystem</name>
+  <description/>
+  <version>1.0</version>
+  <vendor/>
+  <imports>
+    <import name="edu.cmu.lti.oaqa.bio.model.BioSourceDocumentInformation"/>
+    <import name="edu.cmu.lti.oaqa.bio.model.OBOtations"/>
+    <import name="edu.cmu.lti.oaqa.bio.model.bioTokenTypes"/>
+  </imports>
+  <types>
+    <typeDescription>
+      <name>edu.cmu.lti.oaqa.OntologyAnnotation</name>
+      <description/>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>ComponentID</name>
+          <description>Name of the ontology / wordlist / Component that created this</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>edu.cmu.lti.bio.bioAnnotation</name>
+      <description>Annotation from which others inherit ComponentID and other common attributes</description>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>ComponentID</name>
+          <description>Description (name) of the AE Component that generated this annotation</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>Version</name>
+          <description>Version identifier of AE Component (or configuration) that produced this annotation</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>edu.cmu.lti.bio.trec.LegalSpan</name>
+      <description/>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+    </typeDescription>
+  </types>
+</typeSystemDescription>
