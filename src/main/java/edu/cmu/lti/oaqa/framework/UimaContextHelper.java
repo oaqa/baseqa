@@ -45,4 +45,15 @@ public class UimaContextHelper {
       return defaultValue;
     }
   }
+
+  public static Object getConfigParameterClassInstance(UimaContext aContext, String paramName,
+          String defaultClassName) {
+    String className = (String) getConfigParameterStringValue(aContext, paramName, defaultClassName);
+    try {
+      return Class.forName(className).newInstance();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return new Object();
+  }
 }

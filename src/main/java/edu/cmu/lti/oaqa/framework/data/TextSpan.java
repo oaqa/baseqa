@@ -1,5 +1,7 @@
 package edu.cmu.lti.oaqa.framework.data;
 
+import java.util.List;
+
 public class TextSpan implements Comparable<TextSpan> {
 
   public int begin;
@@ -55,12 +57,24 @@ public class TextSpan implements Comparable<TextSpan> {
   public int getLength() {
     return end - begin;
   }
-  
+
   public static int getOverlapLength(TextSpan s1, TextSpan s2) {
     return Math.max(0, Math.min(s1.end, s2.end) - Math.max(s1.begin, s2.begin));
   }
 
   public static TextSpan getOverlapTextSpan(TextSpan s1, TextSpan s2) {
     return new TextSpan(Math.max(s1.begin, s2.begin), Math.min(s1.end, s2.end));
+  }
+
+  public static TextSpan getBoundingTextSpan(TextSpan s1, TextSpan s2) {
+    return new TextSpan(Math.min(s1.begin, s2.begin), Math.max(s1.end, s2.end));
+  }
+
+  public static TextSpan getBoundingTextSpan(List<TextSpan> spans) {
+    TextSpan newSpan = spans.get(0);
+    for (TextSpan span : spans) {
+      newSpan = getBoundingTextSpan(newSpan, span);
+    }
+    return newSpan;
   }
 }
