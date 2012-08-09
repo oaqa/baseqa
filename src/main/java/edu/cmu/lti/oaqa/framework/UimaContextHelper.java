@@ -11,6 +11,8 @@ public class UimaContextHelper {
     } catch (ClassCastException e) {
       return Boolean.parseBoolean((String) aContext.getConfigParameterValue(paramName));
     } catch (NullPointerException e) {
+      System.out.println("\t* Parameter \"" + paramName + "\" cannot be found, use default value \""
+              + defaultValue + "\" instead.");
       return defaultValue;
     }
   }
@@ -22,6 +24,8 @@ public class UimaContextHelper {
     } catch (ClassCastException e) {
       return Double.parseDouble((String) aContext.getConfigParameterValue(paramName));
     } catch (NullPointerException e) {
+      System.out.println("\t* Parameter \"" + paramName + "\" cannot be found, use default value \""
+              + defaultValue + "\" instead.");
       return defaultValue;
     }
   }
@@ -33,15 +37,20 @@ public class UimaContextHelper {
     } catch (ClassCastException e) {
       return Integer.parseInt((String) aContext.getConfigParameterValue(paramName));
     } catch (NullPointerException e) {
+      System.out.println("\t* Parameter \"" + paramName + "\" cannot be found, use default value \""
+              + defaultValue + "\" instead.");
       return defaultValue;
     }
   }
 
   public static String getConfigParameterStringValue(UimaContext aContext, String paramName,
           String defaultValue) {
-    try {
-      return (String) aContext.getConfigParameterValue(paramName);
-    } catch (NullPointerException e) {
+    String value = (String) aContext.getConfigParameterValue(paramName);
+    if (value != null) {
+      return value;
+    } else {
+      System.out.println("\t* Parameter \"" + paramName + "\" cannot be found, use default value \""
+              + defaultValue + "\" instead.");
       return defaultValue;
     }
   }
@@ -52,8 +61,8 @@ public class UimaContextHelper {
     try {
       return Class.forName(className).newInstance();
     } catch (Exception e) {
-      e.printStackTrace();
+      System.out.println("\t* Class \"" + className + "\" cannot be set");
+      return new Object();
     }
-    return new Object();
   }
 }
