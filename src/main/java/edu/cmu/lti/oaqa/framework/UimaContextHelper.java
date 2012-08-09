@@ -11,7 +11,7 @@ public class UimaContextHelper {
     } catch (ClassCastException e) {
       return Boolean.parseBoolean((String) aContext.getConfigParameterValue(paramName));
     } catch (NullPointerException e) {
-      System.out.println("\t* Parameter \"" + paramName + "\" cannot be found, use default value \""
+      System.out.println(" * Parameter \"" + paramName + "\" cannot be found, use default value \""
               + defaultValue + "\" instead.");
       return defaultValue;
     }
@@ -24,7 +24,7 @@ public class UimaContextHelper {
     } catch (ClassCastException e) {
       return Double.parseDouble((String) aContext.getConfigParameterValue(paramName));
     } catch (NullPointerException e) {
-      System.out.println("\t* Parameter \"" + paramName + "\" cannot be found, use default value \""
+      System.out.println(" * Parameter \"" + paramName + "\" cannot be found, use default value \""
               + defaultValue + "\" instead.");
       return defaultValue;
     }
@@ -37,7 +37,7 @@ public class UimaContextHelper {
     } catch (ClassCastException e) {
       return Integer.parseInt((String) aContext.getConfigParameterValue(paramName));
     } catch (NullPointerException e) {
-      System.out.println("\t* Parameter \"" + paramName + "\" cannot be found, use default value \""
+      System.out.println(" * Parameter \"" + paramName + "\" cannot be found, use default value \""
               + defaultValue + "\" instead.");
       return defaultValue;
     }
@@ -49,7 +49,7 @@ public class UimaContextHelper {
     if (value != null) {
       return value;
     } else {
-      System.out.println("\t* Parameter \"" + paramName + "\" cannot be found, use default value \""
+      System.out.println(" * Parameter \"" + paramName + "\" cannot be found, use default value \""
               + defaultValue + "\" instead.");
       return defaultValue;
     }
@@ -61,7 +61,7 @@ public class UimaContextHelper {
     try {
       return Class.forName(className).newInstance();
     } catch (Exception e) {
-      System.out.println("\t* Class \"" + className + "\" cannot be set");
+      System.out.println(" * Class \"" + className + "\" cannot be set");
       return new Object();
     }
   }
