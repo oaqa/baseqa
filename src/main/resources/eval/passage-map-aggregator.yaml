@@ -1,3 +1,0 @@
-class: edu.cmu.lti.oaqa.framework.eval.passage.PassageMAPEvalAggregator
-persistence-provider: |
-  class: edu.cmu.lti.oaqa.framework.eval.passage.CSEPassageMAPEvalPersistenceProvider
