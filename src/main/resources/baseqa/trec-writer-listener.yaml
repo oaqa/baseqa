@@ -1,2 +1,0 @@
-class: edu.cmu.lti.oaqa.framework.TrecWriterListener
-output-file: target/mergeqa-20120411.trec

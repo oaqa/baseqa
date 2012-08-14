@@ -1,8 +1,0 @@
-class: edu.cmu.lti.oaqa.framework.report.TabularReportComponentBuilder
-keys: evaluator,traceId
-headers: Evaluator,Configuration,DocumentMAP,PassageMAP,AspectMAP,Count
-fields: evaluator,traceId,docmap,psgmap,aspmap,count
-formats: "%s,%s,%.4f,%.4f,%.4f,%d"
-query: |
-  SELECT evaluator,traceId,docmap,psgmap,aspmap,count FROM map_eval 
-  WHERE experimentId = ? AND stage = ?
