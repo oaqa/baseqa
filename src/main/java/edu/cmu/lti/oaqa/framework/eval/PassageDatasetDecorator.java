@@ -31,7 +31,7 @@ import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.framework.CasUtils;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
-import edu.cmu.lti.oaqa.framework.eval.passage.gs.GoldStandardPersistenceProvider;
+import edu.cmu.lti.oaqa.framework.eval.gs.GoldStandardPersistenceProvider;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
 public class PassageDatasetDecorator extends JCasAnnotator_ImplBase {

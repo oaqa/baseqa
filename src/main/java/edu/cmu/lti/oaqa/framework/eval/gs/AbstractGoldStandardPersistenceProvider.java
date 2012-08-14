@@ -14,17 +14,10 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.framework.eval.passage.gs;
+package edu.cmu.lti.oaqa.framework.eval.gs;
 
-import java.sql.SQLException;
-import java.util.List;
+import org.apache.uima.resource.Resource_ImplBase;
 
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.resource.Resource;
-import org.oaqa.model.Passage;
-
-public interface GoldStandardPersistenceProvider extends Resource {
-
-  List<Passage> populateRetrievalGS(String dataset, int sequenceId, JCas docGSView) throws SQLException;
+public abstract class AbstractGoldStandardPersistenceProvider extends Resource_ImplBase implements GoldStandardPersistenceProvider {
 
 }
