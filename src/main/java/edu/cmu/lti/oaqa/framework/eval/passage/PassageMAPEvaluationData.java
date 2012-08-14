@@ -16,20 +16,36 @@
 
 package edu.cmu.lti.oaqa.framework.eval.passage;
 
-final class PassageMAPEvaluationData {
+public final class PassageMAPEvaluationData {
 
-  final float docMap;
+  private final float docMap;
 
-  final float psgMap;
+  private final float psgMap;
 
-  final float aspMap;
+  private final float aspMap;
 
-  final float count;
+  private final float count;
 
   PassageMAPEvaluationData(float docMAP, float psgMAP, float aspMAP, int count) {
     this.docMap = docMAP;
     this.psgMap = psgMAP;
     this.aspMap = aspMAP;
     this.count = count;
+  }
+
+  public float getDocMap() {
+    return docMap;
+  }
+
+  public float getPsgMap() {
+    return psgMap;
+  }
+
+  public float getAspMap() {
+    return aspMap;
+  }
+
+  public float getCount() {
+    return count;
   }
 }

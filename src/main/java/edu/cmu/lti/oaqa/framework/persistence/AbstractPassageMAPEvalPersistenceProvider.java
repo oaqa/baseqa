@@ -14,9 +14,11 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.framework.eval.passage;
+package edu.cmu.lti.oaqa.framework.persistence;
 
 import org.apache.uima.resource.Resource_ImplBase;
+
+import edu.cmu.lti.oaqa.framework.eval.passage.PassageMAPEvalPersistenceProvider;
 
 public abstract class AbstractPassageMAPEvalPersistenceProvider extends Resource_ImplBase implements
         PassageMAPEvalPersistenceProvider {

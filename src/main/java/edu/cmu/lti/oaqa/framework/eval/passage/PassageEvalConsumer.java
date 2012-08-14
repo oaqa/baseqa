@@ -39,9 +39,6 @@ import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
 import edu.cmu.lti.oaqa.framework.eval.Key;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.EvaluationAggregator;
-import edu.cmu.lti.oaqa.framework.eval.retrieval.PassageHelper;
-import edu.cmu.lti.oaqa.framework.eval.retrieval.PassageToIdString;
-import edu.cmu.lti.oaqa.framework.eval.retrieval.TRECPassageOrdering;
 import edu.cmu.lti.oaqa.framework.types.ExperimentUUID;
 import edu.cmu.lti.oaqa.framework.types.ProcessingStep;
 

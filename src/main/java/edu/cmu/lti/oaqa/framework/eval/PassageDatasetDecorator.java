@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.framework.eval.retrieval;
+package edu.cmu.lti.oaqa.framework.eval;
 
 import java.util.List;
 

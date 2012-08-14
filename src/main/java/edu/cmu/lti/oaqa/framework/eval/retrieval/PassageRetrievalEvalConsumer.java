@@ -28,6 +28,10 @@ import com.google.common.collect.Ordering;
 
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
+import edu.cmu.lti.oaqa.framework.eval.passage.PassageHelper;
+import edu.cmu.lti.oaqa.framework.eval.passage.PassageToIdString;
+import edu.cmu.lti.oaqa.framework.eval.passage.TRECPassageOrdering;
+import edu.cmu.lti.oaqa.framework.eval.retrieval.RetrievalEvalConsumer;
 
 public class PassageRetrievalEvalConsumer extends RetrievalEvalConsumer<Passage> {
 

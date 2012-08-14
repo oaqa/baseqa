@@ -75,10 +75,10 @@ public class PassageMAPMeasuresEvaluator extends Resource_ImplBase implements Ex
   }
 
   private PassageMAPEvaluationData evaluate(PassageMAPCounts counts) {
-    float docMAP = counts.docavep / counts.count;
-    float psgMAP = counts.psgavep / counts.count;
-    float aspMAP = counts.aspavep / counts.count;
-    return new PassageMAPEvaluationData(docMAP, psgMAP, aspMAP, counts.count);
+    float docMAP = counts.getDocavep() / counts.getCount();
+    float psgMAP = counts.getPsgavep() / counts.getCount();
+    float aspMAP = counts.getAspavep() / counts.getCount();
+    return new PassageMAPEvaluationData(docMAP, psgMAP, aspMAP, counts.getCount());
   }
 
   private void update(Key key, PassageMAPCounts cnt) {

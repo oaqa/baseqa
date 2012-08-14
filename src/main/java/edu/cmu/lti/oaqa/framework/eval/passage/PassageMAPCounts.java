@@ -16,15 +16,15 @@
 
 package edu.cmu.lti.oaqa.framework.eval.passage;
 
-final class PassageMAPCounts {
+public final class PassageMAPCounts {
 
-	float docavep;
+  private float docavep;
 
-	float psgavep;
+  private float psgavep;
 	
-	float aspavep;
+  private float aspavep;
 	
-	int count;
+  private int count;
 	
 	PassageMAPCounts() {
 		this(0, 0, 0, 0);
@@ -43,4 +43,20 @@ final class PassageMAPCounts {
 		aspavep += other.aspavep;
 		count += other.count;
 	}
+
+  public float getDocavep() {
+    return docavep;
+  }
+
+  public float getPsgavep() {
+    return psgavep;
+  }
+
+  public float getAspavep() {
+    return aspavep;
+  }
+
+  public int getCount() {
+    return count;
+  }
 }
