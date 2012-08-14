@@ -16,9 +16,9 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.Resource_ImplBase;
 
-import edu.cmu.lti.oaqa.ecd.eval.Key;
-import edu.cmu.lti.oaqa.ecd.eval.TraceListener;
 import edu.cmu.lti.oaqa.framework.data.PassageCandidate;
+import edu.cmu.lti.oaqa.framework.eval.Key;
+import edu.cmu.lti.oaqa.framework.eval.TraceListener;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
 public class FinalTrecWriterListener extends Resource_ImplBase implements TraceListener {

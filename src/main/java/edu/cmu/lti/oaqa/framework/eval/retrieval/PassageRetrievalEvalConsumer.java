@@ -10,7 +10,6 @@ import org.oaqa.model.Passage;
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 
-import edu.cmu.lti.oaqa.ecd.eval.retrieval.RetrievalEvalConsumer;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
 

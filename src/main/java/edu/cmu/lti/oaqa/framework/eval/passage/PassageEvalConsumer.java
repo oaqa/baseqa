@@ -17,12 +17,12 @@ import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
-import edu.cmu.lti.oaqa.ecd.eval.Key;
-import edu.cmu.lti.oaqa.ecd.eval.retrieval.EvaluationAggregator;
 import edu.cmu.lti.oaqa.ecd.phase.ProcessingStepUtils;
 import edu.cmu.lti.oaqa.ecd.phase.Trace;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
+import edu.cmu.lti.oaqa.framework.eval.Key;
+import edu.cmu.lti.oaqa.framework.eval.retrieval.EvaluationAggregator;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.PassageHelper;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.PassageToIdString;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.TRECPassageOrdering;
