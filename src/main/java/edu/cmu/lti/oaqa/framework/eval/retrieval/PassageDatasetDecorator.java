@@ -27,8 +27,8 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.oaqa.model.Passage;
 import org.oaqa.model.Search;
 
-import edu.cmu.lti.oaqa.cse.driver.CasUtils;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
+import edu.cmu.lti.oaqa.framework.CasUtils;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
 import edu.cmu.lti.oaqa.framework.eval.passage.gs.GoldStandardPersistenceProvider;
@@ -46,7 +46,7 @@ public class PassageDatasetDecorator extends JCasAnnotator_ImplBase {
       throw new ResourceInitializationException(new IllegalArgumentException(
               "Must provide a parameter of type <persistence-provider>"));
     }
-    this.persistence = BaseExperimentBuilder.loadPersistenceProvider(pp,
+    this.persistence = BaseExperimentBuilder.loadProvider(pp,
             GoldStandardPersistenceProvider.class);
   }
   

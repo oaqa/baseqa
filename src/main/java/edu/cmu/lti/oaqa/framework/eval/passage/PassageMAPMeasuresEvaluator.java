@@ -43,7 +43,7 @@ public class PassageMAPMeasuresEvaluator extends Resource_ImplBase implements Ex
       throw new ResourceInitializationException(new IllegalArgumentException(
               "Must provide a parameter of type <persistence-provider>"));
     }
-    this.persistence = BaseExperimentBuilder.loadPersistenceProvider(pp,
+    this.persistence = BaseExperimentBuilder.loadProvider(pp,
             PassageMAPEvalPersistenceProvider.class);
     return true;
   }

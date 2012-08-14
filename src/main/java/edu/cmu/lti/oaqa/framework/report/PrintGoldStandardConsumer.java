@@ -30,7 +30,7 @@ import org.apache.uima.resource.ResourceProcessException;
 import org.apache.uima.util.ProcessTrace;
 import org.oaqa.model.Passage;
 
-import edu.cmu.lti.oaqa.cse.driver.CasUtils;
+import edu.cmu.lti.oaqa.framework.CasUtils;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.PassageHelper;
