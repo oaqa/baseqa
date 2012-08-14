@@ -14,38 +14,12 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.framework.eval.passage;
+package edu.cmu.lti.oaqa.framework.persistence;
 
-public final class PassageMAPEvaluationData {
+import org.apache.uima.resource.Resource_ImplBase;
 
-  private final float docMap;
+import edu.cmu.lti.oaqa.framework.eval.passage.PassageMAPEvalPersistenceProvider;
 
-  private final float psgMap;
-
-  private final float aspMap;
-
-  private final float count;
-
-  PassageMAPEvaluationData(float docMAP, float psgMAP, float aspMAP, int count) {
-    this.docMap = docMAP;
-    this.psgMap = psgMAP;
-    this.aspMap = aspMAP;
-    this.count = count;
-  }
-
-  public float getDocMap() {
-    return docMap;
-  }
-
-  public float getPsgMap() {
-    return psgMap;
-  }
-
-  public float getAspMap() {
-    return aspMap;
-  }
-
-  public float getCount() {
-    return count;
-  }
+public abstract class AbstractPassageMAPEvalPersistenceProvider extends Resource_ImplBase implements
+        PassageMAPEvalPersistenceProvider {
 }

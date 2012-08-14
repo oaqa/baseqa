@@ -22,8 +22,8 @@ import org.apache.uima.resource.Resource;
 
 import com.google.common.collect.Multimap;
 
-import edu.cmu.lti.oaqa.ecd.eval.ExperimentKey;
-import edu.cmu.lti.oaqa.ecd.eval.Key;
+import edu.cmu.lti.oaqa.framework.eval.ExperimentKey;
+import edu.cmu.lti.oaqa.framework.eval.Key;
 
 public interface PassageMAPEvalPersistenceProvider extends Resource {
 

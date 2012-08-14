@@ -16,36 +16,13 @@
 
 package edu.cmu.lti.oaqa.framework.eval.passage;
 
-public final class PassageMAPEvaluationData {
+import org.oaqa.model.Passage;
 
-  private final float docMap;
+import com.google.common.base.Function;
 
-  private final float psgMap;
-
-  private final float aspMap;
-
-  private final float count;
-
-  PassageMAPEvaluationData(float docMAP, float psgMAP, float aspMAP, int count) {
-    this.docMap = docMAP;
-    this.psgMap = psgMAP;
-    this.aspMap = aspMAP;
-    this.count = count;
-  }
-
-  public float getDocMap() {
-    return docMap;
-  }
-
-  public float getPsgMap() {
-    return psgMap;
-  }
-
-  public float getAspMap() {
-    return aspMap;
-  }
-
-  public float getCount() {
-    return count;
+public final class PassageToIdString implements Function<Passage, String> {
+  @Override
+  public String apply(Passage input) {
+    return input.getUri();
   }
 }

@@ -34,9 +34,9 @@ import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
-import edu.cmu.lti.oaqa.ecd.eval.Key;
-import edu.cmu.lti.oaqa.ecd.eval.retrieval.EvaluationAggregator;
-import edu.cmu.lti.oaqa.ecd.eval.retrieval.EvaluationHelper;
+import edu.cmu.lti.oaqa.framework.eval.Key;
+import edu.cmu.lti.oaqa.framework.eval.retrieval.EvaluationAggregator;
+import edu.cmu.lti.oaqa.framework.eval.retrieval.EvaluationHelper;
 
 public class PassageMAPEvalAggregator extends Resource_ImplBase implements EvaluationAggregator<Passage> {
 
@@ -50,7 +50,7 @@ public class PassageMAPEvalAggregator extends Resource_ImplBase implements Evalu
       throw new ResourceInitializationException(new IllegalArgumentException(
               "Must provide a parameter of type <persistence-provider>"));
     }
-    this.persistence = BaseExperimentBuilder.loadPersistenceProvider(pp,
+    this.persistence = BaseExperimentBuilder.loadProvider(pp,
             PassageMAPEvalPersistenceProvider.class);
     return true;
   }
