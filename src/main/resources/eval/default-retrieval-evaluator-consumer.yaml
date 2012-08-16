@@ -1,0 +1,4 @@
+class: edu.cmu.lti.oaqa.framework.eval.TraceConsumer
+name: retrieval-measures-evaluator 
+experiment-listeners: |
+  - inherit: eval.default-retrieval-evaluator
