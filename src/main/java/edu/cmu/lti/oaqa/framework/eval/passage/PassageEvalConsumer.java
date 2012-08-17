@@ -45,14 +45,21 @@ import edu.cmu.lti.oaqa.framework.types.ProcessingStep;
 public class PassageEvalConsumer extends CasConsumer_ImplBase {
 
   private final Ordering<Passage> ordering = new TRECPassageOrdering();
-  
+
   private final Function<Passage, String> toIdString = new PassageToIdString();
 
   @SuppressWarnings("rawtypes")
   private List<EvaluationAggregator> aggregators;
 
+  private int limit;
+
   @Override
   public void initialize(UimaContext context) throws ResourceInitializationException {
+    try {
+      limit = (Integer) context.getConfigParameterValue("limit");
+    } catch (NullPointerException e) {
+      limit = Integer.MAX_VALUE;
+    }
     Object aggregatorNames = (Object) context.getConfigParameterValue("aggregators");
     if (aggregatorNames != null) {
       this.aggregators = BaseExperimentBuilder.createResourceList(aggregatorNames,
@@ -78,6 +85,7 @@ public class PassageEvalConsumer extends CasConsumer_ImplBase {
         List<Passage> gs = PassageHelper.loadDocumentSet(gsView);
         List<Passage> docs = (view != null) ? PassageHelper.loadDocumentSet(view) : Collections
                 .<Passage> emptyList();
+        docs = docs.subList(0, Math.min(docs.size(), limit));
         int sequenceId = ProcessingStepUtils.getSequenceId(jcas);
         for (EvaluationAggregator<Passage> aggregator : aggregators) {
           Key key = new Key(experiment.getUuid(), trace, experiment.getStageId());
