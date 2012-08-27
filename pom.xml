@@ -1,49 +1,59 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>edu.cmu.lti.oaqa.bio.core</groupId>
-	<artifactId>baseqa</artifactId>
-	<version>1.6.1-SNAPSHOT</version>
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
-  <name>Base Question Answering Pipeline</name>
-  <url>https://github.com/oaqa/baseqa</url>
-  <issueManagement>
-    <system>github.com</system>
-    <url>https://github.com/oaqa/baseqa/issues</url>
-  </issueManagement>
-  <inceptionYear>2012</inceptionYear>
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <scm>
-    <url>git@github.com:oaqa/baseqa.git</url>
-    <connection>scm:git:git@github.com:oaqa/baseqa.git</connection>
-    <developerConnection>scm:git:git@github.com:oaqa/baseqa.git</developerConnection>
-  </scm>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	<dependencies>
-		<dependency>
-			<groupId>edu.cmu.lti.oaqa.cse</groupId>
-			<artifactId>cse-framework</artifactId>
-			<version>2.1.1-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>edu.cmu.lti.oaqa.bio.core</groupId>
+    <artifactId>baseqa</artifactId>
+    <version>1.6.1-SNAPSHOT</version>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+    <name>Base Question Answering Pipeline</name>
+    <url>https://github.com/oaqa/baseqa</url>
+    <issueManagement>
+        <system>github.com</system>
+        <url>https://github.com/oaqa/baseqa/issues</url>
+    </issueManagement>
+    <inceptionYear>2012</inceptionYear>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>git@github.com:oaqa/baseqa.git</url>
+        <connection>scm:git:git@github.com:oaqa/baseqa.git</connection>
+        <developerConnection>scm:git:git@github.com:oaqa/baseqa.git</developerConnection>
+    </scm>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>edu.cmu.lti.oaqa.cse</groupId>
+            <artifactId>cse-framework</artifactId>
+            <version>2.1.1-SNAPSHOT</version>
+        </dependency>
+        <!--Added this to resolve dependencies-->
+        <dependency>
+            <groupId>edu.cmu.lti.oaqa.ecd</groupId>
+            <artifactId>uima-ecd</artifactId>
+            <version>2.1.1-SNAPSHOT</version>
+        </dependency>
+        <!--Ends Here -->
+        
+
+    </dependencies>
 </project>
