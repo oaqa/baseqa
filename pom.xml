@@ -46,14 +46,5 @@
             <artifactId>cse-framework</artifactId>
             <version>2.1.1-SNAPSHOT</version>
         </dependency>
-        <!--Added this to resolve dependencies-->
-        <dependency>
-            <groupId>edu.cmu.lti.oaqa.ecd</groupId>
-            <artifactId>uima-ecd</artifactId>
-            <version>2.1.1-SNAPSHOT</version>
-        </dependency>
-        <!--Ends Here -->
-        
-
     </dependencies>
 </project>

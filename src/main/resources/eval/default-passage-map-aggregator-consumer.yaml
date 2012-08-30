@@ -1,0 +1,4 @@
+class: edu.cmu.lti.oaqa.framework.eval.retrieval.PassageRetrievalEvalConsumer
+name: base-retrieval-evaluator  
+aggregators: |
+  - inherit: eval.default-retrieval-aggregator
