@@ -30,7 +30,7 @@ public final class PassageMAPCounts {
 		this(0, 0, 0, 0);
 	}
 
-	PassageMAPCounts(float avep, float psgavep, float aspavep, int num) {
+	public PassageMAPCounts(float avep, float psgavep, float aspavep, int num) {
 		this.docavep = avep;
 		this.psgavep = psgavep;
 		this.aspavep = aspavep;
