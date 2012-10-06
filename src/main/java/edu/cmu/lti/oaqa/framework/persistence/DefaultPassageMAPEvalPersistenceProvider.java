@@ -29,11 +29,11 @@ import edu.cmu.lti.oaqa.framework.eval.passage.PassageMAPEvaluationData;
 public class DefaultPassageMAPEvalPersistenceProvider extends AbstractPassageMAPEvalPersistenceProvider {
 
   @Override
-  public void deletePassageAggrEval(final Key key, final int sequenceId) {
+  public void deletePassageAggrEval(final Key key, final String sequenceId) {
   }
 
   @Override
-  public void insertPartialCounts(final Key key, final int sequenceId, final PassageMAPCounts counts)
+  public void insertPartialCounts(final Key key, final String sequenceId, final PassageMAPCounts counts)
           throws SQLException {
   }
 

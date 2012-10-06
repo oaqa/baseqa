@@ -61,7 +61,7 @@ public class PassageDatasetDecorator extends JCasAnnotator_ImplBase {
               InputElement.class.getName());
       final JCas docGSView = ViewManager.getOrCreateView(aJCas, ViewType.DOCUMENT_GS);
       final String dataset = input.getDataset();
-      final int sequenceId = input.getSequenceId();
+      final String sequenceId = input.getSequenceId();
       List<Passage> results = persistence.populateRetrievalGS(dataset, sequenceId, docGSView);
       if (!results.isEmpty()) {
         FSArray hitList = new FSArray(docGSView, results.size());

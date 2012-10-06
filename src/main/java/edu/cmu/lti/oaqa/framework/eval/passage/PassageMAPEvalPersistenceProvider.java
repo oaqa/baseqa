@@ -27,9 +27,9 @@ import edu.cmu.lti.oaqa.framework.eval.Key;
 
 public interface PassageMAPEvalPersistenceProvider extends Resource {
 
-  void deletePassageAggrEval(Key key, int sequenceId) throws SQLException;
+  void deletePassageAggrEval(Key key, String sequenceId) throws SQLException;
 
-  void insertPartialCounts(Key key, int sequenceId, PassageMAPCounts cnt) throws SQLException;
+  void insertPartialCounts(Key key, String sequenceId, PassageMAPCounts cnt) throws SQLException;
 
   Multimap<Key, PassageMAPCounts> retrievePartialCounts(ExperimentKey experiment);
 

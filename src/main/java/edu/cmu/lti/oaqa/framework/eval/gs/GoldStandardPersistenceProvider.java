@@ -25,6 +25,6 @@ import org.oaqa.model.Passage;
 
 public interface GoldStandardPersistenceProvider extends Resource {
 
-  List<Passage> populateRetrievalGS(String dataset, int sequenceId, JCas docGSView) throws SQLException;
+  List<Passage> populateRetrievalGS(String dataset, String sequenceId, JCas docGSView) throws SQLException;
 
 }
