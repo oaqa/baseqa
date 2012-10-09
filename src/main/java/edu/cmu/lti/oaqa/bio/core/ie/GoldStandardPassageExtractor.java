@@ -9,7 +9,6 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.Passage;
 
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
-import edu.cmu.lti.oaqa.framework.JCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
 import edu.cmu.lti.oaqa.framework.data.PassageCandidate;
@@ -28,7 +27,7 @@ public class GoldStandardPassageExtractor extends AbstractLoggedComponent {
         passages.add(new PassageCandidate(passage));
       }
       JCas candidateView = ViewManager.getCandidateView(jcas);
-      JCasHelper.storePassages(candidateView, passages);
+      PassageCandidate.storePassages(candidateView, passages);
     } catch (CASException e) {
       throw new AnalysisEngineProcessException(e);
     }

@@ -22,7 +22,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
-import edu.cmu.lti.oaqa.framework.JCasHelper;
+import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
@@ -41,14 +41,14 @@ public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponen
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
     try {
-      InputElement input = ((InputElement) JCasHelper.getAnnotation(jcas, InputElement.type));
-      List<Keyterm> keyterms = JCasHelper.getKeyterms(jcas);
+      InputElement input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
+      List<Keyterm> keyterms = Keyterm.getKeyterms(jcas);
       // System.out.println("Retrieving Docs for Question: " + input.getSequenceId());
       List<RetrievalResult> documents = retrieveDocuments(input.getQuestion(), keyterms);
       // CasKey key = new TopicBasedCasKey(jcas);
       // StatsEngine.report(key, BaseQAStats.DOCUMENTS_RETRIEVED, documents.size());
       JCas documentView = ViewManager.getDocumentView(jcas);
-      JCasHelper.storeDocuments(documentView, documents);
+      RetrievalResult.storeDocuments(documentView, documents);
       log("RETRIEVED: " + documents.size());
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);

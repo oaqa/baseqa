@@ -23,7 +23,7 @@ import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;
 
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
-import edu.cmu.lti.oaqa.framework.JCasHelper;
+import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
@@ -45,15 +45,15 @@ public abstract class AbstractPassageUpdater extends AbstractLoggedComponent {
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
     try {
-      String questionText = ((InputElement) JCasHelper.getAnnotation(jcas, InputElement.type))
+      String questionText = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type))
               .getQuestion();
-      List<Keyterm> keyterms = JCasHelper.getKeyterms(jcas);
+      List<Keyterm> keyterms = Keyterm.getKeyterms(jcas);
       JCas documentView = ViewManager.getDocumentView(jcas);
-      List<RetrievalResult> documents = JCasHelper.getDocuments(documentView);
+      List<RetrievalResult> documents = RetrievalResult.getDocuments(documentView);
       JCas candidateView = ViewManager.getCandidateView(jcas);
-      List<PassageCandidate> passages = JCasHelper.getPassages(candidateView);
+      List<PassageCandidate> passages = PassageCandidate.getPassages(candidateView);
       passages = updatePassages(questionText, keyterms, documents, passages);
-      JCasHelper.storePassages(candidateView, passages);
+      PassageCandidate.storePassages(candidateView, passages);
       log("ANSWER PASSAGES: " + passages.size());
     } catch (CASException e) {
       throw new AnalysisEngineProcessException(e);

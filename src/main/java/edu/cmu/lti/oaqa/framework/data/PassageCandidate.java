@@ -1,9 +1,16 @@
 package edu.cmu.lti.oaqa.framework.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSArray;
 import org.oaqa.model.Passage;
+import org.oaqa.model.Search;
 
 /**
  * 
@@ -136,6 +143,88 @@ public class PassageCandidate implements Comparable<PassageCandidate>, Serializa
 
   public void setQueryString(String queryString) {
     this.queryString = queryString;
+  }
+  
+  public static List<PassageCandidate> getPassages(JCas candidateView) {
+
+    List<PassageCandidate> passages = new ArrayList<PassageCandidate>();
+    Iterator<?> it = candidateView.getJFSIndexRepository().getAllIndexedFS(Search.type);
+
+    if (it.hasNext()) {
+      Search retrievalResult = (Search) it.next();
+      FSArray hitList = retrievalResult.getHitList();
+      for (int i = 0; i < hitList.size(); i++) {
+        Passage p = (Passage) hitList.get(i);
+        passages.add(new PassageCandidate(p));
+      }
+    }
+    return passages;
+  }
+
+  public static void storePassages(JCas candidateView, List<PassageCandidate> passages) {
+
+    Collections.sort(passages, Collections.reverseOrder());
+    Iterator<?> it = candidateView.getJFSIndexRepository().getAllIndexedFS(Search.type);
+    while (it.hasNext()) {
+      Search search = (Search) it.next();
+      search.removeFromIndexes();
+    }
+
+    FSArray hitList = new FSArray(candidateView, passages.size());
+    double prevScore = Double.NaN;
+    int prevRank = 0;
+    for (int i = 0; i < passages.size(); i++) {
+      PassageCandidate passage = passages.get(i);
+      Passage p = new Passage(candidateView);
+      p.setUri(passage.getDocID());
+      p.setBegin(passage.getStart());
+      p.setEnd(passage.getEnd());
+      p.setQueryString(passage.getQueryString());
+      double curScore = passage.getScore();
+      p.setScore(curScore);
+      if (curScore != prevScore) {
+        p.setRank(i + 1);
+        prevScore = curScore;
+        prevRank = i + 1;
+      } else {
+        p.setRank(prevRank);
+      }
+      hitList.set(i, p);
+    }
+
+    Search search = new Search(candidateView);
+    search.setHitList(hitList);
+    search.addToIndexes();
+  }
+
+  public static void storePassageTexts(JCas finalView, List<PassageCandidate> passages,
+          List<String> texts) {
+
+    Collections.sort(passages, Collections.reverseOrder());
+    Iterator<?> it = finalView.getJFSIndexRepository().getAllIndexedFS(Search.type);
+    while (it.hasNext()) {
+      Search search = (Search) it.next();
+      search.removeFromIndexes();
+    }
+
+    FSArray hitList = new FSArray(finalView, passages.size());
+    for (int i = 0; i < passages.size(); i++) {
+      PassageCandidate passage = passages.get(i);
+      String text = texts.get(i);
+      Passage p = new Passage(finalView);
+      p.setUri(passage.getDocID());
+      p.setBegin(passage.getStart());
+      p.setEnd(passage.getEnd());
+      p.setRank(passage.getRank());
+      p.setScore(passage.getScore());
+      p.setQueryString(passage.getQueryString());
+      p.setText(text);
+      hitList.set(i, p);
+    }
+
+    Search search = new Search(finalView);
+    search.setHitList(hitList);
+    search.addToIndexes();
   }
 
 }

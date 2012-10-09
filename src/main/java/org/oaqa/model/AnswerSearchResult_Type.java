@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Aug 01 12:12:46 EDT 2012 */
+/* First created by JCasGen Mon Oct 08 18:56:44 EDT 2012 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -11,10 +11,11 @@ import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
 
 /** A search result where the candidate answer is obtained as part of the search process and saved in the text field of the search result.
- * Updated by JCasGen Wed Aug 01 12:12:46 EDT 2012
+ * Updated by JCasGen Mon Oct 08 18:56:44 EDT 2012
  * @generated */
 public class AnswerSearchResult_Type extends SearchResult_Type {
   /** @generated */
+  @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
   /** @generated */
   private final FSGenerator fsGenerator = 
@@ -33,9 +34,11 @@ public class AnswerSearchResult_Type extends SearchResult_Type {
   	  }
     };
   /** @generated */
+  @SuppressWarnings ("hiding")
   public final static int typeIndexID = AnswerSearchResult.typeIndexID;
   /** @generated 
      @modifiable */
+  @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.oaqa.model.AnswerSearchResult");
 
 
