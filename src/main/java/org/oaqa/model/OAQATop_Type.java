@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Aug 01 12:12:46 EDT 2012 */
+/* First created by JCasGen Mon Oct 08 18:56:44 EDT 2012 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -14,10 +14,11 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** The base class for OAQA feature structures that are not Annotations.
- * Updated by JCasGen Wed Aug 01 12:12:46 EDT 2012
+ * Updated by JCasGen Mon Oct 08 18:56:44 EDT 2012
  * @generated */
 public class OAQATop_Type extends TOP_Type {
   /** @generated */
+  @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
   /** @generated */
   private final FSGenerator fsGenerator = 
@@ -36,9 +37,11 @@ public class OAQATop_Type extends TOP_Type {
   	  }
     };
   /** @generated */
+  @SuppressWarnings ("hiding")
   public final static int typeIndexID = OAQATop.typeIndexID;
   /** @generated 
      @modifiable */
+  @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.oaqa.model.OAQATop");
  
   /** @generated */

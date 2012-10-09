@@ -22,7 +22,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
-import edu.cmu.lti.oaqa.framework.JCasHelper;
+import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
@@ -44,11 +44,11 @@ public abstract class AbstractKeytermExtractor extends AbstractLoggedComponent {
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
-    InputElement input = (InputElement) JCasHelper.getAnnotation(jcas, InputElement.type);
+    InputElement input = (InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type);
     String question = input.getQuestion();
     int sequenceId = input.getSequenceId();
     List<Keyterm> keyterms = getKeyterms(question, sequenceId);
-    JCasHelper.storeKeyterms(jcas, keyterms);
+    Keyterm.storeKeyterms(jcas, keyterms);
     log(keyterms.toString());
   }
 
