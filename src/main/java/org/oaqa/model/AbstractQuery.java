@@ -11,7 +11,7 @@ import org.apache.uima.jcas.cas.FSList;
 
 
 /** An abstract search query for the question that represents query concepts and query operators over those concepts.
- * Updated by JCasGen Tue Oct 09 21:34:48 EDT 2012
+ * Updated by JCasGen Thu Oct 11 12:34:47 EDT 2012
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class AbstractQuery extends OAQATop {

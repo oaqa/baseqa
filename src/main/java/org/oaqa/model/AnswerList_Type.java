@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A ranked list of candidate answers.
- * Updated by JCasGen Tue Oct 09 21:34:48 EDT 2012
+ * Updated by JCasGen Thu Oct 11 12:34:48 EDT 2012
  * @generated */
 public class AnswerList_Type extends OAQATop_Type {
   /** @generated */

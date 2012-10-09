@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** The Question and any associated meta-data.
- * Updated by JCasGen Tue Oct 09 21:34:49 EDT 2012
+ * Updated by JCasGen Thu Oct 11 12:34:48 EDT 2012
  * @generated */
 public class Question_Type extends OAQAAnnotation_Type {
   /** @generated */

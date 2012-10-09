@@ -11,7 +11,7 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** A query operator in the abstract search query model.
- * Updated by JCasGen Tue Oct 09 21:34:49 EDT 2012
+ * Updated by JCasGen Thu Oct 11 12:34:48 EDT 2012
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class QueryOperator extends OAQATop {

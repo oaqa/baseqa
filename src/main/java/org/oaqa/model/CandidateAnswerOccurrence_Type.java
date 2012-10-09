@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** Annotates a span of text identified as a candidate answer.
- * Updated by JCasGen Tue Oct 09 21:34:48 EDT 2012
+ * Updated by JCasGen Thu Oct 11 12:34:48 EDT 2012
  * @generated */
 public class CandidateAnswerOccurrence_Type extends OAQAAnnotation_Type {
   /** @generated */
