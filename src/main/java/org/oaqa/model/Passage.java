@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Wed Aug 01 12:12:46 EDT 2012 */
+/* First created by JCasGen Mon Oct 08 18:56:44 EDT 2012 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,24 +10,27 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** A passage search result.
- * Updated by JCasGen Wed Aug 01 12:12:46 EDT 2012
- * XML source: /Users/elmer/Documents/workspace/oaqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Mon Oct 08 18:56:44 EDT 2012
+ * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class Passage extends SearchResult {
   /** @generated
    * @ordered 
    */
+  @SuppressWarnings ("hiding")
   public final static int typeIndexID = JCasRegistry.register(Passage.class);
   /** @generated
    * @ordered 
    */
+  @SuppressWarnings ("hiding")
   public final static int type = typeIndexID;
   /** @generated  */
+  @Override
   public              int getTypeIndexID() {return typeIndexID;}
  
   /** Never called.  Disable default constructor
    * @generated */
-  protected Passage() {}
+  protected Passage() {/* intentionally empty block */}
     
   /** Internal - constructor used by generator 
    * @generated */
@@ -46,7 +49,7 @@ public class Passage extends SearchResult {
     * Write your own initialization here
     * <!-- end-user-doc -->
   @generated modifiable */
-  private void readObject() {}
+  private void readObject() {/*default - does nothing empty block */}
      
  
     

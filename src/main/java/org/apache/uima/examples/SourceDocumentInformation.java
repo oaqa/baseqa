@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** Stores detailed information about the original source document from which the current CAS was initialized. All information (like size) refers to the source document and not to the document in the CAS which may be converted and filtered by a CAS Initializer. For example this information will be written to the Semantic Search index so that the original document contents can be retrieved by queries.
- * Updated by JCasGen Wed Aug 01 12:12:46 EDT 2012
- * XML source: /Users/elmer/Documents/workspace/oaqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Mon Oct 08 18:56:44 EDT 2012
+ * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class SourceDocumentInformation extends Annotation {
   /** @generated
@@ -28,7 +28,7 @@ public class SourceDocumentInformation extends Annotation {
  
   /** Never called.  Disable default constructor
    * @generated */
-  protected SourceDocumentInformation() {}
+  protected SourceDocumentInformation() {/* intentionally empty block */}
     
   /** Internal - constructor used by generator 
    * @generated */
