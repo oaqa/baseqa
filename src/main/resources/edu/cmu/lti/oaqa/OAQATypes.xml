@@ -25,6 +25,11 @@ $Id:$</description>
           <description>The annotator's estimate of the probability associated with this annotation.</description>
           <rangeTypeName>uima.cas.Float</rangeTypeName>
         </featureDescription>
+        <featureDescription>
+          <name>implementingWrapper</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
@@ -41,6 +46,11 @@ $Id:$</description>
           <name>probability</name>
           <description>The annotator's estimate of the probability associated with this annotation.</description>
           <rangeTypeName>uima.cas.Float</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>implementingWrapper</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>

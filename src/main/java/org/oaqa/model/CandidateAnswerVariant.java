@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** A variant of a candidate answer.  A variant may have multiple occurrences, all of which are collected in a variant object.
- * Updated by JCasGen Mon Oct 08 18:56:44 EDT 2012
+ * Updated by JCasGen Tue Oct 09 21:34:48 EDT 2012
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class CandidateAnswerVariant extends OAQATop {

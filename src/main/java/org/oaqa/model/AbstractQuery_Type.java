@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** An abstract search query for the question that represents query concepts and query operators over those concepts.
- * Updated by JCasGen Mon Oct 08 18:56:44 EDT 2012
+ * Updated by JCasGen Tue Oct 09 21:34:48 EDT 2012
  * @generated */
 public class AbstractQuery_Type extends OAQATop_Type {
   /** @generated */

@@ -27,6 +27,7 @@ import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
+import edu.cmu.lti.oaqa.framework.data.KeytermList;
 import edu.cmu.lti.oaqa.framework.data.PassageCandidate;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
@@ -45,15 +46,19 @@ public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
     try {
+      // prepare input
       String questionText = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type))
               .getQuestion();
-      List<Keyterm> keyterms = Keyterm.getKeyterms(jcas);
+      KeytermList keytermList = new KeytermList(jcas);
+      List<Keyterm> keyterms = keytermList.getKeyterms();
       JCas documentView = ViewManager.getDocumentView(jcas);
       List<RetrievalResult> documents = RetrievalResult.getDocuments(documentView);
+      // do task
       List<PassageCandidate> answers = extractPassages(questionText, keyterms, documents);
+      log("ANSWER PASSAGES: " + answers.size());
+      // save output
       JCas candidateView = ViewManager.getCandidateView(jcas);
       PassageCandidate.storePassages(candidateView, answers);
-      log("ANSWER PASSAGES: " + answers.size());
     } catch (CASException e) {
       throw new AnalysisEngineProcessException(e);
     }

@@ -26,6 +26,7 @@ import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
+import edu.cmu.lti.oaqa.framework.data.KeytermList;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
@@ -41,15 +42,16 @@ public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponen
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
     try {
+      // prepare input
       InputElement input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
-      List<Keyterm> keyterms = Keyterm.getKeyterms(jcas);
-      // System.out.println("Retrieving Docs for Question: " + input.getSequenceId());
+      KeytermList keytermList = new KeytermList(jcas);
+      List<Keyterm> keyterms = keytermList.getKeyterms();
+      // do task
       List<RetrievalResult> documents = retrieveDocuments(input.getQuestion(), keyterms);
-      // CasKey key = new TopicBasedCasKey(jcas);
-      // StatsEngine.report(key, BaseQAStats.DOCUMENTS_RETRIEVED, documents.size());
+      log("RETRIEVED: " + documents.size());
+      // save output
       JCas documentView = ViewManager.getDocumentView(jcas);
       RetrievalResult.storeDocuments(documentView, documents);
-      log("RETRIEVED: " + documents.size());
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
