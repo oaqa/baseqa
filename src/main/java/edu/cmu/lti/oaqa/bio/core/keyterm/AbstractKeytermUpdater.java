@@ -51,7 +51,11 @@ public abstract class AbstractKeytermUpdater extends AbstractLoggedComponent {
     log(keyterms.toString());
     // save output
     keytermList = new KeytermList(jcas);
-    keytermList.setList(keyterms);
+    try {
+      keytermList.setList(keyterms);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
   }
 
   protected final void log(String message) {

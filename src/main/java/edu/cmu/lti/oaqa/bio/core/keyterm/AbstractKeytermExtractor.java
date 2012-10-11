@@ -49,7 +49,11 @@ public abstract class AbstractKeytermExtractor extends AbstractLoggedComponent {
     // save output
     KeytermList keytermList = new KeytermList(jcas);
     for (Keyterm keyterm : keyterms) {
-      keytermList.add(keyterm);
+      try {
+        keytermList.add(keyterm);
+      } catch (Exception e) {
+        throw new AnalysisEngineProcessException(e);
+      }
     }
     keytermList.complete();
   }

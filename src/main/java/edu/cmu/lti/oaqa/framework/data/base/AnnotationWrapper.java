@@ -5,7 +5,7 @@ import org.oaqa.model.OAQATop;
 
 public interface AnnotationWrapper<T extends OAQATop> {
 
-  public abstract T unwrap(JCas jcas);
+  public abstract T unwrap(JCas jcas) throws Exception;
 
   public abstract void wrap(T top);
 

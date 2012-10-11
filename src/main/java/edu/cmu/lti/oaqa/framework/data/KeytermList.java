@@ -38,7 +38,7 @@ public class KeytermList extends FSListWrapper<QueryConcept> {
     AbstractQuery query = (AbstractQuery) BaseJCasHelper.getFS(jcas, AbstractQuery.type);
     if (query != null) {
       list = query.getConcepts();
-      return getList(Keyterm.class);
+      return getList(QueryConcept.class, Keyterm.class);
     } else {
       return new ArrayList<Keyterm>();
     }

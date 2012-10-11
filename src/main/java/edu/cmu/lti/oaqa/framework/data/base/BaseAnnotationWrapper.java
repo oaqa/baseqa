@@ -9,27 +9,24 @@ import org.oaqa.model.OAQATop;
 
 public abstract class BaseAnnotationWrapper<T extends OAQATop> implements AnnotationWrapper<T> {
 
-  protected String implementingWrapper;
+  protected final Class<? extends T> typeClass = getType();
+
+  protected String implementingWrapper = getClass().getCanonicalName();
 
   protected String componentId;
 
   protected float probablity;
 
-  public BaseAnnotationWrapper() {
-  }
-  
-  public BaseAnnotationWrapper(T top) {
-    wrap(top);
-  }
+  public abstract Class<? extends T> getType();
 
-  @SuppressWarnings("unchecked")
   @Override
-  public T unwrap(JCas jcas) {
-    OAQATop top = new OAQATop(jcas);
+  public T unwrap(JCas jcas) throws Exception {
+    Constructor<? extends T> c = typeClass.getConstructor(JCas.class);
+    T top = c.newInstance(jcas);
     top.setImplementingWrapper(implementingWrapper);
     top.setComponentId(componentId);
     top.setProbability(probablity);
-    return (T) top;
+    return top;
   }
 
   @Override
@@ -39,14 +36,16 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
     probablity = top.getProbability();
   }
 
-  public static <W extends AnnotationWrapper<?>> W wrap(OAQATop top, Class<W> wrapperClass)
-          throws AnalysisEngineProcessException {
+  @SuppressWarnings("unchecked")
+  public static <T extends OAQATop, W extends AnnotationWrapper<T>> W wrap(OAQATop top,
+          Class<T> type, Class<W> wrapperClass) throws AnalysisEngineProcessException {
     Feature feature = top.getType().getFeatureByBaseName("implementingWrapper");
     String className = top.getFeatureValueAsString(feature);
     try {
       Class<? extends W> clazz = Class.forName(className).asSubclass(wrapperClass);
-      Constructor<? extends W> c = clazz.getConstructor(wrapperClass);
-      return c.newInstance(top);
+      W inst = clazz.newInstance();
+      inst.wrap((T) top);
+      return inst;
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
@@ -75,5 +74,5 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
   public void setProbablity(float probablity) {
     this.probablity = probablity;
   }
-  
+
 }
