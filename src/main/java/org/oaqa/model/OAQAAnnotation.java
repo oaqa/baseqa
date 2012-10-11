@@ -11,7 +11,11 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** The Question Analysis supertype that defines the attributes common to all question analysis results.
+<<<<<<< HEAD
  * Updated by JCasGen Thu Oct 11 12:34:48 EDT 2012
+=======
+ * Updated by JCasGen Tue Oct 09 21:34:48 EDT 2012
+>>>>>>> b546a96e32521e5cc420b3a114ad3fb1279252a1
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class OAQAAnnotation extends Annotation {

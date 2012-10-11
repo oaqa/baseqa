@@ -13,7 +13,11 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A feature of a candidate answer produced by a feature generator or answer scorer.
+<<<<<<< HEAD
  * Updated by JCasGen Thu Oct 11 12:34:48 EDT 2012
+=======
+ * Updated by JCasGen Tue Oct 09 21:34:48 EDT 2012
+>>>>>>> b546a96e32521e5cc420b3a114ad3fb1279252a1
  * @generated */
 public class CaFeature_Type extends OAQATop_Type {
   /** @generated */

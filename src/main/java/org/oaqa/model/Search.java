@@ -11,7 +11,11 @@ import org.apache.uima.jcas.cas.FSArray;
 
 
 /** An object that holds a query and results for a search (text search, fact search, KB search, etc.)
+<<<<<<< HEAD
  * Updated by JCasGen Thu Oct 11 12:34:48 EDT 2012
+=======
+ * Updated by JCasGen Tue Oct 09 21:34:49 EDT 2012
+>>>>>>> b546a96e32521e5cc420b3a114ad3fb1279252a1
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class Search extends OAQATop {

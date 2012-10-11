@@ -10,7 +10,11 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** Annotates a span of text identified as a candidate answer.
+<<<<<<< HEAD
  * Updated by JCasGen Thu Oct 11 12:34:48 EDT 2012
+=======
+ * Updated by JCasGen Tue Oct 09 21:34:48 EDT 2012
+>>>>>>> b546a96e32521e5cc420b3a114ad3fb1279252a1
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class CandidateAnswerOccurrence extends OAQAAnnotation {
