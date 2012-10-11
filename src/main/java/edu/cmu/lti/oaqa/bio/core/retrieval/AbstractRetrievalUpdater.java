@@ -26,6 +26,7 @@ import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
+import edu.cmu.lti.oaqa.framework.data.KeytermList;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
@@ -43,14 +44,17 @@ public abstract class AbstractRetrievalUpdater extends AbstractLoggedComponent {
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
     try {
+      // prepare input
       InputElement input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
-      List<Keyterm> keyterms = Keyterm.getKeyterms(jcas);
-      System.out.println("Retrieving Docs for Question: " + input.getSequenceId());
+      KeytermList keytermList = new KeytermList(jcas);
+      List<Keyterm> keyterms = keytermList.getKeyterms();
       JCas documentView = ViewManager.getDocumentView(jcas);
       List<RetrievalResult> documents = RetrievalResult.getDocuments(documentView);
+      // do task
       documents = updateDocuments(input.getQuestion(), keyterms, documents);
-      RetrievalResult.storeDocuments(documentView, documents);
       log("RETRIEVED: " + documents.size());
+      // save output
+      RetrievalResult.storeDocuments(documentView, documents);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
@@ -59,5 +63,5 @@ public abstract class AbstractRetrievalUpdater extends AbstractLoggedComponent {
   protected final void log(String message) {
     super.log(QALogEntry.RETRIEVAL, message);
   }
-  
+
 }

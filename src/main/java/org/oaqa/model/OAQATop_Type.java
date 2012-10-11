@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** The base class for OAQA feature structures that are not Annotations.
- * Updated by JCasGen Mon Oct 08 18:56:44 EDT 2012
+ * Updated by JCasGen Tue Oct 09 21:34:49 EDT 2012
  * @generated */
 public class OAQATop_Type extends TOP_Type {
   /** @generated */
@@ -79,6 +79,24 @@ public class OAQATop_Type extends TOP_Type {
     ll_cas.ll_setFloatValue(addr, casFeatCode_probability, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_implementingWrapper;
+  /** @generated */
+  final int     casFeatCode_implementingWrapper;
+  /** @generated */ 
+  public String getImplementingWrapper(int addr) {
+        if (featOkTst && casFeat_implementingWrapper == null)
+      jcas.throwFeatMissing("implementingWrapper", "org.oaqa.model.OAQATop");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_implementingWrapper);
+  }
+  /** @generated */    
+  public void setImplementingWrapper(int addr, String v) {
+        if (featOkTst && casFeat_implementingWrapper == null)
+      jcas.throwFeatMissing("implementingWrapper", "org.oaqa.model.OAQATop");
+    ll_cas.ll_setStringValue(addr, casFeatCode_implementingWrapper, v);}
+    
+  
 
 
 
@@ -95,6 +113,10 @@ public class OAQATop_Type extends TOP_Type {
  
     casFeat_probability = jcas.getRequiredFeatureDE(casType, "probability", "uima.cas.Float", featOkTst);
     casFeatCode_probability  = (null == casFeat_probability) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_probability).getCode();
+
+ 
+    casFeat_implementingWrapper = jcas.getRequiredFeatureDE(casType, "implementingWrapper", "uima.cas.String", featOkTst);
+    casFeatCode_implementingWrapper  = (null == casFeat_implementingWrapper) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_implementingWrapper).getCode();
 
   }
 }
