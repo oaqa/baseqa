@@ -25,6 +25,7 @@ import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
+import edu.cmu.lti.oaqa.framework.data.KeytermList;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
 /**
@@ -36,23 +37,25 @@ public abstract class AbstractKeytermExtractor extends AbstractLoggedComponent {
 
   protected abstract List<Keyterm> getKeyterms(String question);
 
-  @Deprecated
-  protected List<Keyterm> getKeyterms(String question, int topicId) {
-    return getKeyterms(question);
-  }
-
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
+    // prepare input
     InputElement input = (InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type);
     String question = input.getQuestion();
-    int sequenceId = input.getSequenceId();
-    List<Keyterm> keyterms = getKeyterms(question, sequenceId);
-    Keyterm.storeKeyterms(jcas, keyterms);
+    // do task
+    List<Keyterm> keyterms = getKeyterms(question);
     log(keyterms.toString());
+    // save output
+    KeytermList keytermList = new KeytermList(jcas);
+    for (Keyterm keyterm : keyterms) {
+      keytermList.add(keyterm);
+    }
+    keytermList.complete();
   }
 
   protected final void log(String message) {
     super.log(QALogEntry.KEYTERM, message);
   }
+
 }

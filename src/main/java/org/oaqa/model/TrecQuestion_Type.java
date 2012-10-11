@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A TREC evaluation question.
- * Updated by JCasGen Mon Oct 08 18:56:44 EDT 2012
+ * Updated by JCasGen Tue Oct 09 21:34:49 EDT 2012
  * @generated */
 public class TrecQuestion_Type extends Question_Type {
   /** @generated */
