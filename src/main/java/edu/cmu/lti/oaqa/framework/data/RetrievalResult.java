@@ -108,57 +108,6 @@ public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements
     return passage;
   }
 
-//  public static List<RetrievalResult> getDocuments(JCas documentView) throws CASException {
-//
-//    List<RetrievalResult> documents = new ArrayList<RetrievalResult>();
-//    Iterator<?> it = documentView.getJFSIndexRepository().getAllIndexedFS(Search.type);
-//
-//    if (it.hasNext()) {
-//      Search retrievalResult = (Search) it.next();
-//      FSArray hitList = retrievalResult.getHitList();
-//      for (int i = 0; i < hitList.size(); i++) {
-//        Passage sr = (Passage) hitList.get(i);
-//        RetrievalResult document = new RetrievalResult(sr);
-//        documents.add(document);
-//      }
-//    }
-//    return documents;
-//  }
-/*
-  public static void storeDocuments(JCas documentView, List<RetrievalResult> documents) {
-
-    Collections.sort(documents, Collections.reverseOrder());
-    Iterator<?> it = documentView.getJFSIndexRepository().getAllIndexedFS(Search.type);
-    while (it.hasNext()) {
-      Search search = (Search) it.next();
-      search.removeFromIndexes();
-    }
-
-    FSArray hitList = new FSArray(documentView, documents.size());
-    double prevScore = Double.NaN;
-    int prevRank = 0;
-    for (int i = 0; i < documents.size(); i++) {
-      RetrievalResult document = documents.get(i);
-      Passage sr = new Passage(documentView);
-      sr.setUri(document.getDocID());
-      sr.setQueryString(document.getQueryString());
-      double curScore = document.getScore();
-      sr.setScore(curScore);
-      if (curScore != prevScore) {
-        sr.setRank(i + 1);
-        prevScore = curScore;
-        prevRank = i + 1;
-      } else {
-        sr.setRank(prevRank);
-      }
-      hitList.set(i, sr);
-    }
-
-    Search search = new Search(documentView);
-    search.setHitList(hitList);
-    search.addToIndexes();
-  }*/
-
   @Override
   public Class<? extends Passage> getTypeClass() {
     return Passage.class;
