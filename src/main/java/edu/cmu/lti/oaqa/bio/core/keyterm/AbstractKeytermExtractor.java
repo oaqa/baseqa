@@ -40,22 +40,18 @@ public abstract class AbstractKeytermExtractor extends AbstractLoggedComponent {
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
-    // prepare input
-    InputElement input = (InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type);
-    String question = input.getQuestion();
-    // do task
-    List<Keyterm> keyterms = getKeyterms(question);
-    log(keyterms.toString());
-    // save output
-    KeytermList keytermList = new KeytermList(jcas);
-    for (Keyterm keyterm : keyterms) {
-      try {
-        keytermList.add(keyterm);
-      } catch (Exception e) {
-        throw new AnalysisEngineProcessException(e);
-      }
+    try {
+      // prepare input
+      InputElement input = (InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type);
+      String question = input.getQuestion();
+      // do task
+      List<Keyterm> keyterms = getKeyterms(question);
+      log(keyterms.toString());
+      // save output
+      KeytermList.storeKeyterms(jcas, keyterms);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
     }
-    keytermList.complete();
   }
 
   protected final void log(String message) {

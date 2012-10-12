@@ -19,7 +19,6 @@ package edu.cmu.lti.oaqa.bio.core.ie;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;
 
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
@@ -29,7 +28,9 @@ import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
 import edu.cmu.lti.oaqa.framework.data.KeytermList;
 import edu.cmu.lti.oaqa.framework.data.PassageCandidate;
+import edu.cmu.lti.oaqa.framework.data.PassageCandidateArray;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
+import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
 /**
@@ -51,16 +52,16 @@ public abstract class AbstractPassageUpdater extends AbstractLoggedComponent {
               .getQuestion();
       KeytermList keytermList = new KeytermList(jcas);
       List<Keyterm> keyterms = keytermList.getKeyterms();
-      JCas documentView = ViewManager.getDocumentView(jcas);
-      List<RetrievalResult> documents = RetrievalResult.getDocuments(documentView);
-      JCas candidateView = ViewManager.getCandidateView(jcas);
-      List<PassageCandidate> passages = PassageCandidate.getPassages(candidateView);
+      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(ViewManager
+              .getDocumentView(jcas));
+      List<PassageCandidate> passages = PassageCandidateArray.retrievePassageCandidates(ViewManager
+              .getCandidateView(jcas));
       // do task
       passages = updatePassages(questionText, keyterms, documents, passages);
       log("ANSWER PASSAGES: " + passages.size());
       // save output
-      PassageCandidate.storePassages(candidateView, passages);
-    } catch (CASException e) {
+      PassageCandidateArray.storePassageCandidates(ViewManager.getCandidateView(jcas), passages);
+    } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
   }

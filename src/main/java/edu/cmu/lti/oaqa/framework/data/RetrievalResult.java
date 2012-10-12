@@ -1,19 +1,14 @@
 package edu.cmu.lti.oaqa.framework.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
-import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSArray;
 import org.oaqa.model.Passage;
-import org.oaqa.model.Search;
-import org.oaqa.model.SearchResult;
 
-public class RetrievalResult implements Comparable<RetrievalResult>, Serializable {
+import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
+
+public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements
+        Comparable<RetrievalResult>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -25,16 +20,15 @@ public class RetrievalResult implements Comparable<RetrievalResult>, Serializabl
 
   private String queryString;
 
+  public RetrievalResult() {
+    super();
+  }
+
   public RetrievalResult(String docID, double score, String queryString) {
+    super();
     this.docID = docID;
     this.score = score;
     this.queryString = queryString;
-  }
-
-  public RetrievalResult(SearchResult result) {
-    this.docID = result.getUri();
-    this.score = result.getScore();
-    this.rank = result.getRank();
   }
 
   public String getQueryString() {
@@ -51,6 +45,10 @@ public class RetrievalResult implements Comparable<RetrievalResult>, Serializabl
 
   public int getRank() {
     return this.rank;
+  }
+
+  public void setRank(int rank) {
+    this.rank = rank;
   }
 
   @Override
@@ -91,31 +89,42 @@ public class RetrievalResult implements Comparable<RetrievalResult>, Serializabl
     return 0;
   }
 
-  public static List<RetrievalResult> getDocuments(JCas documentView) throws CASException {
-
-    List<RetrievalResult> documents = new ArrayList<RetrievalResult>();
-    Iterator<?> it = documentView.getJFSIndexRepository().getAllIndexedFS(Search.type);
-
-    if (it.hasNext()) {
-      Search retrievalResult = (Search) it.next();
-      FSArray hitList = retrievalResult.getHitList();
-      for (int i = 0; i < hitList.size(); i++) {
-        Passage sr = (Passage) hitList.get(i);
-        RetrievalResult document = new RetrievalResult(sr);
-        documents.add(document);
-      }
-    }
-    return documents;
+  @Override
+  public void wrap(Passage passage) {
+    super.wrap(passage);
+    docID = passage.getUri();
+    queryString = passage.getQueryString();
+    score = passage.getScore();
+    rank = passage.getRank();
   }
 
-  /**
-   * @deprecated Use {@link #getDocuments(JCas)} directly.
-   */
-  @Deprecated
-  public static List<RetrievalResult> getDocumentsNoText(JCas documentView) throws CASException {
-    return getDocuments(documentView);
+  @Override
+  public Passage unwrap(JCas jcas) throws Exception {
+    Passage passage = super.unwrap(jcas);
+    passage.setUri(docID);
+    passage.setQueryString(queryString);
+    passage.setScore(score);
+    passage.setRank(rank);
+    return passage;
   }
 
+//  public static List<RetrievalResult> getDocuments(JCas documentView) throws CASException {
+//
+//    List<RetrievalResult> documents = new ArrayList<RetrievalResult>();
+//    Iterator<?> it = documentView.getJFSIndexRepository().getAllIndexedFS(Search.type);
+//
+//    if (it.hasNext()) {
+//      Search retrievalResult = (Search) it.next();
+//      FSArray hitList = retrievalResult.getHitList();
+//      for (int i = 0; i < hitList.size(); i++) {
+//        Passage sr = (Passage) hitList.get(i);
+//        RetrievalResult document = new RetrievalResult(sr);
+//        documents.add(document);
+//      }
+//    }
+//    return documents;
+//  }
+/*
   public static void storeDocuments(JCas documentView, List<RetrievalResult> documents) {
 
     Collections.sort(documents, Collections.reverseOrder());
@@ -148,6 +157,11 @@ public class RetrievalResult implements Comparable<RetrievalResult>, Serializabl
     Search search = new Search(documentView);
     search.setHitList(hitList);
     search.addToIndexes();
+  }*/
+
+  @Override
+  public Class<? extends Passage> getTypeClass() {
+    return Passage.class;
   }
 
 }

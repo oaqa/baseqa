@@ -19,7 +19,6 @@ package edu.cmu.lti.oaqa.bio.core.ie;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;
 
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
@@ -29,7 +28,9 @@ import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
 import edu.cmu.lti.oaqa.framework.data.KeytermList;
 import edu.cmu.lti.oaqa.framework.data.PassageCandidate;
+import edu.cmu.lti.oaqa.framework.data.PassageCandidateArray;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
+import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
 /**
@@ -49,17 +50,15 @@ public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
       // prepare input
       String questionText = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type))
               .getQuestion();
-      KeytermList keytermList = new KeytermList(jcas);
-      List<Keyterm> keyterms = keytermList.getKeyterms();
-      JCas documentView = ViewManager.getDocumentView(jcas);
-      List<RetrievalResult> documents = RetrievalResult.getDocuments(documentView);
+      List<Keyterm> keyterms = KeytermList.retrieveKeyterms(jcas);
+      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(ViewManager
+              .getDocumentView(jcas));
       // do task
       List<PassageCandidate> answers = extractPassages(questionText, keyterms, documents);
       log("ANSWER PASSAGES: " + answers.size());
       // save output
-      JCas candidateView = ViewManager.getCandidateView(jcas);
-      PassageCandidate.storePassages(candidateView, answers);
-    } catch (CASException e) {
+      PassageCandidateArray.storePassageCandidates(ViewManager.getCandidateView(jcas), answers);
+    } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
   }

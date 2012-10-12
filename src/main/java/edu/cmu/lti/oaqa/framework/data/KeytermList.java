@@ -34,6 +34,14 @@ public class KeytermList extends FSListWrapper<QueryConcept> {
     query.addToIndexes();
   }
 
+  public void setKeyterms(List<Keyterm> keyterms) throws Exception {
+    setList(keyterms);
+  }
+
+  public static void storeKeyterms(JCas jcas, List<Keyterm> keyterms) throws Exception {
+    new KeytermList(jcas).setKeyterms(keyterms);
+  }
+
   public List<Keyterm> getKeyterms() throws AnalysisEngineProcessException {
     AbstractQuery query = (AbstractQuery) BaseJCasHelper.getFS(jcas, AbstractQuery.type);
     if (query != null) {
@@ -43,4 +51,9 @@ public class KeytermList extends FSListWrapper<QueryConcept> {
       return new ArrayList<Keyterm>();
     }
   }
+
+  public static List<Keyterm> retrieveKeyterms(JCas jcas) throws Exception {
+    return new KeytermList(jcas).getKeyterms();
+  }
+
 }

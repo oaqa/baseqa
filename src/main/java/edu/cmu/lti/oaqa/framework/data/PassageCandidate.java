@@ -1,23 +1,20 @@
 package edu.cmu.lti.oaqa.framework.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSArray;
 import org.oaqa.model.Passage;
-import org.oaqa.model.Search;
+
+import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
 
 /**
  * 
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public class PassageCandidate implements Comparable<PassageCandidate>, Serializable {
+public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements
+        Comparable<PassageCandidate>, Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -33,22 +30,18 @@ public class PassageCandidate implements Comparable<PassageCandidate>, Serializa
 
   private String queryString;
 
+  public PassageCandidate() {
+    super();
+  }
+
   public PassageCandidate(String docID, int start, int end, double score, String queryString)
           throws AnalysisEngineProcessException {
+    super();
     this.docID = docID;
     this.start = start;
     this.end = end;
     this.score = score;
     this.queryString = queryString;
-  }
-
-  public PassageCandidate(Passage result) {
-    this.docID = result.getUri();
-    this.start = result.getBegin();
-    this.end = result.getEnd();
-    this.score = result.getScore();
-    this.rank = result.getRank();
-    this.queryString = result.getQueryString();
   }
 
   @Override
@@ -144,87 +137,115 @@ public class PassageCandidate implements Comparable<PassageCandidate>, Serializa
   public void setQueryString(String queryString) {
     this.queryString = queryString;
   }
-  
-  public static List<PassageCandidate> getPassages(JCas candidateView) {
 
-    List<PassageCandidate> passages = new ArrayList<PassageCandidate>();
-    Iterator<?> it = candidateView.getJFSIndexRepository().getAllIndexedFS(Search.type);
-
-    if (it.hasNext()) {
-      Search retrievalResult = (Search) it.next();
-      FSArray hitList = retrievalResult.getHitList();
-      for (int i = 0; i < hitList.size(); i++) {
-        Passage p = (Passage) hitList.get(i);
-        passages.add(new PassageCandidate(p));
-      }
-    }
-    return passages;
+  @Override
+  public void wrap(Passage passage) {
+    super.wrap(passage);
+    docID = passage.getUri();
+    start = passage.getBegin();
+    end = passage.getEnd();
+    score = passage.getScore();
+    rank = passage.getRank();
+    queryString = passage.getQueryString();
   }
 
-  public static void storePassages(JCas candidateView, List<PassageCandidate> passages) {
-
-    Collections.sort(passages, Collections.reverseOrder());
-    Iterator<?> it = candidateView.getJFSIndexRepository().getAllIndexedFS(Search.type);
-    while (it.hasNext()) {
-      Search search = (Search) it.next();
-      search.removeFromIndexes();
-    }
-
-    FSArray hitList = new FSArray(candidateView, passages.size());
-    double prevScore = Double.NaN;
-    int prevRank = 0;
-    for (int i = 0; i < passages.size(); i++) {
-      PassageCandidate passage = passages.get(i);
-      Passage p = new Passage(candidateView);
-      p.setUri(passage.getDocID());
-      p.setBegin(passage.getStart());
-      p.setEnd(passage.getEnd());
-      p.setQueryString(passage.getQueryString());
-      double curScore = passage.getScore();
-      p.setScore(curScore);
-      if (curScore != prevScore) {
-        p.setRank(i + 1);
-        prevScore = curScore;
-        prevRank = i + 1;
-      } else {
-        p.setRank(prevRank);
-      }
-      hitList.set(i, p);
-    }
-
-    Search search = new Search(candidateView);
-    search.setHitList(hitList);
-    search.addToIndexes();
+  @Override
+  public Passage unwrap(JCas jcas) throws Exception {
+    Passage passage = super.unwrap(jcas);
+    passage.setUri(docID);
+    passage.setBegin(start);
+    passage.setEnd(end);
+    passage.setScore(score);
+    passage.setRank(rank);
+    passage.setQueryString(queryString);
+    return passage;
   }
 
-  public static void storePassageTexts(JCas finalView, List<PassageCandidate> passages,
-          List<String> texts) {
+//  public static List<PassageCandidate> getPassages(JCas candidateView) {
+//
+//    List<PassageCandidate> passages = new ArrayList<PassageCandidate>();
+//    Iterator<?> it = candidateView.getJFSIndexRepository().getAllIndexedFS(Search.type);
+//
+//    if (it.hasNext()) {
+//      Search retrievalResult = (Search) it.next();
+//      FSArray hitList = retrievalResult.getHitList();
+//      for (int i = 0; i < hitList.size(); i++) {
+//        Passage p = (Passage) hitList.get(i);
+//        passages.add(new PassageCandidate(p));
+//      }
+//    }
+//    return passages;
+//  }
 
-    Collections.sort(passages, Collections.reverseOrder());
-    Iterator<?> it = finalView.getJFSIndexRepository().getAllIndexedFS(Search.type);
-    while (it.hasNext()) {
-      Search search = (Search) it.next();
-      search.removeFromIndexes();
-    }
+//  public static void storePassages(JCas candidateView, List<PassageCandidate> passages) {
+//
+//    Collections.sort(passages, Collections.reverseOrder());
+//    Iterator<?> it = candidateView.getJFSIndexRepository().getAllIndexedFS(Search.type);
+//    while (it.hasNext()) {
+//      Search search = (Search) it.next();
+//      search.removeFromIndexes();
+//    }
+//
+//    FSArray hitList = new FSArray(candidateView, passages.size());
+//    double prevScore = Double.NaN;
+//    int prevRank = 0;
+//    for (int i = 0; i < passages.size(); i++) {
+//      PassageCandidate passage = passages.get(i);
+//      Passage p = new Passage(candidateView);
+//      p.setUri(passage.getDocID());
+//      p.setBegin(passage.getStart());
+//      p.setEnd(passage.getEnd());
+//      p.setQueryString(passage.getQueryString());
+//      double curScore = passage.getScore();
+//      p.setScore(curScore);
+//      if (curScore != prevScore) {
+//        p.setRank(i + 1);
+//        prevScore = curScore;
+//        prevRank = i + 1;
+//      } else {
+//        p.setRank(prevRank);
+//      }
+//      hitList.set(i, p);
+//    }
+//
+//    Search search = new Search(candidateView);
+//    search.setHitList(hitList);
+//    search.addToIndexes();
+//  }
 
-    FSArray hitList = new FSArray(finalView, passages.size());
-    for (int i = 0; i < passages.size(); i++) {
-      PassageCandidate passage = passages.get(i);
-      String text = texts.get(i);
-      Passage p = new Passage(finalView);
-      p.setUri(passage.getDocID());
-      p.setBegin(passage.getStart());
-      p.setEnd(passage.getEnd());
-      p.setRank(passage.getRank());
-      p.setScore(passage.getScore());
-      p.setQueryString(passage.getQueryString());
-      p.setText(text);
-      hitList.set(i, p);
-    }
+  // public static void storePassageTexts(JCas finalView, List<PassageCandidate> passages,
+  // List<String> texts) {
+  //
+  // Collections.sort(passages, Collections.reverseOrder());
+  // Iterator<?> it = finalView.getJFSIndexRepository().getAllIndexedFS(Search.type);
+  // while (it.hasNext()) {
+  // Search search = (Search) it.next();
+  // search.removeFromIndexes();
+  // }
+  //
+  // FSArray hitList = new FSArray(finalView, passages.size());
+  // for (int i = 0; i < passages.size(); i++) {
+  // PassageCandidate passage = passages.get(i);
+  // String text = texts.get(i);
+  // Passage p = new Passage(finalView);
+  // p.setUri(passage.getDocID());
+  // p.setBegin(passage.getStart());
+  // p.setEnd(passage.getEnd());
+  // p.setRank(passage.getRank());
+  // p.setScore(passage.getScore());
+  // p.setQueryString(passage.getQueryString());
+  // p.setText(text);
+  // hitList.set(i, p);
+  // }
+  //
+  // Search search = new Search(finalView);
+  // search.setHitList(hitList);
+  // search.addToIndexes();
+  // }
 
-    Search search = new Search(finalView);
-    search.setHitList(hitList);
-    search.addToIndexes();
+  @Override
+  public Class<? extends Passage> getTypeClass() {
+    return Passage.class;
   }
 
 }

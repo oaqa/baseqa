@@ -9,7 +9,7 @@ import org.oaqa.model.OAQATop;
 
 public abstract class BaseAnnotationWrapper<T extends OAQATop> implements AnnotationWrapper<T> {
 
-  protected final Class<? extends T> typeClass = getType();
+  protected final Class<? extends T> typeClass = getTypeClass();
 
   protected String implementingWrapper = getClass().getCanonicalName();
 
@@ -17,7 +17,7 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
 
   protected float probablity;
 
-  public abstract Class<? extends T> getType();
+  public abstract Class<? extends T> getTypeClass();
 
   @Override
   public T unwrap(JCas jcas) throws Exception {

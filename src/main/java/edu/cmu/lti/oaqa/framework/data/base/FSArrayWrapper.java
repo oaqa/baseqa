@@ -6,25 +6,26 @@ import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSList;
+import org.apache.uima.jcas.cas.FSArray;
 import org.oaqa.model.OAQATop;
 
-import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
-
-public abstract class FSListWrapper<T extends OAQATop> implements ContainerWrapper<T> {
+public abstract class FSArrayWrapper<T extends OAQATop> implements ContainerWrapper<T> {
 
   protected JCas jcas;
 
-  protected FSList list;
+  protected FSArray array;
 
-  public FSListWrapper(JCas jcas) {
+  protected int i;
+
+  public FSArrayWrapper(JCas jcas, int length) {
     this.jcas = jcas;
-    list = new FSList(jcas);
+    array = new FSArray(jcas, length);
+    i = 0;
   }
 
   @Override
   public void add(AnnotationWrapper<T> annotation) throws Exception {
-    list = BaseJCasHelper.addToFSList(jcas, list, annotation.unwrap(jcas));
+    array.set(i++, annotation.unwrap(jcas));
   }
 
   @Override
@@ -33,7 +34,7 @@ public abstract class FSListWrapper<T extends OAQATop> implements ContainerWrapp
   @Override
   public abstract void complete();
 
-  protected final <W extends AnnotationWrapper<T>> void setList(Collection<W> wrappers)
+  protected final <W extends AnnotationWrapper<T>> void setArray(Collection<W> wrappers)
           throws Exception {
     clear();
     for (W wrapper : wrappers) {
@@ -42,11 +43,11 @@ public abstract class FSListWrapper<T extends OAQATop> implements ContainerWrapp
     complete();
   }
 
-  protected final <W extends AnnotationWrapper<T>> List<W> getList(Class<T> type,
+  protected final <W extends AnnotationWrapper<T>> List<W> getArray(Class<T> type,
           Class<W> classWrapper) throws AnalysisEngineProcessException {
     List<W> result = new ArrayList<W>();
-    for (OAQATop top : BaseJCasHelper.<OAQATop> fsIterator(list)) {
-      result.add(BaseAnnotationWrapper.wrap(top, type, classWrapper));
+    for (int i = 0; i < array.size(); i++) {
+      result.add(BaseAnnotationWrapper.wrap((OAQATop) array.get(i), type, classWrapper));
     }
     return result;
   }

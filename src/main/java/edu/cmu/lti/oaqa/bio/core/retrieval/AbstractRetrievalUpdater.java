@@ -28,6 +28,7 @@ import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
 import edu.cmu.lti.oaqa.framework.data.KeytermList;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
+import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
 /**
@@ -46,15 +47,14 @@ public abstract class AbstractRetrievalUpdater extends AbstractLoggedComponent {
     try {
       // prepare input
       InputElement input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
-      KeytermList keytermList = new KeytermList(jcas);
-      List<Keyterm> keyterms = keytermList.getKeyterms();
-      JCas documentView = ViewManager.getDocumentView(jcas);
-      List<RetrievalResult> documents = RetrievalResult.getDocuments(documentView);
+      List<Keyterm> keyterms = KeytermList.retrieveKeyterms(jcas);
+      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(ViewManager
+              .getDocumentView(jcas));
       // do task
       documents = updateDocuments(input.getQuestion(), keyterms, documents);
       log("RETRIEVED: " + documents.size());
       // save output
-      RetrievalResult.storeDocuments(documentView, documents);
+      RetrievalResultArray.storeRetrievalResults(ViewManager.getDocumentView(jcas), documents);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

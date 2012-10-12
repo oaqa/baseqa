@@ -51,7 +51,7 @@ public class Keyterm extends BaseAnnotationWrapper<QueryConcept> implements Seri
   }
 
   @Override
-  public Class<? extends QueryConcept> getType() {
+  public Class<? extends QueryConcept> getTypeClass() {
     return QueryConcept.class;
   }
 
