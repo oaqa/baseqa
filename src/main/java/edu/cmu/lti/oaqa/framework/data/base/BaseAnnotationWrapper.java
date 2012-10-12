@@ -7,7 +7,8 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.OAQATop;
 
-public abstract class BaseAnnotationWrapper<T extends OAQATop> implements AnnotationWrapper<T> {
+public abstract class BaseAnnotationWrapper<T extends OAQATop> implements AnnotationWrapper<T>,
+        Comparable<BaseAnnotationWrapper<T>> {
 
   protected final Class<? extends T> typeClass = getTypeClass();
 
@@ -49,6 +50,14 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
+  }
+  
+  @Override
+  public int compareTo(BaseAnnotationWrapper<T> w) {
+    if (probablity != w.probablity) {
+      return probablity > w.probablity ? 1 : -1;
+    }
+    return 0;
   }
 
   public String getImplementingWrapper() {
