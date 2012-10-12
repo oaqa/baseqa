@@ -40,7 +40,7 @@ public class RetrievalResultArray extends FSArrayWrapper<Passage> {
     int prevRank = 0;
     for (int i = 0; i < results.size(); i++) {
       RetrievalResult result = results.get(i);
-      double curScore = result.getScore();
+      double curScore = result.getProbability();
       if (curScore != prevScore) {
         result.setRank(i + 1);
         prevScore = curScore;

@@ -16,7 +16,7 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
 
   protected String componentId;
 
-  protected float probablity;
+  protected float probability;
 
   public abstract Class<? extends T> getTypeClass();
 
@@ -26,7 +26,7 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
     T top = c.newInstance(jcas);
     top.setImplementingWrapper(implementingWrapper);
     top.setComponentId(componentId);
-    top.setProbability(probablity);
+    top.setProbability(probability);
     return top;
   }
 
@@ -34,7 +34,7 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
   public void wrap(T top) {
     implementingWrapper = top.getImplementingWrapper();
     componentId = top.getComponentId();
-    probablity = top.getProbability();
+    probability = top.getProbability();
   }
 
   @SuppressWarnings("unchecked")
@@ -54,8 +54,8 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
   
   @Override
   public int compareTo(BaseAnnotationWrapper<T> w) {
-    if (probablity != w.probablity) {
-      return probablity > w.probablity ? 1 : -1;
+    if (probability != w.probability) {
+      return probability > w.probability ? 1 : -1;
     }
     return 0;
   }
@@ -76,12 +76,12 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
     this.componentId = componentId;
   }
 
-  public float getProbablity() {
-    return probablity;
+  public float getProbability() {
+    return probability;
   }
 
   public void setProbablity(float probablity) {
-    this.probablity = probablity;
+    this.probability = probablity;
   }
 
 }

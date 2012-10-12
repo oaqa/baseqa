@@ -7,14 +7,11 @@ import org.oaqa.model.Passage;
 
 import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
 
-public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements
-        Comparable<RetrievalResult>, Serializable {
+public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
   private String docID;
-
-  private double score;
 
   private int rank = -1;
 
@@ -24,10 +21,10 @@ public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements
     super();
   }
 
-  public RetrievalResult(String docID, double score, String queryString) {
+  public RetrievalResult(String docID, float score, String queryString) {
     super();
     this.docID = docID;
-    this.score = score;
+    this.probability = score;
     this.queryString = queryString;
   }
 
@@ -37,10 +34,6 @@ public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements
 
   public String getDocID() {
     return this.docID;
-  }
-
-  public double getScore() {
-    return this.score;
   }
 
   public int getRank() {
@@ -82,19 +75,10 @@ public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements
   }
 
   @Override
-  public int compareTo(RetrievalResult o) {
-    if (score != o.score) {
-      return score > o.score ? 1 : -1;
-    }
-    return 0;
-  }
-
-  @Override
   public void wrap(Passage passage) {
     super.wrap(passage);
     docID = passage.getUri();
     queryString = passage.getQueryString();
-    score = passage.getScore();
     rank = passage.getRank();
   }
 
@@ -103,7 +87,6 @@ public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements
     Passage passage = super.unwrap(jcas);
     passage.setUri(docID);
     passage.setQueryString(queryString);
-    passage.setScore(score);
     passage.setRank(rank);
     return passage;
   }

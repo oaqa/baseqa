@@ -13,8 +13,7 @@ import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements
-        Comparable<PassageCandidate>, Serializable {
+public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -24,8 +23,6 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements
 
   private int end;
 
-  private double score;
-
   private int rank = -1;
 
   private String queryString;
@@ -34,29 +31,19 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements
     super();
   }
 
-  public PassageCandidate(String docID, int start, int end, double score, String queryString)
+  public PassageCandidate(String docID, int start, int end, float score, String queryString)
           throws AnalysisEngineProcessException {
     super();
     this.docID = docID;
     this.start = start;
     this.end = end;
-    this.score = score;
+    this.probability = score;
     this.queryString = queryString;
   }
 
   @Override
   public String toString() {
     return docID + "[" + start + "," + end + "]";
-  }
-
-  @Override
-  public int compareTo(PassageCandidate o) {
-    if (score > o.score) {
-      return 1;
-    } else if (score < o.score) {
-      return -1;
-    }
-    return 0;
   }
 
   @Override
@@ -114,14 +101,6 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements
     this.end = end;
   }
 
-  public double getScore() {
-    return score;
-  }
-
-  public void setScore(double score) {
-    this.score = score;
-  }
-
   public int getRank() {
     return rank;
   }
@@ -144,7 +123,6 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements
     docID = passage.getUri();
     start = passage.getBegin();
     end = passage.getEnd();
-    score = passage.getScore();
     rank = passage.getRank();
     queryString = passage.getQueryString();
   }
@@ -155,7 +133,6 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements
     passage.setUri(docID);
     passage.setBegin(start);
     passage.setEnd(end);
-    passage.setScore(score);
     passage.setRank(rank);
     passage.setQueryString(queryString);
     return passage;
