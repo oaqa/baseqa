@@ -16,8 +16,9 @@
 
 package edu.cmu.lti.oaqa.framework.eval.gs;
 
-import org.apache.uima.resource.Resource_ImplBase;
+import edu.cmu.lti.oaqa.ecd.config.ConfigurableProvider;
 
-public abstract class AbstractGoldStandardPersistenceProvider extends Resource_ImplBase implements GoldStandardPersistenceProvider {
+public abstract class AbstractGoldStandardPersistenceProvider extends ConfigurableProvider
+        implements GoldStandardPersistenceProvider {
 
 }
