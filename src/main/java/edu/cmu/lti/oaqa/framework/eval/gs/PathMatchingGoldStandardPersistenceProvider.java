@@ -55,7 +55,11 @@ public class PathMatchingGoldStandardPersistenceProvider extends
           GoldStandardSpan annotation = new GoldStandardSpan(result.group(2),
                   Integer.parseInt(result.group(3)), Integer.parseInt(result.group(4)));
           id2gsSpans.get(id).add(annotation);
-          scanner.nextLine();
+          if (scanner.hasNextLine()) {
+            scanner.nextLine();
+          } else {
+            break;
+          }
         }
         scanner.close();
       }
