@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.bio.core.keyterm;
+package edu.cmu.lti.oaqa.cse.basephase.keyterm;
 
 import java.util.List;
 

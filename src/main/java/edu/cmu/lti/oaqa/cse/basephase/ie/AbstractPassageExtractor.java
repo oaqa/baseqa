@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.bio.core.retrieval;
+package edu.cmu.lti.oaqa.cse.basephase.ie;
 
 import java.util.List;
 
@@ -27,6 +27,8 @@ import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
 import edu.cmu.lti.oaqa.framework.data.KeytermList;
+import edu.cmu.lti.oaqa.framework.data.PassageCandidate;
+import edu.cmu.lti.oaqa.framework.data.PassageCandidateArray;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
@@ -36,29 +38,33 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponent {
+public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
 
-  protected abstract List<RetrievalResult> retrieveDocuments(String question, List<Keyterm> keyterms);
+  protected abstract List<PassageCandidate> extractPassages(String question,
+          List<Keyterm> keyterms, List<RetrievalResult> documents);
 
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
     try {
       // prepare input
-      InputElement input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
+      String questionText = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type))
+              .getQuestion();
       List<Keyterm> keyterms = KeytermList.retrieveKeyterms(jcas);
+      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(ViewManager
+              .getDocumentView(jcas));
       // do task
-      List<RetrievalResult> documents = retrieveDocuments(input.getQuestion(), keyterms);
-      log("RETRIEVED: " + documents.size());
+      List<PassageCandidate> answers = extractPassages(questionText, keyterms, documents);
+      log("ANSWER PASSAGES: " + answers.size());
       // save output
-      RetrievalResultArray.storeRetrievalResults(ViewManager.getDocumentView(jcas), documents);
+      PassageCandidateArray.storePassageCandidates(ViewManager.getCandidateView(jcas), answers);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
   }
 
   protected final void log(String message) {
-    super.log(QALogEntry.RETRIEVAL, message);
+    super.log(QALogEntry.INFORMATION_EXTRACTION, message);
   }
 
 }

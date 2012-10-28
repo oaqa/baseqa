@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.bio.core.retrieval;
+package edu.cmu.lti.oaqa.cse.basephase.retrieval;
 
 import java.util.List;
 

@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.bio.core.ie;
+package edu.cmu.lti.oaqa.cse.basephase.ie;
 
 import java.util.List;
 
@@ -38,10 +38,10 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
+public abstract class AbstractPassageUpdater extends AbstractLoggedComponent {
 
-  protected abstract List<PassageCandidate> extractPassages(String question,
-          List<Keyterm> keyterms, List<RetrievalResult> documents);
+  protected abstract List<PassageCandidate> updatePassages(String question, List<Keyterm> keyterms,
+          List<RetrievalResult> documents, List<PassageCandidate> passages);
 
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
@@ -50,14 +50,17 @@ public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
       // prepare input
       String questionText = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type))
               .getQuestion();
-      List<Keyterm> keyterms = KeytermList.retrieveKeyterms(jcas);
+      KeytermList keytermList = new KeytermList(jcas);
+      List<Keyterm> keyterms = keytermList.getKeyterms();
       List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(ViewManager
               .getDocumentView(jcas));
+      List<PassageCandidate> passages = PassageCandidateArray.retrievePassageCandidates(ViewManager
+              .getCandidateView(jcas));
       // do task
-      List<PassageCandidate> answers = extractPassages(questionText, keyterms, documents);
-      log("ANSWER PASSAGES: " + answers.size());
+      passages = updatePassages(questionText, keyterms, documents, passages);
+      log("ANSWER PASSAGES: " + passages.size());
       // save output
-      PassageCandidateArray.storePassageCandidates(ViewManager.getCandidateView(jcas), answers);
+      PassageCandidateArray.storePassageCandidates(ViewManager.getCandidateView(jcas), passages);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

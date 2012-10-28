@@ -1,4 +1,4 @@
-package edu.cmu.lti.oaqa.bio.core.ie;
+package edu.cmu.lti.oaqa.cse.basephase.ie;
 
 import java.util.ArrayList;
 import java.util.List;

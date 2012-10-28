@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.bio.core.ie;
+package edu.cmu.lti.oaqa.cse.basephase.retrieval;
 
 import java.util.List;
 
@@ -27,8 +27,6 @@ import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.data.Keyterm;
 import edu.cmu.lti.oaqa.framework.data.KeytermList;
-import edu.cmu.lti.oaqa.framework.data.PassageCandidate;
-import edu.cmu.lti.oaqa.framework.data.PassageCandidateArray;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
@@ -38,36 +36,29 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public abstract class AbstractPassageUpdater extends AbstractLoggedComponent {
+public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponent {
 
-  protected abstract List<PassageCandidate> updatePassages(String question, List<Keyterm> keyterms,
-          List<RetrievalResult> documents, List<PassageCandidate> passages);
+  protected abstract List<RetrievalResult> retrieveDocuments(String question, List<Keyterm> keyterms);
 
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
     try {
       // prepare input
-      String questionText = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type))
-              .getQuestion();
-      KeytermList keytermList = new KeytermList(jcas);
-      List<Keyterm> keyterms = keytermList.getKeyterms();
-      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(ViewManager
-              .getDocumentView(jcas));
-      List<PassageCandidate> passages = PassageCandidateArray.retrievePassageCandidates(ViewManager
-              .getCandidateView(jcas));
+      InputElement input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
+      List<Keyterm> keyterms = KeytermList.retrieveKeyterms(jcas);
       // do task
-      passages = updatePassages(questionText, keyterms, documents, passages);
-      log("ANSWER PASSAGES: " + passages.size());
+      List<RetrievalResult> documents = retrieveDocuments(input.getQuestion(), keyterms);
+      log("RETRIEVED: " + documents.size());
       // save output
-      PassageCandidateArray.storePassageCandidates(ViewManager.getCandidateView(jcas), passages);
+      RetrievalResultArray.storeRetrievalResults(ViewManager.getDocumentView(jcas), documents);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
   }
 
   protected final void log(String message) {
-    super.log(QALogEntry.INFORMATION_EXTRACTION, message);
+    super.log(QALogEntry.RETRIEVAL, message);
   }
 
 }
