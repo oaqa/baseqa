@@ -29,7 +29,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public class PathMatchingGoldStandardPersistenceProvider extends
+public class PassageGoldStandardFilePersistenceProvider extends
         AbstractGoldStandardPersistenceProvider {
 
   private static final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
@@ -136,8 +136,8 @@ public class PathMatchingGoldStandardPersistenceProvider extends
       return true;
     }
 
-    private PathMatchingGoldStandardPersistenceProvider getOuterType() {
-      return PathMatchingGoldStandardPersistenceProvider.this;
+    private PassageGoldStandardFilePersistenceProvider getOuterType() {
+      return PassageGoldStandardFilePersistenceProvider.this;
     }
 
   }
@@ -198,8 +198,8 @@ public class PathMatchingGoldStandardPersistenceProvider extends
       return true;
     }
 
-    private PathMatchingGoldStandardPersistenceProvider getOuterType() {
-      return PathMatchingGoldStandardPersistenceProvider.this;
+    private PassageGoldStandardFilePersistenceProvider getOuterType() {
+      return PassageGoldStandardFilePersistenceProvider.this;
     }
 
   }
