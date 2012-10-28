@@ -53,7 +53,8 @@ public class PathMatchingGoldStandardPersistenceProvider extends
             id2gsSpans.put(id, new ArrayList<GoldStandardSpan>());
           }
           GoldStandardSpan annotation = new GoldStandardSpan(result.group(2),
-                  Integer.parseInt(result.group(3)), Integer.parseInt(result.group(4)));
+                  Integer.parseInt(result.group(3)), Integer.parseInt(result.group(4)),
+                  result.group(5));
           id2gsSpans.get(id).add(annotation);
           if (scanner.hasNextLine()) {
             scanner.nextLine();
@@ -79,6 +80,7 @@ public class PathMatchingGoldStandardPersistenceProvider extends
         passage.setUri(gsSpan.docId);
         passage.setBegin(gsSpan.begin);
         passage.setEnd(gsSpan.end);
+        passage.setAspects(gsSpan.aspects);
         gsAnnotations.add(passage);
       }
     }
@@ -152,11 +154,14 @@ public class PathMatchingGoldStandardPersistenceProvider extends
 
     int begin, end;
 
-    public GoldStandardSpan(String docId, int begin, int end) {
+    String aspects;
+
+    public GoldStandardSpan(String docId, int begin, int end, String aspects) {
       super();
       this.docId = docId;
       this.begin = begin;
       this.end = end;
+      this.aspects = aspects;
     }
 
     @Override
