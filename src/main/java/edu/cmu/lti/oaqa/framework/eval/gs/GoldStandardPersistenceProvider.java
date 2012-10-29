@@ -21,10 +21,9 @@ import java.util.List;
 
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.Resource;
-import org.oaqa.model.Passage;
 
 public interface GoldStandardPersistenceProvider extends Resource {
 
-  List<Passage> populateRetrievalGS(String dataset, int sequenceId, JCas docGSView) throws SQLException;
+  List<?> populateRetrievalGS(String dataset, int sequenceId, JCas docGSView) throws SQLException;
 
 }
