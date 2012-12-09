@@ -50,7 +50,6 @@ public class RetrievalResultArray extends FSArrayWrapper<Passage> {
       }
     }
     setArray(results);
-    complete();
   }
 
   public static void storeRetrievalResults(JCas jcas, List<RetrievalResult> results)

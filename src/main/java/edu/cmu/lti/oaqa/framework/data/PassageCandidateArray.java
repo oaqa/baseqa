@@ -50,7 +50,6 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
       }
     }
     setArray(results);
-    complete();
   }
 
   public static void storePassageCandidates(JCas jcas, List<PassageCandidate> results)
