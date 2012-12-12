@@ -17,13 +17,17 @@ public class UimaContextHelper {
     }
   }
 
-  public static double getConfigParameterDoubleValue(UimaContext aContext, String paramName,
-          double defaultValue) {
+  public static float getConfigParameterFloatValue(UimaContext aContext, String paramName,
+          float defaultValue) {
     try {
-      return (Double) aContext.getConfigParameterValue(paramName);
+      return (Float) aContext.getConfigParameterValue(paramName);
     } catch (ClassCastException e) {
-      return Double.parseDouble((String) aContext.getConfigParameterValue(paramName));
-    } catch (NullPointerException e) {
+      try {
+      return (Integer) aContext.getConfigParameterValue(paramName);
+      } catch (ClassCastException err) {
+        return Float.parseFloat((String) aContext.getConfigParameterValue(paramName));
+      }
+    }catch (NullPointerException e) {
       System.out.println(" * Parameter \"" + paramName + "\" cannot be found, use default value \""
               + defaultValue + "\" instead.");
       return defaultValue;
