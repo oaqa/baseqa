@@ -24,6 +24,6 @@ import org.apache.uima.resource.Resource;
 
 public interface GoldStandardPersistenceProvider extends Resource {
 
-  List<?> populateRetrievalGS(String dataset, int sequenceId, JCas docGSView) throws SQLException;
+  List<?> populateRetrievalGS(String dataset, String sequenceId, JCas docGSView) throws SQLException;
 
 }

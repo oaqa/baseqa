@@ -56,7 +56,7 @@ public class PassageMAPEvalAggregator extends Resource_ImplBase implements Evalu
   }
   
   @Override
-  public void update(Key key, int sequenceId, List<Passage> docs, List<Passage> gs, Ordering<Passage> ordering, Function<Passage, String> toIdString) throws AnalysisEngineProcessException {
+  public void update(Key key, String sequenceId, List<Passage> docs, List<Passage> gs, Ordering<Passage> ordering, Function<Passage, String> toIdString) throws AnalysisEngineProcessException {
     PassageMAPCounts cnt = count(docs, gs, ordering, toIdString);
     try {
       persistence.deletePassageAggrEval(key, sequenceId);

@@ -48,7 +48,7 @@ public class PassageGoldStandardFilePersistenceProvider extends
         Scanner scanner = new Scanner(resource.getInputStream());
         while (scanner.findInLine(lineSyntaxPattern) != null) {
           MatchResult result = scanner.match();
-          DatasetSequenceId id = new DatasetSequenceId(dataset, Integer.parseInt(result.group(1)));
+          DatasetSequenceId id = new DatasetSequenceId(dataset, result.group(1));
           if (!id2gsSpans.containsKey(id)) {
             id2gsSpans.put(id, new ArrayList<GoldStandardSpan>());
           }
@@ -71,7 +71,7 @@ public class PassageGoldStandardFilePersistenceProvider extends
   }
 
   @Override
-  public List<Passage> populateRetrievalGS(String dataset, int sequenceId, JCas gsView) {
+  public List<Passage> populateRetrievalGS(String dataset, String sequenceId, JCas gsView) {
     List<Passage> gsAnnotations = new ArrayList<Passage>();
     List<GoldStandardSpan> gsSpans = id2gsSpans.get(new DatasetSequenceId(dataset, sequenceId));
     if (gsSpans != null) {
@@ -97,9 +97,9 @@ public class PassageGoldStandardFilePersistenceProvider extends
   public class DatasetSequenceId {
     String dataset;
 
-    int sequenceId;
+    String sequenceId;
 
-    public DatasetSequenceId(String dataset, int sequenceId) {
+    public DatasetSequenceId(String dataset, String sequenceId) {
       super();
       this.dataset = dataset;
       this.sequenceId = sequenceId;
@@ -111,7 +111,7 @@ public class PassageGoldStandardFilePersistenceProvider extends
       int result = 1;
       result = prime * result + getOuterType().hashCode();
       result = prime * result + ((dataset == null) ? 0 : dataset.hashCode());
-      result = prime * result + sequenceId;
+      result = prime * result + sequenceId.hashCode();
       return result;
     }
 

@@ -42,7 +42,7 @@ public class KeytermGoldStandardDecorator extends JCasAnnotator_ImplBase {
               InputElement.class.getName());
       final JCas gsView = ViewManager.getOrCreateView(aJCas, ViewType.CANDIDATE_GS);
       final String dataset = input.getDataset();
-      final int sequenceId = input.getSequenceId();
+      final String sequenceId = input.getSequenceId();
       @SuppressWarnings("unchecked")
       List<QueryConcept> gsAnnotations = (List<QueryConcept>) persistence.populateRetrievalGS(dataset, sequenceId, gsView);
       if (!gsAnnotations.isEmpty()) {

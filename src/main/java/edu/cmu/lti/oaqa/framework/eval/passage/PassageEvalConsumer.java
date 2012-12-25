@@ -86,7 +86,7 @@ public class PassageEvalConsumer extends CasConsumer_ImplBase {
         List<Passage> docs = (view != null) ? PassageHelper.loadDocumentSet(view) : Collections
                 .<Passage> emptyList();
         docs = docs.subList(0, Math.min(docs.size(), limit));
-        int sequenceId = ProcessingStepUtils.getSequenceId(jcas);
+        String sequenceId = ProcessingStepUtils.getSequenceId(jcas);
         for (EvaluationAggregator<Passage> aggregator : aggregators) {
           Key key = new Key(experiment.getUuid(), trace, experiment.getStageId());
           aggregator.update(key, sequenceId, docs, gs, ordering, toIdString);
