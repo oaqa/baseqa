@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A variant of a candidate answer.  A variant may have multiple occurrences, all of which are collected in a variant object.
- * Updated by JCasGen Thu Oct 11 12:39:21 EDT 2012
+ * Updated by JCasGen Fri Jan 18 20:41:48 EST 2013
  * @generated */
 public class CandidateAnswerVariant_Type extends OAQATop_Type {
   /** @generated */

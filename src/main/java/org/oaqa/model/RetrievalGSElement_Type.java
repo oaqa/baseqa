@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Thu Oct 11 12:39:21 EDT 2012
+ * Updated by JCasGen Fri Jan 18 20:41:49 EST 2013
  * @generated */
 public class RetrievalGSElement_Type extends Annotation_Type {
   /** @generated */

@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** Annotation on a predicate, which may have arguments; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock
- * Updated by JCasGen Thu Oct 11 12:39:21 EDT 2012
+ * Updated by JCasGen Fri Jan 18 20:41:49 EST 2013
  * @generated */
 public class Predicate_Type extends OAQAAnnotation_Type {
   /** @generated */

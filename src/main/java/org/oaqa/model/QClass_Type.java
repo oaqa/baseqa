@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** The class of the question, determined by an automatic question classification process.
- * Updated by JCasGen Thu Oct 11 12:39:21 EDT 2012
+ * Updated by JCasGen Fri Jan 18 20:41:49 EST 2013
  * @generated */
 public class QClass_Type extends OAQAAnnotation_Type {
   /** @generated */

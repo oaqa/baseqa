@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A passage search result that was the result of a search from the subject and object of a triple
- * Updated by JCasGen Thu Oct 11 12:39:21 EDT 2012
+ * Updated by JCasGen Fri Jan 18 20:41:48 EST 2013
  * @generated */
 public class PassageFromTriple_Type extends Passage_Type {
   /** @generated */
