@@ -49,13 +49,15 @@ public class PassageGoldStandardFilePersistenceProvider extends
         while (scanner.findInLine(lineSyntaxPattern) != null) {
           MatchResult result = scanner.match();
           DatasetSequenceId id = new DatasetSequenceId(dataset, result.group(1));
-          if (!id2gsSpans.containsKey(id)) {
-            id2gsSpans.put(id, new ArrayList<GoldStandardSpan>());
+          List<GoldStandardSpan> list = id2gsSpans.get(id);
+          if (list == null) {
+            list = new ArrayList<GoldStandardSpan>();
+            id2gsSpans.put(id, list);
           }
           GoldStandardSpan annotation = new GoldStandardSpan(result.group(2),
                   Integer.parseInt(result.group(3)), Integer.parseInt(result.group(4)),
                   result.group(5));
-          id2gsSpans.get(id).add(annotation);
+          list.add(annotation);
           if (scanner.hasNextLine()) {
             scanner.nextLine();
           } else {
@@ -95,12 +97,11 @@ public class PassageGoldStandardFilePersistenceProvider extends
    * 
    */
   public class DatasetSequenceId {
-    String dataset;
+    final String dataset;
 
-    String sequenceId;
+    final String sequenceId;
 
     public DatasetSequenceId(String dataset, String sequenceId) {
-      super();
       this.dataset = dataset;
       this.sequenceId = sequenceId;
     }
@@ -109,7 +110,7 @@ public class PassageGoldStandardFilePersistenceProvider extends
     public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result + getOuterType().hashCode();
+      //result = prime * result + getOuterType().hashCode();
       result = prime * result + ((dataset == null) ? 0 : dataset.hashCode());
       result = prime * result + sequenceId.hashCode();
       return result;
@@ -117,22 +118,25 @@ public class PassageGoldStandardFilePersistenceProvider extends
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (!(obj instanceof DatasetSequenceId)) {
         return false;
-      if (getClass() != obj.getClass())
-        return false;
+      }
       DatasetSequenceId other = (DatasetSequenceId) obj;
-      if (!getOuterType().equals(other.getOuterType()))
-        return false;
+      //if (!getOuterType().equals(other.getOuterType()))
+      //  return false;
       if (dataset == null) {
-        if (other.dataset != null)
+        if (other.dataset != null) {
           return false;
-      } else if (!dataset.equals(other.dataset))
+        }
+      } else if (!dataset.equals(other.dataset)) {
         return false;
-      if (sequenceId != other.sequenceId)
+      }
+      if (!sequenceId.equals(other.sequenceId)) {
         return false;
+      }
       return true;
     }
 
@@ -140,6 +144,10 @@ public class PassageGoldStandardFilePersistenceProvider extends
       return PassageGoldStandardFilePersistenceProvider.this;
     }
 
+    public String toString() {
+      return String.format("[%s:%s]", dataset, sequenceId);
+    }
+    
   }
 
   /**
