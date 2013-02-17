@@ -3,11 +3,11 @@ package edu.cmu.lti.oaqa.framework.data;
 import java.io.Serializable;
 
 import org.apache.uima.jcas.JCas;
-import org.oaqa.model.Passage;
+import org.oaqa.model.Document;
 
 import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
 
-public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements Serializable {
+public class RetrievalResult extends BaseAnnotationWrapper<Document> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -75,7 +75,7 @@ public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements S
   }
 
   @Override
-  public void wrap(Passage passage) {
+  public void wrap(Document passage) {
     super.wrap(passage);
     docID = passage.getUri();
     queryString = passage.getQueryString();
@@ -83,8 +83,8 @@ public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements S
   }
 
   @Override
-  public Passage unwrap(JCas jcas) throws Exception {
-    Passage passage = super.unwrap(jcas);
+  public Document unwrap(JCas jcas) throws Exception {
+    Document passage = super.unwrap(jcas);
     passage.setUri(docID);
     passage.setQueryString(queryString);
     passage.setRank(rank);
@@ -92,8 +92,8 @@ public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements S
   }
 
   @Override
-  public Class<? extends Passage> getTypeClass() {
-    return Passage.class;
+  public Class<? extends Document> getTypeClass() {
+    return Document.class;
   }
 
 }

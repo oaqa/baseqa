@@ -18,8 +18,12 @@ package edu.cmu.lti.oaqa.cse.basephase.retrieval;
 
 import java.util.List;
 
+import javax.naming.ConfigurationException;
+
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.UimaContext;
+import org.apache.uima.resource.ResourceInitializationException;
 
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
@@ -30,6 +34,8 @@ import edu.cmu.lti.oaqa.framework.data.KeytermList;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
+import edu.cmu.lti.oaqa.framework.UimaContextHelper;
+import edu.cmu.lti.oaqa.cse.basephase.retrieval.SearchIdHelper;
 
 /**
  * 
@@ -39,6 +45,12 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
 public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponent {
 
   protected abstract List<RetrievalResult> retrieveDocuments(String question, List<Keyterm> keyterms);
+
+  @Override
+  public void initialize(UimaContext c) throws ResourceInitializationException {
+    super.initialize(c);
+    SearchId = SearchIdHelper.GetSearchId(c); 
+  }
 
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
@@ -51,7 +63,7 @@ public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponen
       List<RetrievalResult> documents = retrieveDocuments(input.getQuestion(), keyterms);
       log("RETRIEVED: " + documents.size());
       // save output
-      RetrievalResultArray.storeRetrievalResults(ViewManager.getDocumentView(jcas), documents);
+      RetrievalResultArray.storeRetrievalResults(SearchId, ViewManager.getDocumentView(jcas), documents);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
@@ -60,5 +72,7 @@ public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponen
   protected final void log(String message) {
     super.log(QALogEntry.RETRIEVAL, message);
   }
+
+  private String SearchId;
 
 }

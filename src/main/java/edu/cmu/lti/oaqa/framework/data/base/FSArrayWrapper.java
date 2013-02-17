@@ -15,17 +15,17 @@ public abstract class FSArrayWrapper<T extends OAQATop> implements ContainerWrap
 
   protected FSArray array;
 
-  protected int i;
+  protected int index;
 
   public FSArrayWrapper(JCas jcas, int length) {
     this.jcas = jcas;
     array = new FSArray(jcas, length);
-    i = 0;
+    index = 0;
   }
 
   @Override
   public void add(AnnotationWrapper<T> annotation) throws Exception {
-    array.set(i++, annotation.unwrap(jcas));
+    array.set(index++, annotation.unwrap(jcas));
   }
 
   @Override

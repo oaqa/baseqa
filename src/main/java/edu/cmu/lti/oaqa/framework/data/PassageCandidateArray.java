@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.naming.ConfigurationException;
+
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.Passage;
 import org.oaqa.model.Search;
@@ -14,8 +16,12 @@ import edu.cmu.lti.oaqa.framework.data.base.FSArrayWrapper;
 
 public class PassageCandidateArray extends FSArrayWrapper<Passage> {
 
-  public PassageCandidateArray(JCas jcas, int length) {
+  public PassageCandidateArray(String SearchId, JCas jcas, int length) throws ConfigurationException {
     super(jcas, length);
+    if (null == SearchId || SearchId.isEmpty()) {
+      throw new ConfigurationException("SearchId should not be empty!");
+    }
+    this.SearchId = SearchId;    
   }
 
   @Override
@@ -23,13 +29,17 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     Iterator<?> it = jcas.getJFSIndexRepository().getAllIndexedFS(Search.type);
     while (it.hasNext()) {
       Search search = (Search) it.next();
-      search.removeFromIndexes();
+      // Delete only entry with the specified searchId 
+      if (search.getSearchId() == this.SearchId) {
+        search.removeFromIndexes();
+      }
     }
   }
 
   @Override
   public void complete() {
     Search search = new Search(jcas);
+    search.setSearchId(SearchId);
     search.setHitList(array);
     search.addToIndexes();
   }
@@ -52,23 +62,27 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     setArray(results);
   }
 
-  public static void storePassageCandidates(JCas jcas, List<PassageCandidate> results)
+  public static void storePassageCandidates(String SearchId, JCas jcas, List<PassageCandidate> results)
           throws Exception {
-    new PassageCandidateArray(jcas, results.size()).setPassageCandidates(results);
+    new PassageCandidateArray(SearchId, jcas, results.size()).setPassageCandidates(results);
   }
 
   public List<PassageCandidate> getPassageCandidates() throws Exception {
-    Search search = (Search) BaseJCasHelper.getFS(jcas, Search.type);
-    if (search != null) {
-      array = search.getHitList();
-      return getArray(Passage.class, PassageCandidate.class);
-    } else {
-      return new ArrayList<PassageCandidate>();
+    Iterator<?> it = jcas.getJFSIndexRepository().getAllIndexedFS(Search.type);
+    while (it.hasNext()) {
+      Search search = (Search) it.next(); 
+      if (search.getSearchId() == this.SearchId) {
+        array = search.getHitList();
+        return getArray(Passage.class, PassageCandidate.class);
+      }
     }
+    
+    return new ArrayList<PassageCandidate>();
   }
 
-  public static List<PassageCandidate> retrievePassageCandidates(JCas jcas) throws Exception {
-    return new PassageCandidateArray(jcas, 0).getPassageCandidates();
+  public static List<PassageCandidate> retrievePassageCandidates(String SearchId, JCas jcas) throws Exception {
+    return new PassageCandidateArray(SearchId, jcas, 0).getPassageCandidates();
   }
-
+  
+  private String SearchId;
 }
