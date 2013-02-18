@@ -2,6 +2,7 @@ package edu.cmu.lti.oaqa.framework.data;
 
 import java.io.Serializable;
 
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.Passage;
 
@@ -83,7 +84,7 @@ public class RetrievalResult extends BaseAnnotationWrapper<Passage> implements S
   }
 
   @Override
-  public Passage unwrap(JCas jcas) throws Exception {
+  public Passage unwrap(JCas jcas) throws AnalysisEngineProcessException {
     Passage passage = super.unwrap(jcas);
     passage.setUri(docID);
     passage.setQueryString(queryString);

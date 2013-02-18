@@ -2,6 +2,7 @@ package edu.cmu.lti.oaqa.framework.data;
 
 import java.io.Serializable;
 
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.QueryConcept;
 
@@ -23,7 +24,7 @@ public class Keyterm extends BaseAnnotationWrapper<QueryConcept> implements Seri
   public Keyterm() {
     super();
   }
-  
+
   public Keyterm(String text) {
     this.text = text;
   }
@@ -44,7 +45,7 @@ public class Keyterm extends BaseAnnotationWrapper<QueryConcept> implements Seri
   }
 
   @Override
-  public QueryConcept unwrap(JCas jcas) throws Exception {
+  public QueryConcept unwrap(JCas jcas) throws AnalysisEngineProcessException {
     QueryConcept keyterm = super.unwrap(jcas);
     keyterm.setText(text);
     return keyterm;

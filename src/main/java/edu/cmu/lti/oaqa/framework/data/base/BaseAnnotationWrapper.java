@@ -1,6 +1,7 @@
 package edu.cmu.lti.oaqa.framework.data.base;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.Feature;
@@ -21,13 +22,25 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
   public abstract Class<? extends T> getTypeClass();
 
   @Override
-  public T unwrap(JCas jcas) throws Exception {
-    Constructor<? extends T> c = typeClass.getConstructor(JCas.class);
-    T top = c.newInstance(jcas);
-    top.setImplementingWrapper(implementingWrapper);
-    top.setComponentId(componentId);
-    top.setProbability(probability);
-    return top;
+  public T unwrap(JCas jcas) throws AnalysisEngineProcessException {
+    try {
+      Constructor<? extends T> c = typeClass.getConstructor(JCas.class);
+      T top = c.newInstance(jcas);
+      top.setImplementingWrapper(implementingWrapper);
+      top.setComponentId(componentId);
+      top.setProbability(probability);
+      return top;
+    } catch (NoSuchMethodException e) {
+      throw new AnalysisEngineProcessException(e);
+    } catch (RuntimeException e) {
+      throw new AnalysisEngineProcessException(e);
+    } catch (InstantiationException e) {
+      throw new AnalysisEngineProcessException(e);
+    } catch (IllegalAccessException e) {
+      throw new AnalysisEngineProcessException(e);
+    } catch (InvocationTargetException e) {
+      throw new AnalysisEngineProcessException(e);
+    }
   }
 
   @Override
@@ -51,7 +64,7 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
       throw new AnalysisEngineProcessException(e);
     }
   }
-  
+
   @Override
   public int compareTo(BaseAnnotationWrapper<T> w) {
     if (probability != w.probability) {

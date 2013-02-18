@@ -128,7 +128,7 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements 
   }
 
   @Override
-  public Passage unwrap(JCas jcas) throws Exception {
+  public Passage unwrap(JCas jcas) throws AnalysisEngineProcessException  {
     Passage passage = super.unwrap(jcas);
     passage.setUri(docID);
     passage.setBegin(start);
