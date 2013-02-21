@@ -70,7 +70,7 @@ public abstract class AbstractRetrievalUpdater extends AbstractLoggedComponent {
                                                                                       ViewManager.getDocumentView(jcas));
       // do task
       documents = updateDocuments(qid, input.getQuestion(), keyTerms, keyPhrases, documents);
-      log("RETRIEVED: " + documents.size());
+      log("DOC UPDATED RETRIEVED: " + documents.size());
       // save output
       RetrievalResultArray.storeRetrievalResults(SearchId, ViewManager.getDocumentView(jcas), documents);
     } catch (Exception e) {

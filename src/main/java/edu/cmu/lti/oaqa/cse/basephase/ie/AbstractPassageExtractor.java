@@ -16,6 +16,7 @@
 
 package edu.cmu.lti.oaqa.cse.basephase.ie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.uima.UimaContext;
@@ -29,8 +30,7 @@ import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.UimaContextHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
-import edu.cmu.lti.oaqa.framework.data.Keyterm;
-import edu.cmu.lti.oaqa.framework.data.KeytermList;
+import edu.cmu.lti.oaqa.framework.data.BaseQAJCasHelper;
 import edu.cmu.lti.oaqa.framework.data.PassageCandidate;
 import edu.cmu.lti.oaqa.framework.data.PassageCandidateArray;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
@@ -44,8 +44,9 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
  */
 public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
 
-  protected abstract List<PassageCandidate> extractPassages(String question,
-          List<Keyterm> keyterms, List<RetrievalResult> documents);
+  protected abstract List<PassageCandidate> extractPassages(String qid, String question,
+                                                            List<String> keyTerms, List<String> keyPhrases, 
+                                                            List<RetrievalResult> documents);
   
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
@@ -58,13 +59,20 @@ public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
     super.process(jcas);
     try {
       // prepare input
-      String questionText = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type))
-              .getQuestion();
-      List<Keyterm> keyterms = KeytermList.retrieveKeyterms(jcas);
+      InputElement  input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
+      String        qid = input.getSequenceId().toString();
+
+      
+      List<String>  keyTerms   = new ArrayList<String>();
+      List<String>  keyPhrases = new ArrayList<String>();
+      
+      BaseQAJCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
+      
+            
       List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(SearchId, 
                                                                                       ViewManager.getDocumentView(jcas));
       // do task
-      List<PassageCandidate> answers = extractPassages(questionText, keyterms, documents);
+      List<PassageCandidate> answers = extractPassages(qid, input.getQuestion(), keyTerms, keyPhrases, documents);
       log("ANSWER PASSAGES: " + answers.size());
       // save output
       PassageCandidateArray.storePassageCandidates(SearchId, ViewManager.getCandidateView(jcas), answers);
