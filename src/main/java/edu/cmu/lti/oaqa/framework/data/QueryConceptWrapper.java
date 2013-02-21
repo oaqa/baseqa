@@ -8,29 +8,34 @@ import org.oaqa.model.QueryConcept;
 import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
 
 /**
- * TOKEN type refers to the original token terms, and phrases refer to the name entities identified
- * by NameEntity.
  * 
  * @author Zi Yang <ziy@cs.cmu.edu>
+ * @author Leonid Boytsov <srchvrs@cmu.edu>
  * 
  */
-public class Keyterm extends BaseAnnotationWrapper<QueryConcept> implements Serializable {
 
+public class QueryConceptWrapper extends BaseAnnotationWrapper<QueryConcept> implements Serializable {  
+  
   private static final long serialVersionUID = 1L;
 
   protected String text = null;
+  protected String type = null;
 
-  public Keyterm() {
+  public QueryConceptWrapper() {
     super();
   }
   
-  public Keyterm(String text) {
+  public QueryConceptWrapper(String text) {
     this.text = text;
   }
 
   public String getText() {
     return text;
   }
+  
+  public String getType() {
+    return type;
+  }  
 
   @Override
   public String toString() {
@@ -41,13 +46,15 @@ public class Keyterm extends BaseAnnotationWrapper<QueryConcept> implements Seri
   public void wrap(QueryConcept top) {
     super.wrap(top);
     text = top.getText();
+    type = top.getConceptType();
   }
 
   @Override
   public QueryConcept unwrap(JCas jcas) throws Exception {
-    QueryConcept keyterm = super.unwrap(jcas);
-    keyterm.setText(text);
-    return keyterm;
+    QueryConcept concept = super.unwrap(jcas);
+    concept.setText(text);
+    concept.setConceptType(type);
+    return concept;
   }
 
   @Override

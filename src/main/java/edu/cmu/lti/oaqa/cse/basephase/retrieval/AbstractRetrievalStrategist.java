@@ -16,6 +16,7 @@
 
 package edu.cmu.lti.oaqa.cse.basephase.retrieval;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.ConfigurationException;
@@ -29,8 +30,7 @@ import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
-import edu.cmu.lti.oaqa.framework.data.Keyterm;
-import edu.cmu.lti.oaqa.framework.data.KeytermList;
+import edu.cmu.lti.oaqa.framework.data.BaseQAJCasHelper;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
@@ -39,12 +39,14 @@ import edu.cmu.lti.oaqa.cse.basephase.retrieval.SearchIdHelper;
 
 /**
  * 
- * @author Zi Yang <ziy@cs.cmu.edu>
+ * @author Zi Yang <ziy@cs.cmu.edu> 
  * 
  */
 public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponent {
 
-  protected abstract List<RetrievalResult> retrieveDocuments(String question, List<Keyterm> keyterms);
+  protected abstract List<RetrievalResult> retrieveDocuments(String qid, String question,
+                                                             List<String> keyTerms, List<String> keyPhrases);
+
 
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
@@ -58,10 +60,18 @@ public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponen
     try {
       // prepare input
       InputElement input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
-      List<Keyterm> keyterms = KeytermList.retrieveKeyterms(jcas);
+      String        qid      = input.getSequenceId().toString();
+      
+      List<String>  keyTerms   = new ArrayList<String>();
+      List<String>  keyPhrases = new ArrayList<String>();
+      
+      BaseQAJCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
+      
       // do task
-      List<RetrievalResult> documents = retrieveDocuments(input.getQuestion(), keyterms);
+      List<RetrievalResult> documents = retrieveDocuments(qid, input.getQuestion(), keyTerms, keyPhrases);
+      
       log("RETRIEVED: " + documents.size());
+      
       // save output
       RetrievalResultArray.storeRetrievalResults(SearchId, ViewManager.getDocumentView(jcas), documents);
     } catch (Exception e) {

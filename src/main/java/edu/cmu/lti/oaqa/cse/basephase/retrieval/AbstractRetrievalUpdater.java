@@ -16,6 +16,7 @@
 
 package edu.cmu.lti.oaqa.cse.basephase.retrieval;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.uima.UimaContext;
@@ -28,8 +29,7 @@ import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.UimaContextHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
-import edu.cmu.lti.oaqa.framework.data.Keyterm;
-import edu.cmu.lti.oaqa.framework.data.KeytermList;
+import edu.cmu.lti.oaqa.framework.data.BaseQAJCasHelper;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
@@ -41,8 +41,9 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
  */
 public abstract class AbstractRetrievalUpdater extends AbstractLoggedComponent {
 
-  protected abstract List<RetrievalResult> updateDocuments(String question, List<Keyterm> keyterms,
-          List<RetrievalResult> documents);
+  protected abstract List<RetrievalResult> updateDocuments(String qid, String question, 
+                                                           List<String> keyTerms, List<String> keyPhrases,
+                                                           List<RetrievalResult> documents);
   
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
@@ -57,12 +58,18 @@ public abstract class AbstractRetrievalUpdater extends AbstractLoggedComponent {
     super.process(jcas);
     try {
       // prepare input
-      InputElement input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
-      List<Keyterm> keyterms = KeytermList.retrieveKeyterms(jcas);
+      InputElement  input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
+      String        qid      = input.getSequenceId().toString();
+      
+      List<String>  keyTerms   = new ArrayList<String>();
+      List<String>  keyPhrases = new ArrayList<String>();
+      
+      BaseQAJCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
+      
       List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(SearchId, 
                                                                                       ViewManager.getDocumentView(jcas));
       // do task
-      documents = updateDocuments(input.getQuestion(), keyterms, documents);
+      documents = updateDocuments(qid, input.getQuestion(), keyTerms, keyPhrases, documents);
       log("RETRIEVED: " + documents.size());
       // save output
       RetrievalResultArray.storeRetrievalResults(SearchId, ViewManager.getDocumentView(jcas), documents);

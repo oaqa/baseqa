@@ -16,6 +16,7 @@
 
 package edu.cmu.lti.oaqa.cse.basephase.keyterm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -24,8 +25,7 @@ import org.apache.uima.jcas.JCas;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
-import edu.cmu.lti.oaqa.framework.data.Keyterm;
-import edu.cmu.lti.oaqa.framework.data.KeytermList;
+import edu.cmu.lti.oaqa.framework.data.BaseQAJCasHelper;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
 /**
@@ -35,22 +35,27 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
  */
 public abstract class AbstractKeytermUpdater extends AbstractLoggedComponent {
 
-  protected abstract List<Keyterm> updateKeyterms(String question, List<Keyterm> keyterms);
+  protected abstract void updateKeyterms(String question, List<String> keyTerms, List<String> keyPhrases);
 
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
     try {
       // prepare input
-      String question = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type))
-              .getQuestion();
-      List<Keyterm> keyterms;
-      keyterms = KeytermList.retrieveKeyterms(jcas);
-      // do task
-      keyterms = updateKeyterms(question, keyterms);
-      log(keyterms.toString());
+      String question = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type)).getQuestion();
+      
+      List<String>  keyTerms   = new ArrayList<String>();
+      List<String>  keyPhrases = new ArrayList<String>();
+      
+      // Retrieve key terms and phrases
+      BaseQAJCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
+      
+      // updated
+      updateKeyterms(question, keyTerms, keyPhrases);
+      log("Updated KeyTerms:   " + keyTerms.toString());
+      log("Updated KeyPhrases: " + keyTerms.toString());
       // save output
-      KeytermList.storeKeyterms(jcas, keyterms);
+      BaseQAJCasHelper.storeKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

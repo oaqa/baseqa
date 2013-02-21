@@ -24,8 +24,7 @@ import org.apache.uima.jcas.JCas;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
-import edu.cmu.lti.oaqa.framework.data.Keyterm;
-import edu.cmu.lti.oaqa.framework.data.KeytermList;
+import edu.cmu.lti.oaqa.framework.data.BaseQAJCasHelper;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
 /**
@@ -35,7 +34,8 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
  */
 public abstract class AbstractKeytermExtractor extends AbstractLoggedComponent {
 
-  protected abstract List<Keyterm> getKeyterms(String question);
+  protected abstract List<String> getKeyterms(String question);
+  protected abstract List<String> getKeyphrases(String question);
 
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
@@ -43,12 +43,14 @@ public abstract class AbstractKeytermExtractor extends AbstractLoggedComponent {
     try {
       // prepare input
       InputElement input = (InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type);
-      String question = input.getQuestion();
+      String question = input.getQuestion(); 
       // do task
-      List<Keyterm> keyterms = getKeyterms(question);
-      log(keyterms.toString());
+      List<String> keyTerms   = getKeyterms(question);
+      List<String> keyPhrases = getKeyphrases(question);
+      log("Extracted KeyTerms:   " + keyTerms.toString());
+      log("Extracted KeyPhrases: " + keyTerms.toString());
       // save output
-      KeytermList.storeKeyterms(jcas, keyterms);
+      BaseQAJCasHelper.storeKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
