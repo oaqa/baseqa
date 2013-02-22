@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Mon Oct 08 18:56:44 EDT 2012 */
+/* First created by JCasGen Thu Feb 21 16:50:37 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A search result from a triple store, e.g., an RDF store.
- * Updated by JCasGen Fri Jan 18 20:41:49 EST 2013
+ * Updated by JCasGen Thu Feb 21 16:50:37 EST 2013
  * @generated */
 public class TripleStoreSearchResult_Type extends AnswerSearchResult_Type {
   /** @generated */
@@ -66,7 +66,7 @@ public class TripleStoreSearchResult_Type extends AnswerSearchResult_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_context), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_context), i);
-  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_context), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_context), i);
   }
    
   /** @generated */ 

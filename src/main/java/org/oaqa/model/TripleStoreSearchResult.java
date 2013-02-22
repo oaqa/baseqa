@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Mon Oct 08 18:56:44 EDT 2012 */
+/* First created by JCasGen Thu Feb 21 16:50:37 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,8 +11,8 @@ import org.apache.uima.jcas.cas.FSArray;
 
 
 /** A search result from a triple store, e.g., an RDF store.
- * Updated by JCasGen Fri Jan 18 20:41:49 EST 2013
- * XML source: /Users/elmer/Documents/workspace/oaqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Thu Feb 21 16:50:37 EST 2013
+ * XML source: /usr0/srchvrs/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class TripleStoreSearchResult extends AnswerSearchResult {
   /** @generated

@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Mon Oct 08 18:56:44 EDT 2012 */
+/* First created by JCasGen Thu Feb 21 16:50:37 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** An object that holds a query and results for a search (text search, fact search, KB search, etc.)
- * Updated by JCasGen Fri Jan 18 20:41:49 EST 2013
+ * Updated by JCasGen Thu Feb 21 16:50:37 EST 2013
  * @generated */
 public class Search_Type extends OAQATop_Type {
   /** @generated */
@@ -84,7 +84,7 @@ public class Search_Type extends OAQATop_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i);
-  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i);
   }
    
   /** @generated */ 

@@ -624,6 +624,14 @@ $Id:$</description>
       <supertypeName>uima.cas.String</supertypeName>
       <allowedValues>
         <value>
+          <string>KEY_TERMS</string>
+          <description>Query terms.</description>
+        </value>
+        <value>
+          <string>KEY_PHRASES</string>
+          <description>Query phrases.</description>
+        </value>
+        <value>
           <string>KEYWORD_TYPE</string>
           <description>Simple concept.</description>
         </value>

@@ -27,16 +27,11 @@ public class BaseQAJCasHelper {
     List<QueryConceptWrapper> concepts = new ArrayList<QueryConceptWrapper>();
     
     for (String term: keyTerms) {
-        QueryConcept concept = new QueryConcept(questionView);
-        concept.setConceptType(QueryConceptTypes.KEY_TERMS.toString());
-        concept.setText(term);
-        QueryConceptWrapper wrap = new QueryConceptWrapper();
-        
-        wrap.wrap(concept);
-        concepts.add(wrap);
+        concepts.add(new QueryConceptWrapper(term, QueryConceptTypes.KEY_TERMS.toString()));
     }
     
     for (String phrase: keyPhrases) {
+      /*
       QueryConcept concept = new QueryConcept(questionView);
       concept.setConceptType(QueryConceptTypes.KEY_PHRASES.toString());
       concept.setText(phrase);
@@ -44,6 +39,8 @@ public class BaseQAJCasHelper {
       
       wrap.wrap(concept);
       concepts.add(wrap);
+      */
+      concepts.add(new QueryConceptWrapper(phrase, QueryConceptTypes.KEY_PHRASES.toString()));
     }
     QueryConceptList.storeQueryConcepts(questionView, concepts);
   }
@@ -56,19 +53,15 @@ public class BaseQAJCasHelper {
   public static void loadKeyTermsAndPhrases(JCas questionView,
                                            List<String> keyTerms,
                                            List<String> keyPhrases) throws Exception {
-    List<QueryConceptWrapper> concepts = new ArrayList<QueryConceptWrapper>();
-    
-    QueryConceptList.retrieveQueryConcepts(questionView);
+    List<QueryConceptWrapper> concepts = QueryConceptList.retrieveQueryConcepts(questionView);
     
     for (QueryConceptWrapper wrap: concepts) {
-      QueryConcept concept = wrap.unwrap(questionView);
-      
-      if (concept.getType().equals(QueryConceptTypes.KEY_PHRASES.toString())) {
-        keyPhrases.add(concept.getText());
-      } else if (concept.getType().equals(QueryConceptTypes.KEY_TERMS.toString())) {
-        keyTerms.add(concept.getText());
+      if (wrap.getType().equals(QueryConceptTypes.KEY_PHRASES.toString())) {
+        keyPhrases.add(wrap.getText());
+      } else if (wrap.getType().equals(QueryConceptTypes.KEY_TERMS.toString())) {
+        keyTerms.add(wrap.getText());
       } else {
-        throw new Exception("Unknown concept type: " + concept.getType());
+        throw new Exception("Unknown concept type: " + wrap.getType());
       }
     }
   }

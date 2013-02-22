@@ -25,8 +25,9 @@ public class QueryConceptWrapper extends BaseAnnotationWrapper<QueryConcept> imp
     super();
   }
   
-  public QueryConceptWrapper(String text) {
+  public QueryConceptWrapper(String text, String type) {
     this.text = text;
+    this.type = type;
   }
 
   public String getText() {

@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Mon Oct 08 18:56:44 EDT 2012 */
+/* First created by JCasGen Thu Feb 21 16:50:37 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** The Question Analysis supertype that defines the attributes common to all question analysis results.
- * Updated by JCasGen Fri Jan 18 20:41:48 EST 2013
+ * Updated by JCasGen Thu Feb 21 16:50:37 EST 2013
  * @generated */
 public class OAQAAnnotation_Type extends Annotation_Type {
   /** @generated */

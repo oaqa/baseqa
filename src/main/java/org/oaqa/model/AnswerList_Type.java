@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Mon Oct 08 18:56:44 EDT 2012 */
+/* First created by JCasGen Thu Feb 21 16:50:36 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A ranked list of candidate answers.
- * Updated by JCasGen Fri Jan 18 20:41:48 EST 2013
+ * Updated by JCasGen Thu Feb 21 16:50:36 EST 2013
  * @generated */
 public class AnswerList_Type extends OAQATop_Type {
   /** @generated */
@@ -66,7 +66,7 @@ public class AnswerList_Type extends OAQATop_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
-  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
   }
    
   /** @generated */ 
@@ -121,7 +121,7 @@ public class AnswerList_Type extends OAQATop_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_featureLabels), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_featureLabels), i);
-  return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_featureLabels), i);
+	return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_featureLabels), i);
   }
    
   /** @generated */ 

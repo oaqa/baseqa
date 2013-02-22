@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Mon Oct 08 18:56:44 EDT 2012 */
+/* First created by JCasGen Thu Feb 21 16:50:37 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A search result.
- * Updated by JCasGen Fri Jan 18 20:41:49 EST 2013
+ * Updated by JCasGen Thu Feb 21 16:50:37 EST 2013
  * @generated */
 public class SearchResult_Type extends OAQATop_Type {
   /** @generated */
@@ -174,7 +174,7 @@ public class SearchResult_Type extends OAQATop_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_candidateAnswers), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_candidateAnswers), i);
-  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_candidateAnswers), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_candidateAnswers), i);
   }
    
   /** @generated */ 
@@ -229,7 +229,7 @@ public class SearchResult_Type extends OAQATop_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getDoubleArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_featureVector), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_featureVector), i);
-  return ll_cas.ll_getDoubleArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_featureVector), i);
+	return ll_cas.ll_getDoubleArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_featureVector), i);
   }
    
   /** @generated */ 
@@ -266,7 +266,7 @@ public class SearchResult_Type extends OAQATop_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getIntArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_rankVector), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_rankVector), i);
-  return ll_cas.ll_getIntArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_rankVector), i);
+	return ll_cas.ll_getIntArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_rankVector), i);
   }
    
   /** @generated */ 
