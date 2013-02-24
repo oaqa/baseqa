@@ -27,19 +27,10 @@ public class BaseQAJCasHelper {
     List<QueryConceptWrapper> concepts = new ArrayList<QueryConceptWrapper>();
     
     for (String term: keyTerms) {
-        concepts.add(new QueryConceptWrapper(term, QueryConceptTypes.KEY_TERMS.toString()));
+      concepts.add(new QueryConceptWrapper(term, QueryConceptTypes.KEY_TERMS.toString()));
     }
     
     for (String phrase: keyPhrases) {
-      /*
-      QueryConcept concept = new QueryConcept(questionView);
-      concept.setConceptType(QueryConceptTypes.KEY_PHRASES.toString());
-      concept.setText(phrase);
-      QueryConceptWrapper wrap = new QueryConceptWrapper();
-      
-      wrap.wrap(concept);
-      concepts.add(wrap);
-      */
       concepts.add(new QueryConceptWrapper(phrase, QueryConceptTypes.KEY_PHRASES.toString()));
     }
     QueryConceptList.storeQueryConcepts(questionView, concepts);
