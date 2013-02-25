@@ -131,7 +131,7 @@ public class PassageGoldStandardFilePersistenceProvider extends
           return false;
       } else if (!dataset.equals(other.dataset))
         return false;
-      if (sequenceId != other.sequenceId)
+      if (!sequenceId.equals(other.sequenceId))
         return false;
       return true;
     }
