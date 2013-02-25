@@ -12,6 +12,8 @@ public class RetrievalResult extends BaseAnnotationWrapper<Document> implements 
   private static final long serialVersionUID = 1L;
 
   private String docID;
+  
+  private String text = "";
 
   private int rank = -1;
 
@@ -21,9 +23,10 @@ public class RetrievalResult extends BaseAnnotationWrapper<Document> implements 
     super();
   }
 
-  public RetrievalResult(String docID, float score, String queryString) {
+  public RetrievalResult(String docID, float score, String queryString, String text) {
     super();
     this.docID = docID;
+    this.text = text;
     this.probability = score;
     this.queryString = queryString;
   }
@@ -31,9 +34,13 @@ public class RetrievalResult extends BaseAnnotationWrapper<Document> implements 
   public String getQueryString() {
     return this.queryString;
   }
-
+  
   public String getDocID() {
     return this.docID;
+  }
+  
+  public String getText() {
+    return this.text;
   }
 
   public int getRank() {
@@ -49,6 +56,7 @@ public class RetrievalResult extends BaseAnnotationWrapper<Document> implements 
     final int prime = 31;
     int result = 1;
     result = prime * result + ((docID == null) ? 0 : docID.hashCode());
+    result = prime * result + ((text == null) ? 0 : text.hashCode());
     return result;
   }
 
@@ -61,23 +69,33 @@ public class RetrievalResult extends BaseAnnotationWrapper<Document> implements 
     if (getClass() != obj.getClass())
       return false;
     RetrievalResult other = (RetrievalResult) obj;
+    
     if (docID == null) {
       if (other.docID != null)
         return false;
     } else if (!docID.equals(other.docID))
       return false;
+        
+    if (text == null) {
+      if (other.text != null)
+        return false;
+    } else if (!text.equals(other.text))
+      return false;
+
+    
     return true;
   }
 
   @Override
   public String toString() {
-    return docID;
+    return (docID != null ? docID:"") + (text != null ? (" " + text):"");
   }
 
   @Override
   public void wrap(Document Doc) {
     super.wrap(Doc);
     docID       = Doc.getUri();
+    text        = Doc.getText();
     queryString = Doc.getQueryString();
     rank        = Doc.getRank();
   }
@@ -86,8 +104,10 @@ public class RetrievalResult extends BaseAnnotationWrapper<Document> implements 
   public Document unwrap(JCas jcas) throws Exception {
     Document Doc = super.unwrap(jcas);
     Doc.setUri(docID);
+    Doc.setText(text);    
     Doc.setQueryString(queryString);
     Doc.setRank(rank);
+
     return Doc;
   }
 
