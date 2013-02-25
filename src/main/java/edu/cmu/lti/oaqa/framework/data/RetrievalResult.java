@@ -75,20 +75,20 @@ public class RetrievalResult extends BaseAnnotationWrapper<Document> implements 
   }
 
   @Override
-  public void wrap(Document passage) {
-    super.wrap(passage);
-    docID = passage.getUri();
-    queryString = passage.getQueryString();
-    rank = passage.getRank();
+  public void wrap(Document Doc) {
+    super.wrap(Doc);
+    docID       = Doc.getUri();
+    queryString = Doc.getQueryString();
+    rank        = Doc.getRank();
   }
 
   @Override
   public Document unwrap(JCas jcas) throws Exception {
-    Document passage = super.unwrap(jcas);
-    passage.setUri(docID);
-    passage.setQueryString(queryString);
-    passage.setRank(rank);
-    return passage;
+    Document Doc = super.unwrap(jcas);
+    Doc.setUri(docID);
+    Doc.setQueryString(queryString);
+    Doc.setRank(rank);
+    return Doc;
   }
 
   @Override

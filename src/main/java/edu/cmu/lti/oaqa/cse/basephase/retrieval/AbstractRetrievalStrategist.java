@@ -83,6 +83,6 @@ public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponen
     super.log(QALogEntry.RETRIEVAL, message);
   }
 
-  private String SearchId;
+  protected String SearchId;
 
 }

@@ -85,5 +85,5 @@ public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
     super.log(QALogEntry.INFORMATION_EXTRACTION, message);
   }
 
-  private String SearchId;  
+  protected String SearchId;  
 }
