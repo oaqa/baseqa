@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Thu Feb 21 16:50:37 EST 2013 */
+/* First created by JCasGen Sat Mar 02 19:54:39 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** An object that holds a query and results for a search (text search, fact search, KB search, etc.)
- * Updated by JCasGen Thu Feb 21 16:50:37 EST 2013
+ * Updated by JCasGen Sat Mar 02 19:54:39 EST 2013
  * @generated */
 public class Search_Type extends OAQATop_Type {
   /** @generated */
@@ -117,20 +117,20 @@ public class Search_Type extends OAQATop_Type {
   
  
   /** @generated */
-  final Feature casFeat_searchId;
+  final Feature casFeat_sourceId;
   /** @generated */
-  final int     casFeatCode_searchId;
+  final int     casFeatCode_sourceId;
   /** @generated */ 
-  public String getSearchId(int addr) {
-        if (featOkTst && casFeat_searchId == null)
-      jcas.throwFeatMissing("searchId", "org.oaqa.model.Search");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_searchId);
+  public String getSourceId(int addr) {
+        if (featOkTst && casFeat_sourceId == null)
+      jcas.throwFeatMissing("sourceId", "org.oaqa.model.Search");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_sourceId);
   }
   /** @generated */    
-  public void setSearchId(int addr, String v) {
-        if (featOkTst && casFeat_searchId == null)
-      jcas.throwFeatMissing("searchId", "org.oaqa.model.Search");
-    ll_cas.ll_setStringValue(addr, casFeatCode_searchId, v);}
+  public void setSourceId(int addr, String v) {
+        if (featOkTst && casFeat_sourceId == null)
+      jcas.throwFeatMissing("sourceId", "org.oaqa.model.Search");
+    ll_cas.ll_setStringValue(addr, casFeatCode_sourceId, v);}
     
   
 
@@ -155,8 +155,8 @@ public class Search_Type extends OAQATop_Type {
     casFeatCode_abstractQuery  = (null == casFeat_abstractQuery) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_abstractQuery).getCode();
 
  
-    casFeat_searchId = jcas.getRequiredFeatureDE(casType, "searchId", "uima.cas.String", featOkTst);
-    casFeatCode_searchId  = (null == casFeat_searchId) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_searchId).getCode();
+    casFeat_sourceId = jcas.getRequiredFeatureDE(casType, "sourceId", "uima.cas.String", featOkTst);
+    casFeatCode_sourceId  = (null == casFeat_sourceId) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_sourceId).getCode();
 
   }
 }

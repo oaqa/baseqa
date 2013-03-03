@@ -15,12 +15,12 @@ import edu.cmu.lti.oaqa.framework.data.base.FSArrayWrapper;
 
 public class RetrievalResultArray extends FSArrayWrapper<Document> {
 
-  public RetrievalResultArray(String SearchId, JCas jcas, int length) throws ConfigurationException {
+  public RetrievalResultArray(String SourceId, JCas jcas, int length) throws ConfigurationException {
     super(jcas, length);
-    if (null == SearchId || SearchId.isEmpty()) {
-      throw new ConfigurationException("SearchId should not be empty!");
+    if (null == SourceId || SourceId.isEmpty()) {
+      throw new ConfigurationException("SourceId should not be empty!");
     }
-    this.SearchId = SearchId;
+    this.SourceId = SourceId;
   }
 
   @Override
@@ -28,8 +28,8 @@ public class RetrievalResultArray extends FSArrayWrapper<Document> {
     Iterator<?> it = jcas.getJFSIndexRepository().getAllIndexedFS(Search.type);
     while (it.hasNext()) {
       Search search = (Search) it.next();
-      // Delete only entry with the specified searchId
-      if (search.getSearchId() == this.SearchId) {
+      // Delete only entry with the specified SourceId
+      if (search.getSourceId() == this.SourceId) {
         search.removeFromIndexes();
       }
     }
@@ -38,7 +38,7 @@ public class RetrievalResultArray extends FSArrayWrapper<Document> {
   @Override
   public void complete() {
     Search search = new Search(jcas);
-    search.setSearchId(SearchId);
+    search.setSourceId(SourceId);
     search.setHitList(array);
     search.addToIndexes();
   }
@@ -61,16 +61,16 @@ public class RetrievalResultArray extends FSArrayWrapper<Document> {
     setArray(results);
   }
 
-  public static void storeRetrievalResults(String SearchId, JCas jcas, List<RetrievalResult> results)
+  public static void storeRetrievalResults(String SourceId, JCas jcas, List<RetrievalResult> results)
           throws Exception {
-    new RetrievalResultArray(SearchId, jcas, results.size()).setRetrievalResults(results);
+    new RetrievalResultArray(SourceId, jcas, results.size()).setRetrievalResults(results);
   }
 
   public List<RetrievalResult> getRetrievalResults() throws Exception {
     Iterator<?> it = jcas.getJFSIndexRepository().getAllIndexedFS(Search.type);
     while (it.hasNext()) {
       Search search = (Search) it.next();
-      if (search.getSearchId() == this.SearchId) {
+      if (search.getSourceId() == this.SourceId) {
         array = search.getHitList();
         return getArray(Document.class, RetrievalResult.class);        
       }
@@ -79,9 +79,9 @@ public class RetrievalResultArray extends FSArrayWrapper<Document> {
     return new ArrayList<RetrievalResult>();
   }
 
-  public static List<RetrievalResult> retrieveRetrievalResults(String SearchId, JCas jcas) throws Exception {
-    return new RetrievalResultArray(SearchId, jcas, 0).getRetrievalResults();
+  public static List<RetrievalResult> retrieveRetrievalResults(String SourceId, JCas jcas) throws Exception {
+    return new RetrievalResultArray(SourceId, jcas, 0).getRetrievalResults();
   }
   
-  private String SearchId;
+  private String SourceId;
 }

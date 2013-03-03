@@ -24,7 +24,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import edu.cmu.lti.oaqa.cse.basephase.retrieval.SearchIdHelper;
+import edu.cmu.lti.oaqa.cse.basephase.retrieval.SourceIdHelper;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
@@ -50,7 +50,7 @@ public abstract class AbstractPassageUpdater extends AbstractLoggedComponent {
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
     super.initialize(c);
-    SearchId = SearchIdHelper.GetSearchId(c); 
+    SourceId = SourceIdHelper.GetSourceId(c); 
   }
 
   @Override
@@ -66,16 +66,16 @@ public abstract class AbstractPassageUpdater extends AbstractLoggedComponent {
       
       BaseQAJCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
       
-      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(SearchId, 
+      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(SourceId, 
                                                                                       ViewManager.getDocumentView(jcas));
-      List<PassageCandidate> passages = PassageCandidateArray.retrievePassageCandidates(SearchId, 
+      List<PassageCandidate> passages = PassageCandidateArray.retrievePassageCandidates(SourceId, 
                                                                                       ViewManager.getCandidateView(jcas));
       // do task
       passages = updatePassages(qid, input.getQuestion(), keyTerms, keyPhrases, documents, passages);
       
       log("ANSWER PASSAGES UPDATED RETRIEVED: " + passages.size());
       // save output
-      PassageCandidateArray.storePassageCandidates(SearchId, ViewManager.getCandidateView(jcas), passages);
+      PassageCandidateArray.storePassageCandidates(SourceId, ViewManager.getCandidateView(jcas), passages);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
@@ -85,5 +85,5 @@ public abstract class AbstractPassageUpdater extends AbstractLoggedComponent {
     super.log(QALogEntry.INFORMATION_EXTRACTION, message);
   }
 
-  private String SearchId; 
+  private String SourceId; 
 }

@@ -217,8 +217,8 @@ $Id:$</description>
           <rangeTypeName>org.oaqa.model.AbstractQuery</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>searchId</name>
-          <description>An identifier for this search result.  Used to collect hit-list objects that belong to this search result after they've been split out for parallel processing then gathered up again.</description>
+          <name>sourceId</name>
+          <description>A source identifier (e.g., Wikipedia) for this search result.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
@@ -254,8 +254,8 @@ $Id:$</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>searchId</name>
-          <description>ID of the search object to which this search result belongs (matches the searchId field in the Search object).</description>
+          <name>sourceId</name>
+          <description>A source identifier (e.g., Wikipedia) for this search result.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>

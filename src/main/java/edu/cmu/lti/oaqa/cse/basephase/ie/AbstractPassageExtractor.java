@@ -24,7 +24,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import edu.cmu.lti.oaqa.cse.basephase.retrieval.SearchIdHelper;
+import edu.cmu.lti.oaqa.cse.basephase.retrieval.SourceIdHelper;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
@@ -51,7 +51,7 @@ public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
     super.initialize(c);
-    SearchId = SearchIdHelper.GetSearchId(c); 
+    SourceId = SourceIdHelper.GetSourceId(c); 
   }
   
   @Override
@@ -69,13 +69,13 @@ public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
       BaseQAJCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
       
             
-      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(SearchId, 
+      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(SourceId, 
                                                                                       ViewManager.getDocumentView(jcas));
       // do task
       List<PassageCandidate> answers = extractPassages(qid, input.getQuestion(), keyTerms, keyPhrases, documents);
       log("ANSWER PASSAGES: " + answers.size());
       // save output
-      PassageCandidateArray.storePassageCandidates(SearchId, ViewManager.getCandidateView(jcas), answers);
+      PassageCandidateArray.storePassageCandidates(SourceId, ViewManager.getCandidateView(jcas), answers);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
@@ -85,5 +85,5 @@ public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
     super.log(QALogEntry.INFORMATION_EXTRACTION, message);
   }
 
-  protected String SearchId;  
+  protected String SourceId;  
 }

@@ -35,7 +35,7 @@ import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 import edu.cmu.lti.oaqa.framework.UimaContextHelper;
-import edu.cmu.lti.oaqa.cse.basephase.retrieval.SearchIdHelper;
+import edu.cmu.lti.oaqa.cse.basephase.retrieval.SourceIdHelper;
 
 /**
  * 
@@ -51,7 +51,7 @@ public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponen
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
     super.initialize(c);
-    SearchId = SearchIdHelper.GetSearchId(c); 
+    SourceId = SourceIdHelper.GetSourceId(c); 
   }
 
   @Override
@@ -73,7 +73,7 @@ public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponen
       log("RETRIEVED: " + documents.size());
       
       // save output
-      RetrievalResultArray.storeRetrievalResults(SearchId, ViewManager.getDocumentView(jcas), documents);
+      RetrievalResultArray.storeRetrievalResults(SourceId, ViewManager.getDocumentView(jcas), documents);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
@@ -83,6 +83,6 @@ public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponen
     super.log(QALogEntry.RETRIEVAL, message);
   }
 
-  protected String SearchId;
+  protected String SourceId;
 
 }

@@ -26,14 +26,14 @@ import edu.cmu.lti.oaqa.framework.UimaContextHelper;
  * 
  */
 
-public class SearchIdHelper {
-  public static String  DefaultSearchId   = "DefaultSearchId";
-  public static String  SearchIdParamName = "SearchId";  
+public class SourceIdHelper {
+  public static String  DefaultSourceId   = "DefaultSourceId";
+  public static String  SourceIdParamName = "SourceId";  
   
-  public static String GetSearchId(UimaContext c) {
+  public static String GetSourceId(UimaContext c) {
     return UimaContextHelper.getConfigParameterStringValue(c, 
-        SearchIdHelper.SearchIdParamName, 
-        SearchIdHelper.DefaultSearchId);
+        SourceIdHelper.SourceIdParamName, 
+        SourceIdHelper.DefaultSourceId);
   }
 };
 

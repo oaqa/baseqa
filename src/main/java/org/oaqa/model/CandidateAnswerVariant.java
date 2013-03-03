@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Thu Feb 21 16:50:37 EST 2013 */
+/* First created by JCasGen Sat Mar 02 19:54:39 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas; 
@@ -13,8 +13,8 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** A variant of a candidate answer.  A variant may have multiple occurrences, all of which are collected in a variant object.
- * Updated by JCasGen Thu Feb 21 16:50:37 EST 2013
- * XML source: /usr0/srchvrs/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Sat Mar 02 19:54:39 EST 2013
+ * XML source: /home/leo/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class CandidateAnswerVariant extends OAQATop {
   /** @generated

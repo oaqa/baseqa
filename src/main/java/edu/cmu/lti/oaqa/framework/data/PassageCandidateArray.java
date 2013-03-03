@@ -16,12 +16,12 @@ import edu.cmu.lti.oaqa.framework.data.base.FSArrayWrapper;
 
 public class PassageCandidateArray extends FSArrayWrapper<Passage> {
 
-  public PassageCandidateArray(String SearchId, JCas jcas, int length) throws ConfigurationException {
+  public PassageCandidateArray(String SourceId, JCas jcas, int length) throws ConfigurationException {
     super(jcas, length);
-    if (null == SearchId || SearchId.isEmpty()) {
-      throw new ConfigurationException("SearchId should not be empty!");
+    if (null == SourceId || SourceId.isEmpty()) {
+      throw new ConfigurationException("SourceId should not be empty!");
     }
-    this.SearchId = SearchId;    
+    this.SourceId = SourceId;    
   }
 
   @Override
@@ -29,8 +29,8 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     Iterator<?> it = jcas.getJFSIndexRepository().getAllIndexedFS(Search.type);
     while (it.hasNext()) {
       Search search = (Search) it.next();
-      // Delete only entry with the specified searchId 
-      if (search.getSearchId() == this.SearchId) {
+      // Delete only entry with the specified SourceId 
+      if (search.getSourceId() == this.SourceId) {
         search.removeFromIndexes();
       }
     }
@@ -39,7 +39,7 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
   @Override
   public void complete() {
     Search search = new Search(jcas);
-    search.setSearchId(SearchId);
+    search.setSourceId(SourceId);
     search.setHitList(array);
     search.addToIndexes();
   }
@@ -62,16 +62,16 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     setArray(results);
   }
 
-  public static void storePassageCandidates(String SearchId, JCas jcas, List<PassageCandidate> results)
+  public static void storePassageCandidates(String SourceId, JCas jcas, List<PassageCandidate> results)
           throws Exception {
-    new PassageCandidateArray(SearchId, jcas, results.size()).setPassageCandidates(results);
+    new PassageCandidateArray(SourceId, jcas, results.size()).setPassageCandidates(results);
   }
 
   public List<PassageCandidate> getPassageCandidates() throws Exception {
     Iterator<?> it = jcas.getJFSIndexRepository().getAllIndexedFS(Search.type);
     while (it.hasNext()) {
       Search search = (Search) it.next(); 
-      if (search.getSearchId() == this.SearchId) {
+      if (search.getSourceId() == this.SourceId) {
         array = search.getHitList();
         return getArray(Passage.class, PassageCandidate.class);
       }
@@ -80,9 +80,9 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     return new ArrayList<PassageCandidate>();
   }
 
-  public static List<PassageCandidate> retrievePassageCandidates(String SearchId, JCas jcas) throws Exception {
-    return new PassageCandidateArray(SearchId, jcas, 0).getPassageCandidates();
+  public static List<PassageCandidate> retrievePassageCandidates(String SourceId, JCas jcas) throws Exception {
+    return new PassageCandidateArray(SourceId, jcas, 0).getPassageCandidates();
   }
   
-  private String SearchId;
+  private String SourceId;
 }

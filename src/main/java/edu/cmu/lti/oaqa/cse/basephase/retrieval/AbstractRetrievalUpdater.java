@@ -49,8 +49,8 @@ public abstract class AbstractRetrievalUpdater extends AbstractLoggedComponent {
   public void initialize(UimaContext c) throws ResourceInitializationException {
     super.initialize(c);
     SearchId = UimaContextHelper.getConfigParameterStringValue(c, 
-                                                              SearchIdHelper.SearchIdParamName, 
-                                                              SearchIdHelper.DefaultSearchId); 
+                                                              SourceIdHelper.SourceIdParamName, 
+                                                              SourceIdHelper.DefaultSourceId); 
   }  
 
   @Override

@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Thu Feb 21 16:50:37 EST 2013 */
+/* First created by JCasGen Sat Mar 02 19:54:39 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas; 
@@ -14,8 +14,8 @@ import org.apache.uima.jcas.cas.DoubleArray;
 
 
 /** A search result.
- * Updated by JCasGen Thu Feb 21 16:50:37 EST 2013
- * XML source: /usr0/srchvrs/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Sat Mar 02 19:54:39 EST 2013
+ * XML source: /home/leo/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class SearchResult extends OAQATop {
   /** @generated
@@ -148,21 +148,21 @@ public class SearchResult extends OAQATop {
    
     
   //*--------------*
-  //* Feature: searchId
+  //* Feature: sourceId
 
-  /** getter for searchId - gets ID of the search object to which this search result belongs (matches the searchId field in the Search object).
+  /** getter for sourceId - gets A source identifier (e.g., Wikipedia) for this search result.
    * @generated */
-  public String getSearchId() {
-    if (SearchResult_Type.featOkTst && ((SearchResult_Type)jcasType).casFeat_searchId == null)
-      jcasType.jcas.throwFeatMissing("searchId", "org.oaqa.model.SearchResult");
-    return jcasType.ll_cas.ll_getStringValue(addr, ((SearchResult_Type)jcasType).casFeatCode_searchId);}
+  public String getSourceId() {
+    if (SearchResult_Type.featOkTst && ((SearchResult_Type)jcasType).casFeat_sourceId == null)
+      jcasType.jcas.throwFeatMissing("sourceId", "org.oaqa.model.SearchResult");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((SearchResult_Type)jcasType).casFeatCode_sourceId);}
     
-  /** setter for searchId - sets ID of the search object to which this search result belongs (matches the searchId field in the Search object). 
+  /** setter for sourceId - sets A source identifier (e.g., Wikipedia) for this search result. 
    * @generated */
-  public void setSearchId(String v) {
-    if (SearchResult_Type.featOkTst && ((SearchResult_Type)jcasType).casFeat_searchId == null)
-      jcasType.jcas.throwFeatMissing("searchId", "org.oaqa.model.SearchResult");
-    jcasType.ll_cas.ll_setStringValue(addr, ((SearchResult_Type)jcasType).casFeatCode_searchId, v);}    
+  public void setSourceId(String v) {
+    if (SearchResult_Type.featOkTst && ((SearchResult_Type)jcasType).casFeat_sourceId == null)
+      jcasType.jcas.throwFeatMissing("sourceId", "org.oaqa.model.SearchResult");
+    jcasType.ll_cas.ll_setStringValue(addr, ((SearchResult_Type)jcasType).casFeatCode_sourceId, v);}    
    
     
   //*--------------*

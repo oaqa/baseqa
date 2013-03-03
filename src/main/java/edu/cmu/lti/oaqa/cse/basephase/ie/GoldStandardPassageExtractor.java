@@ -9,7 +9,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.oaqa.model.Passage;
 
-import edu.cmu.lti.oaqa.cse.basephase.retrieval.SearchIdHelper;
+import edu.cmu.lti.oaqa.cse.basephase.retrieval.SourceIdHelper;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
@@ -22,7 +22,7 @@ public class GoldStandardPassageExtractor extends AbstractLoggedComponent {
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
     super.initialize(c);
-    SearchId = SearchIdHelper.GetSearchId(c); 
+    SourceId = SourceIdHelper.GetSourceId(c); 
   }
   
   @Override
@@ -38,11 +38,11 @@ public class GoldStandardPassageExtractor extends AbstractLoggedComponent {
         passages.add(candidate);
       }
       JCas candidateView = ViewManager.getCandidateView(jcas);
-      PassageCandidateArray.storePassageCandidates(SearchId, candidateView, passages);
+      PassageCandidateArray.storePassageCandidates(SourceId, candidateView, passages);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
   }
 
-  private String SearchId;
+  private String SourceId;
 }
