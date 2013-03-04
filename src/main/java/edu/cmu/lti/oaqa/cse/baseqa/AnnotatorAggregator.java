@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 Carnegie Mellon University
+ *  Copyright 2013 Carnegie Mellon University
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -45,10 +45,11 @@ import edu.cmu.lti.oaqa.ecd.phase.event.TerminateEvent;
 
 /**
  * 
- * Combines several CAS consumers, which are executed sequentially. 
- * These consumers are registered in the YAML configuration file 
+ * Combines several CAS annotators by executing them sequentially. 
+
+ * The consumers are registered in the YAML configuration file 
  * using the "elements" list like follows:
- * 
+ * <p> 
  * elements: |
  *    - inherit: rankqa.element1
  *    - inherit: rankqa.element2    
@@ -106,8 +107,7 @@ public class AnnotatorAggregator extends AbstractLoggedComponent {
   
   
   /**
-   * Reads a list of consumers specified in the YAML configuration file.
-   * Creates respective consumer classes.
+   * Create a list of annotators specified in the YAML configuration file.
    */
   
   private void ReadElements(UimaContext context) throws ResourceInitializationException {
