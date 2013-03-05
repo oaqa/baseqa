@@ -16,7 +16,7 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
 
   protected String componentId;
 
-  protected float probability;
+  protected double probability;
 
   public abstract Class<? extends T> getTypeClass();
 
@@ -76,11 +76,11 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
     this.componentId = componentId;
   }
 
-  public float getProbability() {
+  public double getProbability() {
     return probability;
   }
 
-  public void setProbablity(float probablity) {
+  public void setProbablity(double probablity) {
     this.probability = probablity;
   }
 

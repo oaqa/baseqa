@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Mar 02 19:54:39 EST 2013 */
+/* First created by JCasGen Tue Mar 05 08:57:57 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.cas.TOP;
 
 
 /** The base class for OAQA feature structures that are not Annotations.
- * Updated by JCasGen Sat Mar 02 19:54:39 EST 2013
+ * Updated by JCasGen Tue Mar 05 08:57:57 EST 2013
  * XML source: /home/leo/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class OAQATop extends TOP {
@@ -77,17 +77,17 @@ public class OAQATop extends TOP {
 
   /** getter for probability - gets The annotator's estimate of the probability associated with this annotation.
    * @generated */
-  public float getProbability() {
+  public double getProbability() {
     if (OAQATop_Type.featOkTst && ((OAQATop_Type)jcasType).casFeat_probability == null)
       jcasType.jcas.throwFeatMissing("probability", "org.oaqa.model.OAQATop");
-    return jcasType.ll_cas.ll_getFloatValue(addr, ((OAQATop_Type)jcasType).casFeatCode_probability);}
+    return jcasType.ll_cas.ll_getDoubleValue(addr, ((OAQATop_Type)jcasType).casFeatCode_probability);}
     
   /** setter for probability - sets The annotator's estimate of the probability associated with this annotation. 
    * @generated */
-  public void setProbability(float v) {
+  public void setProbability(double v) {
     if (OAQATop_Type.featOkTst && ((OAQATop_Type)jcasType).casFeat_probability == null)
       jcasType.jcas.throwFeatMissing("probability", "org.oaqa.model.OAQATop");
-    jcasType.ll_cas.ll_setFloatValue(addr, ((OAQATop_Type)jcasType).casFeatCode_probability, v);}    
+    jcasType.ll_cas.ll_setDoubleValue(addr, ((OAQATop_Type)jcasType).casFeatCode_probability, v);}    
    
     
   //*--------------*

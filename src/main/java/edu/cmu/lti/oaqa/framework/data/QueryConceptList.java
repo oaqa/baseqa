@@ -20,7 +20,7 @@ import edu.cmu.lti.oaqa.framework.data.QueryConceptWrapper;
  * in the CAS.
  * 
  * @author Zi Yang <ziy@cs.cmu.edu>
- * @author Leonid Boytsov <srchvrs@cmu.edu>
+ * @author Leonid Boytsov
  * 
  */
 

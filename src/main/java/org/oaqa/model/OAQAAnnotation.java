@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Mar 02 19:54:39 EST 2013 */
+/* First created by JCasGen Tue Mar 05 08:57:57 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** The Question Analysis supertype that defines the attributes common to all question analysis results.
- * Updated by JCasGen Sat Mar 02 19:54:39 EST 2013
+ * Updated by JCasGen Tue Mar 05 08:57:57 EST 2013
  * XML source: /home/leo/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class OAQAAnnotation extends Annotation {
@@ -78,24 +78,6 @@ public class OAQAAnnotation extends Annotation {
     if (OAQAAnnotation_Type.featOkTst && ((OAQAAnnotation_Type)jcasType).casFeat_componentId == null)
       jcasType.jcas.throwFeatMissing("componentId", "org.oaqa.model.OAQAAnnotation");
     jcasType.ll_cas.ll_setStringValue(addr, ((OAQAAnnotation_Type)jcasType).casFeatCode_componentId, v);}    
-   
-    
-  //*--------------*
-  //* Feature: probability
-
-  /** getter for probability - gets The annotator's estimate of the probability associated with this annotation.
-   * @generated */
-  public float getProbability() {
-    if (OAQAAnnotation_Type.featOkTst && ((OAQAAnnotation_Type)jcasType).casFeat_probability == null)
-      jcasType.jcas.throwFeatMissing("probability", "org.oaqa.model.OAQAAnnotation");
-    return jcasType.ll_cas.ll_getFloatValue(addr, ((OAQAAnnotation_Type)jcasType).casFeatCode_probability);}
-    
-  /** setter for probability - sets The annotator's estimate of the probability associated with this annotation. 
-   * @generated */
-  public void setProbability(float v) {
-    if (OAQAAnnotation_Type.featOkTst && ((OAQAAnnotation_Type)jcasType).casFeat_probability == null)
-      jcasType.jcas.throwFeatMissing("probability", "org.oaqa.model.OAQAAnnotation");
-    jcasType.ll_cas.ll_setFloatValue(addr, ((OAQAAnnotation_Type)jcasType).casFeatCode_probability, v);}    
    
     
   //*--------------*

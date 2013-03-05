@@ -23,7 +23,7 @@ $Id:$</description>
         <featureDescription>
           <name>probability</name>
           <description>The annotator's estimate of the probability associated with this annotation.</description>
-          <rangeTypeName>uima.cas.Float</rangeTypeName>
+          <rangeTypeName>uima.cas.Double</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>implementingWrapper</name>
@@ -42,11 +42,11 @@ $Id:$</description>
           <description>The unique id of the component that created this instance.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
-        <featureDescription>
+        <!--featureDescription>
           <name>probability</name>
           <description>The annotator's estimate of the probability associated with this annotation.</description>
-          <rangeTypeName>uima.cas.Float</rangeTypeName>
-        </featureDescription>
+          <rangeTypeName>uima.cas.Double</rangeTypeName>
+        </featureDescription-->
         <featureDescription>
           <name>implementingWrapper</name>
           <description/>
@@ -245,7 +245,7 @@ $Id:$</description>
         </featureDescription>
         <featureDescription>
           <name>rank</name>
-          <description>Rank of this result in the original hit-list.</description>
+          <description>Rank of this result.</description>
           <rangeTypeName>uima.cas.Integer</rangeTypeName>
         </featureDescription>
         <featureDescription>
@@ -305,6 +305,11 @@ $Id:$</description>
           <rangeTypeName>uima.cas.Double</rangeTypeName>
         </featureDescription>
         <featureDescription>
+          <name>rank</name>
+          <description>Rank of this result.</description>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+        <!--featureDescription>
           <name>variants</name>
           <description>Array of candidate answer variant ids that were merged into this final answer.</description>
           <rangeTypeName>uima.cas.StringArray</rangeTypeName>
@@ -315,6 +320,11 @@ $Id:$</description>
 "featureVector" double array.</description>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>org.oaqa.model.CaFeature</elementType>
+        </featureDescription-->
+        <featureDescription>
+          <name>featureLabels</name>
+          <description>Feature labels for this Answer. </description>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>featureVector</name>
@@ -343,6 +353,11 @@ $Id:$</description>
           <name>featureLabels</name>
           <description>Array of feature labels, which correspond to the elements of the featureVector of each Answer in this AnswerList.</description>
           <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>sourceId</name>
+          <description>A source identifier (e.g., Wikipedia) for this search result.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>

@@ -19,8 +19,6 @@ package edu.cmu.lti.oaqa.cse.basephase.retrieval;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.ConfigurationException;
-
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.UimaContext;
@@ -30,11 +28,10 @@ import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
-import edu.cmu.lti.oaqa.framework.data.BaseQAJCasHelper;
+import edu.cmu.lti.oaqa.framework.data.base.JCasHelper;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
-import edu.cmu.lti.oaqa.framework.UimaContextHelper;
 import edu.cmu.lti.oaqa.cse.basephase.retrieval.SourceIdHelper;
 
 /**
@@ -65,7 +62,7 @@ public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponen
       List<String>  keyTerms   = new ArrayList<String>();
       List<String>  keyPhrases = new ArrayList<String>();
       
-      BaseQAJCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
+      JCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
       
       // do task
       List<RetrievalResult> documents = retrieveDocuments(qid, input.getQuestion(), keyTerms, keyPhrases);

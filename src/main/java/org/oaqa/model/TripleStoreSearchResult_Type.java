@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Mar 02 19:54:39 EST 2013 */
+/* First created by JCasGen Tue Mar 05 08:57:58 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A search result from a triple store, e.g., an RDF store.
- * Updated by JCasGen Sat Mar 02 19:54:39 EST 2013
+ * Updated by JCasGen Tue Mar 05 08:57:58 EST 2013
  * @generated */
 public class TripleStoreSearchResult_Type extends AnswerSearchResult_Type {
   /** @generated */

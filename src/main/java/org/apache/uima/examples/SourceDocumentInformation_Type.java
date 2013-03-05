@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Aug 01 12:12:46 EDT 2012 */
+/* First created by JCasGen Tue Mar 05 08:57:57 EST 2013 */
 package org.apache.uima.examples;
 
 import org.apache.uima.jcas.JCas;
@@ -14,10 +14,11 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** Stores detailed information about the original source document from which the current CAS was initialized. All information (like size) refers to the source document and not to the document in the CAS which may be converted and filtered by a CAS Initializer. For example this information will be written to the Semantic Search index so that the original document contents can be retrieved by queries.
- * Updated by JCasGen Fri Jan 18 20:41:48 EST 2013
+ * Updated by JCasGen Tue Mar 05 08:57:57 EST 2013
  * @generated */
 public class SourceDocumentInformation_Type extends Annotation_Type {
   /** @generated */
+  @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
   /** @generated */
   private final FSGenerator fsGenerator = 
@@ -36,9 +37,11 @@ public class SourceDocumentInformation_Type extends Annotation_Type {
   	  }
     };
   /** @generated */
+  @SuppressWarnings ("hiding")
   public final static int typeIndexID = SourceDocumentInformation.typeIndexID;
   /** @generated 
      @modifiable */
+  @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.apache.uima.examples.SourceDocumentInformation");
  
   /** @generated */

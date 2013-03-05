@@ -25,7 +25,7 @@ import org.apache.uima.jcas.JCas;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
-import edu.cmu.lti.oaqa.framework.data.BaseQAJCasHelper;
+import edu.cmu.lti.oaqa.framework.data.base.JCasHelper;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
 /**
@@ -48,14 +48,14 @@ public abstract class AbstractKeytermUpdater extends AbstractLoggedComponent {
       List<String>  keyPhrases = new ArrayList<String>();
       
       // Retrieve key terms and phrases
-      BaseQAJCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
+      JCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
       
       // updated
       updateKeyterms(question, keyTerms, keyPhrases);
       log("Updated KeyTerms:   " + keyTerms.toString());
       log("Updated KeyPhrases: " + keyTerms.toString());
       // save output
-      BaseQAJCasHelper.storeKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
+      JCasHelper.storeKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

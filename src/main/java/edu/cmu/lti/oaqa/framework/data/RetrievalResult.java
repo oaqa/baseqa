@@ -4,30 +4,37 @@ import java.io.Serializable;
 
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.Document;
+import org.oaqa.model.SearchResult;
 
 import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
 
 public class RetrievalResult extends BaseAnnotationWrapper<Document> implements Serializable {
 
   private static final long serialVersionUID = 1L;
-
   private String docID;
-  
   private String text = "";
-
-  private int rank = -1;
-
+  private double score = 0.0;
+  private int    rank = -1;
   private String queryString;
 
   public RetrievalResult() {
     super();
   }
+  
+  public RetrievalResult(Document That) {
+    super();
+    this.docID = That.getDocId();
+    this.text  = That.getText();
+    this.score = That.getScore();
+    this.rank  = That.getRank();
+    this.queryString = That.getQueryString();
+  }
 
-  public RetrievalResult(String docID, float score, String queryString, String text) {
+  public RetrievalResult(String docID, double score, String queryString, String text) {
     super();
     this.docID = docID;
-    this.text = text;
-    this.probability = score;
+    this.text  = text;
+    this.score = score;
     this.queryString = queryString;
   }
 
@@ -49,6 +56,10 @@ public class RetrievalResult extends BaseAnnotationWrapper<Document> implements 
 
   public void setRank(int rank) {
     this.rank = rank;
+  }
+  
+  public double getScore() {
+  	return score;
   }
 
   @Override
@@ -98,6 +109,7 @@ public class RetrievalResult extends BaseAnnotationWrapper<Document> implements 
     text        = Doc.getText();
     queryString = Doc.getQueryString();
     rank        = Doc.getRank();
+    score       = Doc.getScore();
   }
 
   @Override
@@ -107,6 +119,7 @@ public class RetrievalResult extends BaseAnnotationWrapper<Document> implements 
     Doc.setText(text);    
     Doc.setQueryString(queryString);
     Doc.setRank(rank);
+    Doc.setScore(score);
 
     return Doc;
   }

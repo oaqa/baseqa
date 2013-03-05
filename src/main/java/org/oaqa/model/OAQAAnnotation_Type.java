@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Mar 02 19:54:39 EST 2013 */
+/* First created by JCasGen Tue Mar 05 08:57:57 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** The Question Analysis supertype that defines the attributes common to all question analysis results.
- * Updated by JCasGen Sat Mar 02 19:54:39 EST 2013
+ * Updated by JCasGen Tue Mar 05 08:57:57 EST 2013
  * @generated */
 public class OAQAAnnotation_Type extends Annotation_Type {
   /** @generated */
@@ -63,24 +63,6 @@ public class OAQAAnnotation_Type extends Annotation_Type {
   
  
   /** @generated */
-  final Feature casFeat_probability;
-  /** @generated */
-  final int     casFeatCode_probability;
-  /** @generated */ 
-  public float getProbability(int addr) {
-        if (featOkTst && casFeat_probability == null)
-      jcas.throwFeatMissing("probability", "org.oaqa.model.OAQAAnnotation");
-    return ll_cas.ll_getFloatValue(addr, casFeatCode_probability);
-  }
-  /** @generated */    
-  public void setProbability(int addr, float v) {
-        if (featOkTst && casFeat_probability == null)
-      jcas.throwFeatMissing("probability", "org.oaqa.model.OAQAAnnotation");
-    ll_cas.ll_setFloatValue(addr, casFeatCode_probability, v);}
-    
-  
- 
-  /** @generated */
   final Feature casFeat_implementingWrapper;
   /** @generated */
   final int     casFeatCode_implementingWrapper;
@@ -109,10 +91,6 @@ public class OAQAAnnotation_Type extends Annotation_Type {
  
     casFeat_componentId = jcas.getRequiredFeatureDE(casType, "componentId", "uima.cas.String", featOkTst);
     casFeatCode_componentId  = (null == casFeat_componentId) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_componentId).getCode();
-
- 
-    casFeat_probability = jcas.getRequiredFeatureDE(casType, "probability", "uima.cas.Float", featOkTst);
-    casFeatCode_probability  = (null == casFeat_probability) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_probability).getCode();
 
  
     casFeat_implementingWrapper = jcas.getRequiredFeatureDE(casType, "implementingWrapper", "uima.cas.String", featOkTst);

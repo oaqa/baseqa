@@ -49,7 +49,7 @@ public class RetrievalResultArray extends FSArrayWrapper<Document> {
     int prevRank = 0;
     for (int i = 0; i < results.size(); i++) {
       RetrievalResult result = results.get(i);
-      double curScore = result.getProbability();
+      double curScore = result.getScore();
       if (curScore != prevScore) {
         result.setRank(i + 1);
         prevScore = curScore;

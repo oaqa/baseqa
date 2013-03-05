@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Mar 02 19:54:39 EST 2013 */
+/* First created by JCasGen Tue Mar 05 08:57:57 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas; 
@@ -12,7 +12,7 @@ import org.apache.uima.jcas.cas.StringArray;
 
 
 /** A ranked list of candidate answers.
- * Updated by JCasGen Sat Mar 02 19:54:39 EST 2013
+ * Updated by JCasGen Tue Mar 05 08:57:57 EST 2013
  * XML source: /home/leo/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class AnswerList extends OAQATop {
@@ -139,6 +139,24 @@ public class AnswerList extends OAQATop {
       jcasType.jcas.throwFeatMissing("featureLabels", "org.oaqa.model.AnswerList");
     jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_featureLabels), i);
     jcasType.ll_cas.ll_setStringArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_featureLabels), i, v);}
+   
+    
+  //*--------------*
+  //* Feature: sourceId
+
+  /** getter for sourceId - gets A source identifier (e.g., Wikipedia) for this search result.
+   * @generated */
+  public String getSourceId() {
+    if (AnswerList_Type.featOkTst && ((AnswerList_Type)jcasType).casFeat_sourceId == null)
+      jcasType.jcas.throwFeatMissing("sourceId", "org.oaqa.model.AnswerList");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((AnswerList_Type)jcasType).casFeatCode_sourceId);}
+    
+  /** setter for sourceId - sets A source identifier (e.g., Wikipedia) for this search result. 
+   * @generated */
+  public void setSourceId(String v) {
+    if (AnswerList_Type.featOkTst && ((AnswerList_Type)jcasType).casFeat_sourceId == null)
+      jcasType.jcas.throwFeatMissing("sourceId", "org.oaqa.model.AnswerList");
+    jcasType.ll_cas.ll_setStringValue(addr, ((AnswerList_Type)jcasType).casFeatCode_sourceId, v);}    
   }
 
     

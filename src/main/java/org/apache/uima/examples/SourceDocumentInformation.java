@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Wed Aug 01 12:12:46 EDT 2012 */
+/* First created by JCasGen Tue Mar 05 08:57:57 EST 2013 */
 package org.apache.uima.examples;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,19 +11,22 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** Stores detailed information about the original source document from which the current CAS was initialized. All information (like size) refers to the source document and not to the document in the CAS which may be converted and filtered by a CAS Initializer. For example this information will be written to the Semantic Search index so that the original document contents can be retrieved by queries.
- * Updated by JCasGen Fri Jan 18 20:41:48 EST 2013
- * XML source: /Users/elmer/Documents/workspace/oaqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Tue Mar 05 08:57:57 EST 2013
+ * XML source: /home/leo/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class SourceDocumentInformation extends Annotation {
   /** @generated
    * @ordered 
    */
+  @SuppressWarnings ("hiding")
   public final static int typeIndexID = JCasRegistry.register(SourceDocumentInformation.class);
   /** @generated
    * @ordered 
    */
+  @SuppressWarnings ("hiding")
   public final static int type = typeIndexID;
   /** @generated  */
+  @Override
   public              int getTypeIndexID() {return typeIndexID;}
  
   /** Never called.  Disable default constructor
@@ -55,7 +58,7 @@ public class SourceDocumentInformation extends Annotation {
     * Write your own initialization here
     * <!-- end-user-doc -->
   @generated modifiable */
-  private void readObject() {}
+  private void readObject() {/*default - does nothing empty block */}
      
  
     

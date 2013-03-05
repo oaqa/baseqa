@@ -30,7 +30,7 @@ import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.UimaContextHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
-import edu.cmu.lti.oaqa.framework.data.BaseQAJCasHelper;
+import edu.cmu.lti.oaqa.framework.data.base.JCasHelper;
 import edu.cmu.lti.oaqa.framework.data.PassageCandidate;
 import edu.cmu.lti.oaqa.framework.data.PassageCandidateArray;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
@@ -66,7 +66,7 @@ public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
       List<String>  keyTerms   = new ArrayList<String>();
       List<String>  keyPhrases = new ArrayList<String>();
       
-      BaseQAJCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
+      JCasHelper.loadKeyTermsAndPhrases(jcas, keyTerms, keyPhrases);
       
             
       List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(SourceId, 

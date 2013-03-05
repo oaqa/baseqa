@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Mar 02 19:54:39 EST 2013 */
+/* First created by JCasGen Tue Mar 05 08:57:57 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** The base class for OAQA feature structures that are not Annotations.
- * Updated by JCasGen Sat Mar 02 19:54:39 EST 2013
+ * Updated by JCasGen Tue Mar 05 08:57:57 EST 2013
  * @generated */
 public class OAQATop_Type extends TOP_Type {
   /** @generated */
@@ -67,16 +67,16 @@ public class OAQATop_Type extends TOP_Type {
   /** @generated */
   final int     casFeatCode_probability;
   /** @generated */ 
-  public float getProbability(int addr) {
+  public double getProbability(int addr) {
         if (featOkTst && casFeat_probability == null)
       jcas.throwFeatMissing("probability", "org.oaqa.model.OAQATop");
-    return ll_cas.ll_getFloatValue(addr, casFeatCode_probability);
+    return ll_cas.ll_getDoubleValue(addr, casFeatCode_probability);
   }
   /** @generated */    
-  public void setProbability(int addr, float v) {
+  public void setProbability(int addr, double v) {
         if (featOkTst && casFeat_probability == null)
       jcas.throwFeatMissing("probability", "org.oaqa.model.OAQATop");
-    ll_cas.ll_setFloatValue(addr, casFeatCode_probability, v);}
+    ll_cas.ll_setDoubleValue(addr, casFeatCode_probability, v);}
     
   
  
@@ -111,7 +111,7 @@ public class OAQATop_Type extends TOP_Type {
     casFeatCode_componentId  = (null == casFeat_componentId) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_componentId).getCode();
 
  
-    casFeat_probability = jcas.getRequiredFeatureDE(casType, "probability", "uima.cas.Float", featOkTst);
+    casFeat_probability = jcas.getRequiredFeatureDE(casType, "probability", "uima.cas.Double", featOkTst);
     casFeatCode_probability  = (null == casFeat_probability) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_probability).getCode();
 
  

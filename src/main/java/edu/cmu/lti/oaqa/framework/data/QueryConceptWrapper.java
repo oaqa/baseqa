@@ -10,7 +10,7 @@ import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
 /**
  * 
  * @author Zi Yang <ziy@cs.cmu.edu>
- * @author Leonid Boytsov <srchvrs@cmu.edu>
+ * @author Leonid Boytsov 
  * 
  */
 

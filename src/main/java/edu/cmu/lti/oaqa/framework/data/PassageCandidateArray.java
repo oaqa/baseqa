@@ -50,7 +50,7 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     int prevRank = 0;
     for (int i = 0; i < results.size(); i++) {
       PassageCandidate candidate = results.get(i);
-      double curScore = candidate.getProbability();
+      double curScore = candidate.getScore();
       if (curScore != prevScore) {
         candidate.setRank(i + 1);
         prevScore = curScore;

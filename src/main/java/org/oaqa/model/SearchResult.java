@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Mar 02 19:54:39 EST 2013 */
+/* First created by JCasGen Tue Mar 05 08:57:57 EST 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas; 
@@ -14,7 +14,7 @@ import org.apache.uima.jcas.cas.DoubleArray;
 
 
 /** A search result.
- * Updated by JCasGen Sat Mar 02 19:54:39 EST 2013
+ * Updated by JCasGen Tue Mar 05 08:57:57 EST 2013
  * XML source: /home/leo/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class SearchResult extends OAQATop {
@@ -114,14 +114,14 @@ public class SearchResult extends OAQATop {
   //*--------------*
   //* Feature: rank
 
-  /** getter for rank - gets Rank of this result in the original hit-list.
+  /** getter for rank - gets Rank of this result.
    * @generated */
   public int getRank() {
     if (SearchResult_Type.featOkTst && ((SearchResult_Type)jcasType).casFeat_rank == null)
       jcasType.jcas.throwFeatMissing("rank", "org.oaqa.model.SearchResult");
     return jcasType.ll_cas.ll_getIntValue(addr, ((SearchResult_Type)jcasType).casFeatCode_rank);}
     
-  /** setter for rank - sets Rank of this result in the original hit-list. 
+  /** setter for rank - sets Rank of this result. 
    * @generated */
   public void setRank(int v) {
     if (SearchResult_Type.featOkTst && ((SearchResult_Type)jcasType).casFeat_rank == null)

@@ -2,8 +2,7 @@ package edu.cmu.lti.oaqa.framework.data;
 
 /**
  * 
- * @author Leonid Boytsov <srchvrs@cmu.edu>
- * 
+ *  Types of data stored as concepts.
  */
 
 public enum QueryConceptTypes {

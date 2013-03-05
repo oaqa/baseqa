@@ -18,26 +18,23 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements 
   private static final long serialVersionUID = 1L;
 
   private String docID;
-
   private int start;
-
   private int end;
-
   private int rank = -1;
-
+  private double score = 0.0;
   private String queryString;
 
   public PassageCandidate() {
     super();
   }
 
-  public PassageCandidate(String docID, int start, int end, float score, String queryString)
+  public PassageCandidate(String docID, int start, int end, double score, String queryString)
           throws AnalysisEngineProcessException {
     super();
     this.docID = docID;
     this.start = start;
     this.end = end;
-    this.probability = score;
+    this.score = score;
     this.queryString = queryString;
   }
 
@@ -105,8 +102,16 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements 
     return rank;
   }
 
+  public double getScore() {
+    return score;
+  }
+
   public void setRank(int rank) {
     this.rank = rank;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
   }
 
   public String getQueryString() {
@@ -124,6 +129,7 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements 
     start = passage.getBegin();
     end = passage.getEnd();
     rank = passage.getRank();
+    score = passage.getScore();
     queryString = passage.getQueryString();
   }
 
@@ -134,6 +140,7 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements 
     passage.setBegin(start);
     passage.setEnd(end);
     passage.setRank(rank);
+    passage.setScore(score);
     passage.setQueryString(queryString);
     return passage;
   }
