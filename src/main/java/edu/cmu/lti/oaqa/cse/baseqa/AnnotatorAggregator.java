@@ -64,7 +64,7 @@ public class AnnotatorAggregator extends AbstractLoggedComponent {
 	private static String InheritKeyword  = "inherit";
 	private static String FormatErrorMsg  = "Each entry in " + ElementNames + 
 														" must have exactly one element in the form: " +
-														" " + InheritKeyword + ": <name>";
+														" -" + InheritKeyword + ": <name>";
 
   private 			List<AnalysisEngine> elements;
 
@@ -130,11 +130,8 @@ public class AnnotatorAggregator extends AbstractLoggedComponent {
         		elements.add(CreateAnnotator(DescMap));
         	}
         } catch (ClassCastException e) {
-        	System.err.printf("[ERROR] cannot parse elements' description %s:\n", description);
+        	System.err.printf("[ERROR] cannot parse elements' description:\n%s\n", description);
         	throw new ResourceInitializationException(new Exception(FormatErrorMsg));
-        } catch (ResourceInitializationException e) {
-        	System.err.printf("[ERROR] cannot parse elements' description %s:\n", description);
-        	throw new ResourceInitializationException(new Exception(FormatErrorMsg));        	        	        	
         }
       } else {
       	throw new ResourceInitializationException(new Exception("Parameter: " +
