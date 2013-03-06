@@ -42,7 +42,7 @@ import edu.cmu.lti.oaqa.cse.basephase.retrieval.SourceIdHelper;
 public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponent {
 
   protected abstract List<RetrievalResult> retrieveDocuments(String qid, String question,
-                                                             List<String> keyTerms, List<String> keyPhrases);
+                      List<String> keyTerms, List<String> keyPhrases) throws Exception;
 
 
   @Override
