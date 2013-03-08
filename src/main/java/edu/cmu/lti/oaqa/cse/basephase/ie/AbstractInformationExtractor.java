@@ -10,23 +10,21 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
+import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.data.base.JCasHelper;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
-import edu.cmu.lti.oaqa.cse.basephase.retrieval.SourceIdHelper;
 import edu.cmu.lti.oaqa.framework.data.AnswerWrapper;
 import edu.cmu.lti.oaqa.framework.data.AnswerArray;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 
 
-public abstract class AbstractInformationExtractor extends
-		AbstractLoggedComponent {
-	
+public abstract class AbstractInformationExtractor extends AbstractLoggedComponent {
+  
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
-    super.initialize(c);
-    SourceId = SourceIdHelper.GetSourceId(c); 
+    super.initialize(c); 
   }
 
 	public abstract List<AnswerWrapper> extractAnswerCandidates(String qid,
@@ -34,32 +32,49 @@ public abstract class AbstractInformationExtractor extends
 			List<String> keyphrases, List<RetrievalResult> documents);
 
 	@Override
-	public void process(JCas jcas) throws AnalysisEngineProcessException {
+	public void process(JCas FullJCas) throws AnalysisEngineProcessException {
 		try {
+      JCas jcasSource = ViewManager.getDocumentView(FullJCas);
+      JCas jcasTarget = ViewManager.getFinalAnswerView(FullJCas);
+
 			InputElement input = (InputElement) BaseJCasHelper.getAnnotation(
-					jcas, InputElement.type);
+					                                               FullJCas, InputElement.type);
 			String question = input.getQuestion();
 			String qid = input.getSequenceId();
-			String answerType = JCasHelper.loadAnswerType(jcas);
+			String answerType = JCasHelper.loadAnswerType(FullJCas);
 			List<String> keyterms = new ArrayList<String>();
 			List<String> keyphrases = new ArrayList<String>();
-			JCasHelper.loadKeyTermsAndPhrases(jcas, keyterms, keyphrases);
+			JCasHelper.loadKeyTermsAndPhrases(FullJCas, keyterms, keyphrases);
 			
-			List<RetrievalResult> documents
-								= RetrievalResultArray.retrieveRetrievalResults(SourceId, 
-																						ViewManager.getDocumentView(jcas));
+			ArrayList<String> AllSourceIds = new ArrayList<String>();
 			
+			RetrievalResultArray.GetAllSourceIds(jcasSource, AllSourceIds);
 			
-			List<AnswerWrapper> answers = extractAnswerCandidates(qid, question, 
-																	answerType, keyterms, keyphrases, documents);
-			
-			AnswerArray.storeAnswers(SourceId, 
-															ViewManager.getCandidateView(jcas), 
-															answers);
+			for (String SourceId: AllSourceIds) {
+  			List<RetrievalResult> documents
+  								= RetrievalResultArray.retrieveRetrievalResults(SourceId, jcasSource);
+  			
+        log("Loaded " + documents.size() + 
+            " candidates to extract answers from Source: "+ SourceId);
+  			
+  			List<AnswerWrapper> answers = extractAnswerCandidates(qid, question, 
+  																	answerType, keyterms, keyphrases, documents);
+  			
+  			AnswerArray.storeAnswers(SourceId, jcasTarget, answers);
+  			log("Extracted " + answers.size() + " answer(s) from Source: "+ SourceId);
+
+        int i = 0;
+        for (AnswerWrapper ans: answers) {
+          System.out.println("## " + i + " " + ans.getScore() + " >>> " + ans.getText());
+          if (i++ >= 1000) break;
+        }
+			}
 		} catch (Exception e) {
 			throw new AnalysisEngineProcessException(e);
 		}
 	}
 	
-  private String SourceId;
+  protected final void log(String message) {
+    super.log(QALogEntry.INFORMATION_EXTRACTION, message);
+  }	
 }

@@ -10,6 +10,7 @@ import javax.naming.ConfigurationException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.Answer;
 import org.oaqa.model.AnswerList;
+import org.oaqa.model.Search;
 
 import edu.cmu.lti.oaqa.framework.data.base.FSArrayWrapper;
 
@@ -31,9 +32,22 @@ public class AnswerArray extends FSArrayWrapper<Answer> {
       // Delete only entry with the specified SourceId
       if (answers.getSourceId() == this.SourceId) {
         answers.removeFromIndexes();
+        break;
       }
     }
   }
+  
+
+  public static void GetAllSourceIds(JCas jcas, List<String> res) {
+    res.clear();
+    
+    Iterator<?> it = jcas.getJFSIndexRepository().getAllIndexedFS(AnswerList.type);
+    while (it.hasNext()) {
+      AnswerList answers = (AnswerList) it.next();
+      res.add(answers.getSourceId());
+    }
+  }
+  
 
   @Override
   public void complete() {

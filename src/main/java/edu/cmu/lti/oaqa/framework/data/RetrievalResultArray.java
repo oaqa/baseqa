@@ -31,8 +31,19 @@ public class RetrievalResultArray extends FSArrayWrapper<Document> {
       // Delete only entry with the specified SourceId
       if (search.getSourceId() == this.SourceId) {
         search.removeFromIndexes();
+        break;
       }
     }
+  }
+  
+  public static void GetAllSourceIds(JCas jcas, List<String> res) {
+    res.clear();
+    Iterator<?> it = jcas.getJFSIndexRepository().getAllIndexedFS(Search.type);
+    while (it.hasNext()) {
+      Search search = (Search) it.next();
+
+      res.add(search.getSourceId()); 
+    }    
   }
 
   @Override

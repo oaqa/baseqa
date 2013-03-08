@@ -40,6 +40,7 @@ import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.ecd.ResourceHandle;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.ecd.phase.event.TerminateEvent;
+import edu.cmu.lti.oaqa.framework.QALogEntry;
 
 
 /**
@@ -60,13 +61,14 @@ import edu.cmu.lti.oaqa.ecd.phase.event.TerminateEvent;
  */
 
 public class AnnotatorAggregator extends AbstractLoggedComponent {
-	private static String ElementNames    = "elements";
+	private static String ElementNameKeyword = "elements";
 	private static String InheritKeyword  = "inherit";
-	private static String FormatErrorMsg  = "Each entry in " + ElementNames + 
+	private static String FormatErrorMsg  = "Each entry in " + ElementNameKeyword + 
 														" must have exactly one element in the form: " +
 														" -" + InheritKeyword + ": <name>";
 
-  private 			List<AnalysisEngine> elements;
+  private 			ArrayList<AnalysisEngine> elements;
+  private       ArrayList<String>         ElemNames;
 
   @Override
   public void initialize(UimaContext context) throws ResourceInitializationException {
@@ -88,8 +90,9 @@ public class AnnotatorAggregator extends AbstractLoggedComponent {
     super.process(jcas);
   	
     try {
-      for (AnalysisEngine oneElem : elements) {
-        oneElem.process(jcas);     
+      for (int i = 0; i < elements.size(); ++i) {
+        log("Processing: " + ElemNames.get(i));
+        elements.get(i).process(jcas);     
       }
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
@@ -110,12 +113,13 @@ public class AnnotatorAggregator extends AbstractLoggedComponent {
    */
   
   private void ReadElements(UimaContext context) throws ResourceInitializationException {
-    Object elementNames = (Object) context.getConfigParameterValue(ElementNames);
-    if (elementNames != null) {
+    Object elemNamesInConfig = (Object) context.getConfigParameterValue(ElementNameKeyword);
+    if (elemNamesInConfig != null) {
       this.elements = new ArrayList<AnalysisEngine>();
+      this.ElemNames = new ArrayList<String>();
       
-      if (elementNames instanceof String) {
-        String description = (String) elementNames;
+      if (elemNamesInConfig instanceof String) {
+        String description = (String) elemNamesInConfig;
         Yaml yaml = new Yaml();
        
         
@@ -128,6 +132,9 @@ public class AnnotatorAggregator extends AbstractLoggedComponent {
 
         	for (Map<String, String> DescMap: elems) {
         		elements.add(CreateAnnotator(DescMap));
+  	        Map.Entry<String, String> OneDesc = Iterators.get(DescMap.entrySet().iterator(), 0);
+            ElemNames.add(OneDesc.getValue());
+        		log("Created annotator: " + OneDesc.getValue());
         	}
         } catch (ClassCastException e) {
         	System.err.printf("[ERROR] cannot parse elements' description:\n%s\n", description);
@@ -135,11 +142,11 @@ public class AnnotatorAggregator extends AbstractLoggedComponent {
         }
       } else {
       	throw new ResourceInitializationException(new Exception("Parameter: " +
-      																		ElementNames +" should be a string"));
+      																		ElementNameKeyword +" should be a string"));
       }
     } else {
     	throw new ResourceInitializationException(new Exception("Missing parameter: " 
-    																													+ ElementNames));
+    																													+ ElementNameKeyword));
     }
   	
   }
@@ -186,4 +193,8 @@ public class AnnotatorAggregator extends AbstractLoggedComponent {
   		throw new ResourceInitializationException(e);
 	  }
   }
+  
+  protected final void log(String message) {
+    super.log(QALogEntry.MISC, message);
+  }   
 }
