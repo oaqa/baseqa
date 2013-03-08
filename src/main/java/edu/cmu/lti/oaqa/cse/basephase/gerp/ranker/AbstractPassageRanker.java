@@ -41,7 +41,7 @@ public abstract class AbstractPassageRanker extends AbstractCandidateRanker {
     // save output
     try {
       PassageCandidateArray.storePassageCandidates(
-              GerpViewManager.getView(jcas, ViewType.CANDIDATE_RANK), passages, false);
+              GerpViewManager.getOrCreateView(jcas, ViewType.CANDIDATE_RANK), passages, false);
     } catch (CASException e) {
       throw new AnalysisEngineProcessException(e);
     }

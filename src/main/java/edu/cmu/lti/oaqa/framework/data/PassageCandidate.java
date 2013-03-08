@@ -1,6 +1,8 @@
 package edu.cmu.lti.oaqa.framework.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
@@ -26,6 +28,8 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements 
   private int rank = -1;
 
   private String queryString;
+  
+  private List<Float> probabilities;
 
   public PassageCandidate() {
     super();
@@ -39,12 +43,21 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements 
     this.end = end;
     this.probability = score;
     this.queryString = queryString;
+    
+  }
+  
+  public PassageCandidate(String docID, int start, int end, float score, String queryString, List<Float> probabilities)
+          throws AnalysisEngineProcessException {
+    this(docID,start,end,score,queryString);
+    this.probabilities = probabilities;  
   }
 
   @Override
   public String toString() {
     return docID + "[" + start + "," + end + "]";
   }
+  
+ 
 
   @Override
   public int hashCode() {
@@ -116,7 +129,15 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements 
   public void setQueryString(String queryString) {
     this.queryString = queryString;
   }
+  
+  public List<Float> getProbabilities(){
+	  if(this.probabilities == null)
+			return new ArrayList<Float>();
+		  return this.probabilities;
+  }
 
+  
+  
   @Override
   public void wrap(Passage passage) {
     super.wrap(passage);

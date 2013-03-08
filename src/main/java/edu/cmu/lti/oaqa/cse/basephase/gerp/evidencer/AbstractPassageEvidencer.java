@@ -41,7 +41,7 @@ public abstract class AbstractPassageEvidencer extends AbstractCandidateEvidence
     // save output
     try {
       PassageCandidateArray.storePassageCandidates(
-              GerpViewManager.getView(jcas, ViewType.CANDIDATE_EVIDENCE), passages, false);
+              GerpViewManager.getOrCreateView(jcas, ViewType.CANDIDATE_EVIDENCE), passages, false);
     } catch (CASException e) {
       throw new AnalysisEngineProcessException(e);
     }
