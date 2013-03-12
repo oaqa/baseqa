@@ -35,7 +35,7 @@ public abstract class AbstractInformationExtractor extends AbstractLoggedCompone
 	public void process(JCas FullJCas) throws AnalysisEngineProcessException {
 		try {
       JCas jcasSource = ViewManager.getDocumentView(FullJCas);
-      JCas jcasTarget = ViewManager.getFinalAnswerView(FullJCas);
+      JCas jcasTarget = ViewManager.getCandidateView(FullJCas);
 
 			InputElement input = (InputElement) BaseJCasHelper.getAnnotation(
 					                                               FullJCas, InputElement.type);
@@ -57,8 +57,13 @@ public abstract class AbstractInformationExtractor extends AbstractLoggedCompone
         log("Loaded " + documents.size() + 
             " candidates to extract answers from Source: "+ SourceId);
   			
-  			List<AnswerWrapper> answers = extractAnswerCandidates(qid, question, 
+  			List<AnswerWrapper> CurrAnswers = extractAnswerCandidates(qid, question, 
   																	answerType, keyterms, keyphrases, documents);
+  			
+  			// Produced by other annotators
+  			List<AnswerWrapper> answers = AnswerArray.retrieveAnswers(SourceId, jcasTarget);
+  			
+  			answers.addAll(CurrAnswers);
   			
   			AnswerArray.storeAnswers(SourceId, jcasTarget, answers);
   			log("Extracted " + answers.size() + " answer(s) from Source: "+ SourceId);

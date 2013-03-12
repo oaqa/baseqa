@@ -303,7 +303,7 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
 	      + ", featureLabels=" + Arrays.toString(featureLabels) + ", score="
 	      + score + ", retrievalResultList=" + retrievalResultList + "]";
   }
-
+	
 	@Override
   public boolean equals(Object obj) {
 	  if (this == obj)
@@ -343,16 +343,22 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
   	score		        = answer.getScore();
   	rank						= answer.getRank();
   	
-  	setFeatures(answer.getFeatureVector().toArray());
-  	setFeatureLables(answer.getFeatureLabels().toArray());
-
-  	int fls = answer.getSearchResultList().size();
-  	  	
-  	ArrayList<SearchResult>	sres = new ArrayList<SearchResult>();
-  	
-  	for(int i = 0; i < fls; ++i) {
-  		sres.add(answer.getSearchResultList(i));
+  	if (answer.getFeatureVector() != null) {
+	  	setFeatures(answer.getFeatureVector().toArray());
   	}
+    if (answer.getFeatureLabels() != null) {
+	  	setFeatureLables(answer.getFeatureLabels().toArray());
+  	}
+
+    if (answer.getSearchResultList() != null) {
+	  	int fls = answer.getSearchResultList().size();
+	  	  	
+	  	ArrayList<SearchResult>	sres = new ArrayList<SearchResult>();
+	  	
+	  	for(int i = 0; i < fls; ++i) {
+	  		sres.add(answer.getSearchResultList(i));
+	  	}
+    }
 
   }
 
