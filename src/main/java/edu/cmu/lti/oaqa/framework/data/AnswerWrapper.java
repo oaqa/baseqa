@@ -3,6 +3,7 @@ package edu.cmu.lti.oaqa.framework.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.uima.jcas.JCas;
@@ -27,8 +28,8 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
   private static final long serialVersionUID = 1L;
 
 	private String 									text = "";
-	private List<Double> 						featureList;
-	private String[] 								featureLabels;
+	private List<Double> 						featureValues;
+	private List<String> 						featureLabels;
 	private double 									score = 0.0;
 	private int 										rank = -1;
 	private List<RetrievalResult> 	retrievalResultList;
@@ -40,8 +41,9 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
   public AnswerWrapper() {
     super();
     
-		this.featureList = new ArrayList<Double>(0);
-		this.retrievalResultList = new ArrayList<RetrievalResult>(0);    
+		this.featureValues       = new ArrayList<Double>();
+		this.featureLabels       = new ArrayList<String>();
+		this.retrievalResultList = new ArrayList<RetrievalResult>();    
   }
   
 	/**
@@ -54,16 +56,32 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
   public AnswerWrapper(Answer answer) throws Exception {
     super();
 
-		this.featureList = new ArrayList<Double>();
+    this.featureValues       = new ArrayList<Double>();
+    this.featureLabels       = new ArrayList<String>();
+    this.retrievalResultList = new ArrayList<RetrievalResult>();    		
+		
 		this.text  = answer.getText();
 		this.score = answer.getScore();
 		this.rank  = answer.getRank();
-		if (answer.getFeatureVector() != null) {
+		
+		if (answer.getFeatureVector() != null &&
+		    answer.getFeatureLabels() != null) {
+		  
+		  if (answer.getFeatureLabels().size() !=
+		      answer.getFeatureVector().size()) {
+
+		      throw new Exception("Internal error, sizes are differrent. " +
+		                      " The size of feature values: " + answer.getFeatureLabels().size() +
+		                      " The size of feature labels: " + featureLabels.size());  		    
+		  }
+		  
 			for (int j = 0; j < answer.getFeatureVector().size(); j++) {
-				this.addFeature(answer.getFeatureVector(j));
+				this.addFeature(answer.getFeatureVector(j), answer.getFeatureLabels(j));
 			}
 		}
+		
 		this.retrievalResultList = new ArrayList<RetrievalResult>();
+		
 		if (answer.getSearchResultList() != null) {
 			for (int j = 0; j < answer.getSearchResultList().size(); j++) {
 				SearchResult OneRes = answer.getSearchResultList(j);
@@ -90,34 +108,16 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
 	 */
 	public AnswerWrapper(String text, List<RetrievalResult> results) {
 		this.text = text;
-		this.featureList = new ArrayList<Double>();
+		
+    this.featureLabels = new ArrayList<String>();
+    this.featureValues = new ArrayList<Double>();
+    
 		this.retrievalResultList = new ArrayList<RetrievalResult>();
 		for (RetrievalResult result : results) {
 			this.addRetrievalResult(result);
 		}
 	}
 
-
-	/**
-	 * Constructor
-	 * 
-	 * @param text
-	 *            text value of answer
-	 * @param results
-	 *            list of documents that contain answer
-	 * @param featureLabels
-	 *            labels of features stored in object
-	 */
-	public AnswerWrapper(String text, List<RetrievalResult> results,
-											String[] featureLabels) {
-		this.text = text;
-		this.retrievalResultList = new ArrayList<RetrievalResult>();
-		for (RetrievalResult result : results) {
-			this.addRetrievalResult(result);
-		}
-		this.featureLabels = featureLabels;
-		this.featureList = new ArrayList<Double>();
-	}
 
   
 	/**
@@ -181,16 +181,31 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
   }
 
 	
+  public int getFeatureQty() {
+    return featureValues.size();
+  }
 
 	/**
-	 * Set feature values
+	 * Set feature values & labels
 	 * 
-	 * @param features
+	 * @param featureValues
 	 *            list of feature values
+   * @param featureLabels
+   *            list of feature labels            
+	 * 
 	 */
-	public void setFeatures(List<Double> features) {
-		for (double feature : features) {
-			this.addFeature(feature);
+	public void setFeatures(List<Double> featureValues, List<String> featureLabels) 
+	            throws Exception{
+	  if (featureValues.size() != featureLabels.size()) {
+	    throw new Exception("Internal error, sizes are differrent. " +
+	                    " The size of feature values: " + featureValues.size() +
+	                    " The size of feature labels: " + featureLabels.size());  
+	  }
+	  Iterator<String> itLabel = featureLabels.iterator();
+	  Iterator<Double> itValue = featureValues.iterator();
+	  
+		while (itLabel.hasNext() && itValue.hasNext()) {
+			addFeature(itValue.next(), itLabel.next());
 		}
 	}
 
@@ -200,35 +215,28 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
 	 * @param features
 	 *            array of feature values
 	 */
-	public void setFeatures(double[] features) {
-		for (double feature : features) {
-			this.addFeature(feature);
+	public void setFeatures(double[] featureValues, String[] featureLabels) 
+	            throws Exception {
+    if (featureValues.length != featureLabels.length) {
+      throw new Exception("Internal error, sizes are differrent. " +
+                      " The size of feature values: " + featureValues.length +
+                      " The size of feature labels: " + featureLabels.length);  
+    }
+	  
+		for (int i = 0; i < featureValues.length; ++i) {
+			this.addFeature(featureValues[i], featureLabels[i]);
 		}
 	}
 
-	/**
-	 * Get feature values
-	 * 
-	 * @return array of feature values
-	 */
-	public double[] getFeatures() {
-		if (featureList != null) {
-			double[] features = new double[featureList.size()];
-			for (int i = 0; i < features.length; i++) {
-				features[i] = featureList.get(i);
-			}
-			return features;
-		}
-		return null;
-	}
 
 	/**
 	 * Add feature value
 	 * 
 	 * @param feature
 	 */
-	public void addFeature(double feature) {
-		this.featureList.add(feature);
+	public void addFeature(double feature, String label) {
+		this.featureValues.add(feature);
+		this.featureLabels.add(label);
 	}
 
 	/**
@@ -238,9 +246,50 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
 	 *            index of feature
 	 * @return feature value
 	 */
-	public double getFeature(int index) {
-		return this.featureList.get(index);
+	public double getFeatureValue(int index) {
+		return this.featureValues.get(index);
 	}
+	
+
+  /**
+   * Set feature label
+   * 
+   * @param index
+   *            index of feature
+   * @param value
+   *            feature label
+   */
+  public void setFeatureLabel(int index, String value) {
+    this.featureLabels.set(index, value);
+  }
+  
+
+  /**
+   * Set feature value
+   * 
+   * @param index
+   *            index of feature
+   * @param value
+   *            feature value          
+   */
+  public void setFeatureValue(int index, double value) {
+    this.featureValues.set(index, value);
+  }
+  
+
+  /**
+   * Get feature label
+   * 
+   * @param index
+   *            index of feature
+   * @return feature label
+
+   */
+  public String getFeatureLabel(int index) {
+    return this.featureLabels.get(index);
+  }
+  
+	
 
 	/**
 	 * Set answer text
@@ -261,94 +310,27 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
 		return this.text;
 	}
 
-	/**
-	 * Get feature labels
-	 * 
-	 * @return array of feature labels
-	 */
-	public String[] getFeatureLabels() {
-		return this.featureLabels;
-	}
 
-	/**
-	 * Set feature labels
-	 * 
-	 * @param featureLabels
-	 *            array of feature labels
-	 */
-	public void setFeatureLables(String[] featureLabels) {
-		this.featureLabels = featureLabels;
-	}
-	
-
-  @Override
-  public int hashCode() {
-	  final int prime = 31;
-	  int result = 1;
-	  result = prime * result + Arrays.hashCode(featureLabels);
-	  result = prime * result
-	      + ((featureList == null) ? 0 : featureList.hashCode());
-	  result = prime * result
-	      + ((retrievalResultList == null) ? 0 : retrievalResultList.hashCode());
-	  long temp;
-	  temp = Double.doubleToLongBits(score);
-	  result = prime * result + (int) (temp ^ (temp >>> 32));
-	  result = prime * result + ((text == null) ? 0 : text.hashCode());
-	  return result;
-  }
 
 	@Override
   public String toString() {
-	  return "AnswerWrapper [text=" + text + ", featureList=" + featureList
-	      + ", featureLabels=" + Arrays.toString(featureLabels) + ", score="
+	  return "AnswerWrapper [text=" + text + ", featureList=" + featureValues
+	      + ", featureLabels=" + featureLabels + ", score="
 	      + score + ", retrievalResultList=" + retrievalResultList + "]";
   }
 	
 	@Override
-  public boolean equals(Object obj) {
-	  if (this == obj)
-		  return true;
-	  if (obj == null)
-		  return false;
-	  if (getClass() != obj.getClass())
-		  return false;
-	  AnswerWrapper other = (AnswerWrapper) obj;
-	  if (!Arrays.equals(featureLabels, other.featureLabels))
-		  return false;
-	  if (featureList == null) {
-		  if (other.featureList != null)
-			  return false;
-	  } else if (!featureList.equals(other.featureList))
-		  return false;
-	  if (retrievalResultList == null) {
-		  if (other.retrievalResultList != null)
-			  return false;
-	  } else if (!retrievalResultList.equals(other.retrievalResultList))
-		  return false;
-	  if (Double.doubleToLongBits(score) != Double.doubleToLongBits(other.score))
-		  return false;
-	  if (text == null) {
-		  if (other.text != null)
-			  return false;
-	  } else if (!text.equals(other.text))
-		  return false;
-	  return true;
-  }
-
-	@Override
-  public void wrap(Answer answer) {
+  public void wrap(Answer answer) throws Exception {
     super.wrap(answer);
     
   	text						= answer.getText();
   	score		        = answer.getScore();
   	rank						= answer.getRank();
   	
-  	if (answer.getFeatureVector() != null) {
-	  	setFeatures(answer.getFeatureVector().toArray());
-  	}
-    if (answer.getFeatureLabels() != null) {
-	  	setFeatureLables(answer.getFeatureLabels().toArray());
-  	}
+
+	  setFeatures(answer.getFeatureVector().toArray(), 
+	              answer.getFeatureLabels().toArray());
+  	
 
     if (answer.getSearchResultList() != null) {
 	  	int fls = answer.getSearchResultList().size();
@@ -370,25 +352,29 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
     answer.setScore(score);
     answer.setRank(rank);
     
-    if (featureList != null) {
-	    double[]		tmpFeatureList = new double[featureList.size()];
-	    int i = 0;
-	    for (double d: featureList) {
-	    	tmpFeatureList[i++] = d;
-	    }
-	    DoubleArray tmpDoubleArray = new DoubleArray(jcas, tmpFeatureList.length);    
-	    tmpDoubleArray.copyFromArray(tmpFeatureList, 0, 0, tmpFeatureList.length);
-	    
-	    answer.setFeatureVector(tmpDoubleArray);
-    }
-    
-    if (featureLabels != null) {
-    	StringArray tmpLabelsArray = new StringArray(jcas, featureLabels.length);
-    	tmpLabelsArray.copyFromArray(featureLabels, 0, 0, featureLabels.length);
-    	
-    	answer.setFeatureLabels(tmpLabelsArray);
+
+    double[]		tmpFeatureValues = new double[featureValues.size()];
+
+    int i = 0;
+    for (double d: featureValues) {
+    	tmpFeatureValues[i++] = d;
     }
 
+    DoubleArray tmpValueArray = new DoubleArray(jcas, tmpFeatureValues.length);    
+    tmpValueArray.copyFromArray(tmpFeatureValues, 0, 0, tmpFeatureValues.length);
+    
+    answer.setFeatureVector(tmpValueArray);
+    
+    String[]  tmpFeatureLabels = new String[featureLabels.size()];
+    int j = 0;
+    for (String s: featureLabels) {
+      tmpFeatureLabels[j++] = s;
+    }
+    StringArray tmpLabelArray = new StringArray(jcas, tmpFeatureLabels.length);
+    tmpLabelArray.copyFromArray(tmpFeatureLabels, 0, 0, tmpFeatureLabels.length);
+   
+    	
+    answer.setFeatureLabels(tmpLabelArray);
     
     return answer;
   }
@@ -398,4 +384,60 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
     return Answer.class;
   }
 
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result
+        + ((featureLabels == null) ? 0 : featureLabels.hashCode());
+    result = prime * result
+        + ((featureValues == null) ? 0 : featureValues.hashCode());
+    result = prime * result + rank;
+    result = prime * result
+        + ((retrievalResultList == null) ? 0 : retrievalResultList.hashCode());
+    long temp;
+    temp = Double.doubleToLongBits(score);
+    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + ((text == null) ? 0 : text.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    AnswerWrapper other = (AnswerWrapper) obj;
+    if (featureLabels == null) {
+      if (other.featureLabels != null)
+        return false;
+    } else if (!featureLabels.equals(other.featureLabels))
+      return false;
+    if (featureValues == null) {
+      if (other.featureValues != null)
+        return false;
+    } else if (!featureValues.equals(other.featureValues))
+      return false;
+    if (rank != other.rank)
+      return false;
+    if (retrievalResultList == null) {
+      if (other.retrievalResultList != null)
+        return false;
+    } else if (!retrievalResultList.equals(other.retrievalResultList))
+      return false;
+    if (Double.doubleToLongBits(score) != Double.doubleToLongBits(other.score))
+      return false;
+    if (text == null) {
+      if (other.text != null)
+        return false;
+    } else if (!text.equals(other.text))
+      return false;
+    return true;
+  }
+
+  
+  
 }

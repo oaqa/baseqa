@@ -7,6 +7,6 @@ public interface AnnotationWrapper<T extends OAQATop> {
 
   public abstract T unwrap(JCas jcas) throws Exception;
 
-  public abstract void wrap(T top);
+  public abstract void wrap(T top) throws Exception;
 
 }

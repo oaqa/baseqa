@@ -103,7 +103,7 @@ public class RetrievalResult extends BaseAnnotationWrapper<Document> implements 
   }
 
   @Override
-  public void wrap(Document Doc) {
+  public void wrap(Document Doc) throws Exception {
     super.wrap(Doc);
     docID       = Doc.getUri();
     text        = Doc.getText();

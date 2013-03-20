@@ -44,7 +44,7 @@ public class QueryConceptWrapper extends BaseAnnotationWrapper<QueryConcept> imp
   }
 
   @Override
-  public void wrap(QueryConcept top) {
+  public void wrap(QueryConcept top) throws Exception {
     super.wrap(top);
     text = top.getText();
     type = top.getConceptType();

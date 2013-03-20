@@ -31,7 +31,7 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
   }
 
   @Override
-  public void wrap(T top) {
+  public void wrap(T top) throws Exception {
     implementingWrapper = top.getImplementingWrapper();
     componentId = top.getComponentId();
     probability = top.getProbability();

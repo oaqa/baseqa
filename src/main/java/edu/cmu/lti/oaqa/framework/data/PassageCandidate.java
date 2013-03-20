@@ -123,7 +123,7 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements 
   }
 
   @Override
-  public void wrap(Passage passage) {
+  public void wrap(Passage passage) throws Exception {
     super.wrap(passage);
     docID = passage.getUri();
     start = passage.getBegin();
