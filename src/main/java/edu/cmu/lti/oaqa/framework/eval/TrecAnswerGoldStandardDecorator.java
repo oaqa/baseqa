@@ -16,6 +16,13 @@ import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
 import edu.cmu.lti.oaqa.framework.eval.gs.GoldStandardPersistenceProvider;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
+/**
+ * A gold standard decorator: read the TREC answers and save them in a CAS.
+ * 
+ * @author Di Wang
+ * 
+ */
+
 public class TrecAnswerGoldStandardDecorator extends JCasAnnotator_ImplBase {
 
   private GoldStandardPersistenceProvider persistence;

@@ -41,7 +41,12 @@
         </plugins>
     </build>
     <dependencies>
-        <dependency>
+          <dependency>
+            <groupId>edu.cmu.lti.oaqa.ecd</groupId>
+            <artifactId>uima-ecd</artifactId>
+            <version>2.3.2-SNAPSHOT</version>
+          </dependency>
+          <dependency>
             <groupId>edu.cmu.lti.oaqa.cse</groupId>
             <artifactId>cse-framework</artifactId>
             <version>2.3.1</version>

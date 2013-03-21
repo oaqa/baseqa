@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.openqa.rankqa.collection;
+package edu.cmu.lti.oaqa.framework.collection;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,6 +28,14 @@ import org.apache.uima.resource.ResourceInitializationException;
 import edu.cmu.lti.oaqa.ecd.collection.KnownSizeCollectionReader;
 import edu.cmu.lti.oaqa.framework.DataElement;
 import edu.cmu.lti.oaqa.framework.collection.AbstractCollectionReader;
+
+/**
+ * A collection reader that reads from the file and remembers the
+ * number of read elements.
+ * 
+ * @author Di Wang
+ * 
+ */
 
 public final class KnownSizeFileCollectionReader extends AbstractCollectionReader implements KnownSizeCollectionReader{
 
