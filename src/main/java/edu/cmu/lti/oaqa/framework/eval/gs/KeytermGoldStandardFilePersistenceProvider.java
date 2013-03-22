@@ -125,8 +125,9 @@ public class KeytermGoldStandardFilePersistenceProvider extends
           return false;
       } else if (!dataset.equals(other.dataset))
         return false;
-      if (sequenceId != other.sequenceId)
-        return false;
+      if (!sequenceId.equals(other.sequenceId)) {
+          return false;
+      }      
       return true;
     }
 
