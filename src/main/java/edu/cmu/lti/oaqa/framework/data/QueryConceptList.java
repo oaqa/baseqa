@@ -15,9 +15,10 @@ import edu.cmu.lti.oaqa.framework.data.QueryConceptWrapper;
 
 /**
  * 
- * This is a helper class to store query concepts. The side effect
- * of this method is that it overrides the AbstractQuery object stored 
- * in the CAS.
+ * This is a helper class to store query concepts. 
+ *
+ * The side effect of this method is that it overrides 
+ * the AbstractQuery object stored in the CAS.
  * 
  * @author Zi Yang <ziy@cs.cmu.edu>
  * @author Leonid Boytsov

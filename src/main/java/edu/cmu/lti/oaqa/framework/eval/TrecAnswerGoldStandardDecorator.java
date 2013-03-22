@@ -51,14 +51,8 @@ public class TrecAnswerGoldStandardDecorator extends JCasAnnotator_ImplBase {
       final JCas gsView = ViewManager.getOrCreateView(aJCas, ViewType.FINAL_ANSWER_GS);
       final String dataset = input.getDataset();
       final String sequenceId = input.getSequenceId();
-      @SuppressWarnings("unchecked")
-      List<QueryConcept> gsAnnotations = (List<QueryConcept>) persistence.populateRetrievalGS(dataset, sequenceId, gsView);
-      if (!gsAnnotations.isEmpty()) {
-        for (int i = 0; i < gsAnnotations.size(); i++) {
-          gsAnnotations.get(i).addToIndexes(gsView);
-          //System.out.println(gsAnnotations.get(i).getText());
-        }
-      }
+      
+      persistence.populateRetrievalGS(dataset, sequenceId, gsView);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

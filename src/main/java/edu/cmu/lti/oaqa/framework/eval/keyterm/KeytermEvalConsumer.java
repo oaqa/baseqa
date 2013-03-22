@@ -18,6 +18,9 @@ import com.google.common.collect.Ordering;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
+import edu.cmu.lti.oaqa.framework.data.QueryConceptList;
+import edu.cmu.lti.oaqa.framework.data.QueryConceptTypes;
+import edu.cmu.lti.oaqa.framework.data.QueryConceptWrapper;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.RetrievalEvalConsumer;
 
 public class KeytermEvalConsumer extends RetrievalEvalConsumer<QueryConcept> {
@@ -51,12 +54,26 @@ public class KeytermEvalConsumer extends RetrievalEvalConsumer<QueryConcept> {
 
   @Override
   protected List<QueryConcept> getGoldStandard(JCas jcas) throws CASException {
-    Iterator<?> it = ViewManager.getOrCreateView(jcas, ViewType.CANDIDATE_GS)
-            .getJFSIndexRepository().getAllIndexedFS(QueryConcept.type);
+    JCas   gsView = ViewManager.getOrCreateView(jcas, ViewType.CANDIDATE_GS);
+    List<QueryConceptWrapper>   concepts;
+    
     List<QueryConcept> annotations = new ArrayList<QueryConcept>();
-    while (it.hasNext()) {
-      annotations.add((QueryConcept) it.next());
+    
+    try {
+      concepts = QueryConceptList.retrieveQueryConcepts(gsView);
+      
+      for(QueryConceptWrapper w: concepts) {
+        QueryConcept concept = w.unwrap(gsView);
+        
+        if (w.getType().equals(QueryConceptTypes.KeyTerms) ) {
+          annotations.add(concept);
+        }
+      }
+    
+    } catch (Exception e) {
+      throw new CASException(e);
     }
+    
     return annotations;
   }
 

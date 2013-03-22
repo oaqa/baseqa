@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Tue Mar 05 08:57:57 EST 2013 */
+/* First created by JCasGen Thu Mar 21 23:15:43 EDT 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A query concept in the abstract search query model.
- * Updated by JCasGen Tue Mar 05 08:57:57 EST 2013
+ * Updated by JCasGen Thu Mar 21 23:15:43 EDT 2013
  * @generated */
 public class QueryConcept_Type extends OAQATop_Type {
   /** @generated */

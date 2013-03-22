@@ -53,11 +53,11 @@ public class JCasHelper {
     List<QueryConceptWrapper> concepts = new ArrayList<QueryConceptWrapper>();
     
     for (String term: keyTerms) {
-      concepts.add(new QueryConceptWrapper(term, QueryConceptTypes.KEY_TERMS.toString()));
+      concepts.add(new QueryConceptWrapper(term, QueryConceptTypes.KeyTerms));
     }
     
     for (String phrase: keyPhrases) {
-      concepts.add(new QueryConceptWrapper(phrase, QueryConceptTypes.KEY_PHRASES.toString()));
+      concepts.add(new QueryConceptWrapper(phrase, QueryConceptTypes.KeyPhrases));
     }
     QueryConceptList.storeQueryConcepts(questionView, concepts);
   }
@@ -73,9 +73,9 @@ public class JCasHelper {
     List<QueryConceptWrapper> concepts = QueryConceptList.retrieveQueryConcepts(questionView);
     
     for (QueryConceptWrapper wrap: concepts) {
-      if (wrap.getType().equals(QueryConceptTypes.KEY_PHRASES.toString())) {
+      if (wrap.getType().equals(QueryConceptTypes.KeyPhrases)) {
         keyPhrases.add(wrap.getText());
-      } else if (wrap.getType().equals(QueryConceptTypes.KEY_TERMS.toString())) {
+      } else if (wrap.getType().equals(QueryConceptTypes.KeyTerms)) {
         keyTerms.add(wrap.getText());
       } else {
         throw new Exception("Unknown concept type: " + wrap.getType());

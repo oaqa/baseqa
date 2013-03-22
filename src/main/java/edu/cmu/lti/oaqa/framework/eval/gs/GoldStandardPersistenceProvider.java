@@ -17,13 +17,12 @@
 package edu.cmu.lti.oaqa.framework.eval.gs;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.Resource;
 
 public interface GoldStandardPersistenceProvider extends Resource {
 
-  List<?> populateRetrievalGS(String dataset, String sequenceId, JCas docGSView) throws SQLException;
+  void populateRetrievalGS(String dataset, String sequenceId, JCas docGSView) throws SQLException, Exception;
 
 }

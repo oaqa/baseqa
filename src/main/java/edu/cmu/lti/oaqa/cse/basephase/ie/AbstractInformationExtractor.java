@@ -67,12 +67,13 @@ public abstract class AbstractInformationExtractor extends AbstractLoggedCompone
   			
   			AnswerArray.storeAnswers(SourceId, jcasTarget, answers);
   			log("Extracted " + answers.size() + " answer(s) from Source: "+ SourceId);
-
+/*
         int i = 0;
         for (AnswerWrapper ans: answers) {
           System.out.println("## " + i + " " + ans.getScore() + " >>> " + ans.getText());
           if (i++ >= 1000) break;
         }
+*/
 			}
 		} catch (Exception e) {
 			throw new AnalysisEngineProcessException(e);

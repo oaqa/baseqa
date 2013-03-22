@@ -12,15 +12,16 @@ import java.util.regex.Pattern;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
-import org.apache.uima.jcas.cas.FSArray;
-
-import org.oaqa.model.Passage;
-import org.oaqa.model.Search;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import edu.cmu.lti.oaqa.framework.data.QueryConceptList;
+import edu.cmu.lti.oaqa.framework.data.QueryConceptTypes;
+import edu.cmu.lti.oaqa.framework.data.QueryConceptWrapper;
+import edu.cmu.lti.oaqa.framework.eval.gs.AbstractGoldStandardPersistenceProvider;
+
 import edu.cmu.lti.oaqa.framework.eval.gs.DatasetSequenceId;
-import edu.cmu.lti.oaqa.framework.eval.gs.GoldStandardSpan;
+
 
 /**
  * A gold standard persistence provider that can read a file containing gold standard annotations
@@ -33,14 +34,15 @@ import edu.cmu.lti.oaqa.framework.eval.gs.GoldStandardSpan;
  * framework for more detail)
  * 
  * @author Zi Yang <ziy@cs.cmu.edu>
+ * @author Di Wang
  * 
  */
-public class PassageGoldStandardFilePersistenceProvider extends
+public class TrecAnswerGoldStandardFilePersistenceProvider extends
         AbstractGoldStandardPersistenceProvider {
 
   private static final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
-  private Map<DatasetSequenceId, List<GoldStandardSpan>> id2gsSpans = new HashMap<DatasetSequenceId, List<GoldStandardSpan>>();
+  private Map<DatasetSequenceId, List<String>> id2gs = new HashMap<DatasetSequenceId, List<String>>();
 
   @Override
   public boolean initialize(ResourceSpecifier aSpecifier, Map<String, Object> aAdditionalParams)
@@ -55,13 +57,10 @@ public class PassageGoldStandardFilePersistenceProvider extends
         while (scanner.findInLine(lineSyntaxPattern) != null) {
           MatchResult result = scanner.match();
           DatasetSequenceId id = new DatasetSequenceId(dataset, result.group(1));
-          if (!id2gsSpans.containsKey(id)) {
-            id2gsSpans.put(id, new ArrayList<GoldStandardSpan>());
+          if (!id2gs.containsKey(id)) {
+            id2gs.put(id, new ArrayList<String>());
           }
-          GoldStandardSpan annotation = new GoldStandardSpan(result.group(2),
-                  Integer.parseInt(result.group(3)), Integer.parseInt(result.group(4)),
-                  result.group(5));
-          id2gsSpans.get(id).add(annotation);
+          id2gs.get(id).add(result.group(2));
           if (scanner.hasNextLine()) {
             scanner.nextLine();
           } else {
@@ -73,32 +72,21 @@ public class PassageGoldStandardFilePersistenceProvider extends
     } catch (IOException e) {
       e.printStackTrace();
     }
+    
+    
     return ret;
   }
 
   @Override
-  public void populateRetrievalGS(String dataset, String sequenceId, JCas gsView) {
-    List<Passage> gsAnnotations = new ArrayList<Passage>();
-    List<GoldStandardSpan> gsSpans = id2gsSpans.get(new DatasetSequenceId(dataset, sequenceId));
-    if (gsSpans != null) {
-      for (GoldStandardSpan gsSpan : gsSpans) {
-        Passage passage = new Passage(gsView);
-        passage.setUri(gsSpan.docId);
-        passage.setBegin(gsSpan.begin);
-        passage.setEnd(gsSpan.end);
-        passage.setAspects(gsSpan.aspects);
-        gsAnnotations.add(passage);
-      }
-    }
+  public void populateRetrievalGS(String dataset, String sequenceId, JCas gsView) throws Exception {
+    List<String>              gsAnswers = id2gs.get(new DatasetSequenceId(dataset, sequenceId));
+    List<QueryConceptWrapper> concepts = new ArrayList<QueryConceptWrapper>();
     
-    if (!gsAnnotations.isEmpty()) {
-      FSArray hitList = new FSArray(gsView, gsAnnotations.size());
-      for (int i = 0; i < gsAnnotations.size(); i++) {
-        hitList.set(i, gsAnnotations.get(i));
+    if (gsAnswers != null) {
+      for (String answer : gsAnswers) {
+        concepts.add(new QueryConceptWrapper(answer, QueryConceptTypes.Answers));
       }
-      Search search = new Search(gsView);
-      search.setHitList(hitList);
-      search.addToIndexes();
     }
+    QueryConceptList.storeQueryConcepts(gsView, concepts);
   }
 }

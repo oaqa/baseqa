@@ -16,16 +16,11 @@
 
 package edu.cmu.lti.oaqa.framework.eval;
 
-import java.util.List;
-
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.oaqa.model.Passage;
-import org.oaqa.model.Search;
 
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.framework.CasUtils;
@@ -62,17 +57,8 @@ public class PassageDatasetDecorator extends JCasAnnotator_ImplBase {
       final JCas docGSView = ViewManager.getOrCreateView(aJCas, ViewType.DOCUMENT_GS);
       final String dataset = input.getDataset();
       final String sequenceId = input.getSequenceId();
-      @SuppressWarnings("unchecked")
-      List<Passage> results = (List<Passage>) persistence.populateRetrievalGS(dataset, sequenceId, docGSView);
-      if (!results.isEmpty()) {
-        FSArray hitList = new FSArray(docGSView, results.size());
-        for (int i = 0; i < results.size(); i++) {
-          hitList.set(i, results.get(i));
-        }
-        Search search = new Search(docGSView);
-        search.setHitList(hitList);
-        search.addToIndexes();
-      }
+
+      persistence.populateRetrievalGS(dataset, sequenceId, docGSView);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

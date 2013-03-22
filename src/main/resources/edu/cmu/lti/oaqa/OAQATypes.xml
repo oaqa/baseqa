@@ -647,6 +647,10 @@ $Id:$</description>
           <description>Query phrases.</description>
         </value>
         <value>
+          <string>ANSWERS</string>
+          <description>Answers.</description>
+        </value>
+        <value>
           <string>KEYWORD_TYPE</string>
           <description>Simple concept.</description>
         </value>
