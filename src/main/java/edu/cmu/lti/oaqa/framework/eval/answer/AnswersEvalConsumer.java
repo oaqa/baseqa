@@ -51,14 +51,16 @@ public class AnswersEvalConsumer extends CasConsumer_ImplBase {
   private final class AnswerToIdString implements Function<String, String> {
     @Override
     public String apply(String answ) {
-      return answ.hashCode() + "";
+      // Answers are very small, so the text of an answer
+      // is a unique identifier
+      return answ;
     }
   }
 
   private final class AnswerOrdering extends Ordering<String> {
     @Override
     public int compare(String left, String right) {
-      return compare(left, right);
+      return left.compareTo(right);
     }
   }
 
@@ -99,8 +101,8 @@ public class AnswersEvalConsumer extends CasConsumer_ImplBase {
         List<AnswerWrapper>       _answ = (view != null) ? 
                                           AnswerArray.retrieveAnswers(AnswerArray.MergedSourceId, view) : 
                                           Collections.<AnswerWrapper> emptyList();
-        List<String>              gs = new ArrayList();
-        List<String>              answ = new ArrayList();
+        List<String>              gs = new ArrayList<String>();
+        List<String>              answ = new ArrayList<String>();
 
         for(QueryConceptWrapper w: _gs) {
           gs.add(w.getText());
