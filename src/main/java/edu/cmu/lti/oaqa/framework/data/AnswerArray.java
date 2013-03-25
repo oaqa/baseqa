@@ -15,6 +15,7 @@ import org.oaqa.model.Search;
 import edu.cmu.lti.oaqa.framework.data.base.FSArrayWrapper;
 
 public class AnswerArray extends FSArrayWrapper<Answer> {
+  public static final String MergedSourceId = "__AllMergedAnswersFakeId__";
 
   public AnswerArray(String SourceId, JCas jcas, int length) throws ConfigurationException {
     super(jcas, length);
