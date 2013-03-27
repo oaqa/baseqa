@@ -20,9 +20,14 @@ $Id:$</description>
           <description>The unique id of the component that created this instance.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
-        <featureDescription>
+        <!--featureDescription>
           <name>probability</name>
           <description>The annotator's estimate of the probability associated with this annotation.</description>
+          <rangeTypeName>uima.cas.Double</rangeTypeName>
+        </featureDescription-->
+        <featureDescription>
+          <name>score</name>
+          <description>The annotator's score.</description>
           <rangeTypeName>uima.cas.Double</rangeTypeName>
         </featureDescription>
         <featureDescription>

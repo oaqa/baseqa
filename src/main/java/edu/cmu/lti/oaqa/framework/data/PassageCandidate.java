@@ -13,7 +13,7 @@ import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements Serializable {
+public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements Serializable, ScoreInterface {
 
   private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,6 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements 
   private int start;
   private int end;
   private int rank = -1;
-  private double score = 0.0;
   private String queryString;
 
   public PassageCandidate() {
@@ -110,7 +109,7 @@ public class PassageCandidate extends BaseAnnotationWrapper<Passage> implements 
     this.rank = rank;
   }
 
-  public void setScore(int score) {
+  public void setScore(double score) {
     this.score = score;
   }
 

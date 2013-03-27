@@ -2,7 +2,6 @@ package edu.cmu.lti.oaqa.framework.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,14 +22,13 @@ import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
  *  
  */
 
-public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Serializable {
+public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Serializable, ScoreInterface {
 
   private static final long serialVersionUID = 1L;
 
 	private String 									text = "";
 	private List<Double> 						featureValues;
 	private List<String> 						featureLabels;
-	private double 									score = 0.0;
 	private int 										rank = -1;
 	private List<RetrievalResult> 	retrievalResultList;
 

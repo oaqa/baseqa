@@ -27,9 +27,12 @@ public abstract class AbstractInformationExtractor extends AbstractLoggedCompone
     super.initialize(c); 
   }
 
-	public abstract List<AnswerWrapper> extractAnswerCandidates(String qid,
-			String questionText, String answerType, List<String> keyterms,
-			List<String> keyphrases, List<RetrievalResult> documents);
+	public abstract List<AnswerWrapper> extractOneAnswerCandidate(String qid,
+			                                                    String questionText, 
+			                                                    String answerType, 
+			                                                    List<String> keyterms,
+			                                                    List<String> keyphrases,
+			                                                    RetrievalResult OneDoc);
 
 	@Override
 	public void process(JCas FullJCas) throws AnalysisEngineProcessException {
@@ -51,19 +54,28 @@ public abstract class AbstractInformationExtractor extends AbstractLoggedCompone
 			RetrievalResultArray.GetAllSourceIds(jcasSource, AllSourceIds);
 			
 			for (String SourceId: AllSourceIds) {
+        // Produced by other information extractors
+        List<AnswerWrapper> answers = AnswerArray.retrieveAnswers(SourceId, jcasTarget);
+			  
   			List<RetrievalResult> documents
   								= RetrievalResultArray.retrieveRetrievalResults(SourceId, jcasSource);
   			
         log("Loaded " + documents.size() + 
             " candidates to extract answers from Source: "+ SourceId);
   			
-  			List<AnswerWrapper> CurrAnswers = extractAnswerCandidates(qid, question, 
-  																	answerType, keyterms, keyphrases, documents);
-  			
-  			// Produced by other annotators
-  			List<AnswerWrapper> answers = AnswerArray.retrieveAnswers(SourceId, jcasTarget);
-  			
-  			answers.addAll(CurrAnswers);
+  			for (RetrievalResult doc: documents) {
+  			    List<AnswerWrapper> OneDocAnsw = extractOneAnswerCandidate(qid, question, 
+  																	                                 answerType, 
+  																	                                 keyterms, 
+  																	                                 keyphrases,
+  																	                                 doc);
+  			      		      
+  			    for (AnswerWrapper ans: OneDocAnsw) {
+  			      ans.addFeature(doc.getScore(), "RetrievalScore");
+  			      // TODO: also save 2 categorical features: SourceId & getComponentId()
+  			    }
+  	        answers.addAll(OneDocAnsw);
+  			}  			
   			
   			AnswerArray.storeAnswers(SourceId, jcasTarget, answers);
   			log("Extracted " + answers.size() + " answer(s) from Source: "+ SourceId);

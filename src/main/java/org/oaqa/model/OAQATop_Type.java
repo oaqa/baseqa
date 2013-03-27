@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Tue Mar 05 08:57:57 EST 2013 */
+/* First created by JCasGen Tue Mar 26 17:55:41 EDT 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** The base class for OAQA feature structures that are not Annotations.
- * Updated by JCasGen Tue Mar 05 08:57:57 EST 2013
+ * Updated by JCasGen Tue Mar 26 17:55:41 EDT 2013
  * @generated */
 public class OAQATop_Type extends TOP_Type {
   /** @generated */
@@ -63,20 +63,20 @@ public class OAQATop_Type extends TOP_Type {
   
  
   /** @generated */
-  final Feature casFeat_probability;
+  final Feature casFeat_score;
   /** @generated */
-  final int     casFeatCode_probability;
+  final int     casFeatCode_score;
   /** @generated */ 
-  public double getProbability(int addr) {
-        if (featOkTst && casFeat_probability == null)
-      jcas.throwFeatMissing("probability", "org.oaqa.model.OAQATop");
-    return ll_cas.ll_getDoubleValue(addr, casFeatCode_probability);
+  public double getScore(int addr) {
+        if (featOkTst && casFeat_score == null)
+      jcas.throwFeatMissing("score", "org.oaqa.model.OAQATop");
+    return ll_cas.ll_getDoubleValue(addr, casFeatCode_score);
   }
   /** @generated */    
-  public void setProbability(int addr, double v) {
-        if (featOkTst && casFeat_probability == null)
-      jcas.throwFeatMissing("probability", "org.oaqa.model.OAQATop");
-    ll_cas.ll_setDoubleValue(addr, casFeatCode_probability, v);}
+  public void setScore(int addr, double v) {
+        if (featOkTst && casFeat_score == null)
+      jcas.throwFeatMissing("score", "org.oaqa.model.OAQATop");
+    ll_cas.ll_setDoubleValue(addr, casFeatCode_score, v);}
     
   
  
@@ -111,8 +111,8 @@ public class OAQATop_Type extends TOP_Type {
     casFeatCode_componentId  = (null == casFeat_componentId) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_componentId).getCode();
 
  
-    casFeat_probability = jcas.getRequiredFeatureDE(casType, "probability", "uima.cas.Double", featOkTst);
-    casFeatCode_probability  = (null == casFeat_probability) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_probability).getCode();
+    casFeat_score = jcas.getRequiredFeatureDE(casType, "score", "uima.cas.Double", featOkTst);
+    casFeatCode_score  = (null == casFeat_score) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_score).getCode();
 
  
     casFeat_implementingWrapper = jcas.getRequiredFeatureDE(casType, "implementingWrapper", "uima.cas.String", featOkTst);

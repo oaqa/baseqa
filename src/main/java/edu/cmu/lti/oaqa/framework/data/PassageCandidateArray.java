@@ -11,7 +11,6 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.Passage;
 import org.oaqa.model.Search;
 
-import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.data.base.FSArrayWrapper;
 
 public class PassageCandidateArray extends FSArrayWrapper<Passage> {
@@ -30,7 +29,7 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     while (it.hasNext()) {
       Search search = (Search) it.next();
       // Delete only entry with the specified SourceId 
-      if (search.getSourceId() == this.SourceId) {
+      if (search.getSourceId().equals(SourceId)) {
         search.removeFromIndexes();
         break;
       }
@@ -84,7 +83,7 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     Iterator<?> it = jcas.getJFSIndexRepository().getAllIndexedFS(Search.type);
     while (it.hasNext()) {
       Search search = (Search) it.next(); 
-      if (search.getSourceId() == this.SourceId) {
+      if (search.getSourceId().equals(SourceId)) {
         array = search.getHitList();
         return getArray(Passage.class, PassageCandidate.class);
       }

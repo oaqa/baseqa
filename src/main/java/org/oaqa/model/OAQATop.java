@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Tue Mar 05 08:57:57 EST 2013 */
+/* First created by JCasGen Tue Mar 26 17:55:41 EDT 2013 */
 package org.oaqa.model;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,8 +11,8 @@ import org.apache.uima.jcas.cas.TOP;
 
 
 /** The base class for OAQA feature structures that are not Annotations.
- * Updated by JCasGen Tue Mar 05 08:57:57 EST 2013
- * XML source: /home/leo/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Tue Mar 26 17:55:41 EDT 2013
+ * XML source: /usr0/srchvrs/stuff/OAQA.rankqa/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class OAQATop extends TOP {
   /** @generated
@@ -73,21 +73,21 @@ public class OAQATop extends TOP {
    
     
   //*--------------*
-  //* Feature: probability
+  //* Feature: score
 
-  /** getter for probability - gets The annotator's estimate of the probability associated with this annotation.
+  /** getter for score - gets The annotator's score.
    * @generated */
-  public double getProbability() {
-    if (OAQATop_Type.featOkTst && ((OAQATop_Type)jcasType).casFeat_probability == null)
-      jcasType.jcas.throwFeatMissing("probability", "org.oaqa.model.OAQATop");
-    return jcasType.ll_cas.ll_getDoubleValue(addr, ((OAQATop_Type)jcasType).casFeatCode_probability);}
+  public double getScore() {
+    if (OAQATop_Type.featOkTst && ((OAQATop_Type)jcasType).casFeat_score == null)
+      jcasType.jcas.throwFeatMissing("score", "org.oaqa.model.OAQATop");
+    return jcasType.ll_cas.ll_getDoubleValue(addr, ((OAQATop_Type)jcasType).casFeatCode_score);}
     
-  /** setter for probability - sets The annotator's estimate of the probability associated with this annotation. 
+  /** setter for score - sets The annotator's score. 
    * @generated */
-  public void setProbability(double v) {
-    if (OAQATop_Type.featOkTst && ((OAQATop_Type)jcasType).casFeat_probability == null)
-      jcasType.jcas.throwFeatMissing("probability", "org.oaqa.model.OAQATop");
-    jcasType.ll_cas.ll_setDoubleValue(addr, ((OAQATop_Type)jcasType).casFeatCode_probability, v);}    
+  public void setScore(double v) {
+    if (OAQATop_Type.featOkTst && ((OAQATop_Type)jcasType).casFeat_score == null)
+      jcasType.jcas.throwFeatMissing("score", "org.oaqa.model.OAQATop");
+    jcasType.ll_cas.ll_setDoubleValue(addr, ((OAQATop_Type)jcasType).casFeatCode_score, v);}    
    
     
   //*--------------*

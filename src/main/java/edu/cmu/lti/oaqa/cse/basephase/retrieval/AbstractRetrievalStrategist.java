@@ -67,7 +67,7 @@ public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponen
       // do task
       List<RetrievalResult> documents = retrieveDocuments(qid, input.getQuestion(), keyTerms, keyPhrases);
       
-      log("RETRIEVED: " + documents.size());
+      log("RETRIEVED: " + documents.size() + " SourceId:" + SourceId);
       
       // save output
       RetrievalResultArray.storeRetrievalResults(SourceId, ViewManager.getDocumentView(jcas), documents);

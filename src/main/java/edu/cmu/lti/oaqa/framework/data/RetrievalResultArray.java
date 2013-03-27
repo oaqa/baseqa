@@ -29,7 +29,7 @@ public class RetrievalResultArray extends FSArrayWrapper<Document> {
     while (it.hasNext()) {
       Search search = (Search) it.next();
       // Delete only entry with the specified SourceId
-      if (search.getSourceId() == this.SourceId) {
+      if (search.getSourceId().equals(this.SourceId)) {
         search.removeFromIndexes();
         break;
       }
@@ -81,7 +81,7 @@ public class RetrievalResultArray extends FSArrayWrapper<Document> {
     Iterator<?> it = jcas.getJFSIndexRepository().getAllIndexedFS(Search.type);
     while (it.hasNext()) {
       Search search = (Search) it.next();
-      if (search.getSourceId() == this.SourceId) {
+      if (search.getSourceId().equals(this.SourceId)) {
         array = search.getHitList();
         return getArray(Document.class, RetrievalResult.class);        
       }

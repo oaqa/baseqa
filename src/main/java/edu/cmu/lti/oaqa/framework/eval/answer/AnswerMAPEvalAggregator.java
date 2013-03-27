@@ -72,6 +72,10 @@ public class AnswerMAPEvalAggregator extends Resource_ImplBase implements Evalua
                                  Ordering<String> ordering, Function<String, String> toIdString) {
     Set<String> gsSet = new HashSet<String>(); 
     EvaluationHelper.getStringSet(gs, toIdString);
+
+    int pos = 1; 
+    float nrel = 0;
+    float AveP = 0;
     
     for(String AnswPat: gs) {
       Pattern pat = Pattern.compile(AnswPat);
@@ -80,18 +84,24 @@ public class AnswerMAPEvalAggregator extends Resource_ImplBase implements Evalua
         Matcher m = pat.matcher(oneAns);
 
         if (m.matches()) {
-          System.out.println("Match: " + oneAns + " for " + AnswPat);
+          ++nrel;
+          AveP += nrel / pos;
+          System.out.println("Match: " + oneAns + " for " + AnswPat + " AveP so far: " + AveP);
           gsSet.add(oneAns);
         }
+        ++pos;
       }
     }
+    if (nrel > 0) AveP /= nrel;
 
     List<String> docsArray = EvaluationHelper.getUniqeDocIdList(answ, ordering, toIdString);
     float docavep = EvaluationHelper.getAvgMAP(docsArray, gsSet);
     
-    System.out.println("Average precision: " + docavep);
+    System.out.println("Average precision           : " + docavep);
+    System.out.println("Average precision my version: " + AveP);
 
-    return new PassageMAPCounts(docavep, 0, 0, 1);
+    //return new PassageMAPCounts(docavep, 0, 0, 1);
+    return new PassageMAPCounts(AveP, 0, 0, 1);
   }
 
 }

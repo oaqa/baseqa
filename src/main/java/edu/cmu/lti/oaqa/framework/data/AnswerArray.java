@@ -31,7 +31,7 @@ public class AnswerArray extends FSArrayWrapper<Answer> {
     while (it.hasNext()) {
       AnswerList answers = (AnswerList) it.next();
       // Delete only entry with the specified SourceId
-      if (answers.getSourceId() == this.SourceId) {
+      if (answers.getSourceId().equals(SourceId)) {
         answers.removeFromIndexes();
         break;
       }
@@ -85,7 +85,7 @@ public class AnswerArray extends FSArrayWrapper<Answer> {
     Iterator<?> it = jcas.getJFSIndexRepository().getAllIndexedFS(AnswerList.type);
     while (it.hasNext()) {
       AnswerList answers = (AnswerList) it.next();
-      if (answers.getSourceId() == this.SourceId) {
+      if (answers.getSourceId().equals(SourceId)) {
         array = answers.getAnswerList();
         return getArray(Answer.class, AnswerWrapper.class);        
       }
