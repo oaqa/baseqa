@@ -309,8 +309,15 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
 	}
 
 
+	public List<Double> getFeatureValues() {
+    return featureValues;
+  }
 
-	@Override
+  public List<String> getFeatureLabels() {
+    return featureLabels;
+  }
+
+  @Override
   public String toString() {
 	  return "AnswerWrapper [text=" + text + ", featureList=" + featureValues
 	      + ", featureLabels=" + featureLabels + ", score="

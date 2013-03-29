@@ -21,6 +21,7 @@ import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 
 
 public abstract class AbstractInformationExtractor extends AbstractLoggedComponent {
+  public static String RetrievalScoreName = "RetrievalScore";
   
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
@@ -60,8 +61,11 @@ public abstract class AbstractInformationExtractor extends AbstractLoggedCompone
   			List<RetrievalResult> documents
   								= RetrievalResultArray.retrieveRetrievalResults(SourceId, jcasSource);
   			
+  			String ExtractorId = this.getClass().getSimpleName();
+  			
         log("Loaded " + documents.size() + 
-            " candidates to extract answers from Source: "+ SourceId);
+            " candidates to extract answers from Source: "+ SourceId + 
+            " Extractor class: " + ExtractorId);
   			
   			for (RetrievalResult doc: documents) {
   			    List<AnswerWrapper> OneDocAnsw = extractOneAnswerCandidate(qid, question, 
@@ -71,21 +75,14 @@ public abstract class AbstractInformationExtractor extends AbstractLoggedCompone
   																	                                 doc);
   			      		      
   			    for (AnswerWrapper ans: OneDocAnsw) {
-  			      ans.addFeature(doc.getScore(), "RetrievalScore");
-  			      // TODO: also save 2 categorical features: SourceId & getComponentId()
+  			      ans.addFeature(doc.getScore(), RetrievalScoreName);
+  			      ans.addFeature(doc.getScore(), SourceId + "#" + ExtractorId);
   			    }
   	        answers.addAll(OneDocAnsw);
   			}  			
   			
   			AnswerArray.storeAnswers(SourceId, jcasTarget, answers);
   			log("Extracted " + answers.size() + " answer(s) from Source: "+ SourceId);
-/*
-        int i = 0;
-        for (AnswerWrapper ans: answers) {
-          System.out.println("## " + i + " " + ans.getScore() + " >>> " + ans.getText());
-          if (i++ >= 1000) break;
-        }
-*/
 			}
 		} catch (Exception e) {
 			throw new AnalysisEngineProcessException(e);

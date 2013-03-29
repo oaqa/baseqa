@@ -39,9 +39,20 @@ import edu.cmu.lti.oaqa.framework.eval.passage.PassageMAPEvalPersistenceProvider
 import edu.cmu.lti.oaqa.framework.eval.retrieval.EvaluationAggregator;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.EvaluationHelper;
 
-public class AnswerMAPEvalAggregator extends Resource_ImplBase implements EvaluationAggregator<String> {
+/**
+ * The class to compute the mean reciprocal rank and the accuracy.
+ *
+ * @author Leonid Boytsov
+ * TODO: use a separate persistency provider, not the one that
+ * was designed to store MAP values.
+ */
+public class AnswerMRREvalAggregator extends Resource_ImplBase implements EvaluationAggregator<String> {
 
   private PassageMAPEvalPersistenceProvider persistence;
+
+  public static Pattern CompileGSPattern(String gsStr) {
+      return Pattern.compile("\\b" + gsStr + "\\b", Pattern.CASE_INSENSITIVE);
+  }
 
   @Override
   public boolean initialize(ResourceSpecifier aSpecifier, Map<String, Object> tuples)
@@ -70,38 +81,35 @@ public class AnswerMAPEvalAggregator extends Resource_ImplBase implements Evalua
 
   private PassageMAPCounts count(List<String> answ, List<String> gs, 
                                  Ordering<String> ordering, Function<String, String> toIdString) {
-    Set<String> gsSet = new HashSet<String>(); 
     EvaluationHelper.getStringSet(gs, toIdString);
 
-    int pos = 1; 
-    float nrel = 0;
-    float AveP = 0;
+    int    pos = 1; 
+    int    nrel = 0;
+    float  ReciprocalRank = 0;
+    float  Accuracy = 0;
     
     for(String AnswPat: gs) {
-      Pattern pat = Pattern.compile(AnswPat);
+      Pattern pat = CompileGSPattern(AnswPat);
       
       for(String oneAns: answ) {
         Matcher m = pat.matcher(oneAns);
 
         if (m.matches()) {
+          if (pos == 1) Accuracy = 1;
+          if (nrel == 0) {
+            ReciprocalRank = 1 / (float)pos;
+          }
           ++nrel;
-          AveP += nrel / pos;
-          System.out.println("Match: " + oneAns + " for " + AnswPat + " AveP so far: " + AveP);
-          gsSet.add(oneAns);
+          System.out.println("Match: " + oneAns + " for " + AnswPat + " ReciprocalRank: " + ReciprocalRank);
         }
         ++pos;
       }
     }
-    if (nrel > 0) AveP /= nrel;
 
-    List<String> docsArray = EvaluationHelper.getUniqeDocIdList(answ, ordering, toIdString);
-    float docavep = EvaluationHelper.getAvgMAP(docsArray, gsSet);
-    
-    System.out.println("Average precision           : " + docavep);
-    System.out.println("Average precision my version: " + AveP);
+    System.out.println("Reciprocal rank: " + ReciprocalRank);
+    System.out.println("Accuracy: "        + Accuracy);
 
-    //return new PassageMAPCounts(docavep, 0, 0, 1);
-    return new PassageMAPCounts(AveP, 0, 0, 1);
+    return new PassageMAPCounts(ReciprocalRank, Accuracy, 0, 1);
   }
 
 }
