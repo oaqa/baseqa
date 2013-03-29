@@ -28,7 +28,7 @@ public abstract class AbstractInformationExtractor extends AbstractLoggedCompone
     super.initialize(c); 
   }
 
-	public abstract List<AnswerWrapper> extractOneAnswerCandidate(String qid,
+	public abstract List<AnswerWrapper> extractAnswerCandidatesFromOneDoc(String qid,
 			                                                    String questionText, 
 			                                                    String answerType, 
 			                                                    List<String> keyterms,
@@ -68,7 +68,8 @@ public abstract class AbstractInformationExtractor extends AbstractLoggedCompone
             " Extractor class: " + ExtractorId);
   			
   			for (RetrievalResult doc: documents) {
-  			    List<AnswerWrapper> OneDocAnsw = extractOneAnswerCandidate(qid, question, 
+  			    List<AnswerWrapper> OneDocAnsw = extractAnswerCandidatesFromOneDoc(qid, 
+  			                                                             question, 
   																	                                 answerType, 
   																	                                 keyterms, 
   																	                                 keyphrases,
