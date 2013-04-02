@@ -40,7 +40,9 @@ public class ScoreNormalizerHelper<T extends ScoreInterface> {
   }
 
   public enum TransformMode {
-    no_transform, exponential, logarithmic, reciprocal_of_rank, normalized, normalized_of_exponential, exponential_of_normalized, logarithmic_of_normalized, normalized_of_logarithmic,
+    no_transform, exponential, logarithmic, reciprocal_of_rank, 
+    normalized, normalized_of_exponential, exponential_of_normalized, 
+    logarithmic_of_normalized, normalized_of_logarithmic,z_Score //Added z-score part
   }
 
   public TransformMode getTransformModeValue(String mode) {
@@ -145,6 +147,30 @@ public class ScoreNormalizerHelper<T extends ScoreInterface> {
           ret.put(score, score);
         }
         break;
+        
+      case z_Score:
+    	  //First compute the mean
+    	  double mean=0.0;
+    	  double sum_Scores=0.0;
+    	  int n=scores.size();
+    	  for (double score : scores) {
+    		  sum_Scores = sum_Scores + score;
+            }
+    	  mean = sum_Scores / n;
+    			  
+    	  //Next compute the standard deviation
+    	  //Standard formula z-score = sqrt(1/N (i=0 to N)(score_i - mean)^2)
+    	  double std_Dev=0.0;
+    	  for (double score : scores) 
+    	  {
+    		  std_Dev = std_Dev + Math.pow((score -mean), 2);
+    	  }
+    	  std_Dev = Math.sqrt(std_Dev/n);
+    	  
+    	  for (double score : scores) {
+              ret.put(score, zScore(score,mean,std_Dev));
+            }
+            break; 
     }
     return ret;
   }
@@ -152,7 +178,16 @@ public class ScoreNormalizerHelper<T extends ScoreInterface> {
   private static double safeLog(double value) {
     return value > 0 ? Math.log(value) : Double.NEGATIVE_INFINITY;
   }
-
+  
+  public static double zScore(double score, double mean,double std_dev)
+  {
+	  if (score==0.0)
+			  return 0.0;
+	  else
+		  return (score-mean)/std_dev;
+  }
+  
+  
   public void initialize(String sourceId, TransformMode Mode, double DocWeight)
           throws ResourceInitializationException {
     this.SourceId = sourceId;

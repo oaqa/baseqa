@@ -16,6 +16,8 @@
 
 package edu.cmu.lti.oaqa.cse.basephase.retrieval;
 
+import java.util.Map;
+
 import org.apache.uima.UimaContext;
 import edu.cmu.lti.oaqa.framework.UimaContextHelper;
 
@@ -34,6 +36,14 @@ public class SourceIdHelper {
     return UimaContextHelper.getConfigParameterStringValue(c, 
         SourceIdHelper.SourceIdParamName, 
         SourceIdHelper.DefaultSourceId);
+  }
+  
+  public static String GetSourceIdFromMap(Map<String, Object> addParams) {
+    if (addParams.containsKey(SourceIdParamName)) {
+      return (String)addParams.get(SourceIdParamName);
+    }
+      
+    return DefaultSourceId;
   }
 };
 

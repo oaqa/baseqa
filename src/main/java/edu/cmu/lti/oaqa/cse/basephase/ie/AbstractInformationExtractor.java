@@ -2,13 +2,14 @@ package edu.cmu.lti.oaqa.cse.basephase.ie;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.resource.ResourceSpecifier;
 
-import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
+import edu.cmu.lti.oaqa.cse.baseqa.ConfigurableProviderAnnotator;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
@@ -20,12 +21,15 @@ import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 
 
-public abstract class AbstractInformationExtractor extends AbstractLoggedComponent {
+public abstract class AbstractInformationExtractor extends ConfigurableProviderAnnotator {
   public static String RetrievalScoreName = "RetrievalScore";
   
   @Override
-  public void initialize(UimaContext c) throws ResourceInitializationException {
-    super.initialize(c); 
+  public boolean initialize(ResourceSpecifier aSpecifier, Map<String, Object> addParams) 
+                             throws ResourceInitializationException {
+    if (!super.initialize(aSpecifier, addParams)) return false;
+    
+    return true;
   }
 
 	public abstract List<AnswerWrapper> extractAnswerCandidatesFromOneDoc(String qid,
