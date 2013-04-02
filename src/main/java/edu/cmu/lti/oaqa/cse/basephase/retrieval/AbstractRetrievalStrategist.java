@@ -18,13 +18,13 @@ package edu.cmu.lti.oaqa.cse.basephase.retrieval;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.UimaContext;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.resource.ResourceSpecifier;
 
-import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.QALogEntry;
 import edu.cmu.lti.oaqa.framework.ViewManager;
@@ -33,27 +33,35 @@ import edu.cmu.lti.oaqa.framework.data.RetrievalResult;
 import edu.cmu.lti.oaqa.framework.data.RetrievalResultArray;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 import edu.cmu.lti.oaqa.cse.basephase.retrieval.SourceIdHelper;
+import edu.cmu.lti.oaqa.cse.baseqa.ConfigurableProviderAnnotator;;
 
 /**
  * 
+ * @author Leonid Boytsov 
  * @author Zi Yang <ziy@cs.cmu.edu> 
  * 
  */
-public abstract class AbstractRetrievalStrategist extends AbstractLoggedComponent {
+public abstract class AbstractRetrievalStrategist extends ConfigurableProviderAnnotator {
 
   protected abstract List<RetrievalResult> retrieveDocuments(String qid, String question,
                       List<String> keyTerms, List<String> keyPhrases) throws Exception;
 
 
   @Override
-  public void initialize(UimaContext c) throws ResourceInitializationException {
-    super.initialize(c);
-    SourceId = SourceIdHelper.GetSourceId(c); 
+  public boolean initialize(ResourceSpecifier aSpecifier, Map<String, Object> addParams) 
+                             throws ResourceInitializationException {
+    if (!super.initialize(aSpecifier, addParams)) return false;
+    
+    SourceId = SourceIdHelper.GetSourceIdFromMap(addParams);
+    
+    return true;
   }
 
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
-    super.process(jcas);
+    // No process method in the super class!!!
+    //super.process(jcas);
+    
     try {
       // prepare input
       InputElement input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
