@@ -87,6 +87,7 @@ public class AnswerMRREvalAggregator extends Resource_ImplBase implements Evalua
     int    nrel = 0;
     float  ReciprocalRank = 0;
     float  Accuracy = 0;
+    float  BinaryRecall = 0;
     
     for(String AnswPat: gs) {
       Pattern pat = CompileGSPattern(AnswPat);
@@ -98,6 +99,7 @@ public class AnswerMRREvalAggregator extends Resource_ImplBase implements Evalua
           if (pos == 1) Accuracy = 1;
           if (nrel == 0) {
             ReciprocalRank = 1 / (float)pos;
+            BinaryRecall = 1;
           }
           ++nrel;
           System.out.println("Match: " + oneAns + " for " + AnswPat + " ReciprocalRank: " + ReciprocalRank);
@@ -108,8 +110,9 @@ public class AnswerMRREvalAggregator extends Resource_ImplBase implements Evalua
 
     System.out.println("Reciprocal rank: " + ReciprocalRank);
     System.out.println("Accuracy: "        + Accuracy);
+    System.out.println("Binary recall:   " + BinaryRecall);
 
-    return new PassageMAPCounts(ReciprocalRank, Accuracy, 0, 1);
+    return new PassageMAPCounts(ReciprocalRank, Accuracy, BinaryRecall, 1);
   }
 
 }
