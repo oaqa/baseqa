@@ -18,6 +18,7 @@ package edu.cmu.lti.oaqa.cse.basephase.retrieval;
 
 import java.util.List;
 
+import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 
@@ -36,14 +37,14 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public abstract class AbstractRetrievalUpdater extends AbstractLoggedComponent {
+public abstract class AbstractRetrievalUpdater extends JCasAnnotator_ImplBase {
 
   protected abstract List<RetrievalResult> updateDocuments(String question, List<Keyterm> keyterms,
           List<RetrievalResult> documents);
 
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
-    super.process(jcas);
+    //super.process(jcas);
     try {
       // prepare input
       InputElement input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
@@ -61,7 +62,7 @@ public abstract class AbstractRetrievalUpdater extends AbstractLoggedComponent {
   }
 
   protected final void log(String message) {
-    super.log(QALogEntry.RETRIEVAL, message);
+    //super.log(QALogEntry.RETRIEVAL, message);
   }
 
 }

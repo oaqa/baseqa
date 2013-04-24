@@ -18,6 +18,7 @@ package edu.cmu.lti.oaqa.cse.basephase.keyterm;
 
 import java.util.List;
 
+import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 
@@ -33,13 +34,13 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public abstract class AbstractKeytermExtractor extends AbstractLoggedComponent {
+public abstract class AbstractKeytermExtractor extends JCasAnnotator_ImplBase {
 
   protected abstract List<Keyterm> getKeyterms(String question);
 
   @Override
   public final void process(JCas jcas) throws AnalysisEngineProcessException {
-    super.process(jcas);
+    //super.process(jcas);
     try {
       // prepare input
       InputElement input = (InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type);
@@ -55,7 +56,7 @@ public abstract class AbstractKeytermExtractor extends AbstractLoggedComponent {
   }
 
   protected final void log(String message) {
-    super.log(QALogEntry.KEYTERM, message);
+    //super.log(QALogEntry.KEYTERM, message);
   }
 
 }
