@@ -7,21 +7,23 @@ import java.util.List;
 
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.DoubleArray;
+import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.StringArray;
 import org.oaqa.model.Document;
 import org.oaqa.model.SearchResult;
 import org.oaqa.model.Answer;
 
 import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
+import edu.cmu.lti.oaqa.framework.data.base.FSArrayWrapper;
 
 /*
  * A wrapper class for the class Answer.
  * 
  *  @author Leonid Boytsov
  *  @author Kevin Dela Rosa
+ *  @author Di Wang
  *  
  */
-
 public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Serializable, ScoreInterface {
 
   private static final long serialVersionUID = 1L;
@@ -340,11 +342,12 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
     if (answer.getSearchResultList() != null) {
 	  	int fls = answer.getSearchResultList().size();
 	  	  	
-	  	ArrayList<SearchResult>	sres = new ArrayList<SearchResult>();
-	  	
+	  	//ArrayList<SearchResult>	sres = new ArrayList<SearchResult>();
 	  	for(int i = 0; i < fls; ++i) {
-	  		sres.add(answer.getSearchResultList(i));
+	  		//sres.add(answer.getSearchResultList(i));
+	  		retrievalResultList.add(new RetrievalResult((Document)answer.getSearchResultList(i)));
 	  	}
+	  	
     }
 
   }
@@ -380,6 +383,12 @@ public class AnswerWrapper extends BaseAnnotationWrapper<Answer> implements Seri
    
     	
     answer.setFeatureLabels(tmpLabelArray);
+    
+    FSArray array = new FSArray(jcas, retrievalResultList.size());
+    for (int k = 0; k < retrievalResultList.size(); k++) {
+      array.set(k, retrievalResultList.get(k).unwrap(jcas));
+    }
+    answer.setSearchResultList(array);
     
     return answer;
   }

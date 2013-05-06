@@ -83,26 +83,23 @@ public class AnswerMRREvalAggregator extends Resource_ImplBase implements Evalua
                                  Ordering<String> ordering, Function<String, String> toIdString) {
     EvaluationHelper.getStringSet(gs, toIdString);
 
-    int    pos = 1; 
-    int    nrel = 0;
-    float  ReciprocalRank = 0;
-    float  Accuracy = 0;
-    float  BinaryRecall = 0;
-    
-    for(String AnswPat: gs) {
-      Pattern pat = CompileGSPattern(AnswPat);
-      
-      for(String oneAns: answ) {
-        Matcher m = pat.matcher(oneAns);
+    int pos = 1;
+    float ReciprocalRank = 0;
+    float Accuracy = 0;
+    float BinaryRecall = 0;
 
+    for (String AnswPat : gs) {
+      Pattern pat = CompileGSPattern(AnswPat);
+      pos = 1;
+      for (String oneAns : answ) {
+        Matcher m = pat.matcher(oneAns);
         if (m.matches()) {
-          if (pos == 1) Accuracy = 1;
-          if (nrel == 0) {
-            ReciprocalRank = 1 / (float)pos;
-            BinaryRecall = 1;
-          }
-          ++nrel;
-          System.out.println("Match: " + oneAns + " for " + AnswPat + " ReciprocalRank: " + ReciprocalRank);
+          if (pos == 1)
+            Accuracy = 1;
+          ReciprocalRank = Math.max(ReciprocalRank, 1 / (float) pos);
+          BinaryRecall = 1;
+          System.out.println("Match: " + oneAns + " for " + AnswPat + " ReciprocalRank: "
+                  + ReciprocalRank);
         }
         ++pos;
       }

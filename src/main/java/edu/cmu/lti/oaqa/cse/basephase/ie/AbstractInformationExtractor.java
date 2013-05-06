@@ -38,6 +38,8 @@ public abstract class AbstractInformationExtractor extends ConfigurableProviderA
 			                                                    List<String> keyterms,
 			                                                    List<String> keyphrases,
 			                                                    RetrievalResult OneDoc);
+	
+	
 
 	@Override
 	public void process(JCas FullJCas) throws AnalysisEngineProcessException {
@@ -82,6 +84,7 @@ public abstract class AbstractInformationExtractor extends ConfigurableProviderA
   			    for (AnswerWrapper ans: OneDocAnsw) {
   			      ans.addFeature(doc.getScore(), RetrievalScoreName);
   			      ans.addFeature(doc.getScore(), SourceId + "#" + ExtractorId);
+  			      ans.addRetrievalResult(doc);
   			    }
   	        answers.addAll(OneDocAnsw);
   			}  			
