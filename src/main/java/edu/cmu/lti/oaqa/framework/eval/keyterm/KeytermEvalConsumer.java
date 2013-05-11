@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.AbstractQuery;
@@ -27,9 +25,7 @@ public class KeytermEvalConsumer extends RetrievalEvalConsumer<QueryConcept> {
     return new Ordering<QueryConcept>() {
 
       @Override
-      public int compare(@Nullable
-      QueryConcept left, @Nullable
-      QueryConcept right) {
+      public int compare(QueryConcept left, QueryConcept right) {
         return left.getText().compareTo(right.getText());
       }
 
@@ -41,9 +37,7 @@ public class KeytermEvalConsumer extends RetrievalEvalConsumer<QueryConcept> {
     return new Function<QueryConcept, String>() {
 
       @Override
-      @Nullable
-      public String apply(@Nullable
-      QueryConcept input) {
+      public String apply(QueryConcept input) {
         return input.getText();
       }
     };
