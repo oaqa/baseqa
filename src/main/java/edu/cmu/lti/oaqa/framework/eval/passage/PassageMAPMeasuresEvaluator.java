@@ -47,7 +47,7 @@ public class PassageMAPMeasuresEvaluator extends Resource_ImplBase implements Ex
             PassageMAPEvalPersistenceProvider.class);
     return true;
   }
-  
+
   private final Map<Key, PassageMAPCounts> countMap = Maps.newHashMap();
 
   @Override
@@ -77,8 +77,9 @@ public class PassageMAPMeasuresEvaluator extends Resource_ImplBase implements Ex
   private PassageMAPEvaluationData evaluate(PassageMAPCounts counts) {
     float docMAP = counts.getDocavep() / counts.getCount();
     float psgMAP = counts.getPsgavep() / counts.getCount();
+    float psg2MAP = counts.getPsg2avep() / counts.getCount();
     float aspMAP = counts.getAspavep() / counts.getCount();
-    return new PassageMAPEvaluationData(docMAP, psgMAP, aspMAP, counts.getCount());
+    return new PassageMAPEvaluationData(docMAP, psgMAP, psg2MAP, aspMAP, counts.getCount());
   }
 
   private void update(Key key, PassageMAPCounts cnt) {

@@ -31,14 +31,20 @@ import org.apache.uima.resource.Resource_ImplBase;
 import org.oaqa.model.Passage;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
+import com.google.common.collect.Range;
+import com.google.common.collect.RangeSet;
+import com.google.common.collect.Sets;
+import com.google.common.collect.TreeRangeSet;
 
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.framework.eval.Key;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.EvaluationAggregator;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.EvaluationHelper;
 
-public class PassageMAPEvalAggregator extends Resource_ImplBase implements EvaluationAggregator<Passage> {
+public class PassageMAPEvalAggregator extends Resource_ImplBase implements
+        EvaluationAggregator<Passage> {
 
   private PassageMAPEvalPersistenceProvider persistence;
 
@@ -54,9 +60,11 @@ public class PassageMAPEvalAggregator extends Resource_ImplBase implements Evalu
             PassageMAPEvalPersistenceProvider.class);
     return true;
   }
-  
+
   @Override
-  public void update(Key key, String sequenceId, List<Passage> docs, List<Passage> gs, Ordering<Passage> ordering, Function<Passage, String> toIdString) throws AnalysisEngineProcessException {
+  public void update(Key key, String sequenceId, List<Passage> docs, List<Passage> gs,
+          Ordering<Passage> ordering, Function<Passage, String> toIdString)
+          throws AnalysisEngineProcessException {
     PassageMAPCounts cnt = count(docs, gs, ordering, toIdString);
     try {
       persistence.deletePassageAggrEval(key, sequenceId);
@@ -66,14 +74,16 @@ public class PassageMAPEvalAggregator extends Resource_ImplBase implements Evalu
     }
   }
 
-  private PassageMAPCounts count(List<Passage> docs, List<Passage> gs, Ordering<Passage> ordering, Function<Passage, String> toIdString) {
+  private PassageMAPCounts count(List<Passage> docs, List<Passage> gs, Ordering<Passage> ordering,
+          Function<Passage, String> toIdString) {
     Set<String> gsSet = EvaluationHelper.getStringSet(gs, toIdString);
     List<Passage> legalDocs = checkLegalSpan(docs);
     List<String> docsArray = EvaluationHelper.getUniqeDocIdList(legalDocs, ordering, toIdString);
     float docavep = EvaluationHelper.getAvgMAP(docsArray, gsSet);
     float psgavep = getAvgPsgMAP(legalDocs, gs);
+    float psg2avep = getAvgPsg2MAP(legalDocs, gs);
     float aspavep = getAvgAspMAP(legalDocs, gs);
-    return new PassageMAPCounts(docavep, psgavep, aspavep, 1);
+    return new PassageMAPCounts(docavep, psgavep, psg2avep, aspavep, 1);
   }
 
   private List<Passage> checkLegalSpan(List<Passage> docs) {
@@ -93,70 +103,87 @@ public class PassageMAPEvalAggregator extends Resource_ImplBase implements Evalu
     return true;
   }
 
-  float getAvgPsgMAP(List<Passage> docs, List<Passage> gs) {
+  private float getAvgPsg2MAP(List<Passage> docs, List<Passage> gs) {
     if (gs.size() == 0) {
       return 0;
     }
-    float avep = 0;
-    int totalchars = 0;
-    int overlaplength = 0;
-    float ccpsum = 0;
-    int count = 0;
-    HashSet<Passage> foundGoldTriplets = new HashSet<Passage>();
-    for (int i = 0; i < docs.size(); ++i) {
-      totalchars = totalchars + docs.get(i).getEnd() - docs.get(i).getBegin();
-
-      String docid = docs.get(i).getUri();
-      int releFlag = 0;
-      if (docid == null)
-        System.out.println("docID == null: " + docs.get(i).getUri());
-      Passage temppsg = null;
-      for (int j = 0; j < gs.size(); ++j) {
-        if (!gs.get(j).getUri().equals(docid))
-          continue;
-
-        if ((docs.get(i).getBegin() >= gs.get(j).getBegin())
-                && (docs.get(i).getEnd() <= gs.get(j).getEnd())) {
-          overlaplength = overlaplength + docs.get(i).getEnd() - docs.get(i).getBegin();
-          releFlag = 1;
-          temppsg = gs.get(j);
-          break;
-        } else if ((docs.get(i).getBegin() < gs.get(j).getBegin())
-                && (docs.get(i).getEnd() <= gs.get(j).getEnd())
-                && (docs.get(i).getEnd() >= gs.get(j).getBegin())) {
-          overlaplength = overlaplength + docs.get(i).getEnd() - gs.get(j).getBegin();
-          releFlag = 1;
-          temppsg = gs.get(j);
-          break;
-        } else if ((docs.get(i).getBegin() >= gs.get(j).getBegin())
-                && (docs.get(i).getBegin() <= gs.get(j).getEnd())
-                && (docs.get(i).getEnd() > gs.get(j).getEnd())) {
-          overlaplength = overlaplength + gs.get(j).getEnd() - docs.get(i).getBegin();
-          releFlag = 1;
-          temppsg = gs.get(j);
-          break;
-        } else if ((docs.get(i).getBegin() < gs.get(j).getBegin())
-                && (docs.get(i).getEnd() > gs.get(j).getEnd())) {
-          overlaplength = overlaplength + gs.get(j).getEnd() - gs.get(j).getBegin();
-          releFlag = 1;
-          temppsg = gs.get(j);
-          break;
+    Map<String, RangeSet<Integer>> gsId2Spans = Maps.newHashMap();
+    Map<String, RangeSet<Integer>> trackGsId2Spans = Maps.newHashMap();
+    for (Passage g : gs) {
+      String id = g.getUri();
+      if (!gsId2Spans.containsKey(id)) {
+        gsId2Spans.put(id, TreeRangeSet.<Integer> create());
+        trackGsId2Spans.put(id, TreeRangeSet.<Integer> create());
+      }
+      gsId2Spans.get(g.getUri()).add(Range.closedOpen(g.getBegin(), g.getEnd()));
+      trackGsId2Spans.get(g.getUri()).add(Range.closedOpen(g.getBegin(), g.getEnd()));
+    }
+    int totalChars = 0;
+    int overlapLength = 0;
+    float sumPrecision = 0;
+    for (Passage doc : docs) {
+      Range<Integer> docRange = Range.closedOpen(doc.getBegin(), doc.getEnd());
+      String docId = doc.getUri();
+      if (!gsId2Spans.containsKey(docId) || gsId2Spans.get(docId).encloses(docRange)) {
+        totalChars += docRange.upperEndpoint() - docRange.lowerEndpoint();
+        continue;
+      }
+      for (int offset = docRange.lowerEndpoint(); offset < docRange.upperEndpoint(); offset++) {
+        if (gsId2Spans.containsKey(docId) && gsId2Spans.get(docId).contains(offset)) {
+          if (trackGsId2Spans.get(docId).contains(offset)) {
+            trackGsId2Spans.get(docId).remove(Range.singleton(offset));
+            // +1
+            totalChars++;
+            overlapLength++;
+            sumPrecision += (float) overlapLength / (float) totalChars;
+          }
+        } else {
+          // -1
+          totalChars++;
         }
       }
-      if (releFlag == 1) {
-        ccpsum += (float) overlaplength / (float) totalchars;
-        count++;
-        foundGoldTriplets.add(temppsg);
+    }
+    int count = 0;
+    for (RangeSet<Integer> spans : gsId2Spans.values()) {
+      for (Range<Integer> span : spans.asRanges()) {
+        count += span.upperEndpoint() - span.lowerEndpoint();
       }
     }
-    // int numZeros = gs.size() - foundGoldTriplets.size();
-    int numZeros = 0;
-    for (int i = 0; i < gs.size(); ++i)
-      if (!foundGoldTriplets.contains(gs.get(i)))
-        numZeros++;
+    return (float) sumPrecision / (float) count;
+  }
 
-    avep = (float) ccpsum / (float) (count + numZeros);
-    return avep;
+  private float getAvgPsgMAP(List<Passage> docs, List<Passage> gs) {
+    if (gs.size() == 0) {
+      return 0;
+    }
+    int totalChars = 0;
+    int overlapLength = 0;
+    float sumPrecision = 0;
+    int count = 0;
+    Set<Passage> foundGoldTriplets = Sets.newHashSet();
+    for (Passage doc : docs) {
+      Range<Integer> docRange = Range.closedOpen(doc.getBegin(), doc.getEnd());
+      totalChars += docRange.upperEndpoint() - docRange.lowerEndpoint();
+      for (Passage g : gs) {
+        if (!g.getUri().equals(doc.getUri()))
+          continue;
+        Range<Integer> gRange = Range.closedOpen(g.getBegin(), g.getEnd());
+        if (!docRange.isConnected(gRange)) {
+          continue;
+        }
+        Range<Integer> overlap = docRange.intersection(gRange);
+        if (overlap.isEmpty()) {
+          continue;
+        }
+        overlapLength += overlap.upperEndpoint() - overlap.lowerEndpoint();
+        sumPrecision += (float) overlapLength / (float) totalChars;
+        count++;
+        foundGoldTriplets.add(g);
+        break;
+      }
+    }
+    int numZeros = Sets.difference(Sets.newHashSet(gs), foundGoldTriplets).size();
+    return (float) sumPrecision / (float) (count + numZeros);
   }
 
   private float getAvgAspMAP(List<Passage> docs, List<Passage> gs) {

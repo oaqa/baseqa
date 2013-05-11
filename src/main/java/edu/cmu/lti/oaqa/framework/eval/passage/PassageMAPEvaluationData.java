@@ -22,13 +22,16 @@ public final class PassageMAPEvaluationData {
 
   private final float psgMap;
 
+  private final float psg2Map;
+  
   private final float aspMap;
 
   private final float count;
 
-  PassageMAPEvaluationData(float docMAP, float psgMAP, float aspMAP, int count) {
+  PassageMAPEvaluationData(float docMAP, float psgMAP, float psg2MAP, float aspMAP, int count) {
     this.docMap = docMAP;
     this.psgMap = psgMAP;
+    this.psg2Map = psg2MAP;
     this.aspMap = aspMAP;
     this.count = count;
   }
@@ -41,6 +44,10 @@ public final class PassageMAPEvaluationData {
     return psgMap;
   }
 
+  public float getPsg2Map() {
+    return psg2Map;
+  }
+  
   public float getAspMap() {
     return aspMap;
   }

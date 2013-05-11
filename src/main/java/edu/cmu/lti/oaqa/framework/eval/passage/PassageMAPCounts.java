@@ -21,28 +21,32 @@ public final class PassageMAPCounts {
   private float docavep;
 
   private float psgavep;
-	
+
+  private float psg2avep;
+
   private float aspavep;
-	
+
   private int count;
-	
-	PassageMAPCounts() {
-		this(0, 0, 0, 0);
-	}
 
-	public PassageMAPCounts(float avep, float psgavep, float aspavep, int num) {
-		this.docavep = avep;
-		this.psgavep = psgavep;
-		this.aspavep = aspavep;
-		this.count = num;
-	}
+  PassageMAPCounts() {
+    this(0, 0, 0, 0, 0);
+  }
 
-	void update(PassageMAPCounts other) {
-		docavep += other.docavep;
-		psgavep += other.psgavep;
-		aspavep += other.aspavep;
-		count += other.count;
-	}
+  public PassageMAPCounts(float avep, float psgavep, float psg2avep, float aspavep, int num) {
+    this.docavep = avep;
+    this.psgavep = psgavep;
+    this.psg2avep = psg2avep;
+    this.aspavep = aspavep;
+    this.count = num;
+  }
+
+  void update(PassageMAPCounts other) {
+    docavep += other.docavep;
+    psgavep += other.psgavep;
+    psg2avep += other.psg2avep;
+    aspavep += other.aspavep;
+    count += other.count;
+  }
 
   public float getDocavep() {
     return docavep;
@@ -52,6 +56,10 @@ public final class PassageMAPCounts {
     return psgavep;
   }
 
+  public float getPsg2avep() {
+    return psg2avep;
+  }
+  
   public float getAspavep() {
     return aspavep;
   }
