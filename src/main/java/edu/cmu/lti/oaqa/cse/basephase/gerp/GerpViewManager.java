@@ -25,7 +25,7 @@ public class GerpViewManager {
 
   public enum ViewType implements Type {
     KEYTERM_EVIDENCE, KEYTERM_RANK, DOCUMENT_EVIDENCE, DOCUMENT_RANK, CANDIDATE_EVIDENCE, CANDIDATE_RANK
-  }
+  ,PLACEHOLDER_EVIDENCE,PLACEHOLDER_RANK}
 
   public static JCas getView(JCas jcas, Type type) throws CASException {
     String viewName = type.toString();

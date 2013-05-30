@@ -8,6 +8,8 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.OAQATop;
 
+import edu.cmu.lti.oaqa.cse.basephase.gerp.GerpViewManager.ViewType;
+
 public abstract class BaseAnnotationWrapper<T extends OAQATop> implements AnnotationWrapper<T>,
         Comparable<BaseAnnotationWrapper<T>> {
 
@@ -96,5 +98,7 @@ public abstract class BaseAnnotationWrapper<T extends OAQATop> implements Annota
   public void setProbablity(float probablity) {
     this.probability = probablity;
   }
+  
+  //public abstract ViewType getType();
 
 }

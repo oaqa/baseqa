@@ -6,6 +6,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.QueryConcept;
 
+import edu.cmu.lti.oaqa.cse.basephase.gerp.GerpViewManager.ViewType;
 import edu.cmu.lti.oaqa.framework.data.base.BaseAnnotationWrapper;
 
 /**
@@ -55,5 +56,10 @@ public class Keyterm extends BaseAnnotationWrapper<QueryConcept> implements Seri
   public Class<? extends QueryConcept> getTypeClass() {
     return QueryConcept.class;
   }
+/*
+@Override
+public ViewType getType() {
+	return ViewType.KEYTERM_EVIDENCE;
+}*/
 
 }
