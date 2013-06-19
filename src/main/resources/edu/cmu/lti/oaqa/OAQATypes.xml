@@ -3,8 +3,10 @@
   <name>OAQATypes</name>
   <description>Type system descriptor for the OAQA data model.
 
-$Id:$</description>
-  <version>0.1</version>
+Changes in 0.2:
+
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;</description>
+  <version>0.2</version>
   <vendor>OAQA</vendor>
   <imports>
     <import name="org.apache.uima.examples.SourceDocumentInformation"/>
