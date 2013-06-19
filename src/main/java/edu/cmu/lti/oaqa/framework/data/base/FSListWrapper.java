@@ -23,7 +23,7 @@ public abstract class FSListWrapper<T extends OAQATop> implements ContainerWrapp
   }
 
   @Override
-  public void add(AnnotationWrapper<T> annotation) throws Exception {
+  public void add(AnnotationWrapper<T> annotation) throws AnalysisEngineProcessException {
     list = BaseJCasHelper.addToFSList(jcas, list, annotation.unwrap(jcas));
   }
 
@@ -33,13 +33,18 @@ public abstract class FSListWrapper<T extends OAQATop> implements ContainerWrapp
   @Override
   public abstract void complete();
 
-  protected final <W extends AnnotationWrapper<T>> void setList(Collection<W> wrappers)
-          throws Exception {
-    clear();
+  protected final <W extends AnnotationWrapper<T>> void appendList(Collection<W> wrappers)
+          throws AnalysisEngineProcessException {
     for (W wrapper : wrappers) {
       add(wrapper);
     }
     complete();
+  }
+
+  protected final <W extends AnnotationWrapper<T>> void setList(Collection<W> wrappers)
+          throws AnalysisEngineProcessException {
+    clear();
+    appendList(wrappers);
   }
 
   protected final <W extends AnnotationWrapper<T>> List<W> getList(Class<T> type,

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.Passage;
 import org.oaqa.model.Search;
@@ -34,7 +35,27 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     search.addToIndexes();
   }
 
-  public void setPassageCandidates(List<PassageCandidate> results) throws Exception {
+  private void appendPassageCandidates(List<PassageCandidate> results)
+          throws AnalysisEngineProcessException {
+    Collections.sort(results, Collections.reverseOrder());
+    double prevScore = Double.NaN;
+    int prevRank = 0;
+    for (int i = 0; i < results.size(); i++) {
+      PassageCandidate candidate = results.get(i);
+      double curScore = candidate.getProbability();
+      if (curScore != prevScore) {
+        candidate.setRank(i + 1);
+        prevScore = curScore;
+        prevRank = i + 1;
+      } else {
+        candidate.setRank(prevRank);
+      }
+    }
+    appendArray(results);
+  }
+
+  public void setPassageCandidates(List<PassageCandidate> results)
+          throws AnalysisEngineProcessException {
     Collections.sort(results, Collections.reverseOrder());
     double prevScore = Double.NaN;
     int prevRank = 0;
@@ -52,12 +73,22 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     setArray(results);
   }
 
-  public static void storePassageCandidates(JCas jcas, List<PassageCandidate> results)
-          throws Exception {
-    new PassageCandidateArray(jcas, results.size()).setPassageCandidates(results);
+  public static void storePassageCandidates(JCas jcas, List<PassageCandidate> results,
+          boolean overwrite) throws AnalysisEngineProcessException {
+    if (overwrite) {
+      new PassageCandidateArray(jcas, results.size()).setPassageCandidates(results);
+    } else {
+      new PassageCandidateArray(jcas, results.size()).appendPassageCandidates(results);
+    }
   }
 
-  public List<PassageCandidate> getPassageCandidates() throws Exception {
+  @Deprecated
+  public static void storePassageCandidates(JCas jcas, List<PassageCandidate> results)
+          throws AnalysisEngineProcessException {
+    storePassageCandidates(jcas, results, true);
+  }
+
+  public List<PassageCandidate> getPassageCandidates() throws AnalysisEngineProcessException {
     Search search = (Search) BaseJCasHelper.getFS(jcas, Search.type);
     if (search != null) {
       array = search.getHitList();
@@ -67,7 +98,8 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     }
   }
 
-  public static List<PassageCandidate> retrievePassageCandidates(JCas jcas) throws Exception {
+  public static List<PassageCandidate> retrievePassageCandidates(JCas jcas)
+          throws AnalysisEngineProcessException {
     return new PassageCandidateArray(jcas, 0).getPassageCandidates();
   }
 

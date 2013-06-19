@@ -38,6 +38,7 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
+@Deprecated
 public abstract class AbstractPassageUpdater extends AbstractLoggedComponent {
 
   protected abstract List<PassageCandidate> updatePassages(String question, List<Keyterm> keyterms,

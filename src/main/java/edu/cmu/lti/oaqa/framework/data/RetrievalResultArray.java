@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.Passage;
 import org.oaqa.model.Search;
@@ -34,7 +35,27 @@ public class RetrievalResultArray extends FSArrayWrapper<Passage> {
     search.addToIndexes();
   }
 
-  public void setRetrievalResults(List<RetrievalResult> results) throws Exception {
+  private void appendRetrievalResults(List<RetrievalResult> results)
+          throws AnalysisEngineProcessException {
+    Collections.sort(results, Collections.reverseOrder());
+    double prevScore = Double.NaN;
+    int prevRank = 0;
+    for (int i = 0; i < results.size(); i++) {
+      RetrievalResult result = results.get(i);
+      double curScore = result.getProbability();
+      if (curScore != prevScore) {
+        result.setRank(i + 1);
+        prevScore = curScore;
+        prevRank = i + 1;
+      } else {
+        result.setRank(prevRank);
+      }
+    }
+    appendArray(results);
+  }
+
+  public void setRetrievalResults(List<RetrievalResult> results)
+          throws AnalysisEngineProcessException {
     Collections.sort(results, Collections.reverseOrder());
     double prevScore = Double.NaN;
     int prevRank = 0;
@@ -52,12 +73,22 @@ public class RetrievalResultArray extends FSArrayWrapper<Passage> {
     setArray(results);
   }
 
-  public static void storeRetrievalResults(JCas jcas, List<RetrievalResult> results)
-          throws Exception {
-    new RetrievalResultArray(jcas, results.size()).setRetrievalResults(results);
+  public static void storeRetrievalResults(JCas jcas, List<RetrievalResult> results,
+          boolean overwrite) throws AnalysisEngineProcessException {
+    if (overwrite) {
+      new RetrievalResultArray(jcas, results.size()).setRetrievalResults(results);
+    } else {
+      new RetrievalResultArray(jcas, results.size()).appendRetrievalResults(results);
+    }
   }
 
-  public List<RetrievalResult> getRetrievalResults() throws Exception {
+  @Deprecated
+  public static void storeRetrievalResults(JCas jcas, List<RetrievalResult> results)
+          throws Exception {
+    storeRetrievalResults(jcas, results, true);
+  }
+
+  public List<RetrievalResult> getRetrievalResults() throws AnalysisEngineProcessException {
     Search search = (Search) BaseJCasHelper.getFS(jcas, Search.type);
     if (search != null) {
       array = search.getHitList();
@@ -67,7 +98,8 @@ public class RetrievalResultArray extends FSArrayWrapper<Passage> {
     }
   }
 
-  public static List<RetrievalResult> retrieveRetrievalResults(JCas jcas) throws Exception {
+  public static List<RetrievalResult> retrieveRetrievalResults(JCas jcas)
+          throws AnalysisEngineProcessException {
     return new RetrievalResultArray(jcas, 0).getRetrievalResults();
   }
 

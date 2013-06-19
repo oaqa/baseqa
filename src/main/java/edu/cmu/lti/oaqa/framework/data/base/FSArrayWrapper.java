@@ -24,7 +24,7 @@ public abstract class FSArrayWrapper<T extends OAQATop> implements ContainerWrap
   }
 
   @Override
-  public void add(AnnotationWrapper<T> annotation) throws Exception {
+  public void add(AnnotationWrapper<T> annotation) throws AnalysisEngineProcessException {
     array.set(i++, annotation.unwrap(jcas));
   }
 
@@ -34,13 +34,18 @@ public abstract class FSArrayWrapper<T extends OAQATop> implements ContainerWrap
   @Override
   public abstract void complete();
 
-  protected final <W extends AnnotationWrapper<T>> void setArray(Collection<W> wrappers)
-          throws Exception {
-    clear();
+  protected final <W extends AnnotationWrapper<T>> void appendArray(Collection<W> wrappers)
+          throws AnalysisEngineProcessException {
     for (W wrapper : wrappers) {
       add(wrapper);
     }
     complete();
+  }
+
+  protected final <W extends AnnotationWrapper<T>> void setArray(Collection<W> wrappers)
+          throws AnalysisEngineProcessException {
+    clear();
+    appendArray(wrappers);
   }
 
   protected final <W extends AnnotationWrapper<T>> List<W> getArray(Class<T> type,
