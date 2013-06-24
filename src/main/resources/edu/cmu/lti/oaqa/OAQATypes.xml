@@ -1,14 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?><typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <name>OAQATypes</name>
   <description>Type system descriptor for the OAQA data model.
 
 Changes in 0.2:
+* Grouped types into packages: answer, retrieval, nlp, input, gerp, core
+* Added GERP related types: GerpMeta, GerpBase, GerpTop, GerpAnnotation, Evidence, Rank, PruningDecision
+* Removed probability and componentId from OAQATop and OAQAAnnotation. Components (can be multiple) that generate the FSs need to be specified in the generators field of GerpTop or GerpAnnotation, and the probability should be given in the associated evidences or ranks fields.
+* Simplified types, e.g. Answer, CandidateAnswerVariant, and SearchResult. Features can be represented by those in GerpTop/GerpAnnotation. For example, searchResultList or supportingEvidenceSearches can be represented in additionalEvidences field of Evidence, and features or featureVectors are naturally the combination of confidence in the Evidence, rankVector can be represented by Ranks. 
+* Removed list types, e.g. AnswerList and Search. The common meta information will be stored in the GerpMeta. For example, featureLabels are stored in the evidencers field.
+* Removed feature types, e.g. CandidateAnswerFeature (formerly CaFeature). They are mostly Evidences.
+* Updated superclass of most types from OAQATop/OAQAAnnotation to GerpTop/GerpAnnotation, e.g. QuestionClass
+* Added an imported type system frameworkTypesDescriptor, and updated the supertype of Question to InputElement.
 
 - Zi Yang &lt;ziy@cs.cmu.edu&gt;</description>
   <version>0.2</version>
   <vendor>OAQA</vendor>
   <imports>
-    <import name="org.apache.uima.examples.SourceDocumentInformation"/>
+    <import name="edu.cmu.lti.oaqa.frameworkTypesDescriptor"/>
   </imports>
   <types>
     <typeDescription>
@@ -38,7 +47,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.nlp.Predicate</name>
       <description>Annotation on a predicate, which may have arguments; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock</description>
-      <supertypeName>org.oaqa.model.core.OAQAAnnotation</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
           <name>arguments</name>
@@ -99,7 +108,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.nlp.Focus</name>
       <description>The phrase in the question that indicates the answer variable.</description>
-      <supertypeName>org.oaqa.model.core.OAQAAnnotation</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
           <name>predicate</name>
@@ -116,7 +125,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.nlp.LexicalAnswerType</name>
       <description>The lexical answer type found in the question.</description>
-      <supertypeName>org.oaqa.model.core.OAQAAnnotation</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
           <name>predicate</name>
@@ -133,7 +142,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.nlp.AnswerType</name>
       <description>A Named Entity type that represents the type of the answer being sought.</description>
-      <supertypeName>org.oaqa.model.core.OAQAAnnotation</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
           <name>label</name>
@@ -150,7 +159,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.nlp.SemanticRole</name>
       <description>A semantic role label.</description>
-      <supertypeName>org.oaqa.model.core.OAQAAnnotation</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
           <name>label</name>
@@ -162,7 +171,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.input.Question</name>
       <description>The Question and any associated meta-data.</description>
-      <supertypeName>org.oaqa.model.core.OAQAAnnotation</supertypeName>
+      <supertypeName>edu.cmu.lti.oaqa.framework.types.InputElement</supertypeName>
       <features>
         <featureDescription>
           <name>id</name>
@@ -177,37 +186,9 @@ Changes in 0.2:
       </features>
     </typeDescription>
     <typeDescription>
-      <name>org.oaqa.model.retrieval.Search</name>
-      <description>An object that holds a query and results for a search (text search, fact search, KB search, etc.)</description>
-      <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
-      <features>
-        <featureDescription>
-          <name>query</name>
-          <description>The query in the native syntax of the corresponding search engine.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>hitList</name>
-          <description>Hit list of search results, sorted in descreasing order of relevance score.</description>
-          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>org.oaqa.model.retrieval.SearchResult</elementType>
-        </featureDescription>
-        <featureDescription>
-          <name>abstractQuery</name>
-          <description>The abstract query from which this actual query was generated.</description>
-          <rangeTypeName>org.oaqa.model.retrieval.AbstractQuery</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>searchId</name>
-          <description>An identifier for this search result.  Used to collect hit-list objects that belong to this search result after they've been split out for parallel processing then gathered up again.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
       <name>org.oaqa.model.retrieval.SearchResult</name>
       <description>A search result.</description>
-      <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
       <features>
         <featureDescription>
           <name>uri</name>
@@ -244,23 +225,6 @@ Changes in 0.2:
           <description>CandidateAnswerVariants generated from this SearchResult.</description>
           <rangeTypeName>uima.cas.FSArray</rangeTypeName>
           <elementType>org.oaqa.model.answer.CandidateAnswerVariant</elementType>
-        </featureDescription>
-        <featureDescription>
-          <name>features</name>
-          <description>List of search-related features that should be associated with any candidate answers generated from this search result.</description>
-          <rangeTypeName>uima.cas.FSList</rangeTypeName>
-          <elementType>org.oaqa.model.answer.CandidateAnswerFeature</elementType>
-          <multipleReferencesAllowed>true</multipleReferencesAllowed>
-        </featureDescription>
-        <featureDescription>
-          <name>featureVector</name>
-          <description>Passage Level scores</description>
-          <rangeTypeName>uima.cas.DoubleArray</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>rankVector</name>
-          <description>Passage level ranks</description>
-          <rangeTypeName>uima.cas.IntegerArray</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
@@ -316,7 +280,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.nlp.CandidateAnswerOccurrence</name>
       <description>Annotates a span of text identified as a candidate answer.</description>
-      <supertypeName>org.oaqa.model.core.OAQAAnnotation</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
           <name>text</name>
@@ -328,27 +292,12 @@ Changes in 0.2:
           <description>The manner in which covered text refers to some entity, e.g.  NAME, NOMINAL, PRONOUN</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
-        <featureDescription>
-          <name>source</name>
-          <description>The source of the candidate answer.</description>
-          <rangeTypeName>org.oaqa.model.retrieval.SearchResult</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>sourceBegin</name>
-          <description>The character offset of the start of this candidate answer within the text of the source.</description>
-          <rangeTypeName>uima.cas.Integer</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>sourceEnd</name>
-          <description>The character offset of the end of this candidate answer within the text of the source.</description>
-          <rangeTypeName>uima.cas.Integer</rangeTypeName>
-        </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
       <name>org.oaqa.model.answer.CandidateAnswerVariant</name>
       <description>A variant of a candidate answer.  A variant may have multiple occurrences, all of which are collected in a variant object.</description>
-      <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
       <features>
         <featureDescription>
           <name>occurrences</name>
@@ -365,18 +314,6 @@ Changes in 0.2:
           <name>text</name>
           <description>The candidate answer string.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>features</name>
-          <description>The features associated with this candidate answer.</description>
-          <rangeTypeName>uima.cas.FSList</rangeTypeName>
-          <elementType>org.oaqa.model.CaFeature</elementType>
-        </featureDescription>
-        <featureDescription>
-          <name>supportingEvidenceSearches</name>
-          <description>Reference to Searches performed to retrieve supporting evidence for this candidate answer.  The Search objects in turn reference the retrieved SearchResults.</description>
-          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>org.oaqa.model.retrieval.Search</elementType>
         </featureDescription>
         <featureDescription>
           <name>alternativeNames</name>
@@ -396,31 +333,9 @@ Changes in 0.2:
       </features>
     </typeDescription>
     <typeDescription>
-      <name>org.oaqa.model.answer.CandidateAnswerFeature</name>
-      <description>A feature of a candidate answer produced by a feature generator or answer scorer.</description>
-      <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
-      <features>
-        <featureDescription>
-          <name>answer</name>
-          <description>The candidate answer to which this feature applies.</description>
-          <rangeTypeName>org.oaqa.model.answer.CandidateAnswerVariant</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>label</name>
-          <description>Identify or distinguish this specific feature.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>score</name>
-          <description>The score associated with this feature.</description>
-          <rangeTypeName>uima.cas.Double</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
       <name>org.oaqa.model.input.QuestionClass</name>
       <description>The class of the question, determined by an automatic question classification process.</description>
-      <supertypeName>org.oaqa.model.core.OAQAAnnotation</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
           <name>questionClass</name>
@@ -471,7 +386,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.retrieval.QueryConcept</name>
       <description>A query concept in the abstract search query model.</description>
-      <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
       <features>
         <featureDescription>
           <name>neTypes</name>
@@ -514,7 +429,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.retrieval.QueryOperator</name>
       <description>A query operator in the abstract search query model.</description>
-      <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
       <features>
         <featureDescription>
           <name>name</name>
@@ -531,7 +446,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.retrieval.AbstractQuery</name>
       <description>An abstract search query for the question that represents query concepts and query operators over those concepts.</description>
-      <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
       <features>
         <featureDescription>
           <name>concepts</name>
@@ -660,7 +575,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.nlp.NamedEntity</name>
       <description>A named entity with one or more URIs that identify or define the named entity.  The URIs could reference any source that defines or disambiguates the named entity.</description>
-      <supertypeName>org.oaqa.model.core.OAQAAnnotation</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
           <name>ids</name>
