@@ -12,7 +12,7 @@ import org.oaqa.model.gerp.GerpAnnotation;
 
 
 /** A Named Entity type that represents the type of the answer being sought.
- * Updated by JCasGen Mon Jun 24 14:02:20 EDT 2013
+ * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class AnswerType extends GerpAnnotation {

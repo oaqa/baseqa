@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** A query concept in the abstract search query model.
- * Updated by JCasGen Mon Jun 24 14:02:20 EDT 2013
+ * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
  * @generated */
 public class QueryConcept_Type extends GerpTop_Type {
   /** @generated */

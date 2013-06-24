@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.core.OAQATop_Type;
 
 /** A base class for GERP intermediate data: Evidence, Rank, PruningDecision.
- * Updated by JCasGen Mon Jun 24 14:02:20 EDT 2013
+ * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
  * @generated */
 public class GerpBase_Type extends OAQATop_Type {
   /** @generated */

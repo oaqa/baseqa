@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.core.OAQATop_Type;
 
 /** The base class for Gerp feature structures that are not Annotations, with G/E/E/P features defined.
- * Updated by JCasGen Mon Jun 24 14:02:20 EDT 2013
+ * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
  * @generated */
 public class GerpTop_Type extends OAQATop_Type {
   /** @generated */
@@ -60,26 +60,7 @@ public class GerpTop_Type extends OAQATop_Type {
       jcas.throwFeatMissing("generators", "org.oaqa.model.gerp.GerpTop");
     ll_cas.ll_setRefValue(addr, casFeatCode_generators, v);}
     
-   /** @generated */
-  public String getGenerators(int addr, int i) {
-        if (featOkTst && casFeat_generators == null)
-      jcas.throwFeatMissing("generators", "org.oaqa.model.gerp.GerpTop");
-    if (lowLevelTypeChecks)
-      return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_generators), i, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_generators), i);
-	return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_generators), i);
-  }
-   
-  /** @generated */ 
-  public void setGenerators(int addr, int i, String v) {
-        if (featOkTst && casFeat_generators == null)
-      jcas.throwFeatMissing("generators", "org.oaqa.model.gerp.GerpTop");
-    if (lowLevelTypeChecks)
-      ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_generators), i, v, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_generators), i);
-    ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_generators), i, v);
-  }
- 
+  
  
   /** @generated */
   final Feature casFeat_evidences;
@@ -97,26 +78,7 @@ public class GerpTop_Type extends OAQATop_Type {
       jcas.throwFeatMissing("evidences", "org.oaqa.model.gerp.GerpTop");
     ll_cas.ll_setRefValue(addr, casFeatCode_evidences, v);}
     
-   /** @generated */
-  public int getEvidences(int addr, int i) {
-        if (featOkTst && casFeat_evidences == null)
-      jcas.throwFeatMissing("evidences", "org.oaqa.model.gerp.GerpTop");
-    if (lowLevelTypeChecks)
-      return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_evidences), i, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_evidences), i);
-	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_evidences), i);
-  }
-   
-  /** @generated */ 
-  public void setEvidences(int addr, int i, int v) {
-        if (featOkTst && casFeat_evidences == null)
-      jcas.throwFeatMissing("evidences", "org.oaqa.model.gerp.GerpTop");
-    if (lowLevelTypeChecks)
-      ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_evidences), i, v, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_evidences), i);
-    ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_evidences), i, v);
-  }
- 
+  
  
   /** @generated */
   final Feature casFeat_ranks;
@@ -134,26 +96,7 @@ public class GerpTop_Type extends OAQATop_Type {
       jcas.throwFeatMissing("ranks", "org.oaqa.model.gerp.GerpTop");
     ll_cas.ll_setRefValue(addr, casFeatCode_ranks, v);}
     
-   /** @generated */
-  public int getRanks(int addr, int i) {
-        if (featOkTst && casFeat_ranks == null)
-      jcas.throwFeatMissing("ranks", "org.oaqa.model.gerp.GerpTop");
-    if (lowLevelTypeChecks)
-      return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_ranks), i, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_ranks), i);
-	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_ranks), i);
-  }
-   
-  /** @generated */ 
-  public void setRanks(int addr, int i, int v) {
-        if (featOkTst && casFeat_ranks == null)
-      jcas.throwFeatMissing("ranks", "org.oaqa.model.gerp.GerpTop");
-    if (lowLevelTypeChecks)
-      ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_ranks), i, v, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_ranks), i);
-    ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_ranks), i, v);
-  }
- 
+  
  
   /** @generated */
   final Feature casFeat_pruningDecisions;
@@ -171,26 +114,7 @@ public class GerpTop_Type extends OAQATop_Type {
       jcas.throwFeatMissing("pruningDecisions", "org.oaqa.model.gerp.GerpTop");
     ll_cas.ll_setRefValue(addr, casFeatCode_pruningDecisions, v);}
     
-   /** @generated */
-  public int getPruningDecisions(int addr, int i) {
-        if (featOkTst && casFeat_pruningDecisions == null)
-      jcas.throwFeatMissing("pruningDecisions", "org.oaqa.model.gerp.GerpTop");
-    if (lowLevelTypeChecks)
-      return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_pruningDecisions), i, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_pruningDecisions), i);
-	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_pruningDecisions), i);
-  }
-   
-  /** @generated */ 
-  public void setPruningDecisions(int addr, int i, int v) {
-        if (featOkTst && casFeat_pruningDecisions == null)
-      jcas.throwFeatMissing("pruningDecisions", "org.oaqa.model.gerp.GerpTop");
-    if (lowLevelTypeChecks)
-      ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_pruningDecisions), i, v, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_pruningDecisions), i);
-    ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_pruningDecisions), i, v);
-  }
- 
+  
 
 
 
@@ -201,19 +125,19 @@ public class GerpTop_Type extends OAQATop_Type {
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_generators = jcas.getRequiredFeatureDE(casType, "generators", "uima.cas.StringArray", featOkTst);
+    casFeat_generators = jcas.getRequiredFeatureDE(casType, "generators", "uima.cas.StringList", featOkTst);
     casFeatCode_generators  = (null == casFeat_generators) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_generators).getCode();
 
  
-    casFeat_evidences = jcas.getRequiredFeatureDE(casType, "evidences", "uima.cas.FSArray", featOkTst);
+    casFeat_evidences = jcas.getRequiredFeatureDE(casType, "evidences", "uima.cas.FSList", featOkTst);
     casFeatCode_evidences  = (null == casFeat_evidences) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_evidences).getCode();
 
  
-    casFeat_ranks = jcas.getRequiredFeatureDE(casType, "ranks", "uima.cas.FSArray", featOkTst);
+    casFeat_ranks = jcas.getRequiredFeatureDE(casType, "ranks", "uima.cas.FSList", featOkTst);
     casFeatCode_ranks  = (null == casFeat_ranks) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_ranks).getCode();
 
  
-    casFeat_pruningDecisions = jcas.getRequiredFeatureDE(casType, "pruningDecisions", "uima.cas.FSArray", featOkTst);
+    casFeat_pruningDecisions = jcas.getRequiredFeatureDE(casType, "pruningDecisions", "uima.cas.FSList", featOkTst);
     casFeatCode_pruningDecisions  = (null == casFeat_pruningDecisions) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_pruningDecisions).getCode();
 
   }

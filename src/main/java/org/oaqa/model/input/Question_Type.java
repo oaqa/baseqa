@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import edu.cmu.lti.oaqa.framework.types.InputElement_Type;
 
 /** The Question and any associated meta-data.
- * Updated by JCasGen Mon Jun 24 14:02:20 EDT 2013
+ * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
  * @generated */
 public class Question_Type extends InputElement_Type {
   /** @generated */

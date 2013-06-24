@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A type represents the evidence for the candidate entities, which is provided by an evidencer.
- * Updated by JCasGen Mon Jun 24 14:02:20 EDT 2013
+ * Updated by JCasGen Mon Jun 24 16:50:07 EDT 2013
  * @generated */
 public class Evidence_Type extends GerpBase_Type {
   /** @generated */
