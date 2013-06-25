@@ -6,8 +6,10 @@ import org.apache.uima.jcas.cas.TOP;
 
 public interface TopWrapper<T extends TOP> {
 
-  public T unwrap(JCas jcas) throws AnalysisEngineProcessException;
+  Class<? extends T> getTypeClass();
 
-  public void wrap(T top) throws AnalysisEngineProcessException;
+  T unwrap(JCas jcas) throws AnalysisEngineProcessException;
+
+  void wrap(T top) throws AnalysisEngineProcessException;
 
 }

@@ -1,5 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.data.core;
 
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -8,13 +9,19 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.core.OAQATop;
 
-public abstract class OAQATopWrapper<T extends OAQATop> implements TopWrapper<T> {
+public abstract class OAQATopWrapper<T extends OAQATop> implements TopWrapper<T>, Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   protected final Class<? extends T> typeClass = getTypeClass();
 
   protected String implementingWrapper = getClass().getCanonicalName();
 
   public abstract Class<? extends T> getTypeClass();
+
+  public OAQATopWrapper() {
+    super();
+  }
 
   @Override
   public T unwrap(JCas jcas) throws AnalysisEngineProcessException {
@@ -42,7 +49,7 @@ public abstract class OAQATopWrapper<T extends OAQATop> implements TopWrapper<T>
   }
 
   @SuppressWarnings("unchecked")
-  public static <T extends OAQATop, W extends TopWrapper<T>> W wrap(OAQATop top, Class<T> type,
+  public static <T extends OAQATop, W extends TopWrapper<T>> W wrap(OAQATop top,
           Class<W> wrapperClass) throws AnalysisEngineProcessException {
     Feature feature = top.getType().getFeatureByBaseName("implementingWrapper");
     String className = top.getFeatureValueAsString(feature);

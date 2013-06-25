@@ -11,6 +11,7 @@ import org.oaqa.model.core.OAQATop;
 
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
+@Deprecated
 public abstract class FSListWrapper<T extends OAQATop> implements ContainerWrapper<T> {
 
   protected JCas jcas;
@@ -47,11 +48,11 @@ public abstract class FSListWrapper<T extends OAQATop> implements ContainerWrapp
     appendList(wrappers);
   }
 
-  protected final <W extends TopWrapper<T>> List<W> getList(Class<T> type, Class<W> classWrapper)
+  protected final <W extends TopWrapper<T>> List<W> getList(Class<W> classWrapper)
           throws AnalysisEngineProcessException {
     List<W> result = new ArrayList<W>();
     for (OAQATop top : BaseJCasHelper.<OAQATop> fsIterator(list)) {
-      result.add(OAQATopWrapper.wrap(top, type, classWrapper));
+      result.add(OAQATopWrapper.wrap(top, classWrapper));
     }
     return result;
   }

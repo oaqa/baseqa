@@ -9,6 +9,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
 import org.oaqa.model.core.OAQATop;
 
+@Deprecated
 public abstract class FSArrayWrapper<T extends OAQATop> implements ContainerWrapper<T> {
 
   protected JCas jcas;
@@ -48,11 +49,11 @@ public abstract class FSArrayWrapper<T extends OAQATop> implements ContainerWrap
     appendArray(wrappers);
   }
 
-  protected final <W extends TopWrapper<T>> List<W> getArray(Class<T> type,
-          Class<W> classWrapper) throws AnalysisEngineProcessException {
+  protected final <W extends TopWrapper<T>> List<W> getArray(Class<W> classWrapper)
+          throws AnalysisEngineProcessException {
     List<W> result = new ArrayList<W>();
     for (int i = 0; i < array.size(); i++) {
-      result.add(OAQATopWrapper.wrap((OAQATop) array.get(i), type, classWrapper));
+      result.add(OAQATopWrapper.wrap((OAQATop) array.get(i), classWrapper));
     }
     return result;
   }

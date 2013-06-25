@@ -1,5 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.data.core;
 
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -8,8 +9,13 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.core.OAQAAnnotation;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.ComparisonChain;
+
 public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
-        AnnotationWrapper<T> {
+        AnnotationWrapper<T>, Comparable<OAQAAnnotationWrapper<T>>, Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   protected final Class<? extends T> typeClass = getTypeClass();
 
@@ -20,6 +26,12 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
   protected int begin;
 
   protected int end;
+
+  public OAQAAnnotationWrapper(int begin, int end) {
+    super();
+    this.begin = begin;
+    this.end = end;
+  }
 
   @Override
   public T unwrap(JCas jcas) throws AnalysisEngineProcessException {
@@ -52,8 +64,7 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
 
   @SuppressWarnings("unchecked")
   public static <T extends OAQAAnnotation, W extends AnnotationWrapper<T>> W wrap(
-          OAQAAnnotation annotation, Class<T> type, Class<W> wrapperClass)
-          throws AnalysisEngineProcessException {
+          OAQAAnnotation annotation, Class<W> wrapperClass) throws AnalysisEngineProcessException {
     Feature feature = annotation.getType().getFeatureByBaseName("implementingWrapper");
     String className = annotation.getFeatureValueAsString(feature);
     try {
@@ -64,6 +75,29 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
+  }
+
+  @Override
+  public int compareTo(OAQAAnnotationWrapper<T> o) {
+    return ComparisonChain.start().compare(begin, o.begin).compare(end, o.end).result();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(begin, end);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    @SuppressWarnings("rawtypes")
+    OAQAAnnotationWrapper other = (OAQAAnnotationWrapper) obj;
+    return Objects.equal(this.begin, other.begin) && Objects.equal(this.end, other.end);
   }
 
   public String getImplementingWrapper() {
@@ -89,5 +123,5 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
   public void setEnd(int end) {
     this.end = end;
   }
-  
+
 }
