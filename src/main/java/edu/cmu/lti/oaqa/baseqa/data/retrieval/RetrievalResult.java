@@ -4,10 +4,11 @@ import java.io.Serializable;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
-import org.oaqa.model.Passage;
+import org.oaqa.model.retrieval.Passage;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 
+@Deprecated
 public class RetrievalResult extends OAQATopWrapper<Passage> implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -76,7 +77,7 @@ public class RetrievalResult extends OAQATopWrapper<Passage> implements Serializ
   }
 
   @Override
-  public void wrap(Passage passage) {
+  public void wrap(Passage passage) throws AnalysisEngineProcessException {
     super.wrap(passage);
     docID = passage.getUri();
     queryString = passage.getQueryString();

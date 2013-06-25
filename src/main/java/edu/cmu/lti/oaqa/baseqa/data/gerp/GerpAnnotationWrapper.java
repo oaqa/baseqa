@@ -93,14 +93,14 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(generators, evidences, ranks, pruningDecisions);
+    return Objects.hashCode(super.hashCode(), generators, evidences, ranks, pruningDecisions);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (obj == null)
+    if (!super.equals(obj))
       return false;
     if (getClass() != obj.getClass())
       return false;

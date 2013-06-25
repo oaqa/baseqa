@@ -13,6 +13,7 @@ import org.oaqa.model.test.Search;
 import edu.cmu.lti.oaqa.baseqa.data.core.FSArrayWrapper;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
+@Deprecated
 public class PassageCandidateArray extends FSArrayWrapper<Passage> {
 
   public PassageCandidateArray(JCas jcas, int length) {
@@ -92,7 +93,7 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     Search search = (Search) BaseJCasHelper.getFS(jcas, Search.type);
     if (search != null) {
       array = search.getHitList();
-      return getArray(Passage.class, PassageCandidate.class);
+      return getArray(PassageCandidate.class);
     } else {
       return new ArrayList<PassageCandidate>();
     }

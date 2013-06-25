@@ -7,12 +7,13 @@ import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
-import org.oaqa.model.Passage;
-import org.oaqa.model.Search;
+import org.oaqa.model.retrieval.Passage;
+import org.oaqa.model.test.Search;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.FSArrayWrapper;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
+@Deprecated
 public class RetrievalResultArray extends FSArrayWrapper<Passage> {
 
   public RetrievalResultArray(JCas jcas, int length) {

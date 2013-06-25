@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
-import org.oaqa.model.Passage;
+import org.oaqa.model.retrieval.Passage;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 
@@ -15,6 +15,7 @@ import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
+@Deprecated
 public class PassageCandidate extends OAQATopWrapper<Passage> implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -43,7 +44,6 @@ public class PassageCandidate extends OAQATopWrapper<Passage> implements Seriali
     this.end = end;
     this.probability = score;
     this.queryString = queryString;
-    
   }
   
   public PassageCandidate(String docID, int start, int end, float score, String queryString, List<Float> probabilities)
@@ -57,8 +57,6 @@ public class PassageCandidate extends OAQATopWrapper<Passage> implements Seriali
     return docID + "[" + start + "," + end + "]";
   }
   
- 
-
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -136,10 +134,8 @@ public class PassageCandidate extends OAQATopWrapper<Passage> implements Seriali
 		  return this.probabilities;
   }
 
-  
-  
   @Override
-  public void wrap(Passage passage) {
+  public void wrap(Passage passage) throws AnalysisEngineProcessException {
     super.wrap(passage);
     docID = passage.getUri();
     start = passage.getBegin();

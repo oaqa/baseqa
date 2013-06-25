@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
-import org.oaqa.model.QueryConcept;
+import org.oaqa.model.retrieval.QueryConcept;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 
@@ -15,6 +15,7 @@ import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
+@Deprecated
 public class Keyterm extends OAQATopWrapper<QueryConcept> implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -39,7 +40,7 @@ public class Keyterm extends OAQATopWrapper<QueryConcept> implements Serializabl
   }
 
   @Override
-  public void wrap(QueryConcept top) {
+  public void wrap(QueryConcept top) throws AnalysisEngineProcessException {
     super.wrap(top);
     text = top.getText();
   }

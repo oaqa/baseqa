@@ -6,12 +6,13 @@ import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
-import org.oaqa.model.AbstractQuery;
-import org.oaqa.model.QueryConcept;
+import org.oaqa.model.retrieval.AbstractQuery;
+import org.oaqa.model.retrieval.QueryConcept;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.FSListWrapper;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
+@Deprecated
 public class KeytermList extends FSListWrapper<QueryConcept> {
 
   public KeytermList(JCas jcas) {
@@ -61,7 +62,7 @@ public class KeytermList extends FSListWrapper<QueryConcept> {
     AbstractQuery query = (AbstractQuery) BaseJCasHelper.getFS(jcas, AbstractQuery.type);
     if (query != null) {
       list = query.getConcepts();
-      return getList(QueryConcept.class, Keyterm.class);
+      return getList(Keyterm.class);
     } else {
       return new ArrayList<Keyterm>();
     }
