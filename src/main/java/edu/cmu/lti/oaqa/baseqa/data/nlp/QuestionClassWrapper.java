@@ -64,4 +64,12 @@ public class QuestionClassWrapper extends GerpAnnotationWrapper<QuestionClass> {
     return Objects.equal(questionClass, other.questionClass);
   }
 
+  public QuestionClassType getQuestionClass() {
+    return questionClass;
+  }
+
+  public void setQuestionClass(QuestionClassType questionClass) {
+    this.questionClass = questionClass;
+  }
+
 }

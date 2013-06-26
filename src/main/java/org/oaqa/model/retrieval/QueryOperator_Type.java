@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** A query operator in the abstract search query model.
- * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
+ * Updated by JCasGen Wed Jun 26 17:33:03 EDT 2013
  * @generated */
 public class QueryOperator_Type extends GerpTop_Type {
   /** @generated */

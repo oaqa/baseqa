@@ -62,16 +62,9 @@ Changes in 0.2:
           <rangeTypeName>uima.cas.StringArray</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>sources</name>
-          <description>The annotations from which this predicate was derived, e.g., token or entity annotations.</description>
-          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>uima.tcas.Annotation</elementType>
-          <multipleReferencesAllowed>false</multipleReferencesAllowed>
-        </featureDescription>
-        <featureDescription>
           <name>parse</name>
           <description>A parse for which this predicate was a head (if any)</description>
-          <rangeTypeName>uima.tcas.Annotation</rangeTypeName>
+          <rangeTypeName>org.oaqa.model.nlp.Predicate</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>semanticType</name>
@@ -688,6 +681,7 @@ Changes in 0.2:
           <name>additionalEvidences</name>
           <description>Detailed evidences provided by the evidencer in addition to the confidence score, e.g. related document URIs where a text similarity based evidence is calculated.</description>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.core.OAQATop</elementType>
         </featureDescription>
       </features>
     </typeDescription>
@@ -756,6 +750,7 @@ Changes in 0.2:
           <name>comments</name>
           <description>A placeholder for any additional comments that evidencers, rankers or pruners may provide.</description>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.core.OAQATop</elementType>
         </featureDescription>
       </features>
     </typeDescription>

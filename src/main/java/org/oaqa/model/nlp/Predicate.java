@@ -14,7 +14,7 @@ import org.oaqa.model.gerp.GerpAnnotation;
 
 
 /** Annotation on a predicate, which may have arguments; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock
- * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
+ * Updated by JCasGen Wed Jun 26 17:33:02 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class Predicate extends GerpAnnotation {
@@ -134,52 +134,18 @@ public class Predicate extends GerpAnnotation {
    
     
   //*--------------*
-  //* Feature: sources
-
-  /** getter for sources - gets The annotations from which this predicate was derived, e.g., token or entity annotations.
-   * @generated */
-  public FSArray getSources() {
-    if (Predicate_Type.featOkTst && ((Predicate_Type)jcasType).casFeat_sources == null)
-      jcasType.jcas.throwFeatMissing("sources", "org.oaqa.model.nlp.Predicate");
-    return (FSArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Predicate_Type)jcasType).casFeatCode_sources)));}
-    
-  /** setter for sources - sets The annotations from which this predicate was derived, e.g., token or entity annotations. 
-   * @generated */
-  public void setSources(FSArray v) {
-    if (Predicate_Type.featOkTst && ((Predicate_Type)jcasType).casFeat_sources == null)
-      jcasType.jcas.throwFeatMissing("sources", "org.oaqa.model.nlp.Predicate");
-    jcasType.ll_cas.ll_setRefValue(addr, ((Predicate_Type)jcasType).casFeatCode_sources, jcasType.ll_cas.ll_getFSRef(v));}    
-    
-  /** indexed getter for sources - gets an indexed value - The annotations from which this predicate was derived, e.g., token or entity annotations.
-   * @generated */
-  public Annotation getSources(int i) {
-    if (Predicate_Type.featOkTst && ((Predicate_Type)jcasType).casFeat_sources == null)
-      jcasType.jcas.throwFeatMissing("sources", "org.oaqa.model.nlp.Predicate");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Predicate_Type)jcasType).casFeatCode_sources), i);
-    return (Annotation)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Predicate_Type)jcasType).casFeatCode_sources), i)));}
-
-  /** indexed setter for sources - sets an indexed value - The annotations from which this predicate was derived, e.g., token or entity annotations.
-   * @generated */
-  public void setSources(int i, Annotation v) { 
-    if (Predicate_Type.featOkTst && ((Predicate_Type)jcasType).casFeat_sources == null)
-      jcasType.jcas.throwFeatMissing("sources", "org.oaqa.model.nlp.Predicate");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Predicate_Type)jcasType).casFeatCode_sources), i);
-    jcasType.ll_cas.ll_setRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Predicate_Type)jcasType).casFeatCode_sources), i, jcasType.ll_cas.ll_getFSRef(v));}
-   
-    
-  //*--------------*
   //* Feature: parse
 
   /** getter for parse - gets A parse for which this predicate was a head (if any)
    * @generated */
-  public Annotation getParse() {
+  public Predicate getParse() {
     if (Predicate_Type.featOkTst && ((Predicate_Type)jcasType).casFeat_parse == null)
       jcasType.jcas.throwFeatMissing("parse", "org.oaqa.model.nlp.Predicate");
-    return (Annotation)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Predicate_Type)jcasType).casFeatCode_parse)));}
+    return (Predicate)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Predicate_Type)jcasType).casFeatCode_parse)));}
     
   /** setter for parse - sets A parse for which this predicate was a head (if any) 
    * @generated */
-  public void setParse(Annotation v) {
+  public void setParse(Predicate v) {
     if (Predicate_Type.featOkTst && ((Predicate_Type)jcasType).casFeat_parse == null)
       jcasType.jcas.throwFeatMissing("parse", "org.oaqa.model.nlp.Predicate");
     jcasType.ll_cas.ll_setRefValue(addr, ((Predicate_Type)jcasType).casFeatCode_parse, jcasType.ll_cas.ll_getFSRef(v));}    

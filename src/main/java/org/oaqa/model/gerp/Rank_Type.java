@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A type represents the rank for the candidate entities, which is normally done by a ranker's synthesized analysis of collected evidences.
- * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
+ * Updated by JCasGen Wed Jun 26 17:33:02 EDT 2013
  * @generated */
 public class Rank_Type extends GerpBase_Type {
   /** @generated */

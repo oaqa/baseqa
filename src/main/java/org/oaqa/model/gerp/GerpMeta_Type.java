@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.core.OAQATop_Type;
 
 /** A GERP-style component type, which contains some generators, evidencers, rankers and pruners, that capture the common metadata shared across the feature structures (GerpTops and GerpAnnotations) to be generated in the component, e.g. the name of all generators, evidencers, rankers and pruners.
- * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
+ * Updated by JCasGen Wed Jun 26 17:33:02 EDT 2013
  * @generated */
 public class GerpMeta_Type extends OAQATop_Type {
   /** @generated */

@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpAnnotation_Type;
 
 /** Annotates a span of text identified as a candidate answer.
- * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
+ * Updated by JCasGen Wed Jun 26 17:33:02 EDT 2013
  * @generated */
 public class CandidateAnswerOccurrence_Type extends GerpAnnotation_Type {
   /** @generated */

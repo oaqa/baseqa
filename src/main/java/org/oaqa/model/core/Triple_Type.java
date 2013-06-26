@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A triple, e.g., and RDF triple.
- * Updated by JCasGen Mon Jun 24 16:50:07 EDT 2013
+ * Updated by JCasGen Wed Jun 26 17:33:01 EDT 2013
  * @generated */
 public class Triple_Type extends OAQATop_Type {
   /** @generated */

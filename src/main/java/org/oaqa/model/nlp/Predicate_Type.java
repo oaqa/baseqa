@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpAnnotation_Type;
 
 /** Annotation on a predicate, which may have arguments; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock
- * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
+ * Updated by JCasGen Wed Jun 26 17:33:02 EDT 2013
  * @generated */
 public class Predicate_Type extends GerpAnnotation_Type {
   /** @generated */
@@ -115,43 +115,6 @@ public class Predicate_Type extends GerpAnnotation_Type {
       ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i, v, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i);
     ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i, v);
-  }
- 
- 
-  /** @generated */
-  final Feature casFeat_sources;
-  /** @generated */
-  final int     casFeatCode_sources;
-  /** @generated */ 
-  public int getSources(int addr) {
-        if (featOkTst && casFeat_sources == null)
-      jcas.throwFeatMissing("sources", "org.oaqa.model.nlp.Predicate");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_sources);
-  }
-  /** @generated */    
-  public void setSources(int addr, int v) {
-        if (featOkTst && casFeat_sources == null)
-      jcas.throwFeatMissing("sources", "org.oaqa.model.nlp.Predicate");
-    ll_cas.ll_setRefValue(addr, casFeatCode_sources, v);}
-    
-   /** @generated */
-  public int getSources(int addr, int i) {
-        if (featOkTst && casFeat_sources == null)
-      jcas.throwFeatMissing("sources", "org.oaqa.model.nlp.Predicate");
-    if (lowLevelTypeChecks)
-      return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_sources), i, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_sources), i);
-  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_sources), i);
-  }
-   
-  /** @generated */ 
-  public void setSources(int addr, int i, int v) {
-        if (featOkTst && casFeat_sources == null)
-      jcas.throwFeatMissing("sources", "org.oaqa.model.nlp.Predicate");
-    if (lowLevelTypeChecks)
-      ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_sources), i, v, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_sources), i);
-    ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_sources), i, v);
   }
  
  
@@ -298,11 +261,7 @@ public class Predicate_Type extends GerpAnnotation_Type {
     casFeatCode_argumentLabels  = (null == casFeat_argumentLabels) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_argumentLabels).getCode();
 
  
-    casFeat_sources = jcas.getRequiredFeatureDE(casType, "sources", "uima.cas.FSArray", featOkTst);
-    casFeatCode_sources  = (null == casFeat_sources) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_sources).getCode();
-
- 
-    casFeat_parse = jcas.getRequiredFeatureDE(casType, "parse", "uima.tcas.Annotation", featOkTst);
+    casFeat_parse = jcas.getRequiredFeatureDE(casType, "parse", "org.oaqa.model.nlp.Predicate", featOkTst);
     casFeatCode_parse  = (null == casFeat_parse) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_parse).getCode();
 
  

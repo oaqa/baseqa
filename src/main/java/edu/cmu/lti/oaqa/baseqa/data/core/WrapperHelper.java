@@ -7,6 +7,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.EmptyFSList;
 import org.apache.uima.jcas.cas.EmptyStringList;
+import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.jcas.cas.NonEmptyFSList;
 import org.apache.uima.jcas.cas.NonEmptyStringList;
@@ -83,6 +84,25 @@ public class WrapperHelper {
     return list;
   }
 
+  public static <T extends OAQATop, W extends OAQATopWrapper<T>> List<W> wrapTopArray(
+          FSArray array, Class<W> wrapperClass) throws AnalysisEngineProcessException {
+    List<W> wrappers = new ArrayList<W>(array.size());
+    for (int i = 0; i < array.size(); i++) {
+      wrappers.add(OAQATopWrapper.wrap((OAQATop) array.get(i), wrapperClass));
+    }
+    return wrappers;
+  }
+
+  public static <T extends OAQATop, W extends OAQATopWrapper<T>> FSArray unwrapTopArray(
+          List<W> wrappers, JCas jcas) throws AnalysisEngineProcessException {
+    FSArray array = new FSArray(jcas, wrappers.size());
+    int i = 0;
+    for (W wrapper : wrappers) {
+      array.set(i, wrapper.unwrap(jcas));
+    }
+    return array;
+  }
+
   public static <T extends OAQAAnnotation, W extends OAQAAnnotationWrapper<T>> List<W> wrapAnnotationList(
           FSList list, Class<W> wrapperClass) throws AnalysisEngineProcessException {
     List<W> wrappers = new ArrayList<W>();
@@ -106,6 +126,25 @@ public class WrapperHelper {
       ((NonEmptyFSList) list).setTail(tail);
     }
     return list;
+  }
+
+  public static <T extends OAQAAnnotation, W extends OAQAAnnotationWrapper<T>> List<W> wrapAnnotationArray(
+          FSArray array, Class<W> wrapperClass) throws AnalysisEngineProcessException {
+    List<W> wrappers = new ArrayList<W>(array.size());
+    for (int i = 0; i < array.size(); i++) {
+      wrappers.add(OAQAAnnotationWrapper.wrap((OAQAAnnotation) array.get(i), wrapperClass));
+    }
+    return wrappers;
+  }
+
+  public static <T extends OAQAAnnotation, W extends OAQAAnnotationWrapper<T>> FSArray unwrapAnnotationArray(
+          List<W> wrappers, JCas jcas) throws AnalysisEngineProcessException {
+    FSArray array = new FSArray(jcas, wrappers.size());
+    int i = 0;
+    for (W wrapper : wrappers) {
+      array.set(i, wrapper.unwrap(jcas));
+    }
+    return array;
   }
 
 }

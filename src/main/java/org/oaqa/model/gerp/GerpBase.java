@@ -12,7 +12,7 @@ import org.apache.uima.jcas.cas.FSList;
 
 
 /** A base class for GERP intermediate data: Evidence, Rank, PruningDecision.
- * Updated by JCasGen Mon Jun 24 16:50:08 EDT 2013
+ * Updated by JCasGen Wed Jun 26 17:33:02 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class GerpBase extends OAQATop {
