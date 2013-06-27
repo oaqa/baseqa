@@ -53,13 +53,10 @@ import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
  * TODO cross-opts for parameters within Resource and the corresponding resource is then aggregated
  * by modifiers, e.g. generators, instead of options, the cross-opts will not work
  * 
- * @deprecated Use {@link TopGerper} or {@link GerpAnnotationComponent} instead
- * 
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-@Deprecated
-public class GerpComponent<C extends OAQATopWrapper<? extends OAQATop>> extends
+public class TopGerper<C extends OAQATopWrapper<? extends OAQATop>> extends
         AbstractLoggedComponent {
 
   protected List<AbstractCandidateGenerator> generators;

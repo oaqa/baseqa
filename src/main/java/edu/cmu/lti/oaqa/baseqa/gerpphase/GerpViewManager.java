@@ -21,6 +21,7 @@ import org.apache.uima.jcas.JCas;
 
 import edu.cmu.lti.oaqa.framework.ViewManager.Type;
 
+@Deprecated
 public class GerpViewManager {
 
   public enum ViewType implements Type {
