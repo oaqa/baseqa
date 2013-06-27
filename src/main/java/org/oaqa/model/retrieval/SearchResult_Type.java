@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** A search result.
- * Updated by JCasGen Wed Jun 26 17:33:03 EDT 2013
+ * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
  * @generated */
 public class SearchResult_Type extends GerpTop_Type {
   /** @generated */
@@ -67,16 +67,16 @@ public class SearchResult_Type extends GerpTop_Type {
   /** @generated */
   final int     casFeatCode_score;
   /** @generated */ 
-  public double getScore(int addr) {
+  public float getScore(int addr) {
         if (featOkTst && casFeat_score == null)
       jcas.throwFeatMissing("score", "org.oaqa.model.retrieval.SearchResult");
-    return ll_cas.ll_getDoubleValue(addr, casFeatCode_score);
+    return ll_cas.ll_getFloatValue(addr, casFeatCode_score);
   }
   /** @generated */    
-  public void setScore(int addr, double v) {
+  public void setScore(int addr, float v) {
         if (featOkTst && casFeat_score == null)
       jcas.throwFeatMissing("score", "org.oaqa.model.retrieval.SearchResult");
-    ll_cas.ll_setDoubleValue(addr, casFeatCode_score, v);}
+    ll_cas.ll_setFloatValue(addr, casFeatCode_score, v);}
     
   
  
@@ -202,7 +202,7 @@ public class SearchResult_Type extends GerpTop_Type {
     casFeatCode_uri  = (null == casFeat_uri) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_uri).getCode();
 
  
-    casFeat_score = jcas.getRequiredFeatureDE(casType, "score", "uima.cas.Double", featOkTst);
+    casFeat_score = jcas.getRequiredFeatureDE(casType, "score", "uima.cas.Float", featOkTst);
     casFeatCode_score  = (null == casFeat_score) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_score).getCode();
 
  

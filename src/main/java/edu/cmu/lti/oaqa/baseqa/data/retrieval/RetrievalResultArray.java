@@ -13,6 +13,13 @@ import org.oaqa.model.test.Search;
 import edu.cmu.lti.oaqa.baseqa.data.core.FSArrayWrapper;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
+/**
+ * Legacy type wrapper for Search, defined in basephase. In a GERP environment, the candidates
+ * generates from generators will be stored in the same index without any additional container.
+ * 
+ * @author Zi Yang <ziy@cs.cmu.edu>
+ * 
+ */
 @Deprecated
 public class RetrievalResultArray extends FSArrayWrapper<Passage> {
 
@@ -43,7 +50,7 @@ public class RetrievalResultArray extends FSArrayWrapper<Passage> {
     int prevRank = 0;
     for (int i = 0; i < results.size(); i++) {
       RetrievalResult result = results.get(i);
-      double curScore = result.getProbability();
+      double curScore = result.getScore();
       if (curScore != prevScore) {
         result.setRank(i + 1);
         prevScore = curScore;
@@ -62,7 +69,7 @@ public class RetrievalResultArray extends FSArrayWrapper<Passage> {
     int prevRank = 0;
     for (int i = 0; i < results.size(); i++) {
       RetrievalResult result = results.get(i);
-      double curScore = result.getProbability();
+      double curScore = result.getScore();
       if (curScore != prevScore) {
         result.setRank(i + 1);
         prevScore = curScore;
@@ -93,7 +100,7 @@ public class RetrievalResultArray extends FSArrayWrapper<Passage> {
     Search search = (Search) BaseJCasHelper.getFS(jcas, Search.type);
     if (search != null) {
       array = search.getHitList();
-      return getArray(Passage.class, RetrievalResult.class);
+      return getArray(RetrievalResult.class);
     } else {
       return new ArrayList<RetrievalResult>();
     }

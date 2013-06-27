@@ -12,6 +12,14 @@ import org.oaqa.model.retrieval.QueryConcept;
 import edu.cmu.lti.oaqa.baseqa.data.core.FSListWrapper;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
+/**
+ * Legacy type wrapper for AbstractQuery, used for phrases defined in basephase. In a GERP
+ * environment, the candidates generates from generators will be stored in the same index without
+ * any additional container.
+ * 
+ * @author Zi Yang <ziy@cs.cmu.edu>
+ * 
+ */
 @Deprecated
 public class KeytermList extends FSListWrapper<QueryConcept> {
 

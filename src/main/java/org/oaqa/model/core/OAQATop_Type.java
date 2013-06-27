@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** The base class for OAQA feature structures that are not Annotations.
- * Updated by JCasGen Wed Jun 26 17:33:01 EDT 2013
+ * Updated by JCasGen Thu Jun 27 14:37:28 EDT 2013
  * @generated */
 public class OAQATop_Type extends TOP_Type {
   /** @generated */

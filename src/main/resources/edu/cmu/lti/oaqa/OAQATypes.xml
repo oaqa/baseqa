@@ -191,7 +191,7 @@ Changes in 0.2:
         <featureDescription>
           <name>score</name>
           <description>Relevance score associated with the search result.</description>
-          <rangeTypeName>uima.cas.Double</rangeTypeName>
+          <rangeTypeName>uima.cas.Float</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>text</name>
@@ -382,7 +382,7 @@ Changes in 0.2:
       <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
       <features>
         <featureDescription>
-          <name>neTypes</name>
+          <name>namedEntityTypes</name>
           <description>List of Named Entity types associated with this concept.</description>
           <rangeTypeName>uima.cas.StringList</rangeTypeName>
         </featureDescription>
@@ -413,9 +413,9 @@ Changes in 0.2:
           <elementType>org.oaqa.model.QueryConcept</elementType>
         </featureDescription>
         <featureDescription>
-          <name>pos</name>
+          <name>partOfSpeech</name>
           <description>The part of speech of the concept.</description>
-          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>

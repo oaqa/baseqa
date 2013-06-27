@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** A query concept in the abstract search query model.
- * Updated by JCasGen Wed Jun 26 17:33:03 EDT 2013
+ * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
  * @generated */
 public class QueryConcept_Type extends GerpTop_Type {
   /** @generated */
@@ -45,20 +45,20 @@ public class QueryConcept_Type extends GerpTop_Type {
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.oaqa.model.retrieval.QueryConcept");
  
   /** @generated */
-  final Feature casFeat_neTypes;
+  final Feature casFeat_namedEntityTypes;
   /** @generated */
-  final int     casFeatCode_neTypes;
+  final int     casFeatCode_namedEntityTypes;
   /** @generated */ 
-  public int getNeTypes(int addr) {
-        if (featOkTst && casFeat_neTypes == null)
-      jcas.throwFeatMissing("neTypes", "org.oaqa.model.retrieval.QueryConcept");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_neTypes);
+  public int getNamedEntityTypes(int addr) {
+        if (featOkTst && casFeat_namedEntityTypes == null)
+      jcas.throwFeatMissing("namedEntityTypes", "org.oaqa.model.retrieval.QueryConcept");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_namedEntityTypes);
   }
   /** @generated */    
-  public void setNeTypes(int addr, int v) {
-        if (featOkTst && casFeat_neTypes == null)
-      jcas.throwFeatMissing("neTypes", "org.oaqa.model.retrieval.QueryConcept");
-    ll_cas.ll_setRefValue(addr, casFeatCode_neTypes, v);}
+  public void setNamedEntityTypes(int addr, int v) {
+        if (featOkTst && casFeat_namedEntityTypes == null)
+      jcas.throwFeatMissing("namedEntityTypes", "org.oaqa.model.retrieval.QueryConcept");
+    ll_cas.ll_setRefValue(addr, casFeatCode_namedEntityTypes, v);}
     
   
  
@@ -153,20 +153,20 @@ public class QueryConcept_Type extends GerpTop_Type {
   
  
   /** @generated */
-  final Feature casFeat_pos;
+  final Feature casFeat_partOfSpeech;
   /** @generated */
-  final int     casFeatCode_pos;
+  final int     casFeatCode_partOfSpeech;
   /** @generated */ 
-  public int getPos(int addr) {
-        if (featOkTst && casFeat_pos == null)
-      jcas.throwFeatMissing("pos", "org.oaqa.model.retrieval.QueryConcept");
-    return ll_cas.ll_getIntValue(addr, casFeatCode_pos);
+  public String getPartOfSpeech(int addr) {
+        if (featOkTst && casFeat_partOfSpeech == null)
+      jcas.throwFeatMissing("partOfSpeech", "org.oaqa.model.retrieval.QueryConcept");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_partOfSpeech);
   }
   /** @generated */    
-  public void setPos(int addr, int v) {
-        if (featOkTst && casFeat_pos == null)
-      jcas.throwFeatMissing("pos", "org.oaqa.model.retrieval.QueryConcept");
-    ll_cas.ll_setIntValue(addr, casFeatCode_pos, v);}
+  public void setPartOfSpeech(int addr, String v) {
+        if (featOkTst && casFeat_partOfSpeech == null)
+      jcas.throwFeatMissing("partOfSpeech", "org.oaqa.model.retrieval.QueryConcept");
+    ll_cas.ll_setStringValue(addr, casFeatCode_partOfSpeech, v);}
     
   
 
@@ -179,8 +179,8 @@ public class QueryConcept_Type extends GerpTop_Type {
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_neTypes = jcas.getRequiredFeatureDE(casType, "neTypes", "uima.cas.StringList", featOkTst);
-    casFeatCode_neTypes  = (null == casFeat_neTypes) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_neTypes).getCode();
+    casFeat_namedEntityTypes = jcas.getRequiredFeatureDE(casType, "namedEntityTypes", "uima.cas.StringList", featOkTst);
+    casFeatCode_namedEntityTypes  = (null == casFeat_namedEntityTypes) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_namedEntityTypes).getCode();
 
  
     casFeat_conceptType = jcas.getRequiredFeatureDE(casType, "conceptType", "org.oaqa.model.nlp.ConceptType", featOkTst);
@@ -203,8 +203,8 @@ public class QueryConcept_Type extends GerpTop_Type {
     casFeatCode_operatorArgs  = (null == casFeat_operatorArgs) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_operatorArgs).getCode();
 
  
-    casFeat_pos = jcas.getRequiredFeatureDE(casType, "pos", "uima.cas.Integer", featOkTst);
-    casFeatCode_pos  = (null == casFeat_pos) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_pos).getCode();
+    casFeat_partOfSpeech = jcas.getRequiredFeatureDE(casType, "partOfSpeech", "uima.cas.String", featOkTst);
+    casFeatCode_partOfSpeech  = (null == casFeat_partOfSpeech) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_partOfSpeech).getCode();
 
   }
 }

@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** A query concept in the abstract search query model.
- * Updated by JCasGen Wed Jun 26 17:33:03 EDT 2013
+ * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class QueryConcept extends GerpTop {
@@ -57,21 +57,21 @@ public class QueryConcept extends GerpTop {
  
     
   //*--------------*
-  //* Feature: neTypes
+  //* Feature: namedEntityTypes
 
-  /** getter for neTypes - gets List of Named Entity types associated with this concept.
+  /** getter for namedEntityTypes - gets List of Named Entity types associated with this concept.
    * @generated */
-  public StringList getNeTypes() {
-    if (QueryConcept_Type.featOkTst && ((QueryConcept_Type)jcasType).casFeat_neTypes == null)
-      jcasType.jcas.throwFeatMissing("neTypes", "org.oaqa.model.retrieval.QueryConcept");
-    return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((QueryConcept_Type)jcasType).casFeatCode_neTypes)));}
+  public StringList getNamedEntityTypes() {
+    if (QueryConcept_Type.featOkTst && ((QueryConcept_Type)jcasType).casFeat_namedEntityTypes == null)
+      jcasType.jcas.throwFeatMissing("namedEntityTypes", "org.oaqa.model.retrieval.QueryConcept");
+    return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((QueryConcept_Type)jcasType).casFeatCode_namedEntityTypes)));}
     
-  /** setter for neTypes - sets List of Named Entity types associated with this concept. 
+  /** setter for namedEntityTypes - sets List of Named Entity types associated with this concept. 
    * @generated */
-  public void setNeTypes(StringList v) {
-    if (QueryConcept_Type.featOkTst && ((QueryConcept_Type)jcasType).casFeat_neTypes == null)
-      jcasType.jcas.throwFeatMissing("neTypes", "org.oaqa.model.retrieval.QueryConcept");
-    jcasType.ll_cas.ll_setRefValue(addr, ((QueryConcept_Type)jcasType).casFeatCode_neTypes, jcasType.ll_cas.ll_getFSRef(v));}    
+  public void setNamedEntityTypes(StringList v) {
+    if (QueryConcept_Type.featOkTst && ((QueryConcept_Type)jcasType).casFeat_namedEntityTypes == null)
+      jcasType.jcas.throwFeatMissing("namedEntityTypes", "org.oaqa.model.retrieval.QueryConcept");
+    jcasType.ll_cas.ll_setRefValue(addr, ((QueryConcept_Type)jcasType).casFeatCode_namedEntityTypes, jcasType.ll_cas.ll_getFSRef(v));}    
    
     
   //*--------------*
@@ -165,21 +165,21 @@ public class QueryConcept extends GerpTop {
    
     
   //*--------------*
-  //* Feature: pos
+  //* Feature: partOfSpeech
 
-  /** getter for pos - gets The part of speech of the concept.
+  /** getter for partOfSpeech - gets The part of speech of the concept.
    * @generated */
-  public int getPos() {
-    if (QueryConcept_Type.featOkTst && ((QueryConcept_Type)jcasType).casFeat_pos == null)
-      jcasType.jcas.throwFeatMissing("pos", "org.oaqa.model.retrieval.QueryConcept");
-    return jcasType.ll_cas.ll_getIntValue(addr, ((QueryConcept_Type)jcasType).casFeatCode_pos);}
+  public String getPartOfSpeech() {
+    if (QueryConcept_Type.featOkTst && ((QueryConcept_Type)jcasType).casFeat_partOfSpeech == null)
+      jcasType.jcas.throwFeatMissing("partOfSpeech", "org.oaqa.model.retrieval.QueryConcept");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((QueryConcept_Type)jcasType).casFeatCode_partOfSpeech);}
     
-  /** setter for pos - sets The part of speech of the concept. 
+  /** setter for partOfSpeech - sets The part of speech of the concept. 
    * @generated */
-  public void setPos(int v) {
-    if (QueryConcept_Type.featOkTst && ((QueryConcept_Type)jcasType).casFeat_pos == null)
-      jcasType.jcas.throwFeatMissing("pos", "org.oaqa.model.retrieval.QueryConcept");
-    jcasType.ll_cas.ll_setIntValue(addr, ((QueryConcept_Type)jcasType).casFeatCode_pos, v);}    
+  public void setPartOfSpeech(String v) {
+    if (QueryConcept_Type.featOkTst && ((QueryConcept_Type)jcasType).casFeat_partOfSpeech == null)
+      jcasType.jcas.throwFeatMissing("partOfSpeech", "org.oaqa.model.retrieval.QueryConcept");
+    jcasType.ll_cas.ll_setStringValue(addr, ((QueryConcept_Type)jcasType).casFeatCode_partOfSpeech, v);}    
   }
 
     

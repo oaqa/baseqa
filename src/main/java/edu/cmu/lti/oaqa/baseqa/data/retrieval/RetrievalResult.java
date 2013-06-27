@@ -8,6 +8,13 @@ import org.oaqa.model.retrieval.Passage;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 
+/**
+ * Legacy type wrapper for Passage, used in phrases defined in basephase. In a GERP environment, one
+ * should use {@link PassageWrapper} with {@link EvidenceWrapper} instead.
+ * 
+ * @author Zi Yang <ziy@cs.cmu.edu>
+ * 
+ */
 @Deprecated
 public class RetrievalResult extends OAQATopWrapper<Passage> implements Serializable {
 
@@ -19,6 +26,8 @@ public class RetrievalResult extends OAQATopWrapper<Passage> implements Serializ
 
   private String queryString;
 
+  private float score;
+
   public RetrievalResult() {
     super();
   }
@@ -26,7 +35,7 @@ public class RetrievalResult extends OAQATopWrapper<Passage> implements Serializ
   public RetrievalResult(String docID, float score, String queryString) {
     super();
     this.docID = docID;
-    this.probability = score;
+    this.score = score;
     this.queryString = queryString;
   }
 
@@ -96,6 +105,10 @@ public class RetrievalResult extends OAQATopWrapper<Passage> implements Serializ
   @Override
   public Class<? extends Passage> getTypeClass() {
     return Passage.class;
+  }
+
+  public float getScore() {
+    return score;
   }
 
 }

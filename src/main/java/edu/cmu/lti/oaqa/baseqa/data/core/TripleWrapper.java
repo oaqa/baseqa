@@ -1,10 +1,10 @@
 package edu.cmu.lti.oaqa.baseqa.data.core;
 
-import java.util.Objects;
-
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.core.Triple;
+
+import com.google.common.base.Objects;
 
 public class TripleWrapper extends OAQATopWrapper<Triple> {
 
@@ -52,7 +52,7 @@ public class TripleWrapper extends OAQATopWrapper<Triple> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(object, predicate, subject);
+    return Objects.hashCode(object, predicate, subject);
   }
 
   @Override
@@ -64,8 +64,8 @@ public class TripleWrapper extends OAQATopWrapper<Triple> {
     if (getClass() != obj.getClass())
       return false;
     TripleWrapper other = (TripleWrapper) obj;
-    return Objects.equals(subject, other.subject) && Objects.equals(predicate, other.predicate)
-            && Objects.equals(object, other.object);
+    return Objects.equal(subject, other.subject) && Objects.equal(predicate, other.predicate)
+            && Objects.equal(object, other.object);
   }
 
   public String getSubject() {

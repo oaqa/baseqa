@@ -13,6 +13,13 @@ import org.oaqa.model.test.Search;
 import edu.cmu.lti.oaqa.baseqa.data.core.FSArrayWrapper;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
+/**
+ * Legacy type wrapper for Search, defined in basephase. In a GERP environment, the candidates
+ * generates from generators will be stored in the same index without any additional container.
+ * 
+ * @author Zi Yang <ziy@cs.cmu.edu>
+ * 
+ */
 @Deprecated
 public class PassageCandidateArray extends FSArrayWrapper<Passage> {
 

@@ -36,12 +36,13 @@ public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
     return AnswerType.class;
   }
 
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public void wrap(AnswerType annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     this.label = annotation.getLabel();
     this.targetType = OAQAAnnotationWrapper.wrap((OAQAAnnotation) annotation.getTargetType(),
-            OAQAAnnotationWrapper.class);
+            (Class<OAQAAnnotationWrapper<OAQAAnnotation>>) (Class) OAQAAnnotationWrapper.class);
   }
 
   @Override

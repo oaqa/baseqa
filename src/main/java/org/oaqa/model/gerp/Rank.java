@@ -10,7 +10,7 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** A type represents the rank for the candidate entities, which is normally done by a ranker's synthesized analysis of collected evidences.
- * Updated by JCasGen Wed Jun 26 17:33:02 EDT 2013
+ * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class Rank extends GerpBase {

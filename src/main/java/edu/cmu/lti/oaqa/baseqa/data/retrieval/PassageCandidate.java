@@ -1,16 +1,17 @@
 package edu.cmu.lti.oaqa.baseqa.data.retrieval;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.Passage;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.gerp.EvidenceWrapper;
 
 /**
+ * Legacy type wrapper for Passage, used in phrases defined in basephase. In a GERP environment, one
+ * should use {@link PassageWrapper} with {@link EvidenceWrapper} instead.
  * 
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
@@ -29,8 +30,8 @@ public class PassageCandidate extends OAQATopWrapper<Passage> implements Seriali
   private int rank = -1;
 
   private String queryString;
-  
-  private List<Float> probabilities;
+
+  private float score;
 
   public PassageCandidate() {
     super();
@@ -42,21 +43,15 @@ public class PassageCandidate extends OAQATopWrapper<Passage> implements Seriali
     this.docID = docID;
     this.start = start;
     this.end = end;
-    this.probability = score;
+    this.score = score;
     this.queryString = queryString;
-  }
-  
-  public PassageCandidate(String docID, int start, int end, float score, String queryString, List<Float> probabilities)
-          throws AnalysisEngineProcessException {
-    this(docID,start,end,score,queryString);
-    this.probabilities = probabilities;  
   }
 
   @Override
   public String toString() {
     return docID + "[" + start + "," + end + "]";
   }
-  
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -127,11 +122,9 @@ public class PassageCandidate extends OAQATopWrapper<Passage> implements Seriali
   public void setQueryString(String queryString) {
     this.queryString = queryString;
   }
-  
-  public List<Float> getProbabilities(){
-	  if(this.probabilities == null)
-			return new ArrayList<Float>();
-		  return this.probabilities;
+
+  public float getProbability() {
+    return this.score;
   }
 
   @Override
@@ -145,7 +138,7 @@ public class PassageCandidate extends OAQATopWrapper<Passage> implements Seriali
   }
 
   @Override
-  public Passage unwrap(JCas jcas) throws AnalysisEngineProcessException  {
+  public Passage unwrap(JCas jcas) throws AnalysisEngineProcessException {
     Passage passage = super.unwrap(jcas);
     passage.setUri(docID);
     passage.setBegin(start);

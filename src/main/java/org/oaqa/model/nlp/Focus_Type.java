@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpAnnotation_Type;
 
 /** The phrase in the question that indicates the answer variable.
- * Updated by JCasGen Wed Jun 26 17:33:02 EDT 2013
+ * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
  * @generated */
 public class Focus_Type extends GerpAnnotation_Type {
   /** @generated */

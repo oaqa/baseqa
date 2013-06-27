@@ -11,6 +11,10 @@ import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 /**
  * TOKEN type refers to the original token terms, and phrases refer to the name entities identified
  * by NameEntity.
+ * <p>
+ * Legacy type wrapper for QueryConcept, used in phrases defined in basephase. In a GERP
+ * environment, the candidates generates from generators will be stored in the same index without
+ * any additional container.
  * 
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 

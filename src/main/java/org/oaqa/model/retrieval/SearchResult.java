@@ -13,7 +13,7 @@ import org.oaqa.model.answer.CandidateAnswerVariant;
 
 
 /** A search result.
- * Updated by JCasGen Wed Jun 26 17:33:03 EDT 2013
+ * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class SearchResult extends GerpTop {
@@ -79,17 +79,17 @@ public class SearchResult extends GerpTop {
 
   /** getter for score - gets Relevance score associated with the search result.
    * @generated */
-  public double getScore() {
+  public float getScore() {
     if (SearchResult_Type.featOkTst && ((SearchResult_Type)jcasType).casFeat_score == null)
       jcasType.jcas.throwFeatMissing("score", "org.oaqa.model.retrieval.SearchResult");
-    return jcasType.ll_cas.ll_getDoubleValue(addr, ((SearchResult_Type)jcasType).casFeatCode_score);}
+    return jcasType.ll_cas.ll_getFloatValue(addr, ((SearchResult_Type)jcasType).casFeatCode_score);}
     
   /** setter for score - sets Relevance score associated with the search result. 
    * @generated */
-  public void setScore(double v) {
+  public void setScore(float v) {
     if (SearchResult_Type.featOkTst && ((SearchResult_Type)jcasType).casFeat_score == null)
       jcasType.jcas.throwFeatMissing("score", "org.oaqa.model.retrieval.SearchResult");
-    jcasType.ll_cas.ll_setDoubleValue(addr, ((SearchResult_Type)jcasType).casFeatCode_score, v);}    
+    jcasType.ll_cas.ll_setFloatValue(addr, ((SearchResult_Type)jcasType).casFeatCode_score, v);}    
    
     
   //*--------------*
