@@ -42,9 +42,9 @@ public class QuestionClassWrapper extends GerpAnnotationWrapper<QuestionClass> {
 
   @Override
   public QuestionClass unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    QuestionClass top = super.unwrap(jcas);
-    top.setQuestionClass(questionClass.toString());
-    return top;
+    QuestionClass annotation = super.unwrap(jcas);
+    annotation.setQuestionClass(questionClass.toString());
+    return annotation;
   }
 
   @Override

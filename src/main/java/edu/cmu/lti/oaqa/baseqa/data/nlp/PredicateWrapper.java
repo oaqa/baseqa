@@ -87,17 +87,17 @@ public class PredicateWrapper extends GerpAnnotationWrapper<Predicate> {
 
   @Override
   public Predicate unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Predicate top = super.unwrap(jcas);
-    top.setArguments(WrapperHelper.unwrapAnnotationArray(arguments, jcas));
-    top.setArgumentLabels(WrapperHelper.unwrapStringArray(argumentLabels, jcas));
-    top.setParse(parse.unwrap(jcas));
-    top.setSemanticType(semanticType);
-    top.setPartOfSpeech(partOfSpeech);
-    top.setLemmaForm(lemmaForm);
-    top.setIsMainReference(isMainReference);
-    top.setIsVariable(isVariable);
-    top.setDeterminer(determiner);
-    return top;
+    Predicate annotation = super.unwrap(jcas);
+    annotation.setArguments(WrapperHelper.unwrapAnnotationArray(arguments, jcas));
+    annotation.setArgumentLabels(WrapperHelper.unwrapStringArray(argumentLabels, jcas));
+    annotation.setParse(parse.unwrap(jcas));
+    annotation.setSemanticType(semanticType);
+    annotation.setPartOfSpeech(partOfSpeech);
+    annotation.setLemmaForm(lemmaForm);
+    annotation.setIsMainReference(isMainReference);
+    annotation.setIsVariable(isVariable);
+    annotation.setDeterminer(determiner);
+    return annotation;
   }
 
   @Override
