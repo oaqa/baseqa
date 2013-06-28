@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.baseqa.gerpphase;
+package edu.cmu.lti.oaqa.baseqa.gerpphase.core;
 
 import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;

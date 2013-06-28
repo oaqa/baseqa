@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 
 import edu.cmu.lti.oaqa.baseqa.data.nlp.Keyterm;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.KeytermList;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.core.generator.AbstractGenerator;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 

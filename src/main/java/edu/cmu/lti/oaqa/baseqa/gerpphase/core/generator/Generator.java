@@ -1,4 +1,4 @@
-package edu.cmu.lti.oaqa.baseqa.gerpphase.generator;
+package edu.cmu.lti.oaqa.baseqa.gerpphase.core.generator;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 

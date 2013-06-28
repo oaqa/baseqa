@@ -12,6 +12,7 @@ import edu.cmu.lti.oaqa.baseqa.data.retrieval.PassageCandidate;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.PassageCandidateArray;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResult;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResultArray;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.core.generator.AbstractGenerator;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.types.InputElement;

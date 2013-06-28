@@ -10,6 +10,7 @@ import edu.cmu.lti.oaqa.baseqa.data.nlp.Keyterm;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.KeytermList;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResult;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResultArray;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.core.generator.AbstractGenerator;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.types.InputElement;

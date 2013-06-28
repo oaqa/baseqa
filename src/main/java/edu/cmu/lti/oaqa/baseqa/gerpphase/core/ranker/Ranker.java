@@ -1,15 +1,15 @@
-package edu.cmu.lti.oaqa.baseqa.gerpphase.pruner;
+package edu.cmu.lti.oaqa.baseqa.gerpphase.core.ranker;
 
 import java.util.Collection;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 
-import edu.cmu.lti.oaqa.baseqa.data.gerp.PruningDecisionWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.gerp.EvidenceWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.RankWrapper;
 
-public interface Pruner {
+public interface Ranker {
 
-  PruningDecisionWrapper generate(Collection<? extends RankWrapper> ranks)
+  RankWrapper rank(Collection<? extends EvidenceWrapper<?, ?>> evidences)
           throws AnalysisEngineProcessException;
 
 }

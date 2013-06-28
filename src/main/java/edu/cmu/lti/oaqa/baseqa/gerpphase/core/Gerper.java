@@ -1,4 +1,4 @@
-package edu.cmu.lti.oaqa.baseqa.gerpphase;
+package edu.cmu.lti.oaqa.baseqa.gerpphase.core;
 
 import java.util.List;
 
@@ -8,20 +8,19 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import edu.cmu.lti.oaqa.baseqa.data.gerp.Gerpable;
-import edu.cmu.lti.oaqa.baseqa.gerpphase.evidencer.AbstractEvidencer;
-import edu.cmu.lti.oaqa.baseqa.gerpphase.generator.AbstractGenerator;
-import edu.cmu.lti.oaqa.baseqa.gerpphase.pruner.AbstractPruner;
-import edu.cmu.lti.oaqa.baseqa.gerpphase.ranker.AbstractRanker;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.core.evidencer.AbstractEvidencer;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.core.generator.AbstractGenerator;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.core.pruner.AbstractPruner;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.core.ranker.AbstractRanker;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 
 /**
  * Component that supports 4-step processing: candidate Generation -> Evidencing -> Ranking ->
- * Pruning, which are defined by the interfaces {@link AbstractGenerator},
- * {@link AbstractEvidencer}, {@link AbstractRanker}, and
- * {@link AbstractPruner}. The implementing classes and parameters (together defined in a
- * yaml file) need to be specified for the parameters "generators", "gatherer", "rankers", and
- * "pruners".
+ * Pruning, which are defined by the interfaces {@link AbstractGenerator}, {@link AbstractEvidencer}
+ * , {@link AbstractRanker}, and {@link AbstractPruner}. The implementing classes and parameters
+ * (together defined in a yaml file) need to be specified for the parameters "generators",
+ * "gatherer", "rankers", and "pruners".
  * <p>
  * For short yaml names, the following yaml syntax is recommended:
  * <p>
@@ -55,38 +54,41 @@ import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public class GerpComponent<W extends Gerpable> extends AbstractLoggedComponent {
+public class Gerper<W extends Gerpable> extends AbstractLoggedComponent {
 
-  protected List<AbstractGenerator> generators;
+  protected List<AbstractGenerator<W>> generators;
 
-  protected List<AbstractEvidencer> evidencers;
+  protected List<AbstractEvidencer<W>> evidencers;
 
   protected List<AbstractRanker> rankers;
 
   protected List<AbstractPruner> pruners;
 
+  private AbstractGenerator<W> generatorInstance;
+
+  private AbstractEvidencer<W> evidencerInstance;
+
+  @SuppressWarnings("unchecked")
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
     super.initialize(c);
     Object generatorNames = c.getConfigParameterValue("generators");
     if (generatorNames != null) {
-      generators = BaseExperimentBuilder.createResourceList(generatorNames,
-              AbstractGenerator.class);
+      generators = (List<AbstractGenerator<W>>) BaseExperimentBuilder.createResourceList(
+              generatorNames, generatorInstance.getClass());
     }
     Object evidencerNames = c.getConfigParameterValue("evidencers");
     if (evidencerNames != null) {
-      evidencers = BaseExperimentBuilder.createResourceList(evidencerNames,
-              AbstractEvidencer.class);
+      evidencers = (List<AbstractEvidencer<W>>) BaseExperimentBuilder.createResourceList(
+              evidencerNames, evidencerInstance.getClass());
     }
     Object rankerNames = c.getConfigParameterValue("rankers");
     if (rankerNames != null) {
-      rankers = BaseExperimentBuilder
-              .createResourceList(rankerNames, AbstractRanker.class);
+      rankers = BaseExperimentBuilder.createResourceList(rankerNames, AbstractRanker.class);
     }
     Object prunerNames = c.getConfigParameterValue("pruners");
     if (prunerNames != null) {
-      pruners = BaseExperimentBuilder
-              .createResourceList(prunerNames, AbstractPruner.class);
+      pruners = BaseExperimentBuilder.createResourceList(prunerNames, AbstractPruner.class);
     }
   }
 
@@ -97,17 +99,18 @@ public class GerpComponent<W extends Gerpable> extends AbstractLoggedComponent {
     // unified rankers, and pruners, and all the bookkeeping should be done here;
     // TODO mapping fields to CAS types
     // TODO directly use generated Java classes vs. wrapper classes
-    for (AbstractGenerator generator : generators) {
-      generator.generateCandidates(jcas);
+    for (AbstractGenerator<W> generator : generators) {
+      generator.process(jcas);
     }
-    for (AbstractEvidencer evidencer : evidencers) {
-      evidencer.evidenceCandidates(jcas);
+    for (AbstractEvidencer<W> evidencer : evidencers) {
+      evidencer.process(jcas);
     }
     for (AbstractRanker ranker : rankers) {
-      ranker.rankCandidates(jcas);
+      ranker.process(jcas);
     }
     for (AbstractPruner pruner : pruners) {
-      pruner.pruneCandidates(jcas);
+      pruner.process(jcas);
     }
   }
+
 }

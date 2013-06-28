@@ -8,8 +8,9 @@ import org.apache.uima.jcas.JCas;
 
 import edu.cmu.lti.oaqa.baseqa.data.nlp.Keyterm;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.KeytermList;
-import edu.cmu.lti.oaqa.baseqa.gerpphase.GerpViewManager;
-import edu.cmu.lti.oaqa.baseqa.gerpphase.GerpViewManager.ViewType;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.core.GerpViewManager;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.core.GerpViewManager.ViewType;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.core.pruner.AbstractPruner;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
