@@ -10,7 +10,7 @@ import edu.cmu.lti.oaqa.baseqa.data.nlp.KeytermList;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
-public abstract class AbstractKeytermGenerator extends AbstractCandidateGenerator {
+public abstract class AbstractKeytermGenerator extends AbstractGenerator {
 
   @Override
   public void generateCandidates(JCas jcas) throws AnalysisEngineProcessException {

@@ -14,7 +14,7 @@ import edu.cmu.lti.oaqa.baseqa.data.core.OAQAAnnotationWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 
 public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
-        OAQAAnnotationWrapper<T> {
+        OAQAAnnotationWrapper<T> implements Gerpable {
 
   private static final long serialVersionUID = 1L;
 
@@ -39,34 +39,42 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
     this.addGenerator(generator);
   }
 
+  @Override
   public void addGenerator(String generator) {
     this.generators.add(generator);
   }
 
+  @Override
   public void addGenerators(Collection<String> generators) {
     this.generators.addAll(generators);
   }
 
+  @Override
   public void addEvidence(DefaultEvidenceWrapper evidence) {
     this.evidences.add(evidence);
   }
 
+  @Override
   public void addEvidences(Collection<DefaultEvidenceWrapper> evidences) {
     this.evidences.addAll(evidences);
   }
 
+  @Override
   public void addRank(RankWrapper rank) {
     this.ranks.add(rank);
   }
 
+  @Override
   public void addRanks(Collection<RankWrapper> ranks) {
     this.ranks.addAll(ranks);
   }
 
+  @Override
   public void addPruningDecision(PruningDecisionWrapper pruningDecision) {
     this.pruningDecisions.add(pruningDecision);
   }
 
+  @Override
   public void addPruningDecisions(Collection<PruningDecisionWrapper> pruningDecisions) {
     this.pruningDecisions.addAll(pruningDecisions);
   }
@@ -111,34 +119,42 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
             && Objects.equal(pruningDecisions, other.pruningDecisions);
   }
 
+  @Override
   public List<String> getGenerators() {
     return generators;
   }
 
+  @Override
   public void setGenerators(List<String> generators) {
     this.generators = generators;
   }
 
+  @Override
   public List<DefaultEvidenceWrapper> getEvidences() {
     return evidences;
   }
 
+  @Override
   public void setEvidences(List<DefaultEvidenceWrapper> evidences) {
     this.evidences = evidences;
   }
 
+  @Override
   public List<RankWrapper> getRanks() {
     return ranks;
   }
 
+  @Override
   public void setRanks(List<RankWrapper> ranks) {
     this.ranks = ranks;
   }
 
+  @Override
   public List<PruningDecisionWrapper> getPruningDecisions() {
     return pruningDecisions;
   }
 
+  @Override
   public void setPruningDecisions(List<PruningDecisionWrapper> pruningDecisions) {
     this.pruningDecisions = pruningDecisions;
   }

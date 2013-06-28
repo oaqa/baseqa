@@ -13,7 +13,7 @@ import edu.cmu.lti.oaqa.baseqa.gerpphase.GerpViewManager.ViewType;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
-public abstract class AbstractKeytermEvidencer extends AbstractCandidateEvidencer {
+public abstract class AbstractKeytermEvidencer extends AbstractEvidencer {
 
   @Override
   public void evidenceCandidates(JCas jcas) throws AnalysisEngineProcessException {

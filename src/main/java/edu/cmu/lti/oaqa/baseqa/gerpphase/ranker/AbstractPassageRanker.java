@@ -18,7 +18,7 @@ import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
-public abstract class AbstractPassageRanker extends AbstractCandidateRanker {
+public abstract class AbstractPassageRanker extends AbstractRanker {
 
   @Override
   public void rankCandidates(JCas jcas) throws AnalysisEngineProcessException {

@@ -13,7 +13,7 @@ import edu.cmu.lti.oaqa.baseqa.gerpphase.GerpViewManager.ViewType;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
-public abstract class AbstractKeytermPruner extends AbstractCandidatePruner {
+public abstract class AbstractKeytermPruner extends AbstractPruner {
 
   @Override
   public void pruneCandidates(JCas jcas) throws AnalysisEngineProcessException {

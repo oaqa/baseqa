@@ -15,7 +15,7 @@ import edu.cmu.lti.oaqa.baseqa.gerpphase.GerpViewManager.ViewType;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
-public abstract class AbstractDocumentRanker extends AbstractCandidateRanker {
+public abstract class AbstractDocumentRanker extends AbstractRanker {
 
   @Override
   public void rankCandidates(JCas jcas) throws AnalysisEngineProcessException {

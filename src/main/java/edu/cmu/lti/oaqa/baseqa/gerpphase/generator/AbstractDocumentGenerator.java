@@ -14,7 +14,7 @@ import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
-public abstract class AbstractDocumentGenerator extends AbstractCandidateGenerator {
+public abstract class AbstractDocumentGenerator extends AbstractGenerator {
 
   @Override
   public void generateCandidates(JCas jcas) throws AnalysisEngineProcessException {

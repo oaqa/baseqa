@@ -16,7 +16,7 @@ import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
-public abstract class AbstractDocumentEvidencer extends AbstractCandidateEvidencer {
+public abstract class AbstractDocumentEvidencer extends AbstractEvidencer {
 
   @Override
   public void evidenceCandidates(JCas jcas) throws AnalysisEngineProcessException {

@@ -16,7 +16,7 @@ import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
-public abstract class AbstractDocumentPruner extends AbstractCandidatePruner {
+public abstract class AbstractDocumentPruner extends AbstractPruner {
 
   @Override
   public void pruneCandidates(JCas jcas) throws AnalysisEngineProcessException {
