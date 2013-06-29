@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpAnnotation_Type;
 
 /** A semantic role label.
- * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
+ * Updated by JCasGen Sat Jun 29 17:56:00 EDT 2013
  * @generated */
 public class SemanticRole_Type extends GerpAnnotation_Type {
   /** @generated */

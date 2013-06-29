@@ -12,7 +12,7 @@ import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
 
-public abstract class SearchResultWrapper<T extends SearchResult> extends GerpTopWrapper<T> {
+public abstract class SearchResultWrapper extends GerpTopWrapper<SearchResult> {
 
   private static final long serialVersionUID = 1L;
 
@@ -55,7 +55,7 @@ public abstract class SearchResultWrapper<T extends SearchResult> extends GerpTo
   }
 
   @Override
-  public void wrap(T top) throws AnalysisEngineProcessException {
+  public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
     this.uri = top.getUri();
     this.score = top.getScore();
@@ -68,8 +68,8 @@ public abstract class SearchResultWrapper<T extends SearchResult> extends GerpTo
   }
 
   @Override
-  public T unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    T top = super.unwrap(jcas);
+  public SearchResult unwrap(JCas jcas) throws AnalysisEngineProcessException {
+    SearchResult top = super.unwrap(jcas);
     top.setUri(uri);
     top.setScore(score);
     top.setText(text);
@@ -93,8 +93,7 @@ public abstract class SearchResultWrapper<T extends SearchResult> extends GerpTo
       return false;
     if (getClass() != obj.getClass())
       return false;
-    @SuppressWarnings("unchecked")
-    SearchResultWrapper<T> other = (SearchResultWrapper<T>) obj;
+    SearchResultWrapper other = (SearchResultWrapper) obj;
     return Objects.equal(uri, other.uri) && Objects.equal(queryString, other.queryString)
             && Objects.equal(searchId, other.searchId);
   }

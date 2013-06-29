@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpAnnotation_Type;
 
 /** Annotation on a predicate, which may have arguments; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock
- * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
+ * Updated by JCasGen Sat Jun 29 17:56:00 EDT 2013
  * @generated */
 public class Predicate_Type extends GerpAnnotation_Type {
   /** @generated */

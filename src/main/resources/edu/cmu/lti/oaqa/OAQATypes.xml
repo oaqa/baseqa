@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+<?xml version="1.0" encoding="UTF-8"?><typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <name>OAQATypes</name>
   <description>Type system descriptor for the OAQA data model.
+
+Changes in 0.2.1:
+* Brought AnswerList and Search back to type system from version 0.1.
+
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;
 
 Changes in 0.2:
 * Grouped types into packages: answer, retrieval, nlp, input, gerp, core
@@ -14,7 +18,7 @@ Changes in 0.2:
 * Added an imported type system frameworkTypesDescriptor, and updated the supertype of Question to InputElement.
 
 - Zi Yang &lt;ziy@cs.cmu.edu&gt;</description>
-  <version>0.2</version>
+  <version>0.2.1</version>
   <vendor>OAQA</vendor>
   <imports>
     <import name="edu.cmu.lti.oaqa.frameworkTypesDescriptor"/>
@@ -751,6 +755,47 @@ Changes in 0.2:
           <description>A placeholder for any additional comments that evidencers, rankers or pruners may provide.</description>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>org.oaqa.model.core.OAQATop</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.Search</name>
+      <description>An object that holds a query and results for a search (text search, fact search, KB search, etc.)</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>query</name>
+          <description>The query in the native syntax of the corresponding search engine.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>hitList</name>
+          <description>Hit list of search results, sorted in descreasing order of relevance score.</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.oaqa.model.retrieval.SearchResult</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>abstractQuery</name>
+          <description>The abstract query from which this actual query was generated.</description>
+          <rangeTypeName>org.oaqa.model.retrieval.AbstractQuery</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>searchId</name>
+          <description>An identifier for this search result.  Used to collect hit-list objects that belong to this search result after they've been split out for parallel processing then gathered up again.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.answer.AnswerList</name>
+      <description>A ranked list of candidate answers.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>answerList</name>
+          <description>Hit list of candidate answers, rank ordered, with highest scoring answer first.</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.oaqa.model.answer.Answer</elementType>
         </featureDescription>
       </features>
     </typeDescription>

@@ -5,12 +5,13 @@ import java.util.List;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.Document;
+import org.oaqa.model.retrieval.SearchResult;
 
 import com.google.common.base.Objects;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 
-public class DocumentWrapper extends SearchResultWrapper<Document> {
+public class DocumentWrapper extends SearchResultWrapper {
 
   private static final long serialVersionUID = 1L;
 
@@ -40,15 +41,15 @@ public class DocumentWrapper extends SearchResultWrapper<Document> {
   }
 
   @Override
-  public void wrap(Document top) throws AnalysisEngineProcessException {
+  public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    this.title = top.getTitle();
-    this.docId = top.getDocId();
+    this.title = ((Document) top).getTitle();
+    this.docId = ((Document) top).getDocId();
   }
 
   @Override
   public Document unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Document top = super.unwrap(jcas);
+    Document top = (Document) super.unwrap(jcas);
     top.setTitle(title);
     top.setDocId(docId);
     return top;

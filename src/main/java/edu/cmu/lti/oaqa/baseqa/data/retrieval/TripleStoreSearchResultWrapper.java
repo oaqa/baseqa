@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.AnswerSearchResult;
+import org.oaqa.model.retrieval.SearchResult;
 import org.oaqa.model.retrieval.TripleStoreSearchResult;
 
 import com.google.common.base.Objects;
@@ -40,7 +41,7 @@ public class TripleStoreSearchResultWrapper extends AnswerSearchResultWrapper {
   }
 
   @Override
-  public void wrap(AnswerSearchResult top) throws AnalysisEngineProcessException {
+  public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
     this.context = WrapperHelper.wrapTopArray(((TripleStoreSearchResult) top).getContext(),
             TripleWrapper.class);

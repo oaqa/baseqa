@@ -6,6 +6,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.Passage;
 import org.oaqa.model.retrieval.PassageFromTriple;
+import org.oaqa.model.retrieval.SearchResult;
 
 import com.google.common.base.Objects;
 
@@ -43,7 +44,7 @@ public class PassageFromTripleWrapper extends PassageWrapper {
   }
 
   @Override
-  public void wrap(Passage top) throws AnalysisEngineProcessException {
+  public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
     sourceTriple = OAQATopWrapper.wrap(((PassageFromTriple) top).getSourceTriple(),
             TripleWrapper.class);

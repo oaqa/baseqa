@@ -5,12 +5,13 @@ import java.util.List;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.Passage;
+import org.oaqa.model.retrieval.SearchResult;
 
 import com.google.common.base.Objects;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 
-public class PassageWrapper extends SearchResultWrapper<Passage> {
+public class PassageWrapper extends SearchResultWrapper {
 
   private static final long serialVersionUID = 1L;
 
@@ -52,18 +53,18 @@ public class PassageWrapper extends SearchResultWrapper<Passage> {
   }
 
   @Override
-  public void wrap(Passage top) throws AnalysisEngineProcessException {
+  public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    this.title = top.getTitle();
-    this.docId = top.getDocId();
-    this.begin = top.getBegin();
-    this.end = top.getEnd();
-    this.aspects = top.getAspects();
+    this.title = ((Passage) top).getTitle();
+    this.docId = ((Passage) top).getDocId();
+    this.begin = ((Passage) top).getBegin();
+    this.end = ((Passage) top).getEnd();
+    this.aspects = ((Passage) top).getAspects();
   }
 
   @Override
   public Passage unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Passage top = super.unwrap(jcas);
+    Passage top = (Passage) super.unwrap(jcas);
     top.setTitle(title);
     top.setDocId(docId);
     top.setBegin(begin);

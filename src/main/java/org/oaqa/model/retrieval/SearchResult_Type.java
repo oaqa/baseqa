@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** A search result.
- * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
+ * Updated by JCasGen Sat Jun 29 17:56:00 EDT 2013
  * @generated */
 public class SearchResult_Type extends GerpTop_Type {
   /** @generated */

@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.core.OAQATop_Type;
 
 /** The base class for Gerp feature structures that are not Annotations, with G/E/E/P features defined.
- * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
+ * Updated by JCasGen Sat Jun 29 17:55:59 EDT 2013
  * @generated */
 public class GerpTop_Type extends OAQATop_Type {
   /** @generated */

@@ -10,8 +10,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** A triple, e.g., and RDF triple.
- * Updated by JCasGen Thu Jun 27 14:37:28 EDT 2013
- * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Sat Jun 29 17:55:59 EDT 2013
+ * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class Triple extends OAQATop {
   /** @generated

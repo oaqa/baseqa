@@ -6,7 +6,7 @@ import org.oaqa.model.retrieval.AnswerSearchResult;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 
-public class AnswerSearchResultWrapper extends SearchResultWrapper<AnswerSearchResult> {
+public class AnswerSearchResultWrapper extends SearchResultWrapper {
 
   private static final long serialVersionUID = 1L;
 

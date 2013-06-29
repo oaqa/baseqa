@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** A variant of a candidate answer.  A variant may have multiple occurrences, all of which are collected in a variant object.
- * Updated by JCasGen Thu Jun 27 14:37:28 EDT 2013
+ * Updated by JCasGen Sat Jun 29 17:55:59 EDT 2013
  * @generated */
 public class CandidateAnswerVariant_Type extends GerpTop_Type {
   /** @generated */

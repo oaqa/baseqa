@@ -13,8 +13,8 @@ import org.oaqa.model.answer.CandidateAnswerVariant;
 
 
 /** A search result.
- * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
- * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Sat Jun 29 17:56:00 EDT 2013
+ * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class SearchResult extends GerpTop {
   /** @generated

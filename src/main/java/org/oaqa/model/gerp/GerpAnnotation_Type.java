@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.core.OAQAAnnotation_Type;
 
 /** A higher level supertype for all GERPified annotations that defines the common attributes (G/E/R/P).
- * Updated by JCasGen Thu Jun 27 14:37:29 EDT 2013
+ * Updated by JCasGen Sat Jun 29 17:55:59 EDT 2013
  * @generated */
 public class GerpAnnotation_Type extends OAQAAnnotation_Type {
   /** @generated */
