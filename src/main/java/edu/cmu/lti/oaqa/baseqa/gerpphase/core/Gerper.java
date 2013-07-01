@@ -1,8 +1,8 @@
 package edu.cmu.lti.oaqa.baseqa.gerpphase.core;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.uima.UimaContext;
@@ -12,25 +12,23 @@ import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.oaqa.model.core.OAQATop;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
-import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.AnnotationWrapper;
-import edu.cmu.lti.oaqa.baseqa.data.core.OAQAAnnotationWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
+import edu.cmu.lti.oaqa.baseqa.data.gerp.DefaultEvidenceWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.Gerpable;
+import edu.cmu.lti.oaqa.baseqa.data.gerp.PruningDecisionWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.gerp.RankWrapper;
 import edu.cmu.lti.oaqa.baseqa.gerpphase.core.evidencer.AbstractEvidencer;
 import edu.cmu.lti.oaqa.baseqa.gerpphase.core.generator.AbstractGenerator;
 import edu.cmu.lti.oaqa.baseqa.gerpphase.core.pruner.AbstractPruner;
 import edu.cmu.lti.oaqa.baseqa.gerpphase.core.ranker.AbstractRanker;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
-import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
 /**
  * Component that supports 4-step processing: candidate Generation -> Evidencing -> Ranking ->
@@ -71,7 +69,7 @@ import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public class Gerper<W extends Gerpable> extends AbstractLoggedComponent {
+public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends AbstractLoggedComponent {
 
   protected List<AbstractGenerator<W>> generators;
 
@@ -113,36 +111,64 @@ public class Gerper<W extends Gerpable> extends AbstractLoggedComponent {
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
     // collecting required types from jcas as input
-    SetMultimap<Class<? extends TopWrapper<?>>, ? extends TopWrapper<?>> class2tops = HashMultimap
-            .create();
+    List<Class<? extends OAQATopWrapper<? extends OAQATop>>> allRequiredWrapperClasses = Lists
+            .newArrayList();
+    List<Set<? extends OAQATopWrapper<? extends OAQATop>>> allWrappedFSs = Lists.newArrayList();
     for (AbstractGenerator<W> generator : generators) {
-      for (Class<? extends TopWrapper<?>> clazz : generator.getRequiredInputTypes()) {
-        if (class2tops.containsKey(clazz)) {
-          continue;
-        }
-        if (Arrays.asList(clazz.getInterfaces()).contains(AnnotationWrapper.class)) {
-          class2tops.putAll(clazz, OAQAAnnotationWrapper.wrapAllAnnotationsFromJCas(jcas, clazz));
-        } else if (Arrays.asList(clazz.getInterfaces()).contains(TopWrapper.class)) {
-          class2tops.putAll(clazz, OAQATopWrapper.wrapAllTopsFromJCas(jcas, clazz));
+      for (Class<? extends OAQATopWrapper<? extends OAQATop>> clazz : generator
+              .getRequiredInputTypes()) {
+        if (!allRequiredWrapperClasses.contains(clazz)) {
+          assert Arrays.asList(clazz.getInterfaces()).contains(TopWrapper.class);
+          allRequiredWrapperClasses.add(clazz);
+          try {
+            allWrappedFSs.add(WrapperHelper.wrapAllFromJCas(jcas, clazz));
+          } catch (Exception e) {
+            throw new AnalysisEngineProcessException(e);
+          }
         }
       }
     }
-
-    // gerping
-    for (AbstractGenerator<W> generator : generators) {
-      generator.process(jcas);
+    Set<List<OAQATopWrapper<? extends OAQATop>>> inputCombinations = Sets
+            .cartesianProduct(allWrappedFSs);
+    for (List<OAQATopWrapper<? extends OAQATop>> inputCombination : inputCombinations) {
+      Map<Class<? extends OAQATopWrapper<? extends OAQATop>>, OAQATopWrapper<? extends OAQATop>> class2input = Maps
+              .newHashMap();
+      for (int i = 0; i < allRequiredWrapperClasses.size(); i++) {
+        class2input.put(allRequiredWrapperClasses.get(i), inputCombination.get(i));
+      }
+      List<W> outputs = Lists.newArrayList();
+      // gerping for all combinations of inputs
+      for (AbstractGenerator<W> generator : generators) {
+        List<Class<? extends OAQATopWrapper<?>>> classes = generator.getRequiredInputTypes();
+        List<OAQATopWrapper<?>> inputs = Lists.newArrayList();
+        for (Class<? extends OAQATopWrapper<?>> clazz : classes) {
+          inputs.add(class2input.get(clazz));
+        }
+        outputs.add(generator.generate(inputs.toArray(new OAQATopWrapper<?>[0])));
+      }
+      for (AbstractEvidencer<W> evidencer : evidencers) {
+        for (W output : outputs) {
+          DefaultEvidenceWrapper evidence = (DefaultEvidenceWrapper) evidencer.evidence(output);
+          output.addEvidence(evidence);
+        }
+      }
+      for (AbstractRanker ranker : rankers) {
+        for (W output : outputs) {
+          RankWrapper rank = ranker.rank(output.getEvidences());
+          output.addRank(rank);
+        }
+      }
+      for (AbstractPruner pruner : pruners) {
+        for (W output : outputs) {
+          PruningDecisionWrapper pruningDecision = pruner.prune(output.getRanks());
+          output.addPruningDecision(pruningDecision);
+        }
+      }
+      // persisting output
+      for (W output : outputs) {
+        TOP top = output.unwrap(jcas);
+        top.addToIndexes(jcas);
+      }
     }
-    for (AbstractEvidencer<W> evidencer : evidencers) {
-      evidencer.process(jcas);
-    }
-    for (AbstractRanker ranker : rankers) {
-      ranker.process(jcas);
-    }
-    for (AbstractPruner pruner : pruners) {
-      pruner.process(jcas);
-    }
-
-    // persisting output
-
   }
 }

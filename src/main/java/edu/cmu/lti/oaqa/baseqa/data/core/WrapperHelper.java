@@ -2,6 +2,7 @@ package edu.cmu.lti.oaqa.baseqa.data.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
@@ -13,10 +14,13 @@ import org.apache.uima.jcas.cas.NonEmptyFSList;
 import org.apache.uima.jcas.cas.NonEmptyStringList;
 import org.apache.uima.jcas.cas.StringArray;
 import org.apache.uima.jcas.cas.StringList;
+import org.apache.uima.jcas.cas.TOP;
 import org.oaqa.model.core.OAQAAnnotation;
 import org.oaqa.model.core.OAQATop;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class WrapperHelper {
 
@@ -147,4 +151,15 @@ public class WrapperHelper {
     return array;
   }
 
+  public static <T extends OAQATop, W extends OAQATopWrapper<T>> Set<? extends W> wrapAllFromJCas(
+          JCas jcas, Class<W> clazz) throws InstantiationException, IllegalAccessException,
+          IllegalArgumentException, NoSuchFieldException, SecurityException,
+          AnalysisEngineProcessException {
+    int type = clazz.newInstance().getTypeClass().getField("type").getInt(null);
+    Set<W> tops = Sets.newHashSet();
+    for (TOP top : ImmutableList.copyOf(jcas.getJFSIndexRepository().getAllIndexedFS(type))) {
+      tops.add(OAQATopWrapper.wrap((OAQATop) top, clazz));
+    }
+    return tops;
+  }
 }
