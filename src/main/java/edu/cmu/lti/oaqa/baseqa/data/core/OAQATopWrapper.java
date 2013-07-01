@@ -3,11 +3,16 @@ package edu.cmu.lti.oaqa.baseqa.data.core;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Set;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.TOP;
 import org.oaqa.model.core.OAQATop;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Sets;
 
 public abstract class OAQATopWrapper<T extends OAQATop> implements TopWrapper<T>, Serializable {
 
@@ -61,6 +66,18 @@ public abstract class OAQATopWrapper<T extends OAQATop> implements TopWrapper<T>
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
+  }
+
+  public static <T extends OAQATop, W extends OAQATopWrapper<T>> Set<? extends W> wrapAllTopsFromJCas(
+          JCas jcas, Class<W> clazz) throws InstantiationException, IllegalAccessException,
+          IllegalArgumentException, NoSuchFieldException, SecurityException,
+          AnalysisEngineProcessException {
+    int type = clazz.newInstance().getTypeClass().getField("type").getInt(null);
+    Set<W> tops = Sets.newHashSet();
+    for (TOP top : ImmutableList.copyOf(jcas.getJFSIndexRepository().getAllIndexedFS(type))) {
+      tops.add(OAQATopWrapper.wrap((OAQATop) top, clazz));
+    }
+    return tops;
   }
 
   public String getImplementingWrapper() {

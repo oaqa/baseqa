@@ -1,12 +1,28 @@
 package edu.cmu.lti.oaqa.baseqa.gerpphase.core;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.oaqa.model.core.OAQATop;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
+
+import edu.cmu.lti.oaqa.baseqa.data.core.AnnotationWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.OAQAAnnotationWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.Gerpable;
 import edu.cmu.lti.oaqa.baseqa.gerpphase.core.evidencer.AbstractEvidencer;
 import edu.cmu.lti.oaqa.baseqa.gerpphase.core.generator.AbstractGenerator;
@@ -14,6 +30,7 @@ import edu.cmu.lti.oaqa.baseqa.gerpphase.core.pruner.AbstractPruner;
 import edu.cmu.lti.oaqa.baseqa.gerpphase.core.ranker.AbstractRanker;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
+import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
 /**
  * Component that supports 4-step processing: candidate Generation -> Evidencing -> Ranking ->
@@ -95,10 +112,23 @@ public class Gerper<W extends Gerpable> extends AbstractLoggedComponent {
   @Override
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
-    // different phase defines its own generators and extractors, and nothing need to be done here.
-    // unified rankers, and pruners, and all the bookkeeping should be done here;
-    // TODO mapping fields to CAS types
-    // TODO directly use generated Java classes vs. wrapper classes
+    // collecting required types from jcas as input
+    SetMultimap<Class<? extends TopWrapper<?>>, ? extends TopWrapper<?>> class2tops = HashMultimap
+            .create();
+    for (AbstractGenerator<W> generator : generators) {
+      for (Class<? extends TopWrapper<?>> clazz : generator.getRequiredInputTypes()) {
+        if (class2tops.containsKey(clazz)) {
+          continue;
+        }
+        if (Arrays.asList(clazz.getInterfaces()).contains(AnnotationWrapper.class)) {
+          class2tops.putAll(clazz, OAQAAnnotationWrapper.wrapAllAnnotationsFromJCas(jcas, clazz));
+        } else if (Arrays.asList(clazz.getInterfaces()).contains(TopWrapper.class)) {
+          class2tops.putAll(clazz, OAQATopWrapper.wrapAllTopsFromJCas(jcas, clazz));
+        }
+      }
+    }
+
+    // gerping
     for (AbstractGenerator<W> generator : generators) {
       generator.process(jcas);
     }
@@ -111,6 +141,8 @@ public class Gerper<W extends Gerpable> extends AbstractLoggedComponent {
     for (AbstractPruner pruner : pruners) {
       pruner.process(jcas);
     }
-  }
 
+    // persisting output
+
+  }
 }
