@@ -1,6 +1,7 @@
 package edu.cmu.lti.oaqa.baseqa.gerpphase.core.ranker;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 
@@ -9,7 +10,7 @@ import edu.cmu.lti.oaqa.baseqa.data.gerp.RankWrapper;
 
 public interface Ranker {
 
-  RankWrapper rank(Collection<? extends EvidenceWrapper<?, ?>> evidences)
+  List<RankWrapper> rank(List<? extends Collection<EvidenceWrapper<?, ?>>> evidences)
           throws AnalysisEngineProcessException;
 
 }

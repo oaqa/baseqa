@@ -1,4 +1,4 @@
-package edu.cmu.lti.oaqa.baseqa.gerpphase.evidencer;
+package edu.cmu.lti.oaqa.baseqa.gerpphase.retrieval;
 
 import java.util.List;
 
@@ -12,43 +12,38 @@ import edu.cmu.lti.oaqa.baseqa.data.retrieval.PassageCandidate;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.PassageCandidateArray;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResult;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResultArray;
-import edu.cmu.lti.oaqa.baseqa.gerpphase.core.GerpViewManager;
-import edu.cmu.lti.oaqa.baseqa.gerpphase.core.GerpViewManager.ViewType;
-import edu.cmu.lti.oaqa.baseqa.gerpphase.core.evidencer.AbstractEvidencer;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.core.generator.AbstractGenerator;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
 
-public abstract class AbstractPassageEvidencer extends AbstractEvidencer {
+public abstract class AbstractPassageGenerator extends AbstractGenerator {
 
   @Override
-  public void evidenceCandidates(JCas jcas) throws AnalysisEngineProcessException {
+  public void generateCandidates(JCas jcas) throws AnalysisEngineProcessException {
     // prepare input
     final String question = ((InputElement) BaseJCasHelper.getAnnotation(jcas,
             InputElement.type)).getQuestion();
     final KeytermList keytermList = new KeytermList(jcas);
     final List<Keyterm> keyterms = keytermList.getKeyterms();
     final List<RetrievalResult> documents;
-    List<PassageCandidate> passages;
     try {
       documents = RetrievalResultArray.retrieveRetrievalResults(ViewManager.getDocumentView(jcas));
-      passages = PassageCandidateArray
-              .retrievePassageCandidates(ViewManager.getCandidateView(jcas));
     } catch (CASException e) {
       throw new AnalysisEngineProcessException(e);
     }
     // do task
-    evidencePassages(question, keyterms, documents, passages);
+    final List<PassageCandidate> passages = generatePassages(question, keyterms, documents);
     // save output
     try {
-      PassageCandidateArray.storePassageCandidates(
-              GerpViewManager.getOrCreateView(jcas, ViewType.CANDIDATE_EVIDENCE), passages, false);
+      PassageCandidateArray.storePassageCandidates(ViewManager.getCandidateView(jcas), passages,
+              false);
     } catch (CASException e) {
       throw new AnalysisEngineProcessException(e);
     }
   }
 
-  protected abstract void evidencePassages(final String question, final List<Keyterm> keyterms,
-          final List<RetrievalResult> documents, List<PassageCandidate> passages)
+  protected abstract List<PassageCandidate> generatePassages(final String question,
+          final List<Keyterm> keyterms, final List<RetrievalResult> documents)
           throws AnalysisEngineProcessException;
 }

@@ -1,4 +1,4 @@
-package edu.cmu.lti.oaqa.baseqa.gerpphase.evidencer;
+package edu.cmu.lti.oaqa.baseqa.gerpphase.retrieval;
 
 import java.util.List;
 

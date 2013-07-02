@@ -20,7 +20,7 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
 
   protected List<String> generators;
 
-  protected List<DefaultEvidenceWrapper> evidences;
+  protected List<EvidenceWrapper<?, ?>> evidences;
 
   protected List<RankWrapper> ranks;
 
@@ -29,7 +29,7 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
   protected GerpAnnotationWrapper(int begin, int end) {
     super(begin, end);
     generators = new ArrayList<String>();
-    evidences = new ArrayList<DefaultEvidenceWrapper>();
+    evidences = new ArrayList<EvidenceWrapper<?, ?>>();
     ranks = new ArrayList<RankWrapper>();
     pruningDecisions = new ArrayList<PruningDecisionWrapper>();
   }
@@ -50,12 +50,12 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
   }
 
   @Override
-  public void addEvidence(DefaultEvidenceWrapper evidence) {
+  public void addEvidence(EvidenceWrapper<?, ?> evidence) {
     this.evidences.add(evidence);
   }
 
   @Override
-  public void addEvidences(Collection<DefaultEvidenceWrapper> evidences) {
+  public void addEvidences(Collection<EvidenceWrapper<?, ?>> evidences) {
     this.evidences.addAll(evidences);
   }
 
@@ -79,11 +79,12 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
     this.pruningDecisions.addAll(pruningDecisions);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public void wrap(T annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     generators = WrapperHelper.wrapStringList(annotation.getGenerators());
-    evidences = WrapperHelper.wrapTopList(annotation.getEvidences(), DefaultEvidenceWrapper.class);
+    evidences = WrapperHelper.wrapTopList(annotation.getEvidences(), EvidenceWrapper.class);
     ranks = WrapperHelper.wrapTopList(annotation.getRanks(), RankWrapper.class);
     pruningDecisions = WrapperHelper.wrapTopList(annotation.getPruningDecisions(),
             PruningDecisionWrapper.class);
@@ -130,12 +131,12 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
   }
 
   @Override
-  public List<DefaultEvidenceWrapper> getEvidences() {
+  public List<EvidenceWrapper<?, ?>> getEvidences() {
     return evidences;
   }
 
   @Override
-  public void setEvidences(List<DefaultEvidenceWrapper> evidences) {
+  public void setEvidences(List<EvidenceWrapper<?, ?>> evidences) {
     this.evidences = evidences;
   }
 

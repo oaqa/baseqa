@@ -9,9 +9,9 @@ public interface Gerpable {
 
   public abstract void addGenerators(Collection<String> generators);
 
-  public abstract void addEvidence(DefaultEvidenceWrapper evidence);
+  public abstract void addEvidence(EvidenceWrapper<?, ?> evidence);
 
-  public abstract void addEvidences(Collection<DefaultEvidenceWrapper> evidences);
+  public abstract void addEvidences(Collection<EvidenceWrapper<?, ?>> evidences);
 
   public abstract void addRank(RankWrapper rank);
 
@@ -25,9 +25,9 @@ public interface Gerpable {
 
   public abstract void setGenerators(List<String> generators);
 
-  public abstract List<DefaultEvidenceWrapper> getEvidences();
+  public abstract List<EvidenceWrapper<?, ?>> getEvidences();
 
-  public abstract void setEvidences(List<DefaultEvidenceWrapper> evidences);
+  public abstract void setEvidences(List<EvidenceWrapper<?, ?>> evidences);
 
   public abstract List<RankWrapper> getRanks();
 

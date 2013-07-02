@@ -1,4 +1,4 @@
-package edu.cmu.lti.oaqa.baseqa.gerpphase.generator;
+package edu.cmu.lti.oaqa.baseqa.gerpphase.retrieval;
 
 import java.util.List;
 

@@ -20,7 +20,7 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
 
   protected List<String> generators;
 
-  protected List<DefaultEvidenceWrapper> evidences;
+  protected List<EvidenceWrapper<?, ?>> evidences;
 
   protected List<RankWrapper> ranks;
 
@@ -29,7 +29,7 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
   protected GerpTopWrapper() {
     super();
     generators = new ArrayList<String>();
-    evidences = new ArrayList<DefaultEvidenceWrapper>();
+    evidences = new ArrayList<EvidenceWrapper<?, ?>>();
     ranks = new ArrayList<RankWrapper>();
     pruningDecisions = new ArrayList<PruningDecisionWrapper>();
   }
@@ -50,12 +50,12 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
   }
 
   @Override
-  public void addEvidence(DefaultEvidenceWrapper evidence) {
+  public void addEvidence(EvidenceWrapper<?, ?> evidence) {
     this.evidences.add(evidence);
   }
 
   @Override
-  public void addEvidences(Collection<DefaultEvidenceWrapper> evidences) {
+  public void addEvidences(Collection<EvidenceWrapper<?, ?>> evidences) {
     this.evidences.addAll(evidences);
   }
 
@@ -79,11 +79,12 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
     this.pruningDecisions.addAll(pruningDecisions);
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public void wrap(T top) throws AnalysisEngineProcessException {
     super.wrap(top);
     generators = WrapperHelper.wrapStringList(top.getGenerators());
-    evidences = WrapperHelper.wrapTopList(top.getEvidences(), DefaultEvidenceWrapper.class);
+    evidences = WrapperHelper.wrapTopList(top.getEvidences(), EvidenceWrapper.class);
     ranks = WrapperHelper.wrapTopList(top.getRanks(), RankWrapper.class);
     pruningDecisions = WrapperHelper.wrapTopList(top.getPruningDecisions(),
             PruningDecisionWrapper.class);
@@ -130,12 +131,12 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
   }
 
   @Override
-  public List<DefaultEvidenceWrapper> getEvidences() {
+  public List<EvidenceWrapper<?, ?>> getEvidences() {
     return evidences;
   }
 
   @Override
-  public void setEvidences(List<DefaultEvidenceWrapper> evidences) {
+  public void setEvidences(List<EvidenceWrapper<?, ?>> evidences) {
     this.evidences = evidences;
   }
 

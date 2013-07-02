@@ -1,8 +1,7 @@
 package edu.cmu.lti.oaqa.baseqa.gerpphase.core;
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.uima.UimaContext;
@@ -12,15 +11,14 @@ import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.oaqa.model.core.OAQATop;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
-import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
-import edu.cmu.lti.oaqa.baseqa.data.gerp.DefaultEvidenceWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.WrapperIndexer;
+import edu.cmu.lti.oaqa.baseqa.data.gerp.EvidenceWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.Gerpable;
+import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpableList;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.PruningDecisionWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.RankWrapper;
 import edu.cmu.lti.oaqa.baseqa.gerpphase.core.evidencer.AbstractEvidencer;
@@ -110,64 +108,38 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
   @Override
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
-    // collecting required types from jcas as input
-    List<Class<? extends OAQATopWrapper<? extends OAQATop>>> allRequiredWrapperClasses = Lists
-            .newArrayList();
-    List<Set<? extends OAQATopWrapper<? extends OAQATop>>> allWrappedFSs = Lists.newArrayList();
+    WrapperIndexer indexer = new WrapperIndexer();
     for (AbstractGenerator<W> generator : generators) {
-      for (Class<? extends OAQATopWrapper<? extends OAQATop>> clazz : generator
-              .getRequiredInputTypes()) {
-        if (!allRequiredWrapperClasses.contains(clazz)) {
-          assert Arrays.asList(clazz.getInterfaces()).contains(TopWrapper.class);
-          allRequiredWrapperClasses.add(clazz);
-          try {
-            allWrappedFSs.add(WrapperHelper.wrapAllFromJCas(jcas, clazz));
-          } catch (Exception e) {
-            throw new AnalysisEngineProcessException(e);
-          }
+      // collecting required types from jcas as inputs
+      List<Class<? extends OAQATopWrapper<?>>> classes = generator.getRequiredInputTypes();
+      try {
+        indexer.addAllClassesToIndex(classes, jcas);
+      } catch (Exception e) {
+        throw new AnalysisEngineProcessException(e);
+      }
+      List<Set<OAQATopWrapper<? extends OAQATop>>> inputs = indexer.getWrappersByClasses(classes);
+      for (List<OAQATopWrapper<? extends OAQATop>> input : Sets.cartesianProduct(inputs)) {
+        // gerping for all combinations of inputs
+        GerpableList<W> outputs = new GerpableList<W>();
+        W gerpable = generator.generate(input);
+        outputs.add(gerpable);
+        for (AbstractEvidencer<W> evidencer : evidencers) {
+          List<W> gerpables = outputs.getGerpables();
+          List<EvidenceWrapper<?, ?>> evidences = evidencer.evidence(gerpables);
+          outputs.addAllEvidences(evidences);
         }
-      }
-    }
-    Set<List<OAQATopWrapper<? extends OAQATop>>> inputCombinations = Sets
-            .cartesianProduct(allWrappedFSs);
-    for (List<OAQATopWrapper<? extends OAQATop>> inputCombination : inputCombinations) {
-      Map<Class<? extends OAQATopWrapper<? extends OAQATop>>, OAQATopWrapper<? extends OAQATop>> class2input = Maps
-              .newHashMap();
-      for (int i = 0; i < allRequiredWrapperClasses.size(); i++) {
-        class2input.put(allRequiredWrapperClasses.get(i), inputCombination.get(i));
-      }
-      List<W> outputs = Lists.newArrayList();
-      // gerping for all combinations of inputs
-      for (AbstractGenerator<W> generator : generators) {
-        List<Class<? extends OAQATopWrapper<?>>> classes = generator.getRequiredInputTypes();
-        List<OAQATopWrapper<?>> inputs = Lists.newArrayList();
-        for (Class<? extends OAQATopWrapper<?>> clazz : classes) {
-          inputs.add(class2input.get(clazz));
+        for (AbstractRanker ranker : rankers) {
+          List<Collection<EvidenceWrapper<?, ?>>> evidences = outputs.getAllEvidences();
+          List<RankWrapper> ranks = ranker.rank(evidences);
+          outputs.addAllRanks(ranks);
         }
-        outputs.add(generator.generate(inputs.toArray(new OAQATopWrapper<?>[0])));
-      }
-      for (AbstractEvidencer<W> evidencer : evidencers) {
-        for (W output : outputs) {
-          DefaultEvidenceWrapper evidence = (DefaultEvidenceWrapper) evidencer.evidence(output);
-          output.addEvidence(evidence);
+        for (AbstractPruner pruner : pruners) {
+          List<Collection<RankWrapper>> ranks = outputs.getAllRanks();
+          List<PruningDecisionWrapper> pruningDecisions = pruner.prune(ranks);
+          outputs.setAllPruningDecisions(pruningDecisions);
         }
-      }
-      for (AbstractRanker ranker : rankers) {
-        for (W output : outputs) {
-          RankWrapper rank = ranker.rank(output.getEvidences());
-          output.addRank(rank);
-        }
-      }
-      for (AbstractPruner pruner : pruners) {
-        for (W output : outputs) {
-          PruningDecisionWrapper pruningDecision = pruner.prune(output.getRanks());
-          output.addPruningDecision(pruningDecision);
-        }
-      }
-      // persisting output
-      for (W output : outputs) {
-        TOP top = output.unwrap(jcas);
-        top.addToIndexes(jcas);
+        // persisting outputs
+        outputs.unwrapAllAndAddToIndexes(jcas);
       }
     }
   }
