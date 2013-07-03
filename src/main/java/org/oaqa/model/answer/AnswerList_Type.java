@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jun 29 17:55:59 EDT 2013 */
+/* First created by JCasGen Wed Jul 03 11:51:45 EDT 2013 */
 package org.oaqa.model.answer;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** A ranked list of candidate answers.
- * Updated by JCasGen Sat Jun 29 17:55:59 EDT 2013
+ * Updated by JCasGen Wed Jul 03 14:53:43 EDT 2013
  * @generated */
 public class AnswerList_Type extends GerpTop_Type {
   /** @generated */
@@ -67,7 +67,7 @@ public class AnswerList_Type extends GerpTop_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
-	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
+  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
   }
    
   /** @generated */ 
@@ -78,61 +78,6 @@ public class AnswerList_Type extends GerpTop_Type {
       ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i, v, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
     ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i, v);
-  }
- 
- 
-  /** @generated */
-  final Feature casFeat_nilAnswer;
-  /** @generated */
-  final int     casFeatCode_nilAnswer;
-  /** @generated */ 
-  public boolean getNilAnswer(int addr) {
-        if (featOkTst && casFeat_nilAnswer == null)
-      jcas.throwFeatMissing("nilAnswer", "org.oaqa.model.answer.AnswerList");
-    return ll_cas.ll_getBooleanValue(addr, casFeatCode_nilAnswer);
-  }
-  /** @generated */    
-  public void setNilAnswer(int addr, boolean v) {
-        if (featOkTst && casFeat_nilAnswer == null)
-      jcas.throwFeatMissing("nilAnswer", "org.oaqa.model.answer.AnswerList");
-    ll_cas.ll_setBooleanValue(addr, casFeatCode_nilAnswer, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_featureLabels;
-  /** @generated */
-  final int     casFeatCode_featureLabels;
-  /** @generated */ 
-  public int getFeatureLabels(int addr) {
-        if (featOkTst && casFeat_featureLabels == null)
-      jcas.throwFeatMissing("featureLabels", "org.oaqa.model.answer.AnswerList");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_featureLabels);
-  }
-  /** @generated */    
-  public void setFeatureLabels(int addr, int v) {
-        if (featOkTst && casFeat_featureLabels == null)
-      jcas.throwFeatMissing("featureLabels", "org.oaqa.model.answer.AnswerList");
-    ll_cas.ll_setRefValue(addr, casFeatCode_featureLabels, v);}
-    
-   /** @generated */
-  public String getFeatureLabels(int addr, int i) {
-        if (featOkTst && casFeat_featureLabels == null)
-      jcas.throwFeatMissing("featureLabels", "org.oaqa.model.answer.AnswerList");
-    if (lowLevelTypeChecks)
-      return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_featureLabels), i, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_featureLabels), i);
-	return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_featureLabels), i);
-  }
-   
-  /** @generated */ 
-  public void setFeatureLabels(int addr, int i, String v) {
-        if (featOkTst && casFeat_featureLabels == null)
-      jcas.throwFeatMissing("featureLabels", "org.oaqa.model.answer.AnswerList");
-    if (lowLevelTypeChecks)
-      ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_featureLabels), i, v, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_featureLabels), i);
-    ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_featureLabels), i, v);
   }
  
 
@@ -147,14 +92,6 @@ public class AnswerList_Type extends GerpTop_Type {
  
     casFeat_answerList = jcas.getRequiredFeatureDE(casType, "answerList", "uima.cas.FSArray", featOkTst);
     casFeatCode_answerList  = (null == casFeat_answerList) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_answerList).getCode();
-
- 
-    casFeat_nilAnswer = jcas.getRequiredFeatureDE(casType, "nilAnswer", "uima.cas.Boolean", featOkTst);
-    casFeatCode_nilAnswer  = (null == casFeat_nilAnswer) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_nilAnswer).getCode();
-
- 
-    casFeat_featureLabels = jcas.getRequiredFeatureDE(casType, "featureLabels", "uima.cas.StringArray", featOkTst);
-    casFeatCode_featureLabels  = (null == casFeat_featureLabels) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_featureLabels).getCode();
 
   }
 }

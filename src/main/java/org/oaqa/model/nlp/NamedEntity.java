@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Mon Jun 24 14:02:20 EDT 2013 */
+/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
 package org.oaqa.model.nlp;
 
 import org.apache.uima.jcas.JCas; 
@@ -14,8 +14,8 @@ import org.oaqa.model.gerp.GerpAnnotation;
 
 
 /** A named entity with one or more URIs that identify or define the named entity.  The URIs could reference any source that defines or disambiguates the named entity.
- * Updated by JCasGen Sat Jun 29 17:55:59 EDT 2013
- * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Wed Jul 03 14:53:43 EDT 2013
+ * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class NamedEntity extends GerpAnnotation {
   /** @generated

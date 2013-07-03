@@ -1,6 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <name>OAQATypes</name>
   <description>Type system descriptor for the OAQA data model.
+
+Changes in 0.2.2:
+* Merged annotation QuestionClass with Question, and rebased Question on GerpAnnotation instead of InputElement.
+
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;
 
 Changes in 0.2.1:
 * Brought AnswerList and Search back to type system from version 0.1.
@@ -18,7 +24,7 @@ Changes in 0.2:
 * Added an imported type system frameworkTypesDescriptor, and updated the supertype of Question to InputElement.
 
 - Zi Yang &lt;ziy@cs.cmu.edu&gt;</description>
-  <version>0.2.1</version>
+  <version>0.2.2</version>
   <vendor>OAQA</vendor>
   <imports>
     <import name="edu.cmu.lti.oaqa.frameworkTypesDescriptor"/>
@@ -168,7 +174,7 @@ Changes in 0.2:
     <typeDescription>
       <name>org.oaqa.model.input.Question</name>
       <description>The Question and any associated meta-data.</description>
-      <supertypeName>edu.cmu.lti.oaqa.framework.types.InputElement</supertypeName>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
           <name>id</name>
@@ -178,6 +184,16 @@ Changes in 0.2:
         <featureDescription>
           <name>source</name>
           <description>The source of the question, e.g., TREC11, Jeopardy, etc.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>questionType</name>
+          <description>The class of the question, determined by either an automatic question classification process or human judgment.</description>
+          <rangeTypeName>org.oaqa.model.input.QuestionType</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>text</name>
+          <description>The question content.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
@@ -330,19 +346,7 @@ Changes in 0.2:
       </features>
     </typeDescription>
     <typeDescription>
-      <name>org.oaqa.model.input.QuestionClass</name>
-      <description>The class of the question, determined by an automatic question classification process.</description>
-      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
-      <features>
-        <featureDescription>
-          <name>questionClass</name>
-          <description>The kind (class) of the question.</description>
-          <rangeTypeName>org.oaqa.model.input.QuestionClassType</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
-      <name>org.oaqa.model.input.QuestionClassType</name>
+      <name>org.oaqa.model.input.QuestionType</name>
       <description>Enumeration of the possible values for the question class.</description>
       <supertypeName>uima.cas.String</supertypeName>
       <allowedValues>

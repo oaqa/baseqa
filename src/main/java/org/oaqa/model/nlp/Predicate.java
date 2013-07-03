@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Mon Jun 24 14:02:20 EDT 2013 */
+/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
 package org.oaqa.model.nlp;
 
 import org.apache.uima.jcas.JCas; 
@@ -8,14 +8,13 @@ import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 import org.apache.uima.jcas.cas.FSArray;
-import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.jcas.cas.StringArray;
 import org.oaqa.model.gerp.GerpAnnotation;
 
 
 /** Annotation on a predicate, which may have arguments; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock
- * Updated by JCasGen Sat Jun 29 17:56:00 EDT 2013
- * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Wed Jul 03 14:53:43 EDT 2013
+ * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class Predicate extends GerpAnnotation {
   /** @generated

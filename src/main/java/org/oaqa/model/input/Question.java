@@ -1,20 +1,20 @@
 
 
-/* First created by JCasGen Mon Jun 24 14:02:20 EDT 2013 */
+/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
 package org.oaqa.model.input;
 
 import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
 
-import edu.cmu.lti.oaqa.framework.types.InputElement;
+import org.oaqa.model.gerp.GerpAnnotation;
 
 
 /** The Question and any associated meta-data.
- * Updated by JCasGen Sat Jun 29 17:55:59 EDT 2013
- * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Wed Jul 03 14:53:43 EDT 2013
+ * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
-public class Question extends InputElement {
+public class Question extends GerpAnnotation {
   /** @generated
    * @ordered 
    */
@@ -96,6 +96,42 @@ public class Question extends InputElement {
     if (Question_Type.featOkTst && ((Question_Type)jcasType).casFeat_source == null)
       jcasType.jcas.throwFeatMissing("source", "org.oaqa.model.input.Question");
     jcasType.ll_cas.ll_setStringValue(addr, ((Question_Type)jcasType).casFeatCode_source, v);}    
+   
+    
+  //*--------------*
+  //* Feature: questionType
+
+  /** getter for questionType - gets The class of the question, determined by either an automatic question classification process or human judgment.
+   * @generated */
+  public String getQuestionType() {
+    if (Question_Type.featOkTst && ((Question_Type)jcasType).casFeat_questionType == null)
+      jcasType.jcas.throwFeatMissing("questionType", "org.oaqa.model.input.Question");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Question_Type)jcasType).casFeatCode_questionType);}
+    
+  /** setter for questionType - sets The class of the question, determined by either an automatic question classification process or human judgment. 
+   * @generated */
+  public void setQuestionType(String v) {
+    if (Question_Type.featOkTst && ((Question_Type)jcasType).casFeat_questionType == null)
+      jcasType.jcas.throwFeatMissing("questionType", "org.oaqa.model.input.Question");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Question_Type)jcasType).casFeatCode_questionType, v);}    
+   
+    
+  //*--------------*
+  //* Feature: text
+
+  /** getter for text - gets The question content.
+   * @generated */
+  public String getText() {
+    if (Question_Type.featOkTst && ((Question_Type)jcasType).casFeat_text == null)
+      jcasType.jcas.throwFeatMissing("text", "org.oaqa.model.input.Question");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Question_Type)jcasType).casFeatCode_text);}
+    
+  /** setter for text - sets The question content. 
+   * @generated */
+  public void setText(String v) {
+    if (Question_Type.featOkTst && ((Question_Type)jcasType).casFeat_text == null)
+      jcasType.jcas.throwFeatMissing("text", "org.oaqa.model.input.Question");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Question_Type)jcasType).casFeatCode_text, v);}    
   }
 
     

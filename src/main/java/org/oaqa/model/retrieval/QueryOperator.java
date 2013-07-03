@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Mon Jun 24 14:02:20 EDT 2013 */
+/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
 package org.oaqa.model.retrieval;
 
 import org.apache.uima.jcas.JCas; 
@@ -12,8 +12,8 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** A query operator in the abstract search query model.
- * Updated by JCasGen Sat Jun 29 17:56:00 EDT 2013
- * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Wed Jul 03 14:53:43 EDT 2013
+ * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class QueryOperator extends GerpTop {
   /** @generated

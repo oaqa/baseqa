@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Mon Jun 24 14:02:20 EDT 2013 */
+/* First created by JCasGen Wed Jul 03 11:51:45 EDT 2013 */
 package org.oaqa.model.core;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A triple, e.g., and RDF triple.
- * Updated by JCasGen Sat Jun 29 17:55:59 EDT 2013
+ * Updated by JCasGen Wed Jul 03 14:53:43 EDT 2013
  * @generated */
 public class Triple_Type extends OAQATop_Type {
   /** @generated */

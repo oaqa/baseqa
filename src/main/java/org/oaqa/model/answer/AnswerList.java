@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Jun 29 17:55:59 EDT 2013 */
+/* First created by JCasGen Wed Jul 03 11:51:45 EDT 2013 */
 package org.oaqa.model.answer;
 
 import org.apache.uima.jcas.JCas; 
@@ -9,12 +9,11 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 import org.apache.uima.jcas.cas.FSArray;
 import org.oaqa.model.gerp.GerpTop;
-import org.apache.uima.jcas.cas.StringArray;
 
 
 /** A ranked list of candidate answers.
- * Updated by JCasGen Sat Jun 29 17:55:59 EDT 2013
- * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Wed Jul 03 14:53:43 EDT 2013
+ * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class AnswerList extends GerpTop {
   /** @generated
@@ -88,58 +87,6 @@ public class AnswerList extends GerpTop {
       jcasType.jcas.throwFeatMissing("answerList", "org.oaqa.model.answer.AnswerList");
     jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_answerList), i);
     jcasType.ll_cas.ll_setRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_answerList), i, jcasType.ll_cas.ll_getFSRef(v));}
-   
-    
-  //*--------------*
-  //* Feature: nilAnswer
-
-  /** getter for nilAnswer - gets True if there is no answer to the question, False otherwise.
-   * @generated */
-  public boolean getNilAnswer() {
-    if (AnswerList_Type.featOkTst && ((AnswerList_Type)jcasType).casFeat_nilAnswer == null)
-      jcasType.jcas.throwFeatMissing("nilAnswer", "org.oaqa.model.answer.AnswerList");
-    return jcasType.ll_cas.ll_getBooleanValue(addr, ((AnswerList_Type)jcasType).casFeatCode_nilAnswer);}
-    
-  /** setter for nilAnswer - sets True if there is no answer to the question, False otherwise. 
-   * @generated */
-  public void setNilAnswer(boolean v) {
-    if (AnswerList_Type.featOkTst && ((AnswerList_Type)jcasType).casFeat_nilAnswer == null)
-      jcasType.jcas.throwFeatMissing("nilAnswer", "org.oaqa.model.answer.AnswerList");
-    jcasType.ll_cas.ll_setBooleanValue(addr, ((AnswerList_Type)jcasType).casFeatCode_nilAnswer, v);}    
-   
-    
-  //*--------------*
-  //* Feature: featureLabels
-
-  /** getter for featureLabels - gets Array of feature labels, which correspond to the elements of the featureVector of each Answer in this AnswerList.
-   * @generated */
-  public StringArray getFeatureLabels() {
-    if (AnswerList_Type.featOkTst && ((AnswerList_Type)jcasType).casFeat_featureLabels == null)
-      jcasType.jcas.throwFeatMissing("featureLabels", "org.oaqa.model.answer.AnswerList");
-    return (StringArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_featureLabels)));}
-    
-  /** setter for featureLabels - sets Array of feature labels, which correspond to the elements of the featureVector of each Answer in this AnswerList. 
-   * @generated */
-  public void setFeatureLabels(StringArray v) {
-    if (AnswerList_Type.featOkTst && ((AnswerList_Type)jcasType).casFeat_featureLabels == null)
-      jcasType.jcas.throwFeatMissing("featureLabels", "org.oaqa.model.answer.AnswerList");
-    jcasType.ll_cas.ll_setRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_featureLabels, jcasType.ll_cas.ll_getFSRef(v));}    
-    
-  /** indexed getter for featureLabels - gets an indexed value - Array of feature labels, which correspond to the elements of the featureVector of each Answer in this AnswerList.
-   * @generated */
-  public String getFeatureLabels(int i) {
-    if (AnswerList_Type.featOkTst && ((AnswerList_Type)jcasType).casFeat_featureLabels == null)
-      jcasType.jcas.throwFeatMissing("featureLabels", "org.oaqa.model.answer.AnswerList");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_featureLabels), i);
-    return jcasType.ll_cas.ll_getStringArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_featureLabels), i);}
-
-  /** indexed setter for featureLabels - sets an indexed value - Array of feature labels, which correspond to the elements of the featureVector of each Answer in this AnswerList.
-   * @generated */
-  public void setFeatureLabels(int i, String v) { 
-    if (AnswerList_Type.featOkTst && ((AnswerList_Type)jcasType).casFeat_featureLabels == null)
-      jcasType.jcas.throwFeatMissing("featureLabels", "org.oaqa.model.answer.AnswerList");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_featureLabels), i);
-    jcasType.ll_cas.ll_setStringArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_featureLabels), i, v);}
   }
 
     
