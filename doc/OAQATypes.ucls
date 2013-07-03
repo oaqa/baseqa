@@ -3,7 +3,7 @@
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="org.oaqa.model.nlp.CandidateAnswerOccurrence" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/nlp/CandidateAnswerOccurrence.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="279" width="243" x="1828" y="1175"/>    
+    <position height="279" width="243" x="2362" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="org.oaqa.model.core.OAQATop" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/core/OAQATop.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="203" x="659" y="321"/>    
+    <position height="225" width="203" x="676" y="5"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,25 +21,25 @@
   </class>  
   <class id="3" language="java" name="org.oaqa.model.nlp.Focus" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/nlp/Focus.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="279" width="162" x="2111" y="1175"/>    
+    <position height="279" width="162" x="2645" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="org.oaqa.model.input.QuestionClass" project="baseqa" 
-    file="/baseqa/src/main/java/org/oaqa/model/input/QuestionClass.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="243" width="170" x="2313" y="1175"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="5" language="java" name="org.oaqa.model.retrieval.SearchResult" project="baseqa" 
+  <class id="4" language="java" name="org.oaqa.model.retrieval.SearchResult" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/retrieval/SearchResult.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="477" width="302" x="661" y="1175"/>    
+    <position height="477" width="302" x="518" y="805"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="org.oaqa.model.retrieval.Search" project="baseqa" 
+    file="/baseqa/src/main/java/org/oaqa/model/retrieval/Search.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="369" width="216" x="-418" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="org.oaqa.model.answer.Answer" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/answer/Answer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="297" width="168" x="-243" y="1175"/>    
+    <position height="297" width="168" x="-162" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,7 +57,7 @@
   </class>  
   <class id="7" language="java" name="org.oaqa.model.input.Question" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/input/Question.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="279" width="140" x="118" y="321"/>    
+    <position height="351" width="166" x="2847" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,319 +66,349 @@
   </class>  
   <class id="8" language="java" name="org.oaqa.model.answer.CandidateAnswerVariant" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/answer/CandidateAnswerVariant.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="405" width="219" x="-35" y="1175"/>    
+    <position height="405" width="219" x="259" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="org.oaqa.model.retrieval.TripleStoreSearchResult" project="baseqa" 
+  <class id="9" language="java" name="org.oaqa.model.nlp.Parse" project="baseqa" 
+    file="/baseqa/src/main/java/org/oaqa/model/nlp/Parse.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="173" x="46" y="805"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="org.oaqa.model.retrieval.TripleStoreSearchResult" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/retrieval/TripleStoreSearchResult.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="261" width="214" x="685" y="2299"/>    
+    <position height="261" width="214" x="542" y="1857"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="org.oaqa.model.nlp.NamedEntity" project="baseqa" 
+  <class id="11" language="java" name="org.oaqa.model.nlp.NamedEntity" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/nlp/NamedEntity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="351" width="156" x="2523" y="1175"/>    
+    <position height="351" width="156" x="3053" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="org.oaqa.model.nlp.AnswerType" project="baseqa" 
+  <class id="12" language="java" name="org.oaqa.model.nlp.AnswerType" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/nlp/AnswerType.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="279" width="177" x="2719" y="1175"/>    
+    <position height="279" width="177" x="3249" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="org.oaqa.model.nlp.Predicate" project="baseqa" 
+  <class id="13" language="java" name="org.oaqa.model.nlp.Predicate" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/nlp/Predicate.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="675" width="207" x="2936" y="1175"/>    
+    <position height="603" width="207" x="3466" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="org.oaqa.model.retrieval.AbstractQuery" project="baseqa" 
+  <class id="14" language="java" name="org.oaqa.model.retrieval.AbstractQuery" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/retrieval/AbstractQuery.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="169" x="224" y="1175"/>    
+    <position height="225" width="169" x="860" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="org.oaqa.model.gerp.Evidence" project="baseqa" 
+  <class id="15" language="java" name="org.oaqa.model.gerp.Evidence" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/gerp/Evidence.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="261" width="199" x="1213" y="1175"/>    
+    <position height="261" width="199" x="1747" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="org.oaqa.model.gerp.GerpAnnotation" project="baseqa" 
+  <class id="16" language="java" name="org.oaqa.model.answer.AnswerList" project="baseqa" 
+    file="/baseqa/src/main/java/org/oaqa/model/answer/AnswerList.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="261" width="183" x="1069" y="805"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="org.oaqa.model.gerp.GerpAnnotation" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/gerp/GerpAnnotation.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="495" width="246" x="2624" y="640"/>    
+    <position height="351" width="185" x="3156" y="288"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="org.oaqa.model.gerp.Rank" project="baseqa" 
+  <class id="18" language="java" name="org.oaqa.model.gerp.Rank" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/gerp/Rank.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="261" width="122" x="1452" y="1175"/>    
+    <position height="261" width="122" x="1986" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="17" language="java" name="org.oaqa.model.core.Triple" project="baseqa" 
+  <class id="19" language="java" name="org.oaqa.model.core.Triple" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/core/Triple.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="333" width="147" x="246" y="640"/>    
+    <position height="333" width="147" x="266" y="288"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="18" language="java" name="org.oaqa.model.nlp.SemanticRole" project="baseqa" 
-    file="/baseqa/src/main/java/org/oaqa/model/nlp/SemanticRole.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="243" width="162" x="3183" y="1175"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="19" language="java" name="org.oaqa.model.retrieval.Passage" project="baseqa" 
+  <class id="20" language="java" name="org.oaqa.model.retrieval.Passage" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/retrieval/Passage.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="369" width="141" x="480" y="1890"/>    
+    <position height="369" width="141" x="337" y="1448"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="org.oaqa.model.gerp.PruningDecision" project="baseqa" 
+  <class id="21" language="java" name="org.oaqa.model.nlp.SemanticRole" project="baseqa" 
+    file="/baseqa/src/main/java/org/oaqa/model/nlp/SemanticRole.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="243" width="162" x="3713" y="805"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="org.oaqa.model.gerp.PruningDecision" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/gerp/PruningDecision.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="174" x="1614" y="1175"/>    
+    <position height="225" width="174" x="2148" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="21" language="java" name="org.oaqa.model.nlp.LexicalAnswerType" project="baseqa" 
+  <class id="23" language="java" name="org.oaqa.model.nlp.LexicalAnswerType" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/nlp/LexicalAnswerType.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="279" width="194" x="3385" y="1175"/>    
+    <position height="279" width="194" x="3915" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="22" language="java" name="org.oaqa.model.retrieval.PassageFromTriple" project="baseqa" 
+  <class id="24" language="java" name="org.oaqa.model.retrieval.PassageFromTriple" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/retrieval/PassageFromTriple.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="189" x="456" y="2299"/>    
+    <position height="225" width="189" x="313" y="1857"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="23" language="java" name="org.oaqa.model.gerp.GerpTop" project="baseqa" 
+  <class id="25" language="java" name="org.oaqa.model.gerp.GerpTop" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/gerp/GerpTop.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="477" width="246" x="433" y="640"/>    
+    <position height="333" width="185" x="676" y="288"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="24" language="java" name="org.oaqa.model.gerp.GerpMeta" project="baseqa" 
+  <class id="26" language="java" name="org.oaqa.model.gerp.GerpMeta" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/gerp/GerpMeta.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="477" width="183" x="719" y="640"/>    
+    <position height="477" width="183" x="453" y="288"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="25" language="java" name="org.oaqa.model.retrieval.Document" project="baseqa" 
+  <class id="27" language="java" name="org.oaqa.model.retrieval.Document" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/retrieval/Document.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="261" width="145" x="903" y="1890"/>    
+    <position height="261" width="145" x="760" y="1448"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="26" language="java" name="org.oaqa.model.retrieval.AnswerSearchResult" project="baseqa" 
+  <class id="28" language="java" name="org.oaqa.model.retrieval.AnswerSearchResult" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/retrieval/AnswerSearchResult.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="189" width="202" x="661" y="1890"/>    
+    <position height="189" width="202" x="518" y="1448"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="27" language="java" name="org.oaqa.model.core.OAQAAnnotation" project="baseqa" 
+  <class id="29" language="java" name="org.oaqa.model.core.OAQAAnnotation" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/core/OAQAAnnotation.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="243" width="203" x="2624" y="321"/>    
+    <position height="243" width="203" x="3156" y="5"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="28" language="java" name="org.oaqa.model.retrieval.QueryConcept" project="baseqa" 
+  <class id="30" language="java" name="org.oaqa.model.retrieval.QueryConcept" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/retrieval/QueryConcept.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="441" width="188" x="433" y="1175"/>    
+    <position height="441" width="205" x="1292" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="29" language="java" name="org.oaqa.model.retrieval.QueryOperator" project="baseqa" 
+  <class id="31" language="java" name="org.oaqa.model.retrieval.QueryOperator" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/retrieval/QueryOperator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="261" width="170" x="1003" y="1175"/>    
+    <position height="261" width="170" x="1537" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="30" language="java" name="org.oaqa.model.gerp.GerpBase" project="baseqa" 
+  <class id="32" language="java" name="org.oaqa.model.gerp.GerpBase" project="baseqa" 
     file="/baseqa/src/main/java/org/oaqa/model/gerp/GerpBase.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="152" x="1235" y="640"/>    
+    <position height="225" width="152" x="1747" y="288"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="31">    
-    <end type="SOURCE" refId="30"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <generalization id="32">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="23"/>  
-  </generalization>  
   <generalization id="33">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="15"/>  
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="17"/>  
   </generalization>  
   <generalization id="34">    
-    <end type="SOURCE" refId="29"/>    
-    <end type="TARGET" refId="23"/>  
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="2"/>  
   </generalization>  
   <generalization id="35">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="15"/>  
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="25"/>  
   </generalization>  
   <generalization id="36">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="15"/>  
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="2"/>  
   </generalization>  
   <generalization id="37">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="15"/>  
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="28"/>  
   </generalization>  
   <generalization id="38">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="15"/>  
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="25"/>  
   </generalization>  
   <generalization id="39">    
-    <end type="SOURCE" refId="24"/>    
-    <end type="TARGET" refId="2"/>  
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="29"/>  
   </generalization>  
   <generalization id="40">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="15"/>  
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="25"/>  
   </generalization>  
   <generalization id="41">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="15"/>  
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="25"/>  
   </generalization>  
   <generalization id="42">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="27"/>  
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="25"/>  
   </generalization>  
   <generalization id="43">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="23"/>  
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="17"/>  
   </generalization>  
   <generalization id="44">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="5"/>  
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="25"/>  
   </generalization>  
   <generalization id="45">    
-    <end type="SOURCE" refId="26"/>    
-    <end type="TARGET" refId="5"/>  
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="20"/>  
   </generalization>  
   <generalization id="46">    
-    <end type="SOURCE" refId="20"/>    
-    <end type="TARGET" refId="30"/>  
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="25"/>  
   </generalization>  
   <generalization id="47">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="23"/>  
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="17"/>  
   </generalization>  
   <generalization id="48">    
-    <end type="SOURCE" refId="23"/>    
-    <end type="TARGET" refId="2"/>  
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="4"/>  
   </generalization>  
   <generalization id="49">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="30"/>  
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="2"/>  
   </generalization>  
   <generalization id="50">    
-    <end type="SOURCE" refId="22"/>    
-    <end type="TARGET" refId="19"/>  
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="32"/>  
   </generalization>  
   <generalization id="51">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="15"/>  
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="17"/>  
   </generalization>  
   <generalization id="52">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="23"/>  
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="17"/>  
   </generalization>  
   <generalization id="53">    
-    <end type="SOURCE" refId="28"/>    
-    <end type="TARGET" refId="23"/>  
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="17"/>  
   </generalization>  
   <generalization id="54">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="30"/>  
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="2"/>  
   </generalization>  
   <generalization id="55">    
-    <end type="SOURCE" refId="25"/>    
-    <end type="TARGET" refId="5"/>  
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="17"/>  
   </generalization>  
   <generalization id="56">    
     <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="26"/>  
+    <end type="TARGET" refId="25"/>  
   </generalization>  
   <generalization id="57">    
-    <end type="SOURCE" refId="17"/>    
-    <end type="TARGET" refId="2"/>  
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="32"/>  
+  </generalization>  
+  <generalization id="58">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <generalization id="59">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <generalization id="60">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="17"/>  
+  </generalization>  
+  <generalization id="61">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="32"/>  
+  </generalization>  
+  <generalization id="62">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="25"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
