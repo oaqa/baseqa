@@ -3,6 +3,11 @@
   <name>OAQATypes</name>
   <description>Type system descriptor for the OAQA data model.
 
+Changes in 0.2.3:
+* Added new type Parse to aggregate NLP annotations, e.g. predicates, named entities, semantic roles.
+
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;
+
 Changes in 0.2.2:
 * Merged annotation QuestionClass with Question, and rebased Question on GerpAnnotation instead of InputElement.
 
@@ -24,7 +29,7 @@ Changes in 0.2:
 * Added an imported type system frameworkTypesDescriptor, and updated the supertype of Question to InputElement.
 
 - Zi Yang &lt;ziy@cs.cmu.edu&gt;</description>
-  <version>0.2.2</version>
+  <version>0.2.3</version>
   <vendor>OAQA</vendor>
   <imports>
     <import name="edu.cmu.lti.oaqa.frameworkTypesDescriptor"/>
@@ -800,6 +805,31 @@ Changes in 0.2:
           <description>Hit list of candidate answers, rank ordered, with highest scoring answer first.</description>
           <rangeTypeName>uima.cas.FSArray</rangeTypeName>
           <elementType>org.oaqa.model.answer.Answer</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.nlp.Parse</name>
+      <description>A data structure that represents various NLP annotations from a parser, e.g. lists of Predicate, NamedEntity, SemanticRole, etc.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>predicates</name>
+          <description>A list of predicates.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.nlp.Predicate</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>namedEntities</name>
+          <description>A list of named entities.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.nlp.NamedEntity</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>semanticRoles</name>
+          <description>A list of semantic roles.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.nlp.SemanticRole</elementType>
         </featureDescription>
       </features>
     </typeDescription>
