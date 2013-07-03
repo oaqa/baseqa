@@ -42,7 +42,11 @@ public class NamedEntityWrapper extends GerpAnnotationWrapper<NamedEntity> {
   public void wrap(NamedEntity annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     ids = WrapperHelper.wrapStringArray(annotation.getIds());
-    context = WrapperHelper.wrapTopArray(annotation.getContext(), TripleWrapper.class);
+    try {
+      context = WrapperHelper.wrapTopArray(annotation.getContext(), TripleWrapper.class);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
   }
 
   @Override

@@ -35,7 +35,11 @@ public class AbstractQueryWrapper extends GerpTopWrapper<AbstractQuery> {
   @Override
   public void wrap(AbstractQuery top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    this.concepts = WrapperHelper.wrapTopList(top.getConcepts(), QueryConceptWrapper.class);
+    try {
+      this.concepts = WrapperHelper.wrapTopList(top.getConcepts(), QueryConceptWrapper.class);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
   }
 
   @Override

@@ -8,6 +8,7 @@ import org.oaqa.model.nlp.AnswerType;
 import com.google.common.base.Objects;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQAAnnotationWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpAnnotationWrapper;
 
 public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
@@ -41,8 +42,13 @@ public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
   public void wrap(AnswerType annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     this.label = annotation.getLabel();
-    this.targetType = OAQAAnnotationWrapper.wrap((OAQAAnnotation) annotation.getTargetType(),
-            (Class<OAQAAnnotationWrapper<OAQAAnnotation>>) (Class) OAQAAnnotationWrapper.class);
+    try {
+      this.targetType = WrapperHelper.matchSubclassAndWrap(
+              (OAQAAnnotation) annotation.getTargetType(),
+              (Class<OAQAAnnotationWrapper<OAQAAnnotation>>) (Class) OAQAAnnotationWrapper.class);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
   }
 
   @Override

@@ -6,7 +6,7 @@ import org.oaqa.model.nlp.Focus;
 
 import com.google.common.base.Objects;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.OAQAAnnotationWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpAnnotationWrapper;
 
 public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
@@ -37,7 +37,12 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
   @Override
   public void wrap(Focus annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
-    this.predicate = OAQAAnnotationWrapper.wrap(annotation.getPredicate(), PredicateWrapper.class);
+    try {
+      this.predicate = WrapperHelper.matchSubclassAndWrap(annotation.getPredicate(),
+              PredicateWrapper.class);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
     this.label = annotation.getLabel();
   }
 

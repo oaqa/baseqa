@@ -5,7 +5,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.core.OAQAAnnotation;
 
@@ -60,21 +59,6 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
     implementingWrapper = annotation.getImplementingWrapper();
     begin = annotation.getBegin();
     end = annotation.getEnd();
-  }
-
-  @SuppressWarnings("unchecked")
-  public static <T extends OAQAAnnotation, W extends AnnotationWrapper<T>> W wrap(
-          OAQAAnnotation annotation, Class<W> wrapperClass) throws AnalysisEngineProcessException {
-    Feature feature = annotation.getType().getFeatureByBaseName("implementingWrapper");
-    String className = annotation.getFeatureValueAsString(feature);
-    try {
-      Class<? extends W> clazz = Class.forName(className).asSubclass(wrapperClass);
-      W inst = clazz.newInstance();
-      inst.wrap((T) annotation);
-      return inst;
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
   }
 
   @Override

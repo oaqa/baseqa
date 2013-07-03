@@ -43,8 +43,12 @@ public class TripleStoreSearchResultWrapper extends AnswerSearchResultWrapper {
   @Override
   public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    this.context = WrapperHelper.wrapTopArray(((TripleStoreSearchResult) top).getContext(),
-            TripleWrapper.class);
+    try {
+      this.context = WrapperHelper.wrapTopArray(((TripleStoreSearchResult) top).getContext(),
+              TripleWrapper.class);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
   }
 
   @Override

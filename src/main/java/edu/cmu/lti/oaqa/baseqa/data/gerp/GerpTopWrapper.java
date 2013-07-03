@@ -84,10 +84,14 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
   public void wrap(T top) throws AnalysisEngineProcessException {
     super.wrap(top);
     generators = WrapperHelper.wrapStringList(top.getGenerators());
-    evidences = WrapperHelper.wrapTopList(top.getEvidences(), EvidenceWrapper.class);
-    ranks = WrapperHelper.wrapTopList(top.getRanks(), RankWrapper.class);
-    pruningDecisions = WrapperHelper.wrapTopList(top.getPruningDecisions(),
-            PruningDecisionWrapper.class);
+    try {
+      evidences = WrapperHelper.wrapTopList(top.getEvidences(), EvidenceWrapper.class);
+      ranks = WrapperHelper.wrapTopList(top.getRanks(), RankWrapper.class);
+      pruningDecisions = WrapperHelper.wrapTopList(top.getPruningDecisions(),
+              PruningDecisionWrapper.class);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
   }
 
   @Override

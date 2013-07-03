@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.EmptyFSList;
 import org.apache.uima.jcas.cas.EmptyStringList;
@@ -15,8 +16,7 @@ import org.apache.uima.jcas.cas.NonEmptyStringList;
 import org.apache.uima.jcas.cas.StringArray;
 import org.apache.uima.jcas.cas.StringList;
 import org.apache.uima.jcas.cas.TOP;
-import org.oaqa.model.core.OAQAAnnotation;
-import org.oaqa.model.core.OAQATop;
+import org.apache.uima.jcas.tcas.Annotation;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -63,19 +63,66 @@ public class WrapperHelper {
     return array;
   }
 
-  public static <T extends OAQATop, W extends OAQATopWrapper<T>> List<W> wrapTopList(FSList list,
-          Class<W> wrapperClass) throws AnalysisEngineProcessException {
+  public static <T extends TOP, W extends TopWrapper<T>> List<W> wrapTopList(FSList list,
+          Class<W> wrapperClass) throws AnalysisEngineProcessException, InstantiationException,
+          IllegalAccessException, ClassNotFoundException {
     List<W> wrappers = new ArrayList<W>();
     FSList tail = list;
     while (tail instanceof NonEmptyFSList) {
-      OAQATop head = (OAQATop) ((NonEmptyFSList) tail).getHead();
-      wrappers.add(OAQATopWrapper.wrap(head, wrapperClass));
+      TOP head = ((NonEmptyFSList) tail).getHead();
+      wrappers.add(matchSubclassAndWrap(head, wrapperClass));
       tail = ((NonEmptyFSList) tail).getTail();
     }
     return wrappers;
   }
 
-  public static <T extends OAQATop, W extends OAQATopWrapper<T>> FSList unwrapTopList(
+  public static <T extends TOP, W extends TopWrapper<T>> FSList unwrapTopList(List<W> wrappers,
+          JCas jcas) throws AnalysisEngineProcessException {
+    FSList list = new EmptyFSList(jcas);
+    FSList tail;
+    for (W wrapper : Lists.reverse(wrappers)) {
+      tail = list;
+      list = new NonEmptyFSList(jcas);
+      ((NonEmptyFSList) list).setHead(wrapper.unwrap(jcas));
+      ((NonEmptyFSList) list).setTail(tail);
+    }
+    return list;
+  }
+
+  public static <T extends TOP, W extends TopWrapper<T>> List<W> wrapTopArray(FSArray array,
+          Class<W> wrapperClass) throws AnalysisEngineProcessException, InstantiationException,
+          IllegalAccessException, ClassNotFoundException {
+    List<W> wrappers = new ArrayList<W>(array.size());
+    for (int i = 0; i < array.size(); i++) {
+      wrappers.add(matchSubclassAndWrap((TOP) array.get(i), wrapperClass));
+    }
+    return wrappers;
+  }
+
+  public static <T extends TOP, W extends TopWrapper<T>> FSArray unwrapTopArray(List<W> wrappers,
+          JCas jcas) throws AnalysisEngineProcessException {
+    FSArray array = new FSArray(jcas, wrappers.size());
+    int i = 0;
+    for (W wrapper : wrappers) {
+      array.set(i, wrapper.unwrap(jcas));
+    }
+    return array;
+  }
+
+  public static <T extends Annotation, W extends AnnotationWrapper<T>> List<W> wrapAnnotationList(
+          FSList list, Class<W> wrapperClass) throws AnalysisEngineProcessException,
+          InstantiationException, IllegalAccessException, ClassNotFoundException {
+    List<W> wrappers = new ArrayList<W>();
+    FSList tail = list;
+    while (tail instanceof NonEmptyFSList) {
+      TOP head = ((NonEmptyFSList) tail).getHead();
+      wrappers.add(matchSubclassAndWrap(head, wrapperClass));
+      tail = ((NonEmptyFSList) tail).getTail();
+    }
+    return wrappers;
+  }
+
+  public static <T extends Annotation, W extends AnnotationWrapper<T>> FSList unwrapAnnotationList(
           List<W> wrappers, JCas jcas) throws AnalysisEngineProcessException {
     FSList list = new EmptyFSList(jcas);
     FSList tail;
@@ -88,16 +135,17 @@ public class WrapperHelper {
     return list;
   }
 
-  public static <T extends OAQATop, W extends OAQATopWrapper<T>> List<W> wrapTopArray(
-          FSArray array, Class<W> wrapperClass) throws AnalysisEngineProcessException {
+  public static <T extends Annotation, W extends AnnotationWrapper<T>> List<W> wrapAnnotationArray(
+          FSArray array, Class<W> wrapperClass) throws AnalysisEngineProcessException,
+          InstantiationException, IllegalAccessException, ClassNotFoundException {
     List<W> wrappers = new ArrayList<W>(array.size());
     for (int i = 0; i < array.size(); i++) {
-      wrappers.add(OAQATopWrapper.wrap((OAQATop) array.get(i), wrapperClass));
+      wrappers.add(matchSubclassAndWrap((TOP) array.get(i), wrapperClass));
     }
     return wrappers;
   }
 
-  public static <T extends OAQATop, W extends OAQATopWrapper<T>> FSArray unwrapTopArray(
+  public static <T extends Annotation, W extends AnnotationWrapper<T>> FSArray unwrapAnnotationArray(
           List<W> wrappers, JCas jcas) throws AnalysisEngineProcessException {
     FSArray array = new FSArray(jcas, wrappers.size());
     int i = 0;
@@ -107,59 +155,36 @@ public class WrapperHelper {
     return array;
   }
 
-  public static <T extends OAQAAnnotation, W extends OAQAAnnotationWrapper<T>> List<W> wrapAnnotationList(
-          FSList list, Class<W> wrapperClass) throws AnalysisEngineProcessException {
-    List<W> wrappers = new ArrayList<W>();
-    FSList tail = list;
-    while (tail instanceof NonEmptyFSList) {
-      OAQAAnnotation head = (OAQAAnnotation) ((NonEmptyFSList) tail).getHead();
-      wrappers.add(OAQAAnnotationWrapper.wrap(head, wrapperClass));
-      tail = ((NonEmptyFSList) tail).getTail();
-    }
-    return wrappers;
-  }
-
-  public static <T extends OAQAAnnotation, W extends OAQAAnnotationWrapper<T>> FSList unwrapAnnotationList(
-          List<W> wrappers, JCas jcas) throws AnalysisEngineProcessException {
-    FSList list = new EmptyFSList(jcas);
-    FSList tail;
-    for (W wrapper : Lists.reverse(wrappers)) {
-      tail = list;
-      list = new NonEmptyFSList(jcas);
-      ((NonEmptyFSList) list).setHead(wrapper.unwrap(jcas));
-      ((NonEmptyFSList) list).setTail(tail);
-    }
-    return list;
-  }
-
-  public static <T extends OAQAAnnotation, W extends OAQAAnnotationWrapper<T>> List<W> wrapAnnotationArray(
-          FSArray array, Class<W> wrapperClass) throws AnalysisEngineProcessException {
-    List<W> wrappers = new ArrayList<W>(array.size());
-    for (int i = 0; i < array.size(); i++) {
-      wrappers.add(OAQAAnnotationWrapper.wrap((OAQAAnnotation) array.get(i), wrapperClass));
-    }
-    return wrappers;
-  }
-
-  public static <T extends OAQAAnnotation, W extends OAQAAnnotationWrapper<T>> FSArray unwrapAnnotationArray(
-          List<W> wrappers, JCas jcas) throws AnalysisEngineProcessException {
-    FSArray array = new FSArray(jcas, wrappers.size());
-    int i = 0;
-    for (W wrapper : wrappers) {
-      array.set(i, wrapper.unwrap(jcas));
-    }
-    return array;
-  }
-
-  public static <T extends OAQATop, W extends OAQATopWrapper<T>> Set<? extends W> wrapAllFromJCas(
+  public static <T extends TOP, W extends TopWrapper<T>> Set<? extends W> wrapAllFromJCas(
           JCas jcas, Class<W> clazz) throws InstantiationException, IllegalAccessException,
           IllegalArgumentException, NoSuchFieldException, SecurityException,
-          AnalysisEngineProcessException {
+          AnalysisEngineProcessException, ClassNotFoundException {
     int type = clazz.newInstance().getTypeClass().getField("type").getInt(null);
     Set<W> tops = Sets.newHashSet();
     for (TOP top : ImmutableList.copyOf(jcas.getJFSIndexRepository().getAllIndexedFS(type))) {
-      tops.add(OAQATopWrapper.wrap((OAQATop) top, clazz));
+      tops.add(matchSubclassAndWrap(top, clazz));
     }
     return tops;
+  }
+
+  public static <T extends TOP, W extends TopWrapper<T>> W wrap(T top, Class<W> wrapperClass)
+          throws InstantiationException, IllegalAccessException, AnalysisEngineProcessException {
+    W inst = wrapperClass.newInstance();
+    inst.wrap(top);
+    return inst;
+  }
+
+  @SuppressWarnings("unchecked")
+  public static <T extends TOP, W extends TopWrapper<T>> W matchSubclassAndWrap(TOP top,
+          Class<W> superClass) throws AnalysisEngineProcessException, InstantiationException,
+          IllegalAccessException, ClassNotFoundException {
+    // FIXME Different TopWrapper implementations may have different ways to store the actual
+    // implementation subclass in TOP, the following method is only used for OAQATop. A method needs
+    // to be defined in the interface class, e.g. Class<? extends TopWrapper<?
+    // extends T>> getWrapperClass(TOP top);
+    Feature feature = top.getType().getFeatureByBaseName("implementingWrapper");
+    String className = top.getFeatureValueAsString(feature);
+    Class<? extends W> clazz = Class.forName(className).asSubclass(superClass);
+    return wrap((T) top, clazz);
   }
 }

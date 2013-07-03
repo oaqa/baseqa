@@ -30,7 +30,11 @@ public class AnswerListWrapper extends GerpTopWrapper<AnswerList> {
   @Override
   public void wrap(AnswerList top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    this.answerList = WrapperHelper.wrapTopArray(top.getAnswerList(), AnswerWrapper.class);
+    try {
+      this.answerList = WrapperHelper.wrapTopArray(top.getAnswerList(), AnswerWrapper.class);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
   }
 
   @Override

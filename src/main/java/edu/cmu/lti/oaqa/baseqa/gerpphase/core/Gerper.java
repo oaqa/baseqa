@@ -9,11 +9,9 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.oaqa.model.core.OAQATop;
 
 import com.google.common.collect.Sets;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperIndexer;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.EvidenceWrapper;
@@ -111,14 +109,14 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
     WrapperIndexer indexer = new WrapperIndexer();
     for (AbstractGenerator<W> generator : generators) {
       // collecting required types from jcas as inputs
-      List<Class<? extends OAQATopWrapper<?>>> classes = generator.getRequiredInputTypes();
+      List<Class<? extends TopWrapper<?>>> classes = generator.getRequiredInputTypes();
       try {
         indexer.addAllClassesToIndex(classes, jcas);
       } catch (Exception e) {
         throw new AnalysisEngineProcessException(e);
       }
-      List<Set<OAQATopWrapper<? extends OAQATop>>> inputs = indexer.getWrappersByClasses(classes);
-      for (List<OAQATopWrapper<? extends OAQATop>> input : Sets.cartesianProduct(inputs)) {
+      List<Set<TopWrapper<? extends TOP>>> inputs = indexer.getWrappersByClasses(classes);
+      for (List<TopWrapper<? extends TOP>> input : Sets.cartesianProduct(inputs)) {
         // gerping for all combinations of inputs
         GerpableList<W> outputs = new GerpableList<W>();
         W gerpable = generator.generate(input);

@@ -11,8 +11,8 @@ import org.oaqa.model.retrieval.SearchResult;
 import com.google.common.base.Objects;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
-import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.TripleWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 
 public class PassageFromTripleWrapper extends PassageWrapper {
 
@@ -46,8 +46,12 @@ public class PassageFromTripleWrapper extends PassageWrapper {
   @Override
   public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    sourceTriple = OAQATopWrapper.wrap(((PassageFromTriple) top).getSourceTriple(),
-            TripleWrapper.class);
+    try {
+      sourceTriple = WrapperHelper.matchSubclassAndWrap(
+              ((PassageFromTriple) top).getSourceTriple(), TripleWrapper.class);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
   }
 
   @Override

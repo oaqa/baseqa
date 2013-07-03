@@ -5,7 +5,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.core.OAQATop;
 
@@ -46,21 +45,6 @@ public abstract class OAQATopWrapper<T extends OAQATop> implements TopWrapper<T>
   @Override
   public void wrap(T top) throws AnalysisEngineProcessException {
     implementingWrapper = top.getImplementingWrapper();
-  }
-
-  @SuppressWarnings("unchecked")
-  public static <T extends OAQATop, W extends TopWrapper<T>> W wrap(OAQATop top,
-          Class<W> wrapperClass) throws AnalysisEngineProcessException {
-    Feature feature = top.getType().getFeatureByBaseName("implementingWrapper");
-    String className = top.getFeatureValueAsString(feature);
-    try {
-      Class<? extends W> clazz = Class.forName(className).asSubclass(wrapperClass);
-      W inst = clazz.newInstance();
-      inst.wrap((T) top);
-      return inst;
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
   }
 
   public String getImplementingWrapper() {

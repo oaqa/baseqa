@@ -52,7 +52,11 @@ public abstract class FSListWrapper<T extends OAQATop> implements ContainerWrapp
           throws AnalysisEngineProcessException {
     List<W> result = new ArrayList<W>();
     for (OAQATop top : BaseJCasHelper.<OAQATop> fsIterator(list)) {
-      result.add(OAQATopWrapper.wrap(top, classWrapper));
+      try {
+        result.add(WrapperHelper.matchSubclassAndWrap(top, classWrapper));
+      } catch (Exception e) {
+        throw new AnalysisEngineProcessException(e);
+      }
     }
     return result;
   }

@@ -8,7 +8,6 @@ import org.oaqa.model.retrieval.QueryConcept;
 
 import com.google.common.base.Objects;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
 
@@ -68,8 +67,14 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
     this.conceptType = top.getConceptType();
     this.text = top.getText();
     this.originalText = top.getOriginalText();
-    this.operator = OAQATopWrapper.wrap(top.getOperator(), QueryOperatorWrapper.class);
-    this.operatorArgs = WrapperHelper.wrapTopList(top.getOperatorArgs(), QueryConceptWrapper.class);
+    try {
+      this.operator = WrapperHelper.matchSubclassAndWrap(top.getOperator(),
+              QueryOperatorWrapper.class);
+      this.operatorArgs = WrapperHelper.wrapTopList(top.getOperatorArgs(),
+              QueryConceptWrapper.class);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
     this.partOfSpeech = top.getPartOfSpeech();
   }
 

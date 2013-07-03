@@ -8,7 +8,6 @@ import org.oaqa.model.retrieval.Search;
 
 import com.google.common.base.Objects;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
 
@@ -46,8 +45,13 @@ public class SearchWrapper extends GerpTopWrapper<Search> {
   public void wrap(Search top) throws AnalysisEngineProcessException {
     super.wrap(top);
     this.query = top.getQuery();
-    this.hitList = WrapperHelper.wrapTopArray(top.getHitList(), SearchResultWrapper.class);
-    this.abstractQuery = OAQATopWrapper.wrap(top.getAbstractQuery(), AbstractQueryWrapper.class);
+    try {
+      this.hitList = WrapperHelper.wrapTopArray(top.getHitList(), SearchResultWrapper.class);
+      this.abstractQuery = WrapperHelper.matchSubclassAndWrap(top.getAbstractQuery(),
+              AbstractQueryWrapper.class);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
     this.searchId = top.getSearchId();
   }
 

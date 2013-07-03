@@ -6,16 +6,16 @@ import java.util.List;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSList;
-import org.oaqa.model.core.OAQATop;
+import org.apache.uima.jcas.cas.TOP;
 import org.oaqa.model.gerp.Evidence;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 
-public class EvidenceWrapper<T extends OAQATop, W extends OAQATopWrapper<T>> extends
+public class EvidenceWrapper<T extends TOP, W extends TopWrapper<T>> extends
         GerpBaseWrapper<Evidence> implements Comparable<EvidenceWrapper<T, W>> {
 
   private static final long serialVersionUID = 1L;
@@ -56,8 +56,12 @@ public class EvidenceWrapper<T extends OAQATop, W extends OAQATopWrapper<T>> ext
   public void wrap(Evidence top) throws AnalysisEngineProcessException {
     super.wrap(top);
     confidence = top.getConfidence();
-    additionalEvidences = WrapperHelper.wrapTopList(top.getAdditionalEvidences(),
-            additionalEvidenceWrapperClass);
+    try {
+      additionalEvidences = WrapperHelper.wrapTopList(top.getAdditionalEvidences(),
+              additionalEvidenceWrapperClass);
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
   }
 
   @Override

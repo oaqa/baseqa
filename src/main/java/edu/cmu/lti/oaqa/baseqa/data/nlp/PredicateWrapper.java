@@ -8,7 +8,6 @@ import org.oaqa.model.nlp.Predicate;
 
 import com.google.common.base.Objects;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.OAQAAnnotationWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpAnnotationWrapper;
 
@@ -74,9 +73,18 @@ public class PredicateWrapper extends GerpAnnotationWrapper<Predicate> {
   @Override
   public void wrap(Predicate annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
-    this.arguments = WrapperHelper.wrapAnnotationArray(annotation.getArguments(), this.getClass());
+    try {
+      this.arguments = WrapperHelper
+              .wrapAnnotationArray(annotation.getArguments(), this.getClass());
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
     this.argumentLabels = WrapperHelper.wrapStringArray(annotation.getArgumentLabels());
-    this.parse = OAQAAnnotationWrapper.wrap(annotation.getParse(), this.getClass());
+    try {
+      this.parse = WrapperHelper.matchSubclassAndWrap(annotation.getParse(), this.getClass());
+    } catch (Exception e) {
+      throw new AnalysisEngineProcessException(e);
+    }
     this.semanticType = annotation.getSemanticType();
     this.partOfSpeech = annotation.getPartOfSpeech();
     this.lemmaForm = annotation.getLemmaForm();

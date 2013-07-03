@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
+import org.apache.uima.jcas.cas.TOP;
 import org.oaqa.model.core.OAQATop;
 
 @Deprecated
@@ -53,7 +54,11 @@ public abstract class FSArrayWrapper<T extends OAQATop> implements ContainerWrap
           throws AnalysisEngineProcessException {
     List<W> result = new ArrayList<W>();
     for (int i = 0; i < array.size(); i++) {
-      result.add(OAQATopWrapper.wrap((OAQATop) array.get(i), classWrapper));
+      try {
+        result.add(WrapperHelper.matchSubclassAndWrap((TOP) array.get(i), classWrapper));
+      } catch (Exception e) {
+        throw new AnalysisEngineProcessException(e);
+      }
     }
     return result;
   }
