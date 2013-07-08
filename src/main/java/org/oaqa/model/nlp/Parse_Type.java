@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Jul 03 15:35:55 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.nlp;
 
 import org.apache.uima.jcas.JCas;
@@ -13,8 +13,8 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
-/** A data structure that represents various NLP annotations from a parser, e.g. lists of Predicate, NamedEntity, SemanticRole, etc.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+/** A data structure that represents various NLP annotations from a parser, e.g. lists of tokens, semantic roles, etc.
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * @generated */
 public class Parse_Type extends GerpTop_Type {
   /** @generated */
@@ -45,38 +45,20 @@ public class Parse_Type extends GerpTop_Type {
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.oaqa.model.nlp.Parse");
  
   /** @generated */
-  final Feature casFeat_predicates;
+  final Feature casFeat_tokens;
   /** @generated */
-  final int     casFeatCode_predicates;
+  final int     casFeatCode_tokens;
   /** @generated */ 
-  public int getPredicates(int addr) {
-        if (featOkTst && casFeat_predicates == null)
-      jcas.throwFeatMissing("predicates", "org.oaqa.model.nlp.Parse");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_predicates);
+  public int getTokens(int addr) {
+        if (featOkTst && casFeat_tokens == null)
+      jcas.throwFeatMissing("tokens", "org.oaqa.model.nlp.Parse");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_tokens);
   }
   /** @generated */    
-  public void setPredicates(int addr, int v) {
-        if (featOkTst && casFeat_predicates == null)
-      jcas.throwFeatMissing("predicates", "org.oaqa.model.nlp.Parse");
-    ll_cas.ll_setRefValue(addr, casFeatCode_predicates, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_namedEntities;
-  /** @generated */
-  final int     casFeatCode_namedEntities;
-  /** @generated */ 
-  public int getNamedEntities(int addr) {
-        if (featOkTst && casFeat_namedEntities == null)
-      jcas.throwFeatMissing("namedEntities", "org.oaqa.model.nlp.Parse");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_namedEntities);
-  }
-  /** @generated */    
-  public void setNamedEntities(int addr, int v) {
-        if (featOkTst && casFeat_namedEntities == null)
-      jcas.throwFeatMissing("namedEntities", "org.oaqa.model.nlp.Parse");
-    ll_cas.ll_setRefValue(addr, casFeatCode_namedEntities, v);}
+  public void setTokens(int addr, int v) {
+        if (featOkTst && casFeat_tokens == null)
+      jcas.throwFeatMissing("tokens", "org.oaqa.model.nlp.Parse");
+    ll_cas.ll_setRefValue(addr, casFeatCode_tokens, v);}
     
   
  
@@ -107,12 +89,8 @@ public class Parse_Type extends GerpTop_Type {
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_predicates = jcas.getRequiredFeatureDE(casType, "predicates", "uima.cas.FSList", featOkTst);
-    casFeatCode_predicates  = (null == casFeat_predicates) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_predicates).getCode();
-
- 
-    casFeat_namedEntities = jcas.getRequiredFeatureDE(casType, "namedEntities", "uima.cas.FSList", featOkTst);
-    casFeatCode_namedEntities  = (null == casFeat_namedEntities) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_namedEntities).getCode();
+    casFeat_tokens = jcas.getRequiredFeatureDE(casType, "tokens", "uima.cas.FSList", featOkTst);
+    casFeatCode_tokens  = (null == casFeat_tokens) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_tokens).getCode();
 
  
     casFeat_semanticRoles = jcas.getRequiredFeatureDE(casType, "semanticRoles", "uima.cas.FSList", featOkTst);

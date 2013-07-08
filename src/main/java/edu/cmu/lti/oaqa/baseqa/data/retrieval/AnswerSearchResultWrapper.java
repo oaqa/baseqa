@@ -10,11 +10,6 @@ public class AnswerSearchResultWrapper extends SearchResultWrapper {
 
   private static final long serialVersionUID = 1L;
 
-  @Override
-  public Class<? extends AnswerSearchResult> getTypeClass() {
-    return AnswerSearchResult.class;
-  }
-
   public AnswerSearchResultWrapper(String uri, float score, String text, int rank,
           String queryString, String searchId, List<CandidateAnswerVariantWrapper> candidateAnswers) {
     super(uri, score, text, rank, queryString, searchId, candidateAnswers);
@@ -25,4 +20,10 @@ public class AnswerSearchResultWrapper extends SearchResultWrapper {
           List<CandidateAnswerVariantWrapper> candidateAnswers, String generator) {
     super(uri, score, text, rank, queryString, searchId, candidateAnswers, generator);
   }
+
+  @Override
+  public Class<? extends AnswerSearchResult> getTypeClass() {
+    return AnswerSearchResult.class;
+  }
+
 }

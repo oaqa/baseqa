@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.nlp;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpAnnotation_Type;
 
 /** The phrase in the question that indicates the answer variable.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * @generated */
 public class Focus_Type extends GerpAnnotation_Type {
   /** @generated */
@@ -45,20 +45,20 @@ public class Focus_Type extends GerpAnnotation_Type {
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.oaqa.model.nlp.Focus");
  
   /** @generated */
-  final Feature casFeat_predicate;
+  final Feature casFeat_token;
   /** @generated */
-  final int     casFeatCode_predicate;
+  final int     casFeatCode_token;
   /** @generated */ 
-  public int getPredicate(int addr) {
-        if (featOkTst && casFeat_predicate == null)
-      jcas.throwFeatMissing("predicate", "org.oaqa.model.nlp.Focus");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_predicate);
+  public int getToken(int addr) {
+        if (featOkTst && casFeat_token == null)
+      jcas.throwFeatMissing("token", "org.oaqa.model.nlp.Focus");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_token);
   }
   /** @generated */    
-  public void setPredicate(int addr, int v) {
-        if (featOkTst && casFeat_predicate == null)
-      jcas.throwFeatMissing("predicate", "org.oaqa.model.nlp.Focus");
-    ll_cas.ll_setRefValue(addr, casFeatCode_predicate, v);}
+  public void setToken(int addr, int v) {
+        if (featOkTst && casFeat_token == null)
+      jcas.throwFeatMissing("token", "org.oaqa.model.nlp.Focus");
+    ll_cas.ll_setRefValue(addr, casFeatCode_token, v);}
     
   
  
@@ -89,8 +89,8 @@ public class Focus_Type extends GerpAnnotation_Type {
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_predicate = jcas.getRequiredFeatureDE(casType, "predicate", "org.oaqa.model.nlp.Predicate", featOkTst);
-    casFeatCode_predicate  = (null == casFeat_predicate) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_predicate).getCode();
+    casFeat_token = jcas.getRequiredFeatureDE(casType, "token", "org.oaqa.model.nlp.Token", featOkTst);
+    casFeatCode_token  = (null == casFeat_token) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_token).getCode();
 
  
     casFeat_label = jcas.getRequiredFeatureDE(casType, "label", "uima.cas.String", featOkTst);

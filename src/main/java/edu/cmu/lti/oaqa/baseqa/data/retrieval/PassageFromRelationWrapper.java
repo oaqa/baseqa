@@ -5,65 +5,65 @@ import java.util.List;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.Passage;
-import org.oaqa.model.retrieval.PassageFromTriple;
+import org.oaqa.model.retrieval.PassageFromRelation;
 import org.oaqa.model.retrieval.SearchResult;
 
 import com.google.common.base.Objects;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
-import edu.cmu.lti.oaqa.baseqa.data.core.TripleWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
+import edu.cmu.lti.oaqa.baseqa.data.kb.RelationWrapper;
 
-public class PassageFromTripleWrapper extends PassageWrapper {
+public class PassageFromRelationWrapper extends PassageWrapper {
 
   private static final long serialVersionUID = 1L;
 
-  private TripleWrapper sourceTriple;
+  private RelationWrapper sourceRelation;
 
-  public PassageFromTripleWrapper(String uri, float score, String text, int rank,
+  public PassageFromRelationWrapper(String uri, float score, String text, int rank,
           String queryString, String searchId,
           List<CandidateAnswerVariantWrapper> candidateAnswers, String title, String docId,
-          int begin, int end, String aspects, TripleWrapper sourceTriple) {
+          int begin, int end, String aspects, RelationWrapper sourceRelation) {
     super(uri, score, text, rank, queryString, searchId, candidateAnswers, title, docId, begin,
             end, aspects);
-    this.sourceTriple = sourceTriple;
+    this.sourceRelation = sourceRelation;
   }
 
-  public PassageFromTripleWrapper(String uri, float score, String text, int rank,
+  public PassageFromRelationWrapper(String uri, float score, String text, int rank,
           String queryString, String searchId,
           List<CandidateAnswerVariantWrapper> candidateAnswers, String title, String docId,
-          int begin, int end, String aspects, TripleWrapper sourceTriple, String generator) {
+          int begin, int end, String aspects, RelationWrapper sourceRelation, String generator) {
     super(uri, score, text, rank, queryString, searchId, candidateAnswers, title, docId, begin,
             end, aspects, generator);
-    this.sourceTriple = sourceTriple;
+    this.sourceRelation = sourceRelation;
   }
 
   @Override
   public Class<? extends Passage> getTypeClass() {
-    return PassageFromTriple.class;
+    return PassageFromRelation.class;
   }
 
   @Override
   public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
     try {
-      sourceTriple = WrapperHelper.matchSubclassAndWrap(
-              ((PassageFromTriple) top).getSourceTriple(), TripleWrapper.class);
+      sourceRelation = WrapperHelper.matchSubclassAndWrap(
+              ((PassageFromRelation) top).getSourceRelation(), RelationWrapper.class);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
   }
 
   @Override
-  public Passage unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    PassageFromTriple top = (PassageFromTriple) super.unwrap(jcas);
-    top.setSourceTriple(sourceTriple.unwrap(jcas));
+  public PassageFromRelation unwrap(JCas jcas) throws AnalysisEngineProcessException {
+    PassageFromRelation top = (PassageFromRelation) super.unwrap(jcas);
+    top.setSourceRelation(sourceRelation.unwrap(jcas));
     return top;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), sourceTriple);
+    return Objects.hashCode(super.hashCode(), sourceRelation);
   }
 
   @Override
@@ -74,16 +74,16 @@ public class PassageFromTripleWrapper extends PassageWrapper {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    PassageFromTripleWrapper other = (PassageFromTripleWrapper) obj;
-    return Objects.equal(sourceTriple, other.sourceTriple);
+    PassageFromRelationWrapper other = (PassageFromRelationWrapper) obj;
+    return Objects.equal(sourceRelation, other.sourceRelation);
   }
 
-  public TripleWrapper getSourceTriple() {
-    return sourceTriple;
+  public RelationWrapper getSourceRelation() {
+    return sourceRelation;
   }
 
-  public void setSourceTriple(TripleWrapper sourceTriple) {
-    this.sourceTriple = sourceTriple;
+  public void setSourceRelation(RelationWrapper sourceRelation) {
+    this.sourceRelation = sourceRelation;
   }
 
 }

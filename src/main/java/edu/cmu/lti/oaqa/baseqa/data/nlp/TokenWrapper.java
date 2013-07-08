@@ -4,22 +4,22 @@ import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
-import org.oaqa.model.nlp.Predicate;
+import org.oaqa.model.nlp.Token;
 
 import com.google.common.base.Objects;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpAnnotationWrapper;
 
-public class PredicateWrapper extends GerpAnnotationWrapper<Predicate> {
+public class TokenWrapper extends GerpAnnotationWrapper<Token> {
 
   private static final long serialVersionUID = 1L;
 
-  private List<? extends PredicateWrapper> arguments;
+  private List<? extends TokenWrapper> arguments;
 
   private List<String> argumentLabels;
 
-  private PredicateWrapper parse;
+  private TokenWrapper parse;
 
   private String semanticType;
 
@@ -33,8 +33,8 @@ public class PredicateWrapper extends GerpAnnotationWrapper<Predicate> {
 
   private String determiner;
 
-  public PredicateWrapper(int begin, int end, List<PredicateWrapper> arguments,
-          List<String> argumentLabels, PredicateWrapper parse, String semanticType,
+  public TokenWrapper(int begin, int end, List<TokenWrapper> arguments,
+          List<String> argumentLabels, TokenWrapper parse, String semanticType,
           String partOfSpeech, String lemmaForm, boolean isMainReference, boolean isVariable,
           String determiner) {
     super(begin, end);
@@ -49,8 +49,8 @@ public class PredicateWrapper extends GerpAnnotationWrapper<Predicate> {
     this.determiner = determiner;
   }
 
-  public PredicateWrapper(int begin, int end, List<PredicateWrapper> arguments,
-          List<String> argumentLabels, PredicateWrapper parse, String semanticType,
+  public TokenWrapper(int begin, int end, List<TokenWrapper> arguments,
+          List<String> argumentLabels, TokenWrapper parse, String semanticType,
           String partOfSpeech, String lemmaForm, boolean isMainReference, boolean isVariable,
           String determiner, String generator) {
     super(begin, end, generator);
@@ -66,12 +66,12 @@ public class PredicateWrapper extends GerpAnnotationWrapper<Predicate> {
   }
 
   @Override
-  public Class<? extends Predicate> getTypeClass() {
-    return Predicate.class;
+  public Class<? extends Token> getTypeClass() {
+    return Token.class;
   }
 
   @Override
-  public void wrap(Predicate annotation) throws AnalysisEngineProcessException {
+  public void wrap(Token annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     try {
       this.arguments = WrapperHelper
@@ -94,8 +94,8 @@ public class PredicateWrapper extends GerpAnnotationWrapper<Predicate> {
   }
 
   @Override
-  public Predicate unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Predicate annotation = super.unwrap(jcas);
+  public Token unwrap(JCas jcas) throws AnalysisEngineProcessException {
+    Token annotation = super.unwrap(jcas);
     annotation.setArguments(WrapperHelper.unwrapAnnotationArray(arguments, jcas));
     annotation.setArgumentLabels(WrapperHelper.unwrapStringArray(argumentLabels, jcas));
     annotation.setParse(parse.unwrap(jcas));
@@ -124,11 +124,11 @@ public class PredicateWrapper extends GerpAnnotationWrapper<Predicate> {
     return true;
   }
 
-  public List<? extends PredicateWrapper> getArguments() {
+  public List<? extends TokenWrapper> getArguments() {
     return arguments;
   }
 
-  public void setArguments(List<? extends PredicateWrapper> arguments) {
+  public void setArguments(List<? extends TokenWrapper> arguments) {
     this.arguments = arguments;
   }
 
@@ -140,11 +140,11 @@ public class PredicateWrapper extends GerpAnnotationWrapper<Predicate> {
     this.argumentLabels = argumentLabels;
   }
 
-  public PredicateWrapper getParse() {
+  public TokenWrapper getParse() {
     return parse;
   }
 
-  public void setParse(PredicateWrapper parse) {
+  public void setParse(TokenWrapper parse) {
     this.parse = parse;
   }
 

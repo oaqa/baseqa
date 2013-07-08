@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.nlp;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.oaqa.model.gerp.GerpAnnotation;
 
 
 /** The phrase in the question that indicates the answer variable.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class Focus extends GerpAnnotation {
@@ -63,21 +63,21 @@ public class Focus extends GerpAnnotation {
  
     
   //*--------------*
-  //* Feature: predicate
+  //* Feature: token
 
-  /** getter for predicate - gets The corresponding predicate for the focus.
+  /** getter for token - gets The corresponding token for the focus.
    * @generated */
-  public Predicate getPredicate() {
-    if (Focus_Type.featOkTst && ((Focus_Type)jcasType).casFeat_predicate == null)
-      jcasType.jcas.throwFeatMissing("predicate", "org.oaqa.model.nlp.Focus");
-    return (Predicate)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Focus_Type)jcasType).casFeatCode_predicate)));}
+  public Token getToken() {
+    if (Focus_Type.featOkTst && ((Focus_Type)jcasType).casFeat_token == null)
+      jcasType.jcas.throwFeatMissing("token", "org.oaqa.model.nlp.Focus");
+    return (Token)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Focus_Type)jcasType).casFeatCode_token)));}
     
-  /** setter for predicate - sets The corresponding predicate for the focus. 
+  /** setter for token - sets The corresponding token for the focus. 
    * @generated */
-  public void setPredicate(Predicate v) {
-    if (Focus_Type.featOkTst && ((Focus_Type)jcasType).casFeat_predicate == null)
-      jcasType.jcas.throwFeatMissing("predicate", "org.oaqa.model.nlp.Focus");
-    jcasType.ll_cas.ll_setRefValue(addr, ((Focus_Type)jcasType).casFeatCode_predicate, jcasType.ll_cas.ll_getFSRef(v));}    
+  public void setToken(Token v) {
+    if (Focus_Type.featOkTst && ((Focus_Type)jcasType).casFeat_token == null)
+      jcasType.jcas.throwFeatMissing("token", "org.oaqa.model.nlp.Focus");
+    jcasType.ll_cas.ll_setRefValue(addr, ((Focus_Type)jcasType).casFeatCode_token, jcasType.ll_cas.ll_getFSRef(v));}    
    
     
   //*--------------*

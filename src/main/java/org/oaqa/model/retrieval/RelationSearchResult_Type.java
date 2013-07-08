@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.retrieval;
 
 import org.apache.uima.jcas.JCas;
@@ -13,9 +13,9 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A search result from a triple store, e.g., an RDF store.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * @generated */
-public class TripleStoreSearchResult_Type extends AnswerSearchResult_Type {
+public class RelationSearchResult_Type extends AnswerSearchResult_Type {
   /** @generated */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
@@ -23,25 +23,25 @@ public class TripleStoreSearchResult_Type extends AnswerSearchResult_Type {
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
-  			 if (TripleStoreSearchResult_Type.this.useExistingInstance) {
+  			 if (RelationSearchResult_Type.this.useExistingInstance) {
   			   // Return eq fs instance if already created
-  		     FeatureStructure fs = TripleStoreSearchResult_Type.this.jcas.getJfsFromCaddr(addr);
+  		     FeatureStructure fs = RelationSearchResult_Type.this.jcas.getJfsFromCaddr(addr);
   		     if (null == fs) {
-  		       fs = new TripleStoreSearchResult(addr, TripleStoreSearchResult_Type.this);
-  			   TripleStoreSearchResult_Type.this.jcas.putJfsFromCaddr(addr, fs);
+  		       fs = new RelationSearchResult(addr, RelationSearchResult_Type.this);
+  			   RelationSearchResult_Type.this.jcas.putJfsFromCaddr(addr, fs);
   			   return fs;
   		     }
   		     return fs;
-        } else return new TripleStoreSearchResult(addr, TripleStoreSearchResult_Type.this);
+        } else return new RelationSearchResult(addr, RelationSearchResult_Type.this);
   	  }
     };
   /** @generated */
   @SuppressWarnings ("hiding")
-  public final static int typeIndexID = TripleStoreSearchResult.typeIndexID;
+  public final static int typeIndexID = RelationSearchResult.typeIndexID;
   /** @generated 
      @modifiable */
   @SuppressWarnings ("hiding")
-  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.oaqa.model.retrieval.TripleStoreSearchResult");
+  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.oaqa.model.retrieval.RelationSearchResult");
  
   /** @generated */
   final Feature casFeat_context;
@@ -50,29 +50,29 @@ public class TripleStoreSearchResult_Type extends AnswerSearchResult_Type {
   /** @generated */ 
   public int getContext(int addr) {
         if (featOkTst && casFeat_context == null)
-      jcas.throwFeatMissing("context", "org.oaqa.model.retrieval.TripleStoreSearchResult");
+      jcas.throwFeatMissing("context", "org.oaqa.model.retrieval.RelationSearchResult");
     return ll_cas.ll_getRefValue(addr, casFeatCode_context);
   }
   /** @generated */    
   public void setContext(int addr, int v) {
         if (featOkTst && casFeat_context == null)
-      jcas.throwFeatMissing("context", "org.oaqa.model.retrieval.TripleStoreSearchResult");
+      jcas.throwFeatMissing("context", "org.oaqa.model.retrieval.RelationSearchResult");
     ll_cas.ll_setRefValue(addr, casFeatCode_context, v);}
     
    /** @generated */
   public int getContext(int addr, int i) {
         if (featOkTst && casFeat_context == null)
-      jcas.throwFeatMissing("context", "org.oaqa.model.retrieval.TripleStoreSearchResult");
+      jcas.throwFeatMissing("context", "org.oaqa.model.retrieval.RelationSearchResult");
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_context), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_context), i);
-  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_context), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_context), i);
   }
    
   /** @generated */ 
   public void setContext(int addr, int i, int v) {
         if (featOkTst && casFeat_context == null)
-      jcas.throwFeatMissing("context", "org.oaqa.model.retrieval.TripleStoreSearchResult");
+      jcas.throwFeatMissing("context", "org.oaqa.model.retrieval.RelationSearchResult");
     if (lowLevelTypeChecks)
       ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_context), i, v, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_context), i);
@@ -84,7 +84,7 @@ public class TripleStoreSearchResult_Type extends AnswerSearchResult_Type {
 
   /** initialize variables to correspond with Cas Type and Features
 	* @generated */
-  public TripleStoreSearchResult_Type(JCas jcas, Type casType) {
+  public RelationSearchResult_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 

@@ -4,56 +4,55 @@ import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
-import org.oaqa.model.retrieval.AnswerSearchResult;
+import org.oaqa.model.retrieval.RelationSearchResult;
 import org.oaqa.model.retrieval.SearchResult;
-import org.oaqa.model.retrieval.TripleStoreSearchResult;
 
 import com.google.common.base.Objects;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
-import edu.cmu.lti.oaqa.baseqa.data.core.TripleWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
+import edu.cmu.lti.oaqa.baseqa.data.kb.RelationWrapper;
 
-public class TripleStoreSearchResultWrapper extends AnswerSearchResultWrapper {
+public class RelationSearchResultWrapper extends AnswerSearchResultWrapper {
 
   private static final long serialVersionUID = 1L;
 
-  private List<TripleWrapper> context;
+  private List<RelationWrapper> context;
 
-  public TripleStoreSearchResultWrapper(String uri, float score, String text, int rank,
+  public RelationSearchResultWrapper(String uri, float score, String text, int rank,
           String queryString, String searchId,
-          List<CandidateAnswerVariantWrapper> candidateAnswers, List<TripleWrapper> context) {
+          List<CandidateAnswerVariantWrapper> candidateAnswers, List<RelationWrapper> context) {
     super(uri, score, text, rank, queryString, searchId, candidateAnswers);
     this.context = context;
   }
 
-  public TripleStoreSearchResultWrapper(String uri, float score, String text, int rank,
+  public RelationSearchResultWrapper(String uri, float score, String text, int rank,
           String queryString, String searchId,
-          List<CandidateAnswerVariantWrapper> candidateAnswers, List<TripleWrapper> context,
+          List<CandidateAnswerVariantWrapper> candidateAnswers, List<RelationWrapper> context,
           String generator) {
     super(uri, score, text, rank, queryString, searchId, candidateAnswers, generator);
     this.context = context;
   }
 
   @Override
-  public Class<? extends AnswerSearchResult> getTypeClass() {
-    return TripleStoreSearchResult.class;
+  public Class<? extends RelationSearchResult> getTypeClass() {
+    return RelationSearchResult.class;
   }
 
   @Override
   public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
     try {
-      this.context = WrapperHelper.wrapTopArray(((TripleStoreSearchResult) top).getContext(),
-              TripleWrapper.class);
+      this.context = WrapperHelper.wrapTopArray(((RelationSearchResult) top).getContext(),
+              RelationWrapper.class);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
   }
 
   @Override
-  public AnswerSearchResult unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    TripleStoreSearchResult top = (TripleStoreSearchResult) super.unwrap(jcas);
+  public RelationSearchResult unwrap(JCas jcas) throws AnalysisEngineProcessException {
+    RelationSearchResult top = (RelationSearchResult) super.unwrap(jcas);
     top.setContext(WrapperHelper.unwrapTopArray(context, jcas));
     return top;
   }
@@ -71,15 +70,15 @@ public class TripleStoreSearchResultWrapper extends AnswerSearchResultWrapper {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    TripleStoreSearchResultWrapper other = (TripleStoreSearchResultWrapper) obj;
+    RelationSearchResultWrapper other = (RelationSearchResultWrapper) obj;
     return Objects.equal(context, other.context);
   }
 
-  public List<TripleWrapper> getContext() {
+  public List<RelationWrapper> getContext() {
     return context;
   }
 
-  public void setContext(List<TripleWrapper> context) {
+  public void setContext(List<RelationWrapper> context) {
     this.context = context;
   }
 

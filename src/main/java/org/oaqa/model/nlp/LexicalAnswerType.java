@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.nlp;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.oaqa.model.gerp.GerpAnnotation;
 
 
 /** The lexical answer type found in the question.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class LexicalAnswerType extends GerpAnnotation {
@@ -63,21 +63,21 @@ public class LexicalAnswerType extends GerpAnnotation {
  
     
   //*--------------*
-  //* Feature: predicate
+  //* Feature: token
 
-  /** getter for predicate - gets The corresponding predicate for the LAT.
+  /** getter for token - gets The corresponding token for the LAT.
    * @generated */
-  public Predicate getPredicate() {
-    if (LexicalAnswerType_Type.featOkTst && ((LexicalAnswerType_Type)jcasType).casFeat_predicate == null)
-      jcasType.jcas.throwFeatMissing("predicate", "org.oaqa.model.nlp.LexicalAnswerType");
-    return (Predicate)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((LexicalAnswerType_Type)jcasType).casFeatCode_predicate)));}
+  public Token getToken() {
+    if (LexicalAnswerType_Type.featOkTst && ((LexicalAnswerType_Type)jcasType).casFeat_token == null)
+      jcasType.jcas.throwFeatMissing("token", "org.oaqa.model.nlp.LexicalAnswerType");
+    return (Token)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((LexicalAnswerType_Type)jcasType).casFeatCode_token)));}
     
-  /** setter for predicate - sets The corresponding predicate for the LAT. 
+  /** setter for token - sets The corresponding token for the LAT. 
    * @generated */
-  public void setPredicate(Predicate v) {
-    if (LexicalAnswerType_Type.featOkTst && ((LexicalAnswerType_Type)jcasType).casFeat_predicate == null)
-      jcasType.jcas.throwFeatMissing("predicate", "org.oaqa.model.nlp.LexicalAnswerType");
-    jcasType.ll_cas.ll_setRefValue(addr, ((LexicalAnswerType_Type)jcasType).casFeatCode_predicate, jcasType.ll_cas.ll_getFSRef(v));}    
+  public void setToken(Token v) {
+    if (LexicalAnswerType_Type.featOkTst && ((LexicalAnswerType_Type)jcasType).casFeat_token == null)
+      jcasType.jcas.throwFeatMissing("token", "org.oaqa.model.nlp.LexicalAnswerType");
+    jcasType.ll_cas.ll_setRefValue(addr, ((LexicalAnswerType_Type)jcasType).casFeatCode_token, jcasType.ll_cas.ll_getFSRef(v));}    
    
     
   //*--------------*

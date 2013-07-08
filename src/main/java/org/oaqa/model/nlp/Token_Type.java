@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.nlp;
 
 import org.apache.uima.jcas.JCas;
@@ -13,10 +13,10 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpAnnotation_Type;
 
-/** Annotation on a predicate, which may have arguments; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+/** Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * @generated */
-public class Predicate_Type extends GerpAnnotation_Type {
+public class Token_Type extends GerpAnnotation_Type {
   /** @generated */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
@@ -24,25 +24,25 @@ public class Predicate_Type extends GerpAnnotation_Type {
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
-  			 if (Predicate_Type.this.useExistingInstance) {
+  			 if (Token_Type.this.useExistingInstance) {
   			   // Return eq fs instance if already created
-  		     FeatureStructure fs = Predicate_Type.this.jcas.getJfsFromCaddr(addr);
+  		     FeatureStructure fs = Token_Type.this.jcas.getJfsFromCaddr(addr);
   		     if (null == fs) {
-  		       fs = new Predicate(addr, Predicate_Type.this);
-  			   Predicate_Type.this.jcas.putJfsFromCaddr(addr, fs);
+  		       fs = new Token(addr, Token_Type.this);
+  			   Token_Type.this.jcas.putJfsFromCaddr(addr, fs);
   			   return fs;
   		     }
   		     return fs;
-        } else return new Predicate(addr, Predicate_Type.this);
+        } else return new Token(addr, Token_Type.this);
   	  }
     };
   /** @generated */
   @SuppressWarnings ("hiding")
-  public final static int typeIndexID = Predicate.typeIndexID;
+  public final static int typeIndexID = Token.typeIndexID;
   /** @generated 
      @modifiable */
   @SuppressWarnings ("hiding")
-  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.oaqa.model.nlp.Predicate");
+  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.oaqa.model.nlp.Token");
  
   /** @generated */
   final Feature casFeat_arguments;
@@ -51,29 +51,29 @@ public class Predicate_Type extends GerpAnnotation_Type {
   /** @generated */ 
   public int getArguments(int addr) {
         if (featOkTst && casFeat_arguments == null)
-      jcas.throwFeatMissing("arguments", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("arguments", "org.oaqa.model.nlp.Token");
     return ll_cas.ll_getRefValue(addr, casFeatCode_arguments);
   }
   /** @generated */    
   public void setArguments(int addr, int v) {
         if (featOkTst && casFeat_arguments == null)
-      jcas.throwFeatMissing("arguments", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("arguments", "org.oaqa.model.nlp.Token");
     ll_cas.ll_setRefValue(addr, casFeatCode_arguments, v);}
     
    /** @generated */
   public int getArguments(int addr, int i) {
         if (featOkTst && casFeat_arguments == null)
-      jcas.throwFeatMissing("arguments", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("arguments", "org.oaqa.model.nlp.Token");
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i);
-  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i);
   }
    
   /** @generated */ 
   public void setArguments(int addr, int i, int v) {
         if (featOkTst && casFeat_arguments == null)
-      jcas.throwFeatMissing("arguments", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("arguments", "org.oaqa.model.nlp.Token");
     if (lowLevelTypeChecks)
       ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i, v, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i);
@@ -88,29 +88,29 @@ public class Predicate_Type extends GerpAnnotation_Type {
   /** @generated */ 
   public int getArgumentLabels(int addr) {
         if (featOkTst && casFeat_argumentLabels == null)
-      jcas.throwFeatMissing("argumentLabels", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("argumentLabels", "org.oaqa.model.nlp.Token");
     return ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels);
   }
   /** @generated */    
   public void setArgumentLabels(int addr, int v) {
         if (featOkTst && casFeat_argumentLabels == null)
-      jcas.throwFeatMissing("argumentLabels", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("argumentLabels", "org.oaqa.model.nlp.Token");
     ll_cas.ll_setRefValue(addr, casFeatCode_argumentLabels, v);}
     
    /** @generated */
   public String getArgumentLabels(int addr, int i) {
         if (featOkTst && casFeat_argumentLabels == null)
-      jcas.throwFeatMissing("argumentLabels", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("argumentLabels", "org.oaqa.model.nlp.Token");
     if (lowLevelTypeChecks)
       return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i);
-  return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i);
+	return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i);
   }
    
   /** @generated */ 
   public void setArgumentLabels(int addr, int i, String v) {
         if (featOkTst && casFeat_argumentLabels == null)
-      jcas.throwFeatMissing("argumentLabels", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("argumentLabels", "org.oaqa.model.nlp.Token");
     if (lowLevelTypeChecks)
       ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i, v, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i);
@@ -125,13 +125,13 @@ public class Predicate_Type extends GerpAnnotation_Type {
   /** @generated */ 
   public int getParse(int addr) {
         if (featOkTst && casFeat_parse == null)
-      jcas.throwFeatMissing("parse", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("parse", "org.oaqa.model.nlp.Token");
     return ll_cas.ll_getRefValue(addr, casFeatCode_parse);
   }
   /** @generated */    
   public void setParse(int addr, int v) {
         if (featOkTst && casFeat_parse == null)
-      jcas.throwFeatMissing("parse", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("parse", "org.oaqa.model.nlp.Token");
     ll_cas.ll_setRefValue(addr, casFeatCode_parse, v);}
     
   
@@ -143,13 +143,13 @@ public class Predicate_Type extends GerpAnnotation_Type {
   /** @generated */ 
   public String getSemanticType(int addr) {
         if (featOkTst && casFeat_semanticType == null)
-      jcas.throwFeatMissing("semanticType", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("semanticType", "org.oaqa.model.nlp.Token");
     return ll_cas.ll_getStringValue(addr, casFeatCode_semanticType);
   }
   /** @generated */    
   public void setSemanticType(int addr, String v) {
         if (featOkTst && casFeat_semanticType == null)
-      jcas.throwFeatMissing("semanticType", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("semanticType", "org.oaqa.model.nlp.Token");
     ll_cas.ll_setStringValue(addr, casFeatCode_semanticType, v);}
     
   
@@ -161,13 +161,13 @@ public class Predicate_Type extends GerpAnnotation_Type {
   /** @generated */ 
   public String getPartOfSpeech(int addr) {
         if (featOkTst && casFeat_partOfSpeech == null)
-      jcas.throwFeatMissing("partOfSpeech", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("partOfSpeech", "org.oaqa.model.nlp.Token");
     return ll_cas.ll_getStringValue(addr, casFeatCode_partOfSpeech);
   }
   /** @generated */    
   public void setPartOfSpeech(int addr, String v) {
         if (featOkTst && casFeat_partOfSpeech == null)
-      jcas.throwFeatMissing("partOfSpeech", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("partOfSpeech", "org.oaqa.model.nlp.Token");
     ll_cas.ll_setStringValue(addr, casFeatCode_partOfSpeech, v);}
     
   
@@ -179,13 +179,13 @@ public class Predicate_Type extends GerpAnnotation_Type {
   /** @generated */ 
   public String getLemmaForm(int addr) {
         if (featOkTst && casFeat_lemmaForm == null)
-      jcas.throwFeatMissing("lemmaForm", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("lemmaForm", "org.oaqa.model.nlp.Token");
     return ll_cas.ll_getStringValue(addr, casFeatCode_lemmaForm);
   }
   /** @generated */    
   public void setLemmaForm(int addr, String v) {
         if (featOkTst && casFeat_lemmaForm == null)
-      jcas.throwFeatMissing("lemmaForm", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("lemmaForm", "org.oaqa.model.nlp.Token");
     ll_cas.ll_setStringValue(addr, casFeatCode_lemmaForm, v);}
     
   
@@ -197,13 +197,13 @@ public class Predicate_Type extends GerpAnnotation_Type {
   /** @generated */ 
   public boolean getIsMainReference(int addr) {
         if (featOkTst && casFeat_isMainReference == null)
-      jcas.throwFeatMissing("isMainReference", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("isMainReference", "org.oaqa.model.nlp.Token");
     return ll_cas.ll_getBooleanValue(addr, casFeatCode_isMainReference);
   }
   /** @generated */    
   public void setIsMainReference(int addr, boolean v) {
         if (featOkTst && casFeat_isMainReference == null)
-      jcas.throwFeatMissing("isMainReference", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("isMainReference", "org.oaqa.model.nlp.Token");
     ll_cas.ll_setBooleanValue(addr, casFeatCode_isMainReference, v);}
     
   
@@ -215,13 +215,13 @@ public class Predicate_Type extends GerpAnnotation_Type {
   /** @generated */ 
   public boolean getIsVariable(int addr) {
         if (featOkTst && casFeat_isVariable == null)
-      jcas.throwFeatMissing("isVariable", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("isVariable", "org.oaqa.model.nlp.Token");
     return ll_cas.ll_getBooleanValue(addr, casFeatCode_isVariable);
   }
   /** @generated */    
   public void setIsVariable(int addr, boolean v) {
         if (featOkTst && casFeat_isVariable == null)
-      jcas.throwFeatMissing("isVariable", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("isVariable", "org.oaqa.model.nlp.Token");
     ll_cas.ll_setBooleanValue(addr, casFeatCode_isVariable, v);}
     
   
@@ -233,13 +233,13 @@ public class Predicate_Type extends GerpAnnotation_Type {
   /** @generated */ 
   public String getDeterminer(int addr) {
         if (featOkTst && casFeat_determiner == null)
-      jcas.throwFeatMissing("determiner", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("determiner", "org.oaqa.model.nlp.Token");
     return ll_cas.ll_getStringValue(addr, casFeatCode_determiner);
   }
   /** @generated */    
   public void setDeterminer(int addr, String v) {
         if (featOkTst && casFeat_determiner == null)
-      jcas.throwFeatMissing("determiner", "org.oaqa.model.nlp.Predicate");
+      jcas.throwFeatMissing("determiner", "org.oaqa.model.nlp.Token");
     ll_cas.ll_setStringValue(addr, casFeatCode_determiner, v);}
     
   
@@ -248,7 +248,7 @@ public class Predicate_Type extends GerpAnnotation_Type {
 
   /** initialize variables to correspond with Cas Type and Features
 	* @generated */
-  public Predicate_Type(JCas jcas, Type casType) {
+  public Token_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
@@ -261,7 +261,7 @@ public class Predicate_Type extends GerpAnnotation_Type {
     casFeatCode_argumentLabels  = (null == casFeat_argumentLabels) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_argumentLabels).getCode();
 
  
-    casFeat_parse = jcas.getRequiredFeatureDE(casType, "parse", "org.oaqa.model.nlp.Predicate", featOkTst);
+    casFeat_parse = jcas.getRequiredFeatureDE(casType, "parse", "org.oaqa.model.nlp.Token", featOkTst);
     casFeatCode_parse  = (null == casFeat_parse) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_parse).getCode();
 
  

@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Wed Jul 03 15:35:55 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.nlp;
 
 import org.apache.uima.jcas.JCas; 
@@ -8,13 +8,11 @@ import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 import org.oaqa.model.gerp.GerpTop;
-
-
 import org.apache.uima.jcas.cas.FSList;
 
 
-/** A data structure that represents various NLP annotations from a parser, e.g. lists of Predicate, NamedEntity, SemanticRole, etc.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+/** A data structure that represents various NLP annotations from a parser, e.g. lists of tokens, semantic roles, etc.
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class Parse extends GerpTop {
@@ -58,39 +56,21 @@ public class Parse extends GerpTop {
  
     
   //*--------------*
-  //* Feature: predicates
+  //* Feature: tokens
 
-  /** getter for predicates - gets A list of predicates.
+  /** getter for tokens - gets A list of tokens.
    * @generated */
-  public FSList getPredicates() {
-    if (Parse_Type.featOkTst && ((Parse_Type)jcasType).casFeat_predicates == null)
-      jcasType.jcas.throwFeatMissing("predicates", "org.oaqa.model.nlp.Parse");
-    return (FSList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Parse_Type)jcasType).casFeatCode_predicates)));}
+  public FSList getTokens() {
+    if (Parse_Type.featOkTst && ((Parse_Type)jcasType).casFeat_tokens == null)
+      jcasType.jcas.throwFeatMissing("tokens", "org.oaqa.model.nlp.Parse");
+    return (FSList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Parse_Type)jcasType).casFeatCode_tokens)));}
     
-  /** setter for predicates - sets A list of predicates. 
+  /** setter for tokens - sets A list of tokens. 
    * @generated */
-  public void setPredicates(FSList v) {
-    if (Parse_Type.featOkTst && ((Parse_Type)jcasType).casFeat_predicates == null)
-      jcasType.jcas.throwFeatMissing("predicates", "org.oaqa.model.nlp.Parse");
-    jcasType.ll_cas.ll_setRefValue(addr, ((Parse_Type)jcasType).casFeatCode_predicates, jcasType.ll_cas.ll_getFSRef(v));}    
-   
-    
-  //*--------------*
-  //* Feature: namedEntities
-
-  /** getter for namedEntities - gets A list of named entities.
-   * @generated */
-  public FSList getNamedEntities() {
-    if (Parse_Type.featOkTst && ((Parse_Type)jcasType).casFeat_namedEntities == null)
-      jcasType.jcas.throwFeatMissing("namedEntities", "org.oaqa.model.nlp.Parse");
-    return (FSList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Parse_Type)jcasType).casFeatCode_namedEntities)));}
-    
-  /** setter for namedEntities - sets A list of named entities. 
-   * @generated */
-  public void setNamedEntities(FSList v) {
-    if (Parse_Type.featOkTst && ((Parse_Type)jcasType).casFeat_namedEntities == null)
-      jcasType.jcas.throwFeatMissing("namedEntities", "org.oaqa.model.nlp.Parse");
-    jcasType.ll_cas.ll_setRefValue(addr, ((Parse_Type)jcasType).casFeatCode_namedEntities, jcasType.ll_cas.ll_getFSRef(v));}    
+  public void setTokens(FSList v) {
+    if (Parse_Type.featOkTst && ((Parse_Type)jcasType).casFeat_tokens == null)
+      jcasType.jcas.throwFeatMissing("tokens", "org.oaqa.model.nlp.Parse");
+    jcasType.ll_cas.ll_setRefValue(addr, ((Parse_Type)jcasType).casFeatCode_tokens, jcasType.ll_cas.ll_getFSRef(v));}    
    
     
   //*--------------*
