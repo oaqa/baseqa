@@ -13,19 +13,19 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
 
   private static final long serialVersionUID = 1L;
 
-  private PredicateWrapper predicate;
+  private TokenWrapper token;
 
   private String label;
 
-  public FocusWrapper(int begin, int end, PredicateWrapper predicate, String label) {
+  public FocusWrapper(int begin, int end, TokenWrapper token, String label) {
     super(begin, end);
-    this.predicate = predicate;
+    this.token = token;
     this.label = label;
   }
 
-  public FocusWrapper(int begin, int end, PredicateWrapper predicate, String label, String generator) {
+  public FocusWrapper(int begin, int end, TokenWrapper token, String label, String generator) {
     super(begin, end, generator);
-    this.predicate = predicate;
+    this.token = token;
     this.label = label;
   }
 
@@ -38,8 +38,7 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
   public void wrap(Focus annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     try {
-      this.predicate = WrapperHelper.matchSubclassAndWrap(annotation.getPredicate(),
-              PredicateWrapper.class);
+      this.token = WrapperHelper.matchSubclassAndWrap(annotation.getToken(), TokenWrapper.class);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
@@ -49,7 +48,7 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
   @Override
   public Focus unwrap(JCas jcas) throws AnalysisEngineProcessException {
     Focus annotation = super.unwrap(jcas);
-    annotation.setPredicate(predicate.unwrap(jcas));
+    annotation.setToken(token.unwrap(jcas));
     annotation.setLabel(label);
     return annotation;
   }
@@ -70,12 +69,12 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
     return true;
   }
 
-  public PredicateWrapper getPredicate() {
-    return predicate;
+  public TokenWrapper getToken() {
+    return token;
   }
 
-  public void setPredicate(PredicateWrapper predicate) {
-    this.predicate = predicate;
+  public void setToken(TokenWrapper token) {
+    this.token = token;
   }
 
   public String getLabel() {

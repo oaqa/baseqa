@@ -15,25 +15,20 @@ public class ParseWrapper extends GerpTopWrapper<Parse> {
 
   private static final long serialVersionUID = 1L;
 
-  private List<PredicateWrapper> predicates;
-
-  private List<NamedEntityWrapper> namedEntities;
+  private List<TokenWrapper> tokens;
 
   private List<SemanticRoleWrapper> semanticRoles;
 
-  public ParseWrapper(List<PredicateWrapper> predicates, List<NamedEntityWrapper> namedEntities,
-          List<SemanticRoleWrapper> semanticRoles) {
+  public ParseWrapper(List<TokenWrapper> tokens, List<SemanticRoleWrapper> semanticRoles) {
     super();
-    this.predicates = predicates;
-    this.namedEntities = namedEntities;
+    this.tokens = tokens;
     this.semanticRoles = semanticRoles;
   }
 
-  public ParseWrapper(List<PredicateWrapper> predicates, List<NamedEntityWrapper> namedEntities,
-          List<SemanticRoleWrapper> semanticRoles, String generator) {
+  public ParseWrapper(List<TokenWrapper> tokens, List<SemanticRoleWrapper> semanticRoles,
+          String generator) {
     super(generator);
-    this.predicates = predicates;
-    this.namedEntities = namedEntities;
+    this.tokens = tokens;
     this.semanticRoles = semanticRoles;
   }
 
@@ -41,10 +36,7 @@ public class ParseWrapper extends GerpTopWrapper<Parse> {
   public void wrap(Parse top) throws AnalysisEngineProcessException {
     super.wrap(top);
     try {
-      this.predicates = WrapperHelper.wrapAnnotationList(top.getPredicates(),
-              PredicateWrapper.class);
-      this.namedEntities = WrapperHelper.wrapAnnotationList(top.getNamedEntities(),
-              NamedEntityWrapper.class);
+      this.tokens = WrapperHelper.wrapAnnotationList(top.getTokens(), TokenWrapper.class);
       this.semanticRoles = WrapperHelper.wrapAnnotationList(top.getSemanticRoles(),
               SemanticRoleWrapper.class);
     } catch (Exception e) {
@@ -55,8 +47,7 @@ public class ParseWrapper extends GerpTopWrapper<Parse> {
   @Override
   public Parse unwrap(JCas jcas) throws AnalysisEngineProcessException {
     Parse top = super.unwrap(jcas);
-    top.setPredicates(WrapperHelper.unwrapAnnotationList(predicates, jcas));
-    top.setNamedEntities(WrapperHelper.unwrapAnnotationList(namedEntities, jcas));
+    top.setTokens(WrapperHelper.unwrapAnnotationList(tokens, jcas));
     top.setSemanticRoles(WrapperHelper.unwrapAnnotationList(semanticRoles, jcas));
     return top;
   }
@@ -68,7 +59,7 @@ public class ParseWrapper extends GerpTopWrapper<Parse> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), predicates, namedEntities, semanticRoles);
+    return Objects.hashCode(super.hashCode(), tokens, semanticRoles);
   }
 
   @Override
@@ -80,25 +71,15 @@ public class ParseWrapper extends GerpTopWrapper<Parse> {
     if (getClass() != obj.getClass())
       return false;
     ParseWrapper other = (ParseWrapper) obj;
-    return Objects.equal(predicates, other.predicates)
-            && Objects.equal(namedEntities, other.namedEntities)
-            && Objects.equal(semanticRoles, other.semanticRoles);
+    return Objects.equal(tokens, other.tokens) && Objects.equal(semanticRoles, other.semanticRoles);
   }
 
-  public List<PredicateWrapper> getPredicates() {
-    return predicates;
+  public List<TokenWrapper> getTokens() {
+    return tokens;
   }
 
-  public void setPredicates(List<PredicateWrapper> predicates) {
-    this.predicates = predicates;
-  }
-
-  public List<NamedEntityWrapper> getNamedEntities() {
-    return namedEntities;
-  }
-
-  public void setNamedEntities(List<NamedEntityWrapper> namedEntities) {
-    this.namedEntities = namedEntities;
+  public void setTokens(List<TokenWrapper> tokens) {
+    this.tokens = tokens;
   }
 
   public List<SemanticRoleWrapper> getSemanticRoles() {

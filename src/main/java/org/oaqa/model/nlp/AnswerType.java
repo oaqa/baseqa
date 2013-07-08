@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.nlp;
 
 import org.apache.uima.jcas.JCas; 
@@ -12,7 +12,7 @@ import org.oaqa.model.gerp.GerpAnnotation;
 
 
 /** A Named Entity type that represents the type of the answer being sought.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class AnswerType extends GerpAnnotation {

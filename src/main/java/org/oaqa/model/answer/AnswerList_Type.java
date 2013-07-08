@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Jul 03 11:51:45 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.answer;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** A ranked list of candidate answers.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * @generated */
 public class AnswerList_Type extends GerpTop_Type {
   /** @generated */
@@ -67,7 +67,7 @@ public class AnswerList_Type extends GerpTop_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
-  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
   }
    
   /** @generated */ 

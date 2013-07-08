@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Wed Jul 03 11:51:45 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.gerp;
 
 import org.apache.uima.jcas.JCas; 
@@ -12,7 +12,7 @@ import org.apache.uima.jcas.cas.StringArray;
 
 
 /** A GERP-style component type, which contains some generators, evidencers, rankers and pruners, that capture the common metadata shared across the feature structures (GerpTops and GerpAnnotations) to be generated in the component, e.g. the name of all generators, evidencers, rankers and pruners.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class GerpMeta extends OAQATop {

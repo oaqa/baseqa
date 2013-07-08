@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Jul 03 11:51:45 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.gerp;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.core.OAQATop_Type;
 
 /** A base class for GERP intermediate data: Evidence, Rank, PruningDecision.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * @generated */
 public class GerpBase_Type extends OAQATop_Type {
   /** @generated */

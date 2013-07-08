@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.input;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpAnnotation_Type;
 
 /** The Question and any associated meta-data.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * @generated */
 public class Question_Type extends GerpAnnotation_Type {
   /** @generated */

@@ -3,19 +3,29 @@
   <name>OAQATypes</name>
   <description>Type system descriptor for the OAQA data model.
 
+Changes in 2.4:
+* Added super types from NEAL project: Concept and ConceptMention.
+* Added Entity type, inherited from Concept.
+* Added RelationMention, inherited from ConceptMention.
+* NamedEntity is now renamed to EntityMention, and inherited from ConceptMention. Moved ids field to Concept.
+* Triple type is generalized and renamed to Relation. Subject, object, and other fields are replaced with arguments field.
+* TripleStore search result is updated to RelationBaseSearchResult, which is now based on Relation instead of Triple.
+* PassageFromTriple is updated to PassageFromRelation.
+* Field namedEntities is removed from Parse type.
+* Added new container type Interpretation to integrate Concepts and ConceptMentions.
+* Predicate type now renamed to Token.
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;
+
 Changes in 0.2.3:
 * Added new type Parse to aggregate NLP annotations, e.g. predicates, named entities, semantic roles.
-
 - Zi Yang &lt;ziy@cs.cmu.edu&gt;
 
 Changes in 0.2.2:
 * Merged annotation QuestionClass with Question, and rebased Question on GerpAnnotation instead of InputElement.
-
 - Zi Yang &lt;ziy@cs.cmu.edu&gt;
 
 Changes in 0.2.1:
 * Brought AnswerList and Search back to type system from version 0.1.
-
 - Zi Yang &lt;ziy@cs.cmu.edu&gt;
 
 Changes in 0.2:
@@ -27,13 +37,9 @@ Changes in 0.2:
 * Removed feature types, e.g. CandidateAnswerFeature (formerly CaFeature). They are mostly Evidences.
 * Updated superclass of most types from OAQATop/OAQAAnnotation to GerpTop/GerpAnnotation, e.g. QuestionClass
 * Added an imported type system frameworkTypesDescriptor, and updated the supertype of Question to InputElement.
-
 - Zi Yang &lt;ziy@cs.cmu.edu&gt;</description>
-  <version>0.2.3</version>
+  <version>2.4</version>
   <vendor>OAQA</vendor>
-  <imports>
-    <import name="edu.cmu.lti.oaqa.frameworkTypesDescriptor"/>
-  </imports>
   <types>
     <typeDescription>
       <name>org.oaqa.model.core.OAQATop</name>
@@ -60,15 +66,15 @@ Changes in 0.2:
       </features>
     </typeDescription>
     <typeDescription>
-      <name>org.oaqa.model.nlp.Predicate</name>
-      <description>Annotation on a predicate, which may have arguments; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock</description>
+      <name>org.oaqa.model.nlp.Token</name>
+      <description>Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock</description>
       <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
           <name>arguments</name>
           <description>The arguments</description>
           <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>org.oaqa.model.nlp.Predicate</elementType>
+          <elementType>org.oaqa.model.nlp.Token</elementType>
           <multipleReferencesAllowed>false</multipleReferencesAllowed>
         </featureDescription>
         <featureDescription>
@@ -78,8 +84,8 @@ Changes in 0.2:
         </featureDescription>
         <featureDescription>
           <name>parse</name>
-          <description>A parse for which this predicate was a head (if any)</description>
-          <rangeTypeName>org.oaqa.model.nlp.Predicate</rangeTypeName>
+          <description>A parse for which this token was a head (if any)</description>
+          <rangeTypeName>org.oaqa.model.nlp.Token</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>semanticType</name>
@@ -103,7 +109,7 @@ Changes in 0.2:
         </featureDescription>
         <featureDescription>
           <name>isVariable</name>
-          <description>True iff the predicate expresses some unknown entity, typically the focus of a question:  --- Example: "[Who] shot JR?", "What [city] was JR born in?"</description>
+          <description>True iff the token expresses some unknown entity, typically the focus of a question:  --- Example: "[Who] shot JR?", "What [city] was JR born in?"</description>
           <rangeTypeName>uima.cas.Boolean</rangeTypeName>
         </featureDescription>
         <featureDescription>
@@ -119,9 +125,9 @@ Changes in 0.2:
       <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
-          <name>predicate</name>
-          <description>The corresponding predicate for the focus.</description>
-          <rangeTypeName>org.oaqa.model.nlp.Predicate</rangeTypeName>
+          <name>token</name>
+          <description>The corresponding token for the focus.</description>
+          <rangeTypeName>org.oaqa.model.nlp.Token</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>label</name>
@@ -136,9 +142,9 @@ Changes in 0.2:
       <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
       <features>
         <featureDescription>
-          <name>predicate</name>
-          <description>The corresponding predicate for the LAT.</description>
-          <rangeTypeName>org.oaqa.model.nlp.Predicate</rangeTypeName>
+          <name>token</name>
+          <description>The corresponding token for the LAT.</description>
+          <rangeTypeName>org.oaqa.model.nlp.Token</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>label</name>
@@ -539,7 +545,7 @@ Changes in 0.2:
       <supertypeName>org.oaqa.model.retrieval.SearchResult</supertypeName>
     </typeDescription>
     <typeDescription>
-      <name>org.oaqa.model.retrieval.TripleStoreSearchResult</name>
+      <name>org.oaqa.model.retrieval.RelationSearchResult</name>
       <description>A search result from a triple store, e.g., an RDF store.</description>
       <supertypeName>org.oaqa.model.retrieval.AnswerSearchResult</supertypeName>
       <features>
@@ -547,76 +553,37 @@ Changes in 0.2:
           <name>context</name>
           <description>The context of the triple store search result, i.e., triples identifying all neighboring nodes in the store.</description>
           <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>org.oaqa.model.core.Triple</elementType>
+          <elementType>org.oaqa.model.kb.Relation</elementType>
         </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
-      <name>org.oaqa.model.core.Triple</name>
-      <description>A triple, e.g., and RDF triple.</description>
-      <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
+      <name>org.oaqa.model.kb.Relation</name>
+      <description>A relation concept. It represents the relationship between entities. which is generalized from a triple, e.g., and RDF triple.</description>
+      <supertypeName>org.oaqa.model.kb.Concept</supertypeName>
       <features>
         <featureDescription>
-          <name>subject</name>
-          <description>The subject of the triple - always a URI.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>predicate</name>
-          <description>The predicate of the triple - always a URI.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>object</name>
-          <description>The object of the triple - may be a URI or an xml datatype (string, int, etc.).  See isObjeUri to determine if object is a URI.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>isObjUri</name>
-          <description>Boolean flag - true of object field is a URI, false otherwise.</description>
-          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
+          <name>arguments</name>
+          <description>Arguments of type Entity of the relation.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.kb.Entity</elementType>
         </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
-      <name>org.oaqa.model.nlp.NamedEntity</name>
-      <description>A named entity with one or more URIs that identify or define the named entity.  The URIs could reference any source that defines or disambiguates the named entity.</description>
-      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
-      <features>
-        <featureDescription>
-          <name>ids</name>
-          <description>Array of ids that identify this named entity.  There may be more than one id if this named entity is ambiguous.  The ids are typically URIs.</description>
-          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>context</name>
-          <description>The context of this named entity, i.e., triples identifying all neighboring nodes in the store.</description>
-          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>org.oaqa.model.core.Triple</elementType>
-        </featureDescription>
-      </features>
+      <name>org.oaqa.model.kb.EntityMention</name>
+      <description>A named entity mention that identify or define the named entity concept.</description>
+      <supertypeName>org.oaqa.model.kb.ConceptMention</supertypeName>
     </typeDescription>
     <typeDescription>
-      <name>org.oaqa.model.retrieval.PassageFromTriple</name>
+      <name>org.oaqa.model.retrieval.PassageFromRelation</name>
       <description>A passage search result that was the result of a search from the subject and object of a triple</description>
       <supertypeName>org.oaqa.model.retrieval.Passage</supertypeName>
       <features>
         <featureDescription>
-          <name>sourceTriple</name>
+          <name>sourceRelation</name>
           <description>The triple from which the search result was generated</description>
-          <rangeTypeName>org.oaqa.model.core.Triple</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
-      <name>org.oaqa.model.retrieval.PassageFromTriple</name>
-      <description>A passage search result that was the result of a search from the subject and object of a triple</description>
-      <supertypeName>org.oaqa.model.retrieval.Passage</supertypeName>
-      <features>
-        <featureDescription>
-          <name>sourceTriple</name>
-          <description>The triple from which the search result was generated</description>
-          <rangeTypeName>org.oaqa.model.core.Triple</rangeTypeName>
+          <rangeTypeName>org.oaqa.model.kb.Relation</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
@@ -810,26 +777,92 @@ Changes in 0.2:
     </typeDescription>
     <typeDescription>
       <name>org.oaqa.model.nlp.Parse</name>
-      <description>A data structure that represents various NLP annotations from a parser, e.g. lists of Predicate, NamedEntity, SemanticRole, etc.</description>
+      <description>A data structure that represents various NLP annotations from a parser, e.g. lists of tokens, semantic roles, etc.</description>
       <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
       <features>
         <featureDescription>
-          <name>predicates</name>
-          <description>A list of predicates.</description>
+          <name>tokens</name>
+          <description>A list of tokens.</description>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
-          <elementType>org.oaqa.model.nlp.Predicate</elementType>
-        </featureDescription>
-        <featureDescription>
-          <name>namedEntities</name>
-          <description>A list of named entities.</description>
-          <rangeTypeName>uima.cas.FSList</rangeTypeName>
-          <elementType>org.oaqa.model.nlp.NamedEntity</elementType>
+          <elementType>org.oaqa.model.nlp.Token</elementType>
         </featureDescription>
         <featureDescription>
           <name>semanticRoles</name>
           <description>A list of semantic roles.</description>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>org.oaqa.model.nlp.SemanticRole</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.Concept</name>
+      <description>A superclass for EntityConcept and RelationConcept.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>name</name>
+          <description>The name of the concept.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>ids</name>
+          <description>Array of ids that identify this named entity.  There may be more than one id if this named entity is ambiguous.  The ids are typically URIs.</description>
+          <rangeTypeName>uima.cas.StringList</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>mentions</name>
+          <description>A list of ConceptMentions (text spans) that might be surface forms to this concept.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.neal.ConceptMention</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.ConceptMention</name>
+      <description>A superclass for EntityMention and RelationMention.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>concept</name>
+          <description>The abstract concept that the text span conveys.</description>
+          <rangeTypeName>org.oaqa.model.kb.Concept</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.RelationMention</name>
+      <description>A named relation mention that identify or define the named relation concept.</description>
+      <supertypeName>org.oaqa.model.kb.ConceptMention</supertypeName>
+      <features>
+        <featureDescription>
+          <name>argumentMentions</name>
+          <description>A list of entity mentions being the arguments (e.g. sub, obj, etc.) of the relation mention.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.kb.EntityMention</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.Entity</name>
+      <description>An abstract normalized entity, which may have various surface forms (alternative representations).</description>
+      <supertypeName>org.oaqa.model.kb.Concept</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.kb.Interpretation</name>
+      <description>A container that integrates Concepts and ConceptMentions.</description>
+      <supertypeName>org.oaqa.model.gerp.GerpTop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>concepts</name>
+          <description>A list of all concepts mentioned in the corresponding text.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.kb.Concept</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>mentions</name>
+          <description>A list of all mentions in the text.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.kb.ConceptMention</elementType>
         </featureDescription>
       </features>
     </typeDescription>

@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.retrieval;
 
 import org.apache.uima.jcas.JCas; 
@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** A query concept in the abstract search query model.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class QueryConcept extends GerpTop {

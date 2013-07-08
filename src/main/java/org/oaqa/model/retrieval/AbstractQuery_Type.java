@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.retrieval;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** An abstract search query for the question that represents query concepts and query operators over those concepts.
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * @generated */
 public class AbstractQuery_Type extends GerpTop_Type {
   /** @generated */

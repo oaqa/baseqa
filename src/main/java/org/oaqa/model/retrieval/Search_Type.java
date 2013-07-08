@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Jul 03 11:52:04 EDT 2013 */
+/* First created by JCasGen Mon Jul 08 17:12:14 EDT 2013 */
 package org.oaqa.model.retrieval;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** An object that holds a query and results for a search (text search, fact search, KB search, etc.)
- * Updated by JCasGen Wed Jul 03 15:44:17 EDT 2013
+ * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
  * @generated */
 public class Search_Type extends GerpTop_Type {
   /** @generated */
@@ -85,7 +85,7 @@ public class Search_Type extends GerpTop_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i);
-  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i);
   }
    
   /** @generated */ 
