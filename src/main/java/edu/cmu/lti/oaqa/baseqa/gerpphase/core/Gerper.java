@@ -120,21 +120,21 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
         // gerping for all combinations of inputs
         GerpableList<W> outputs = new GerpableList<W>();
         W gerpable = generator.generate(input);
-        outputs.add(gerpable);
+        outputs.add(gerpable, generator.getClass().getSimpleName());
         for (AbstractEvidencer<W> evidencer : evidencers) {
           List<W> gerpables = outputs.getGerpables();
           List<EvidenceWrapper<?, ?>> evidences = evidencer.evidence(gerpables);
-          outputs.addAllEvidences(evidences);
+          outputs.addAllEvidences(evidences, evidencer.getClass().getSimpleName());
         }
         for (AbstractRanker ranker : rankers) {
           List<Collection<EvidenceWrapper<?, ?>>> evidences = outputs.getAllEvidences();
-          List<RankWrapper> ranks = ranker.rank(evidences);
+          List<RankWrapper> ranks = ranker.rank(evidences, ranker.getClass().getSimpleName());
           outputs.addAllRanks(ranks);
         }
         for (AbstractPruner pruner : pruners) {
           List<Collection<RankWrapper>> ranks = outputs.getAllRanks();
           List<PruningDecisionWrapper> pruningDecisions = pruner.prune(ranks);
-          outputs.addAllPruningDecisions(pruningDecisions);
+          outputs.addAllPruningDecisions(pruningDecisions, pruner.getClass().getSimpleName());
         }
         // persisting outputs
         outputs.unwrapAllAndAddToIndexes(jcas);

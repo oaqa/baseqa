@@ -106,7 +106,7 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), generators, evidences, ranks, pruningDecisions);
+    return Objects.hashCode(super.hashCode());
   }
 
   @Override
@@ -117,11 +117,7 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
       return false;
     if (getClass() != obj.getClass())
       return false;
-    @SuppressWarnings("rawtypes")
-    GerpTopWrapper other = (GerpTopWrapper) obj;
-    return Objects.equal(generators, other.generators) && Objects.equal(evidences, other.evidences)
-            && Objects.equal(ranks, other.ranks)
-            && Objects.equal(pruningDecisions, other.pruningDecisions);
+    return true;
   }
 
   @Override

@@ -8,8 +8,6 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.gerp.GerpTop;
 
-import com.google.common.base.Objects;
-
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 
@@ -102,26 +100,6 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
     annotation.setRanks(WrapperHelper.unwrapTopList(ranks, jcas));
     annotation.setPruningDecisions(WrapperHelper.unwrapTopList(pruningDecisions, jcas));
     return annotation;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(generators, evidences, ranks, pruningDecisions);
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    @SuppressWarnings("rawtypes")
-    GerpTopWrapper other = (GerpTopWrapper) obj;
-    return Objects.equal(generators, other.generators) && Objects.equal(evidences, other.evidences)
-            && Objects.equal(ranks, other.ranks)
-            && Objects.equal(pruningDecisions, other.pruningDecisions);
   }
 
   @Override
