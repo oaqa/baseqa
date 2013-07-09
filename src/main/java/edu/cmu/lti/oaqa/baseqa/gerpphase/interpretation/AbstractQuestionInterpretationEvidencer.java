@@ -1,4 +1,4 @@
-package edu.cmu.lti.oaqa.baseqa.gerpphase.question;
+package edu.cmu.lti.oaqa.baseqa.gerpphase.interpretation;
 
 import edu.cmu.lti.oaqa.baseqa.data.kb.InterpretationWrapper;
 import edu.cmu.lti.oaqa.baseqa.gerpphase.core.evidencer.AbstractIndependentEvidencer;

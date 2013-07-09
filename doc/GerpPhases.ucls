@@ -44,9 +44,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="edu.cmu.lti.oaqa.baseqa.gerpphase.question.AbstractQuestionParseEvidencer" 
+  <class id="5" language="java" name="edu.cmu.lti.oaqa.baseqa.gerpphase.parse.AbstractQuestionParseEvidencer" 
     project="baseqa" 
-    file="/baseqa/src/main/java/edu/cmu/lti/oaqa/baseqa/gerpphase/question/AbstractQuestionParseEvidencer.java" 
+    file="/baseqa/src/main/java/edu/cmu/lti/oaqa/baseqa/gerpphase/parse/AbstractQuestionParseEvidencer.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1269" y="727"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -87,8 +87,8 @@
     </display>  
   </class>  
   <class id="9" language="java" 
-    name="edu.cmu.lti.oaqa.baseqa.gerpphase.question.AbstractQuestionInterpretationEvidencer" project="baseqa" 
-    file="/baseqa/src/main/java/edu/cmu/lti/oaqa/baseqa/gerpphase/question/AbstractQuestionInterpretationEvidencer.java" 
+    name="edu.cmu.lti.oaqa.baseqa.gerpphase.interpretation.AbstractQuestionInterpretationEvidencer" project="baseqa" 
+    file="/baseqa/src/main/java/edu/cmu/lti/oaqa/baseqa/gerpphase/interpretation/AbstractQuestionInterpretationEvidencer.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1263" y="836"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -139,8 +139,8 @@
     </display>  
   </class>  
   <class id="14" language="java" 
-    name="edu.cmu.lti.oaqa.baseqa.gerpphase.question.AbstractQuestionInterpretationGenerator" project="baseqa" 
-    file="/baseqa/src/main/java/edu/cmu/lti/oaqa/baseqa/gerpphase/question/AbstractQuestionInterpretationGenerator.java" 
+    name="edu.cmu.lti.oaqa.baseqa.gerpphase.interpretation.AbstractQuestionInterpretationGenerator" project="baseqa" 
+    file="/baseqa/src/main/java/edu/cmu/lti/oaqa/baseqa/gerpphase/interpretation/AbstractQuestionInterpretationGenerator.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="569" y="651"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -171,9 +171,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="17" language="java" name="edu.cmu.lti.oaqa.baseqa.gerpphase.question.AbstractQuestionParseGenerator" 
+  <class id="17" language="java" name="edu.cmu.lti.oaqa.baseqa.gerpphase.parse.AbstractQuestionParseGenerator" 
     project="baseqa" 
-    file="/baseqa/src/main/java/edu/cmu/lti/oaqa/baseqa/gerpphase/question/AbstractQuestionParseGenerator.java" 
+    file="/baseqa/src/main/java/edu/cmu/lti/oaqa/baseqa/gerpphase/parse/AbstractQuestionParseGenerator.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="194" y="651"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 

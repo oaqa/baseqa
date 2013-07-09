@@ -1,4 +1,4 @@
-package edu.cmu.lti.oaqa.baseqa.gerpphase.question;
+package edu.cmu.lti.oaqa.baseqa.gerpphase.parse;
 
 import java.util.List;
 
