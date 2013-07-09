@@ -57,7 +57,7 @@ public class GerpableList<W extends Gerpable & TopWrapper<? extends TOP>> {
     return ranks;
   }
 
-  public void setAllPruningDecisions(List<PruningDecisionWrapper> pruningDecisions) {
+  public void addAllPruningDecisions(List<PruningDecisionWrapper> pruningDecisions) {
     for (int i = 0; i < gerpableCount; i++) {
       gerpables.get(i).addPruningDecision(pruningDecisions.get(i));
     }

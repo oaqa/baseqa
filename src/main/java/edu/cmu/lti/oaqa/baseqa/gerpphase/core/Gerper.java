@@ -134,7 +134,7 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
         for (AbstractPruner pruner : pruners) {
           List<Collection<RankWrapper>> ranks = outputs.getAllRanks();
           List<PruningDecisionWrapper> pruningDecisions = pruner.prune(ranks);
-          outputs.setAllPruningDecisions(pruningDecisions);
+          outputs.addAllPruningDecisions(pruningDecisions);
         }
         // persisting outputs
         outputs.unwrapAllAndAddToIndexes(jcas);
