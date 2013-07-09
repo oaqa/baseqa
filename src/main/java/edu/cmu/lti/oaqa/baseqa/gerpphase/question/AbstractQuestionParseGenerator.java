@@ -12,7 +12,7 @@ import edu.cmu.lti.oaqa.baseqa.data.nlp.ParseWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.QuestionWrapper;
 import edu.cmu.lti.oaqa.baseqa.gerpphase.core.generator.AbstractGenerator;
 
-public abstract class AbstractParseGenerator extends AbstractGenerator<ParseWrapper> {
+public abstract class AbstractQuestionParseGenerator extends AbstractGenerator<ParseWrapper> {
 
   @SuppressWarnings("unchecked")
   @Override
