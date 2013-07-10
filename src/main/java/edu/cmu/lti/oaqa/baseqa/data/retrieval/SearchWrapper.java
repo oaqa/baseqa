@@ -47,7 +47,7 @@ public class SearchWrapper extends GerpTopWrapper<Search> {
     this.query = top.getQuery();
     try {
       this.hitList = WrapperHelper.wrapTopArray(top.getHitList(), SearchResultWrapper.class);
-      this.abstractQuery = WrapperHelper.matchSubclassAndWrap(top.getAbstractQuery(),
+      this.abstractQuery = WrapperHelper.checkWrappedMatchSubclassAndWrap(top.getAbstractQuery(),
               AbstractQueryWrapper.class);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);

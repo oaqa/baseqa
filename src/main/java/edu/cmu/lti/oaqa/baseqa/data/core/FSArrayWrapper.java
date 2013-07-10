@@ -55,7 +55,7 @@ public abstract class FSArrayWrapper<T extends OAQATop> implements ContainerWrap
     List<W> result = new ArrayList<W>();
     for (int i = 0; i < array.size(); i++) {
       try {
-        result.add(WrapperHelper.matchSubclassAndWrap((TOP) array.get(i), classWrapper));
+        result.add(WrapperHelper.checkWrappedMatchSubclassAndWrap((TOP) array.get(i), classWrapper));
       } catch (Exception e) {
         throw new AnalysisEngineProcessException(e);
       }

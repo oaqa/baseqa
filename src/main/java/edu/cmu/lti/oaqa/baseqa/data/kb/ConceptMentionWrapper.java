@@ -34,7 +34,7 @@ public class ConceptMentionWrapper extends GerpAnnotationWrapper<ConceptMention>
   public void wrap(ConceptMention annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     try {
-      this.concept = WrapperHelper.matchSubclassAndWrap(annotation.getConcept(),
+      this.concept = WrapperHelper.checkWrappedMatchSubclassAndWrap(annotation.getConcept(),
               ConceptWrapper.class);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);

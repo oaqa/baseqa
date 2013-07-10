@@ -15,13 +15,16 @@ import com.google.common.collect.SetMultimap;
 
 public class WrapperIndexer {
 
+  private JCas jcas;
+
   private SetMultimap<Class<? extends TopWrapper<? extends TOP>>, TopWrapper<? extends TOP>> class2wrappers;
 
-  public WrapperIndexer() {
+  public WrapperIndexer(JCas jcas) {
+    this.jcas = jcas;
     class2wrappers = HashMultimap.create();
   }
 
-  public void addClassWrappersToIndex(Class<? extends TopWrapper<? extends TOP>> clazz, JCas jcas)
+  public void addClassWrappersToIndex(Class<? extends TopWrapper<? extends TOP>> clazz)
           throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
           InstantiationException, IllegalAccessException, NoSuchFieldException,
           ClassNotFoundException {
@@ -32,12 +35,12 @@ public class WrapperIndexer {
     class2wrappers.putAll(clazz, WrapperHelper.wrapAllFromJCas(jcas, clazz));
   }
 
-  public void addAllClassesToIndex(Collection<Class<? extends TopWrapper<?>>> classes, JCas jcas)
+  public void addAllClassesToIndex(Collection<Class<? extends TopWrapper<?>>> classes)
           throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
           InstantiationException, IllegalAccessException, NoSuchFieldException,
           ClassNotFoundException {
     for (Class<? extends TopWrapper<?>> clazz : classes) {
-      addClassWrappersToIndex(clazz, jcas);
+      addClassWrappersToIndex(clazz);
     }
   }
 

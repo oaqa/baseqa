@@ -43,7 +43,7 @@ public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
     super.wrap(annotation);
     this.label = annotation.getLabel();
     try {
-      this.targetType = WrapperHelper.matchSubclassAndWrap(
+      this.targetType = WrapperHelper.checkWrappedMatchSubclassAndWrap(
               (OAQAAnnotation) annotation.getTargetType(),
               (Class<OAQAAnnotationWrapper<OAQAAnnotation>>) (Class) OAQAAnnotationWrapper.class);
     } catch (Exception e) {

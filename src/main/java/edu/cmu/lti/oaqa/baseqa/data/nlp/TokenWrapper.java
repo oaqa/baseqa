@@ -81,7 +81,7 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
     }
     this.argumentLabels = WrapperHelper.wrapStringArray(annotation.getArgumentLabels());
     try {
-      this.parse = WrapperHelper.matchSubclassAndWrap(annotation.getParse(), this.getClass());
+      this.parse = WrapperHelper.checkWrappedMatchSubclassAndWrap(annotation.getParse(), this.getClass());
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

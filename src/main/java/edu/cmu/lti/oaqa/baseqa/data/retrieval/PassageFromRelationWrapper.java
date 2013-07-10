@@ -47,7 +47,7 @@ public class PassageFromRelationWrapper extends PassageWrapper {
   public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
     try {
-      sourceRelation = WrapperHelper.matchSubclassAndWrap(
+      sourceRelation = WrapperHelper.checkWrappedMatchSubclassAndWrap(
               ((PassageFromRelation) top).getSourceRelation(), RelationWrapper.class);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);

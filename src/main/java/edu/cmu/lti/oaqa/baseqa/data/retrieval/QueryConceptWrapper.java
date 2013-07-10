@@ -68,7 +68,7 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
     this.text = top.getText();
     this.originalText = top.getOriginalText();
     try {
-      this.operator = WrapperHelper.matchSubclassAndWrap(top.getOperator(),
+      this.operator = WrapperHelper.checkWrappedMatchSubclassAndWrap(top.getOperator(),
               QueryOperatorWrapper.class);
       this.operatorArgs = WrapperHelper.wrapTopList(top.getOperatorArgs(),
               QueryConceptWrapper.class);

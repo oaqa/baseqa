@@ -70,7 +70,7 @@ public class WrapperHelper {
     FSList tail = list;
     while (tail instanceof NonEmptyFSList) {
       TOP head = ((NonEmptyFSList) tail).getHead();
-      wrappers.add(matchSubclassAndWrap(head, wrapperClass));
+      wrappers.add(checkWrappedMatchSubclassAndWrap(head, wrapperClass));
       tail = ((NonEmptyFSList) tail).getTail();
     }
     return wrappers;
@@ -94,7 +94,7 @@ public class WrapperHelper {
           IllegalAccessException, ClassNotFoundException {
     List<W> wrappers = new ArrayList<W>(array.size());
     for (int i = 0; i < array.size(); i++) {
-      wrappers.add(matchSubclassAndWrap((TOP) array.get(i), wrapperClass));
+      wrappers.add(checkWrappedMatchSubclassAndWrap((TOP) array.get(i), wrapperClass));
     }
     return wrappers;
   }
@@ -116,7 +116,7 @@ public class WrapperHelper {
     FSList tail = list;
     while (tail instanceof NonEmptyFSList) {
       TOP head = ((NonEmptyFSList) tail).getHead();
-      wrappers.add(matchSubclassAndWrap(head, wrapperClass));
+      wrappers.add(checkWrappedMatchSubclassAndWrap(head, wrapperClass));
       tail = ((NonEmptyFSList) tail).getTail();
     }
     return wrappers;
@@ -140,7 +140,7 @@ public class WrapperHelper {
           InstantiationException, IllegalAccessException, ClassNotFoundException {
     List<W> wrappers = new ArrayList<W>(array.size());
     for (int i = 0; i < array.size(); i++) {
-      wrappers.add(matchSubclassAndWrap((TOP) array.get(i), wrapperClass));
+      wrappers.add(checkWrappedMatchSubclassAndWrap((TOP) array.get(i), wrapperClass));
     }
     return wrappers;
   }
@@ -162,20 +162,19 @@ public class WrapperHelper {
     int type = clazz.newInstance().getTypeClass().getField("type").getInt(null);
     Set<W> tops = Sets.newHashSet();
     for (TOP top : ImmutableList.copyOf(jcas.getJFSIndexRepository().getAllIndexedFS(type))) {
-      tops.add(matchSubclassAndWrap(top, clazz));
+      tops.add(checkWrappedMatchSubclassAndWrap(top, clazz));
     }
     return tops;
   }
 
-  public static <T extends TOP, W extends TopWrapper<T>> W wrap(T top, Class<W> wrapperClass)
-          throws InstantiationException, IllegalAccessException, AnalysisEngineProcessException {
-    W inst = wrapperClass.newInstance();
-    inst.wrap(top);
-    return inst;
+  public static <T extends TOP, W extends TopWrapper<T>> W checkWrappedMatchSubclassAndWrap(
+          TOP top, Class<W> superClass) throws AnalysisEngineProcessException,
+          InstantiationException, IllegalAccessException, ClassNotFoundException {
+    return checkWrapped(top) ? getWrapped(top) : matchSubclassAndWrap(top, superClass);
   }
 
   @SuppressWarnings("unchecked")
-  public static <T extends TOP, W extends TopWrapper<T>> W matchSubclassAndWrap(TOP top,
+  private static <T extends TOP, W extends TopWrapper<T>> W matchSubclassAndWrap(TOP top,
           Class<W> superClass) throws AnalysisEngineProcessException, InstantiationException,
           IllegalAccessException, ClassNotFoundException {
     // FIXME Different TopWrapper implementations may have different ways to store the actual
@@ -186,5 +185,12 @@ public class WrapperHelper {
     String className = top.getFeatureValueAsString(feature);
     Class<? extends W> clazz = Class.forName(className).asSubclass(superClass);
     return wrap((T) top, clazz);
+  }
+
+  private static <T extends TOP, W extends TopWrapper<T>> W wrap(T top, Class<W> wrapperClass)
+          throws InstantiationException, IllegalAccessException, AnalysisEngineProcessException {
+    W inst = wrapperClass.newInstance();
+    inst.wrap(top);
+    return inst;
   }
 }
