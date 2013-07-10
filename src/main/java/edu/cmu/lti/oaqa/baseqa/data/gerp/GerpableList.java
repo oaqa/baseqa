@@ -23,8 +23,14 @@ public class GerpableList<W extends Gerpable & TopWrapper<? extends TOP>> {
     this.gerpableCount = 0;
   }
 
-  public void add(W gerpable) {
-    gerpables.add(gerpable);
+  public void add(W gerpable, String generator) {
+    int index = -1;
+    if ((index = gerpables.indexOf(gerpable)) > 0) {
+      gerpables.get(index).addGenerator(generator);
+    } else {
+      gerpable.addGenerator(generator);
+      gerpables.add(gerpable);
+    }
     gerpableCount++;
   }
 
@@ -85,7 +91,7 @@ public class GerpableList<W extends Gerpable & TopWrapper<? extends TOP>> {
       return false;
     @SuppressWarnings("rawtypes")
     GerpableList other = (GerpableList) obj;
-    return Objects.equal(gerpables, other.gerpables);
+    return Objects.equal(this.gerpables, other.gerpables);
   }
 
   public List<W> getGerpables() {

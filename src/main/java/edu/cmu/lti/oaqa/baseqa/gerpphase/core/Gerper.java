@@ -9,12 +9,15 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.oaqa.model.gerp.GerpMeta;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperIndexer;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.EvidenceWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpMetaWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.Gerpable;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpableList;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.PruningDecisionWrapper;
@@ -106,6 +109,18 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
   @Override
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
+    generateGerpMeta(jcas);
+    executeGerp(jcas);
+  }
+
+  private void generateGerpMeta(JCas jcas) throws AnalysisEngineProcessException {
+    GerpMetaWrapper gerpMeta = new GerpMetaWrapper(toClassNames(generators),
+            toClassNames(evidencers), toClassNames(rankers), toClassNames(pruners));
+    GerpMeta top = gerpMeta.unwrap(jcas);
+    top.addToIndexes(jcas);
+  }
+
+  private void executeGerp(JCas jcas) throws AnalysisEngineProcessException {
     WrapperIndexer indexer = new WrapperIndexer();
     for (AbstractGenerator<W> generator : generators) {
       // collecting required types from jcas as inputs
@@ -124,21 +139,29 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
         for (AbstractEvidencer<W> evidencer : evidencers) {
           List<W> gerpables = outputs.getGerpables();
           List<EvidenceWrapper<?, ?>> evidences = evidencer.evidence(gerpables);
-          outputs.addAllEvidences(evidences, evidencer.getClass().getSimpleName());
+          outputs.addAllEvidences(evidences);
         }
         for (AbstractRanker ranker : rankers) {
           List<Collection<EvidenceWrapper<?, ?>>> evidences = outputs.getAllEvidences();
-          List<RankWrapper> ranks = ranker.rank(evidences, ranker.getClass().getSimpleName());
+          List<RankWrapper> ranks = ranker.rank(evidences);
           outputs.addAllRanks(ranks);
         }
         for (AbstractPruner pruner : pruners) {
           List<Collection<RankWrapper>> ranks = outputs.getAllRanks();
           List<PruningDecisionWrapper> pruningDecisions = pruner.prune(ranks);
-          outputs.addAllPruningDecisions(pruningDecisions, pruner.getClass().getSimpleName());
+          outputs.addAllPruningDecisions(pruningDecisions);
         }
         // persisting outputs
         outputs.unwrapAllAndAddToIndexes(jcas);
       }
     }
+  }
+
+  private static List<String> toClassNames(List<? extends Object> objects) {
+    List<String> classNames = Lists.newArrayList();
+    for (Object object : objects) {
+      classNames.add(object.getClass().getSimpleName());
+    }
+    return classNames;
   }
 }
