@@ -86,20 +86,20 @@ public abstract class SearchResultWrapper extends GerpTopWrapper<SearchResult> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), uri, queryString, searchId);
+    return Objects.hashCode(uri, queryString, searchId);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (!super.equals(obj))
+    if (obj == null)
       return false;
     if (getClass() != obj.getClass())
       return false;
     SearchResultWrapper other = (SearchResultWrapper) obj;
-    return Objects.equal(uri, other.uri) && Objects.equal(queryString, other.queryString)
-            && Objects.equal(searchId, other.searchId);
+    return Objects.equal(this.uri, other.uri) && Objects.equal(this.queryString, other.queryString)
+            && Objects.equal(this.searchId, other.searchId);
   }
 
   public String getUri() {

@@ -59,19 +59,20 @@ public class ParseWrapper extends GerpTopWrapper<Parse> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), tokens, semanticRoles);
+    return Objects.hashCode(tokens, semanticRoles);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (!super.equals(obj))
+    if (obj == null)
       return false;
     if (getClass() != obj.getClass())
       return false;
     ParseWrapper other = (ParseWrapper) obj;
-    return Objects.equal(tokens, other.tokens) && Objects.equal(semanticRoles, other.semanticRoles);
+    return Objects.equal(this.tokens, other.tokens)
+            && Objects.equal(this.semanticRoles, other.semanticRoles);
   }
 
   public List<TokenWrapper> getTokens() {

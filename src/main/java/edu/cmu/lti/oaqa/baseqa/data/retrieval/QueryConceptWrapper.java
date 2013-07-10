@@ -93,7 +93,7 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), text, originalText, operator, operatorArgs);
+    return Objects.hashCode(text, originalText, operator, operatorArgs);
   }
 
   @Override
@@ -105,9 +105,10 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
     if (getClass() != obj.getClass())
       return false;
     QueryConceptWrapper other = (QueryConceptWrapper) obj;
-    return Objects.equal(text, other.text) && Objects.equal(originalText, other.originalText)
-            && Objects.equal(operator, other.operator)
-            && Objects.equal(operatorArgs, other.operatorArgs);
+    return Objects.equal(this.text, other.text)
+            && Objects.equal(this.originalText, other.originalText)
+            && Objects.equal(this.operator, other.operator)
+            && Objects.equal(this.operatorArgs, other.operatorArgs);
   }
 
   public List<String> getNamedEntityTypes() {

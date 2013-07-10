@@ -51,19 +51,19 @@ public class AnswerListWrapper extends GerpTopWrapper<AnswerList> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), answerList);
+    return Objects.hashCode(answerList);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (!super.equals(obj))
+    if (obj == null)
       return false;
     if (getClass() != obj.getClass())
       return false;
     AnswerListWrapper other = (AnswerListWrapper) obj;
-    return Objects.equal(answerList, other.answerList);
+    return Objects.equal(this.answerList, other.answerList);
   }
 
   public List<AnswerWrapper> getAnswerList() {

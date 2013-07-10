@@ -87,8 +87,8 @@ public class PassageWrapper extends SearchResultWrapper {
     if (getClass() != obj.getClass())
       return false;
     PassageWrapper other = (PassageWrapper) obj;
-    return Objects.equal(docId, other.docId) && Objects.equal(begin, other.begin)
-            && Objects.equal(end, other.end);
+    return Objects.equal(this.docId, other.docId) && Objects.equal(this.begin, other.begin)
+            && Objects.equal(this.end, other.end);
   }
 
   public String getTitle() {

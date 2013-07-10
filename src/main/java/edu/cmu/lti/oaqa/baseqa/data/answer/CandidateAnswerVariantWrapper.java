@@ -86,20 +86,19 @@ public class CandidateAnswerVariantWrapper extends GerpTopWrapper<CandidateAnswe
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), occurrences, text, uri, docId);
+    return Objects.hashCode(text);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (!super.equals(obj))
+    if (obj == null)
       return false;
     if (getClass() != obj.getClass())
       return false;
     CandidateAnswerVariantWrapper other = (CandidateAnswerVariantWrapper) obj;
-    return Objects.equal(occurrences, other.occurrences) && Objects.equal(text, other.text)
-            && Objects.equal(uri, other.uri) && Objects.equal(docId, docId);
+    return Objects.equal(this.text, other.text);
   }
 
   public List<CandidateAnswerOccurrenceWrapper> getOccurrences() {

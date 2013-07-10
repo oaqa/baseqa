@@ -62,7 +62,7 @@ public class ConceptMentionWrapper extends GerpAnnotationWrapper<ConceptMention>
     if (getClass() != obj.getClass())
       return false;
     ConceptMentionWrapper other = (ConceptMentionWrapper) obj;
-    return Objects.equal(concept, other.concept);
+    return Objects.equal(this.concept, other.concept);
   }
 
   public ConceptWrapper getConcept() {

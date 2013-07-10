@@ -53,19 +53,19 @@ public class QueryOperatorWrapper extends GerpTopWrapper<QueryOperator> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), name, args);
+    return Objects.hashCode(name, args);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (!super.equals(obj))
+    if (obj == null)
       return false;
     if (getClass() != obj.getClass())
       return false;
     QueryOperatorWrapper other = (QueryOperatorWrapper) obj;
-    return Objects.equal(name, other.name) && Objects.equal(args, other.args);
+    return Objects.equal(this.name, other.name) && Objects.equal(this.args, other.args);
   }
 
   public String getName() {

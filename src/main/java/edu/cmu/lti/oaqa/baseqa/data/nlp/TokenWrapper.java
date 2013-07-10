@@ -110,7 +110,8 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode());
+    return Objects.hashCode(super.hashCode(), arguments, argumentLabels, semanticType,
+            partOfSpeech, lemmaForm, isMainReference, isVariable, determiner);
   }
 
   @Override
@@ -121,7 +122,15 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    return true;
+    TokenWrapper other = (TokenWrapper) obj;
+    return Objects.equal(this.arguments, other.arguments)
+            && Objects.equal(this.argumentLabels, other.argumentLabels)
+            && Objects.equal(this.semanticType, other.semanticType)
+            && Objects.equal(this.partOfSpeech, other.partOfSpeech)
+            && Objects.equal(this.lemmaForm, other.lemmaForm)
+            && Objects.equal(this.isMainReference, other.isMainReference)
+            && Objects.equal(this.isVariable, other.isVariable)
+            && Objects.equal(this.determiner, other.determiner);
   }
 
   public List<? extends TokenWrapper> getArguments() {

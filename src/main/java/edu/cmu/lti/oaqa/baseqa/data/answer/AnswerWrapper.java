@@ -53,19 +53,19 @@ public class AnswerWrapper extends GerpTopWrapper<Answer> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), text, variants);
+    return Objects.hashCode(text);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (!super.equals(obj))
+    if (obj == null)
       return false;
     if (getClass() != obj.getClass())
       return false;
     AnswerWrapper other = (AnswerWrapper) obj;
-    return Objects.equal(text, other.text) && Objects.equal(variants, other.variants);
+    return Objects.equal(this.text, other.text);
   }
 
   public String getText() {

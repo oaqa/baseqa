@@ -61,12 +61,12 @@ public class RelationWrapper extends ConceptWrapper {
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (obj == null)
+    if (!super.equals(obj))
       return false;
     if (getClass() != obj.getClass())
       return false;
     RelationWrapper other = (RelationWrapper) obj;
-    return Objects.equal(arguments, other.arguments);
+    return Objects.equal(this.arguments, other.arguments);
   }
 
   public List<EntityWrapper> getArguments() {

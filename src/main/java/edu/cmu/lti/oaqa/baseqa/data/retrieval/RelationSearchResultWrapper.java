@@ -71,7 +71,7 @@ public class RelationSearchResultWrapper extends AnswerSearchResultWrapper {
     if (getClass() != obj.getClass())
       return false;
     RelationSearchResultWrapper other = (RelationSearchResultWrapper) obj;
-    return Objects.equal(context, other.context);
+    return Objects.equal(this.context, other.context);
   }
 
   public List<RelationWrapper> getContext() {

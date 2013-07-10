@@ -75,7 +75,7 @@ public class PassageFromRelationWrapper extends PassageWrapper {
     if (getClass() != obj.getClass())
       return false;
     PassageFromRelationWrapper other = (PassageFromRelationWrapper) obj;
-    return Objects.equal(sourceRelation, other.sourceRelation);
+    return Objects.equal(this.sourceRelation, other.sourceRelation);
   }
 
   public RelationWrapper getSourceRelation() {

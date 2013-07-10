@@ -59,7 +59,7 @@ public class InterpretationWrapper extends GerpTopWrapper<Interpretation> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), concepts, mentions);
+    return Objects.hashCode(concepts, mentions);
   }
 
   @Override
@@ -71,7 +71,8 @@ public class InterpretationWrapper extends GerpTopWrapper<Interpretation> {
     if (getClass() != obj.getClass())
       return false;
     InterpretationWrapper other = (InterpretationWrapper) obj;
-    return Objects.equal(concepts, other.concepts) && Objects.equal(mentions, other.mentions);
+    return Objects.equal(this.concepts, other.concepts)
+            && Objects.equal(this.mentions, other.mentions);
   }
 
   public List<ConceptWrapper> getConcepts() {

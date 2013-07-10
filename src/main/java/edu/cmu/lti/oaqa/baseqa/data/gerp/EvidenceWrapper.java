@@ -104,8 +104,8 @@ public class EvidenceWrapper<T extends TOP, W extends TopWrapper<T>> extends
       return false;
     @SuppressWarnings("rawtypes")
     EvidenceWrapper other = (EvidenceWrapper) obj;
-    return Objects.equal(confidence, other.confidence)
-            && Objects.equal(additionalEvidences, other.additionalEvidences);
+    return Objects.equal(this.confidence, other.confidence)
+            && Objects.equal(this.additionalEvidences, other.additionalEvidences);
   }
 
   public float getConfidence() {

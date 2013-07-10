@@ -52,7 +52,7 @@ public class CandidateAnswerOccurrenceWrapper extends
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode());
+    return Objects.hashCode(super.hashCode(), mentionType);
   }
 
   @Override
@@ -63,7 +63,8 @@ public class CandidateAnswerOccurrenceWrapper extends
       return false;
     if (getClass() != obj.getClass())
       return false;
-    return true;
+    CandidateAnswerOccurrenceWrapper other = (CandidateAnswerOccurrenceWrapper) obj;
+    return Objects.equal(this.mentionType, other.mentionType);
   }
 
   public String getText() {

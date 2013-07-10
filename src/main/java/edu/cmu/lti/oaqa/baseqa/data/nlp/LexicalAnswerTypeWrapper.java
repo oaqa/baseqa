@@ -56,7 +56,7 @@ public class LexicalAnswerTypeWrapper extends GerpAnnotationWrapper<LexicalAnswe
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode());
+    return Objects.hashCode(super.hashCode(), label);
   }
 
   @Override
@@ -67,7 +67,8 @@ public class LexicalAnswerTypeWrapper extends GerpAnnotationWrapper<LexicalAnswe
       return false;
     if (getClass() != obj.getClass())
       return false;
-    return true;
+    LexicalAnswerTypeWrapper other = (LexicalAnswerTypeWrapper) obj;
+    return Objects.equal(this.label, other.label);
   }
 
   public TokenWrapper getToken() {

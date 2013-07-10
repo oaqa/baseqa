@@ -69,7 +69,7 @@ public class DocumentWrapper extends SearchResultWrapper {
     if (getClass() != obj.getClass())
       return false;
     DocumentWrapper other = (DocumentWrapper) obj;
-    return Objects.equal(docId, other.docId);
+    return Objects.equal(this.docId, other.docId);
   }
 
   public String getTitle() {

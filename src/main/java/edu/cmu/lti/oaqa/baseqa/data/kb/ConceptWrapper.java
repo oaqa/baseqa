@@ -65,19 +65,19 @@ public class ConceptWrapper extends GerpTopWrapper<Concept> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), name);
+    return Objects.hashCode(name);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (!super.equals(obj))
+    if (obj == null)
       return false;
     if (getClass() != obj.getClass())
       return false;
     ConceptWrapper other = (ConceptWrapper) obj;
-    return Objects.equal(name, other.name);
+    return Objects.equal(this.name, other.name);
   }
 
   public String getName() {

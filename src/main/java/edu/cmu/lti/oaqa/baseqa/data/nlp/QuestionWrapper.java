@@ -68,7 +68,7 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), id, source, text, questionType);
+    return Objects.hashCode(super.hashCode(), text);
   }
 
   @Override
@@ -80,8 +80,7 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
     if (getClass() != obj.getClass())
       return false;
     QuestionWrapper other = (QuestionWrapper) obj;
-    return Objects.equal(id, other.id) && Objects.equal(source, other.source)
-            && Objects.equal(text, other.text) && Objects.equal(questionType, other.questionType);
+    return Objects.equal(this.text, other.text);
   }
 
   public String getId() {

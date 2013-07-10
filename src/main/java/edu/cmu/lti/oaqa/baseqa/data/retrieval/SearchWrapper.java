@@ -72,20 +72,20 @@ public class SearchWrapper extends GerpTopWrapper<Search> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), query, hitList, searchId);
+    return Objects.hashCode(query, hitList, searchId);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (!super.equals(obj))
+    if (obj == null)
       return false;
     if (getClass() != obj.getClass())
       return false;
     SearchWrapper other = (SearchWrapper) obj;
-    return Objects.equal(query, other.query) && Objects.equal(hitList, other.hitList)
-            && Objects.equal(searchId, other.searchId);
+    return Objects.equal(this.query, other.query) && Objects.equal(this.hitList, other.hitList)
+            && Objects.equal(this.searchId, other.searchId);
   }
 
   public String getQuery() {

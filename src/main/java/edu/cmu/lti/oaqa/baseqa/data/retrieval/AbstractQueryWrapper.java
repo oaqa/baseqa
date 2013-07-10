@@ -51,19 +51,19 @@ public class AbstractQueryWrapper extends GerpTopWrapper<AbstractQuery> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode(), concepts);
+    return Objects.hashCode(concepts);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (!super.equals(obj))
+    if (obj == null)
       return false;
     if (getClass() != obj.getClass())
       return false;
     AbstractQueryWrapper other = (AbstractQueryWrapper) obj;
-    return Objects.equal(concepts, other.concepts);
+    return Objects.equal(this.concepts, other.concepts);
   }
 
   public List<QueryConceptWrapper> getConcepts() {

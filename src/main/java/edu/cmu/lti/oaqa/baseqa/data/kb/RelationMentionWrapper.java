@@ -61,12 +61,12 @@ public class RelationMentionWrapper extends ConceptMentionWrapper {
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
-    if (obj == null)
+    if (!super.equals(obj))
       return false;
     if (getClass() != obj.getClass())
       return false;
     RelationMentionWrapper other = (RelationMentionWrapper) obj;
-    return Objects.equal(argumentMentions, other.argumentMentions);
+    return Objects.equal(this.argumentMentions, other.argumentMentions);
   }
 
   public List<EntityMentionWrapper> getArgumentMentions() {

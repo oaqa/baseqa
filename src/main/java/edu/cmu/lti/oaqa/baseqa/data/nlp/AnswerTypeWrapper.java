@@ -61,7 +61,7 @@ public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode());
+    return Objects.hashCode(super.hashCode(), label);
   }
 
   @Override
@@ -72,7 +72,8 @@ public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    return true;
+    AnswerTypeWrapper other = (AnswerTypeWrapper) obj;
+    return Objects.equal(this.label, other.label);
   }
 
   public String getLabel() {

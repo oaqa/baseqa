@@ -8,8 +8,6 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.gerp.GerpAnnotation;
 
-import com.google.common.base.Objects;
-
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQAAnnotationWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 
@@ -102,22 +100,6 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
     annotation.setRanks(WrapperHelper.unwrapTopList(ranks, jcas));
     annotation.setPruningDecisions(WrapperHelper.unwrapTopList(pruningDecisions, jcas));
     return annotation;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(super.hashCode());
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (!super.equals(obj))
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    return true;
   }
 
   @Override

@@ -44,7 +44,7 @@ public class SemanticRoleWrapper extends GerpAnnotationWrapper<SemanticRole> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode());
+    return Objects.hashCode(super.hashCode(), label);
   }
 
   @Override
@@ -55,7 +55,8 @@ public class SemanticRoleWrapper extends GerpAnnotationWrapper<SemanticRole> {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    return true;
+    SemanticRoleWrapper other = (SemanticRoleWrapper) obj;
+    return Objects.equal(this.label, other.label);
   }
 
   public String getLabel() {

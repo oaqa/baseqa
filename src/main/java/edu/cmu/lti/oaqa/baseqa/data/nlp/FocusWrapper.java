@@ -55,7 +55,7 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(super.hashCode());
+    return Objects.hashCode(super.hashCode(), label);
   }
 
   @Override
@@ -66,7 +66,8 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    return true;
+    FocusWrapper other = (FocusWrapper) obj;
+    return Objects.equal(this.label, other.label);
   }
 
   public TokenWrapper getToken() {
