@@ -15,17 +15,21 @@ public class QueryOperatorWrapper extends GerpTopWrapper<QueryOperator> {
 
   private static final long serialVersionUID = 1L;
 
-  private String name;
+  public static enum QueryOperatorName {
+    SYNONYM, PHRASE, TIE, WEIGHT, REQUIRED, RELATION, QUOTEDPHRASE
+  };
+
+  private QueryOperatorName name;
 
   private List<String> args;
 
-  public QueryOperatorWrapper(String name, List<String> args) {
+  public QueryOperatorWrapper(QueryOperatorName name, List<String> args) {
     super();
     this.name = name;
     this.args = args;
   }
 
-  public QueryOperatorWrapper(String name, List<String> args, String generator) {
+  public QueryOperatorWrapper(QueryOperatorName name, List<String> args, String generator) {
     super(generator);
     this.name = name;
     this.args = args;
@@ -39,14 +43,14 @@ public class QueryOperatorWrapper extends GerpTopWrapper<QueryOperator> {
   @Override
   public void wrap(QueryOperator top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    this.name = top.getName();
+    this.name = QueryOperatorName.valueOf(top.getName());
     this.args = WrapperHelper.wrapStringList(top.getArgs());
   }
 
   @Override
   public QueryOperator unwrap(JCas jcas) throws AnalysisEngineProcessException {
     QueryOperator top = super.unwrap(jcas);
-    top.setName(name);
+    top.setName(name.toString());
     top.setArgs(WrapperHelper.unwrapStringList(args, jcas));
     return top;
   }
@@ -68,11 +72,11 @@ public class QueryOperatorWrapper extends GerpTopWrapper<QueryOperator> {
     return Objects.equal(this.name, other.name) && Objects.equal(this.args, other.args);
   }
 
-  public String getName() {
+  public QueryOperatorName getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(QueryOperatorName name) {
     this.name = name;
   }
 
