@@ -39,7 +39,7 @@ public class LexicalAnswerTypeWrapper extends GerpAnnotationWrapper<LexicalAnswe
   public void wrap(LexicalAnswerType annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     try {
-      this.token = WrapperHelper.checkWrappedMatchSubclassAndWrap(annotation.getToken(), TokenWrapper.class);
+      this.token = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getToken(), TokenWrapper.class);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
@@ -49,7 +49,7 @@ public class LexicalAnswerTypeWrapper extends GerpAnnotationWrapper<LexicalAnswe
   @Override
   public LexicalAnswerType unwrap(JCas jcas) throws AnalysisEngineProcessException {
     LexicalAnswerType annotation = super.unwrap(jcas);
-    annotation.setToken(token.unwrap(jcas));
+    annotation.setToken(token.unwrapIfNotUnwrapped(jcas));
     annotation.setLabel(label);
     return annotation;
   }

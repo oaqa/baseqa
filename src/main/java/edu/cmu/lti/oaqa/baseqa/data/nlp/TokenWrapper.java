@@ -81,7 +81,7 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
     }
     this.argumentLabels = WrapperHelper.wrapStringArray(annotation.getArgumentLabels());
     try {
-      this.parse = WrapperHelper.checkWrappedMatchSubclassAndWrap(annotation.getParse(), this.getClass());
+      this.parse = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getParse(), this.getClass());
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
@@ -98,7 +98,7 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
     Token annotation = super.unwrap(jcas);
     annotation.setArguments(WrapperHelper.unwrapAnnotationArray(arguments, jcas));
     annotation.setArgumentLabels(WrapperHelper.unwrapStringArray(argumentLabels, jcas));
-    annotation.setParse(parse.unwrap(jcas));
+    annotation.setParse(parse.unwrapIfNotUnwrapped(jcas));
     annotation.setSemanticType(semanticType);
     annotation.setPartOfSpeech(partOfSpeech);
     annotation.setLemmaForm(lemmaForm);

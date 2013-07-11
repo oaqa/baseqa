@@ -32,6 +32,15 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
     this.end = end;
   }
 
+  @SuppressWarnings("unchecked")
+  public T unwrapIfNotUnwrapped(JCas jcas) throws AnalysisEngineProcessException {
+    if (WrapperIndexer.getWrapperIndexer(jcas).checkUnwrapped(this)) {
+      return (T) WrapperIndexer.getWrapperIndexer(jcas).getUnwrapped(this);
+    } else {
+      return unwrap(jcas);
+    }
+  }
+
   @Override
   public T unwrap(JCas jcas) throws AnalysisEngineProcessException {
     try {

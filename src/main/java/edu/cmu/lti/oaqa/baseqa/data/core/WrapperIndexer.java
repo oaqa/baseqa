@@ -33,7 +33,9 @@ import com.google.common.collect.SetMultimap;
  * {@link Object#hashCode()} method, whereas the identical address is generated from
  * {@link TOP#getAddress()}. Both mappings ensure the uniqueness of wrapper while wrappingand the
  * uniqueness of TOP while unwrapping. {@link #checkWrapped(TOP)} and {@link #getWrapped(TOP)} can
- * be used to check and retrieve the wrapper by a {@link TOP}.
+ * be used to check and retrieve the wrapper by a {@link TOP}, {@link #checkUnwrapped(TopWrapper)}
+ * and {@link #getUnwrapped(TopWrapper)} can be used to check and retrieve the TOP by a
+ * {@link TopWrapper}.
  * 
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
@@ -44,8 +46,9 @@ public class WrapperIndexer {
    * Global static variables and methods
    */
   /**
-   * A global mapping variable to simulate the whole CAS including multiple views. TODO a wrapper
-   * for the global JCas can be implemented.
+   * A global mapping variable to simulate the whole CAS including multiple views.
+   * <p>
+   * TODO a wrapper for the global JCas can be implemented.
    */
   private static Map<Integer, WrapperIndexer> jcasHash2wrapperIndexer = Maps.newHashMap();
 
@@ -123,6 +126,14 @@ public class WrapperIndexer {
 
   public TopWrapper<?> getWrapped(TOP top) {
     return topAddress2wrapper.get(top.getAddress());
+  }
+
+  public boolean checkUnwrapped(TopWrapper<? extends TOP> wrapper) {
+    return wrapperHash2top.containsKey(System.identityHashCode(wrapper));
+  }
+
+  public TOP getUnwrapped(TopWrapper<? extends TOP> wrapper) {
+    return wrapperHash2top.get(System.identityHashCode(wrapper));
   }
 
   public JCas getJCas() {

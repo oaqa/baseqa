@@ -8,6 +8,8 @@ public interface AnnotationWrapper<T extends Annotation> extends TopWrapper<T> {
 
   Class<? extends T> getTypeClass();
   
+  T unwrapIfNotUnwrapped(JCas jcas) throws AnalysisEngineProcessException;
+  
   T unwrap(JCas jcas) throws AnalysisEngineProcessException;
 
   void wrap(T annotation) throws AnalysisEngineProcessException;

@@ -43,7 +43,7 @@ public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
     super.wrap(annotation);
     this.label = annotation.getLabel();
     try {
-      this.targetType = WrapperHelper.checkWrappedMatchSubclassAndWrap(
+      this.targetType = WrapperHelper.matchSubclassAndWrapIfNotWrapped(
               (OAQAAnnotation) annotation.getTargetType(),
               (Class<OAQAAnnotationWrapper<OAQAAnnotation>>) (Class) OAQAAnnotationWrapper.class);
     } catch (Exception e) {
@@ -55,7 +55,7 @@ public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
   public AnswerType unwrap(JCas jcas) throws AnalysisEngineProcessException {
     AnswerType annotation = super.unwrap(jcas);
     annotation.setLabel(label);
-    annotation.setTargetType(targetType.unwrap(jcas));
+    annotation.setTargetType(targetType.unwrapIfNotUnwrapped(jcas));
     return annotation;
   }
 

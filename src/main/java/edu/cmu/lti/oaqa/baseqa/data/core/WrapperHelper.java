@@ -29,7 +29,7 @@ import com.google.common.collect.Sets;
  * <p>
  * In addition, the {@link WrapperHelper} class provides the only static method to convert a
  * {@link TOP} or {@link Annotation} to a wrapper
- * {@link #checkWrappedMatchSubclassAndWrap(TOP, Class)}. It can be used if (1) only a super class
+ * {@link #matchSubclassAndWrapIfNotWrapped(TOP, Class)}. It can be used if (1) only a super class
  * of wrapper can be inferred instead of the actual implementing wrapper, and/or (2) whether the
  * {@link TOP} or {@link Annotation} has been wrapped by some {@link TopWrapper} or
  * {@link AnnotationWrapper} is unknown and needs to be checked before creating duplicated wrappers,
@@ -86,7 +86,7 @@ public class WrapperHelper {
     FSList tail = list;
     while (tail instanceof NonEmptyFSList) {
       TOP head = ((NonEmptyFSList) tail).getHead();
-      wrappers.add(checkWrappedMatchSubclassAndWrap(head, wrapperClass));
+      wrappers.add(matchSubclassAndWrapIfNotWrapped(head, wrapperClass));
       tail = ((NonEmptyFSList) tail).getTail();
     }
     return wrappers;
@@ -99,7 +99,7 @@ public class WrapperHelper {
     for (W wrapper : Lists.reverse(wrappers)) {
       tail = list;
       list = new NonEmptyFSList(jcas);
-      ((NonEmptyFSList) list).setHead(wrapper.unwrap(jcas));
+      ((NonEmptyFSList) list).setHead(wrapper.unwrapIfNotUnwrapped(jcas));
       ((NonEmptyFSList) list).setTail(tail);
     }
     return list;
@@ -110,7 +110,7 @@ public class WrapperHelper {
           IllegalAccessException, ClassNotFoundException, CASException {
     List<W> wrappers = new ArrayList<W>(array.size());
     for (int i = 0; i < array.size(); i++) {
-      wrappers.add(checkWrappedMatchSubclassAndWrap((TOP) array.get(i), wrapperClass));
+      wrappers.add(matchSubclassAndWrapIfNotWrapped((TOP) array.get(i), wrapperClass));
     }
     return wrappers;
   }
@@ -120,7 +120,7 @@ public class WrapperHelper {
     FSArray array = new FSArray(jcas, wrappers.size());
     int i = 0;
     for (W wrapper : wrappers) {
-      array.set(i, wrapper.unwrap(jcas));
+      array.set(i, wrapper.unwrapIfNotUnwrapped(jcas));
     }
     return array;
   }
@@ -132,7 +132,7 @@ public class WrapperHelper {
     FSList tail = list;
     while (tail instanceof NonEmptyFSList) {
       TOP head = ((NonEmptyFSList) tail).getHead();
-      wrappers.add(checkWrappedMatchSubclassAndWrap(head, wrapperClass));
+      wrappers.add(matchSubclassAndWrapIfNotWrapped(head, wrapperClass));
       tail = ((NonEmptyFSList) tail).getTail();
     }
     return wrappers;
@@ -145,7 +145,7 @@ public class WrapperHelper {
     for (W wrapper : Lists.reverse(wrappers)) {
       tail = list;
       list = new NonEmptyFSList(jcas);
-      ((NonEmptyFSList) list).setHead(wrapper.unwrap(jcas));
+      ((NonEmptyFSList) list).setHead(wrapper.unwrapIfNotUnwrapped(jcas));
       ((NonEmptyFSList) list).setTail(tail);
     }
     return list;
@@ -156,7 +156,7 @@ public class WrapperHelper {
           InstantiationException, IllegalAccessException, ClassNotFoundException, CASException {
     List<W> wrappers = new ArrayList<W>(array.size());
     for (int i = 0; i < array.size(); i++) {
-      wrappers.add(checkWrappedMatchSubclassAndWrap((TOP) array.get(i), wrapperClass));
+      wrappers.add(matchSubclassAndWrapIfNotWrapped((TOP) array.get(i), wrapperClass));
     }
     return wrappers;
   }
@@ -166,7 +166,7 @@ public class WrapperHelper {
     FSArray array = new FSArray(jcas, wrappers.size());
     int i = 0;
     for (W wrapper : wrappers) {
-      array.set(i, wrapper.unwrap(jcas));
+      array.set(i, wrapper.unwrapIfNotUnwrapped(jcas));
     }
     return array;
   }
@@ -178,13 +178,13 @@ public class WrapperHelper {
     int type = clazz.newInstance().getTypeClass().getField("type").getInt(null);
     Set<W> tops = Sets.newHashSet();
     for (TOP top : ImmutableList.copyOf(jcas.getJFSIndexRepository().getAllIndexedFS(type))) {
-      tops.add(checkWrappedMatchSubclassAndWrap(top, clazz));
+      tops.add(matchSubclassAndWrapIfNotWrapped(top, clazz));
     }
     return tops;
   }
 
   @SuppressWarnings("unchecked")
-  public static <T extends TOP, W extends TopWrapper<T>> W checkWrappedMatchSubclassAndWrap(
+  public static <T extends TOP, W extends TopWrapper<T>> W matchSubclassAndWrapIfNotWrapped(
           TOP top, Class<W> superClass) throws AnalysisEngineProcessException,
           InstantiationException, IllegalAccessException, ClassNotFoundException, CASException {
     WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(top.getCAS().getJCas());

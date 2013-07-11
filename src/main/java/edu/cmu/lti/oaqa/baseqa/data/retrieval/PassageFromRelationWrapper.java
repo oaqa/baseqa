@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
+import org.oaqa.model.kb.Relation;
 import org.oaqa.model.retrieval.Passage;
 import org.oaqa.model.retrieval.PassageFromRelation;
 import org.oaqa.model.retrieval.SearchResult;
@@ -47,7 +48,7 @@ public class PassageFromRelationWrapper extends PassageWrapper {
   public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
     try {
-      sourceRelation = WrapperHelper.checkWrappedMatchSubclassAndWrap(
+      sourceRelation = WrapperHelper.matchSubclassAndWrapIfNotWrapped(
               ((PassageFromRelation) top).getSourceRelation(), RelationWrapper.class);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
@@ -57,7 +58,7 @@ public class PassageFromRelationWrapper extends PassageWrapper {
   @Override
   public PassageFromRelation unwrap(JCas jcas) throws AnalysisEngineProcessException {
     PassageFromRelation top = (PassageFromRelation) super.unwrap(jcas);
-    top.setSourceRelation(sourceRelation.unwrap(jcas));
+    top.setSourceRelation((Relation) sourceRelation.unwrapIfNotUnwrapped(jcas));
     return top;
   }
 

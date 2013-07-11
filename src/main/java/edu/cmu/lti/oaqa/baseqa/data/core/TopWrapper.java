@@ -8,6 +8,8 @@ public interface TopWrapper<T extends TOP> {
 
   Class<? extends T> getTypeClass();
 
+  T unwrapIfNotUnwrapped(JCas jcas) throws AnalysisEngineProcessException;
+
   T unwrap(JCas jcas) throws AnalysisEngineProcessException;
 
   void wrap(T top) throws AnalysisEngineProcessException;
