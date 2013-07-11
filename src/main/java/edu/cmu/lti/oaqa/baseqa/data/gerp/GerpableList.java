@@ -4,13 +4,13 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.WrapperIndexer;
 
 public class GerpableList<W extends Gerpable & TopWrapper<? extends TOP>> {
 
@@ -69,10 +69,11 @@ public class GerpableList<W extends Gerpable & TopWrapper<? extends TOP>> {
     }
   }
 
-  public void unwrapAllAndAddToIndexes(JCas jcas) throws AnalysisEngineProcessException {
+  public void unwrapAllAndAddToIndexes(WrapperIndexer indexer)
+          throws AnalysisEngineProcessException {
     for (W gerpable : gerpables) {
-      TOP top = gerpable.unwrap(jcas);
-      top.addToIndexes(jcas);
+      TOP top = gerpable.unwrapIfNotUnwrapped(indexer.getJCas());
+      top.addToIndexes(indexer.getJCas());
     }
   }
 

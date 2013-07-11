@@ -152,7 +152,7 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
           outputs.addAllPruningDecisions(pruningDecisions);
         }
         // persisting outputs
-        outputs.unwrapAllAndAddToIndexes(jcas);
+        outputs.unwrapAllAndAddToIndexes(indexer);
       }
     }
   }
