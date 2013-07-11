@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.cas.CASException;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.EmptyFSList;
@@ -22,6 +23,21 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+/**
+ * A class with all the utility methods to wrap or unwrap a list or an array of {@link TOP} or
+ * {@link Annotation} from or to {@link TopWrapper} or {@link AnnotationWrapper}.
+ * <p>
+ * In addition, the {@link WrapperHelper} class provides the only static method to convert a
+ * {@link TOP} or {@link Annotation} to a wrapper
+ * {@link #checkWrappedMatchSubclassAndWrap(TOP, Class)}. It can be used if (1) only a super class
+ * of wrapper can be inferred instead of the actual implementing wrapper, and/or (2) whether the
+ * {@link TOP} or {@link Annotation} has been wrapped by some {@link TopWrapper} or
+ * {@link AnnotationWrapper} is unknown and needs to be checked before creating duplicated wrappers,
+ * which is important if the {@link TOP}s or {@link Annotation}s contain a loop.
+ * 
+ * @author Zi Yang <ziy@cs.cmu.edu>
+ * 
+ */
 public class WrapperHelper {
 
   public static List<String> wrapStringList(StringList list) {
@@ -65,7 +81,7 @@ public class WrapperHelper {
 
   public static <T extends TOP, W extends TopWrapper<T>> List<W> wrapTopList(FSList list,
           Class<W> wrapperClass) throws AnalysisEngineProcessException, InstantiationException,
-          IllegalAccessException, ClassNotFoundException {
+          IllegalAccessException, ClassNotFoundException, CASException {
     List<W> wrappers = new ArrayList<W>();
     FSList tail = list;
     while (tail instanceof NonEmptyFSList) {
@@ -91,7 +107,7 @@ public class WrapperHelper {
 
   public static <T extends TOP, W extends TopWrapper<T>> List<W> wrapTopArray(FSArray array,
           Class<W> wrapperClass) throws AnalysisEngineProcessException, InstantiationException,
-          IllegalAccessException, ClassNotFoundException {
+          IllegalAccessException, ClassNotFoundException, CASException {
     List<W> wrappers = new ArrayList<W>(array.size());
     for (int i = 0; i < array.size(); i++) {
       wrappers.add(checkWrappedMatchSubclassAndWrap((TOP) array.get(i), wrapperClass));
@@ -111,7 +127,7 @@ public class WrapperHelper {
 
   public static <T extends Annotation, W extends AnnotationWrapper<T>> List<W> wrapAnnotationList(
           FSList list, Class<W> wrapperClass) throws AnalysisEngineProcessException,
-          InstantiationException, IllegalAccessException, ClassNotFoundException {
+          InstantiationException, IllegalAccessException, ClassNotFoundException, CASException {
     List<W> wrappers = new ArrayList<W>();
     FSList tail = list;
     while (tail instanceof NonEmptyFSList) {
@@ -137,7 +153,7 @@ public class WrapperHelper {
 
   public static <T extends Annotation, W extends AnnotationWrapper<T>> List<W> wrapAnnotationArray(
           FSArray array, Class<W> wrapperClass) throws AnalysisEngineProcessException,
-          InstantiationException, IllegalAccessException, ClassNotFoundException {
+          InstantiationException, IllegalAccessException, ClassNotFoundException, CASException {
     List<W> wrappers = new ArrayList<W>(array.size());
     for (int i = 0; i < array.size(); i++) {
       wrappers.add(checkWrappedMatchSubclassAndWrap((TOP) array.get(i), wrapperClass));
@@ -158,7 +174,7 @@ public class WrapperHelper {
   public static <T extends TOP, W extends TopWrapper<T>> Set<? extends W> wrapAllFromJCas(
           JCas jcas, Class<W> clazz) throws InstantiationException, IllegalAccessException,
           IllegalArgumentException, NoSuchFieldException, SecurityException,
-          AnalysisEngineProcessException, ClassNotFoundException {
+          AnalysisEngineProcessException, ClassNotFoundException, CASException {
     int type = clazz.newInstance().getTypeClass().getField("type").getInt(null);
     Set<W> tops = Sets.newHashSet();
     for (TOP top : ImmutableList.copyOf(jcas.getJFSIndexRepository().getAllIndexedFS(type))) {
@@ -167,10 +183,13 @@ public class WrapperHelper {
     return tops;
   }
 
+  @SuppressWarnings("unchecked")
   public static <T extends TOP, W extends TopWrapper<T>> W checkWrappedMatchSubclassAndWrap(
           TOP top, Class<W> superClass) throws AnalysisEngineProcessException,
-          InstantiationException, IllegalAccessException, ClassNotFoundException {
-    return checkWrapped(top) ? getWrapped(top) : matchSubclassAndWrap(top, superClass);
+          InstantiationException, IllegalAccessException, ClassNotFoundException, CASException {
+    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(top.getCAS().getJCas());
+    return (W) (indexer.checkWrapped(top) ? indexer.getWrapped(top) : matchSubclassAndWrap(top,
+            superClass));
   }
 
   @SuppressWarnings("unchecked")

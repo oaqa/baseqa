@@ -121,16 +121,16 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
   }
 
   private void executeGerp(JCas jcas) throws AnalysisEngineProcessException {
-    WrapperIndexer indexer = new WrapperIndexer(jcas);
+    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
     for (AbstractGenerator<W> generator : generators) {
       // collecting required types from jcas as inputs
       List<Class<? extends TopWrapper<?>>> classes = generator.getRequiredInputTypes();
+      List<Set<TopWrapper<? extends TOP>>> inputs;
       try {
-        indexer.addAllClassesToIndex(classes);
+        inputs = indexer.getWrappersByClasses(classes);
       } catch (Exception e) {
         throw new AnalysisEngineProcessException(e);
       }
-      List<Set<TopWrapper<? extends TOP>>> inputs = indexer.getWrappersByClasses(classes);
       for (List<TopWrapper<? extends TOP>> input : Sets.cartesianProduct(inputs)) {
         // gerping for all combinations of inputs
         GerpableList<W> outputs = new GerpableList<W>();

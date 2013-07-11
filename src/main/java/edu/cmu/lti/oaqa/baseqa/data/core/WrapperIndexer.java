@@ -1,33 +1,115 @@
 package edu.cmu.lti.oaqa.baseqa.data.core;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
 
+/**
+ * This class acts as a wrapper for a particular view in a {@link JCas} or a middle layer between
+ * the view in {@link JCas} and the wrappers. The constructor {@link #getWrapperIndexer(JCas)} takes
+ * a view as the input.
+ * <p>
+ * To use it as a wrapper for {@link JCas}, one can retrieve all the wrappers by the {@link Class}
+ * of the wrapper, similar to {@link JCas#getAnnotationIndex(int)}, by invoking
+ * {@link #getWrappersByClasses(List)}.
+ * <p>
+ * Since this class is responsible to guarantee the one-to-one correspondence between {@link TOP}s
+ * in the view of the {@link JCas} and the wrappers included in an instance of this class. Two
+ * mappings have been creat: a mapping between the native hash code (aka identical Java Object
+ * reference id for each instance) of wrappers to the actual TOPs, and a mapping between the
+ * identical address of TOPs to the actual wrappers. Identical hash code (from
+ * {@link System#identityHashCode(Object)} should be used since most wrappers override original
+ * {@link Object#hashCode()} method, whereas the identical address is generated from
+ * {@link TOP#getAddress()}. Both mappings ensure the uniqueness of wrapper while wrappingand the
+ * uniqueness of TOP while unwrapping. {@link #checkWrapped(TOP)} and {@link #getWrapped(TOP)} can
+ * be used to check and retrieve the wrapper by a {@link TOP}.
+ * 
+ * @author Zi Yang <ziy@cs.cmu.edu>
+ * 
+ */
 public class WrapperIndexer {
 
-  private JCas jcas;
+  /*
+   * Global static variables and methods
+   */
+  /**
+   * A global mapping variable to simulate the whole CAS including multiple views. TODO a wrapper
+   * for the global JCas can be implemented.
+   */
+  private static Map<Integer, WrapperIndexer> jcasHash2wrapperIndexer = Maps.newHashMap();
 
-  private SetMultimap<Class<? extends TopWrapper<? extends TOP>>, TopWrapper<? extends TOP>> class2wrappers;
-
-  public WrapperIndexer(JCas jcas) {
-    this.jcas = jcas;
-    class2wrappers = HashMultimap.create();
+  private static void addJCasWrapperIndexerPair(JCas jcas, WrapperIndexer indexer) {
+    jcasHash2wrapperIndexer.put(System.identityHashCode(jcas), indexer);
   }
 
-  public void addClassWrappersToIndex(Class<? extends TopWrapper<? extends TOP>> clazz)
+  public static WrapperIndexer getWrapperIndexer(JCas jcas) {
+    int jcasHash = System.identityHashCode(jcas);
+    return jcasHash2wrapperIndexer.containsKey(jcasHash) ? jcasHash2wrapperIndexer.get(jcasHash)
+            : new WrapperIndexer(jcas);
+  }
+
+  /*
+   * Member variables and methods
+   */
+  private JCas jcas;
+
+  /**
+   * A local cache for the mapping between wrapper {@link Class} and actual wrappers.
+   */
+  private SetMultimap<Class<? extends TopWrapper<? extends TOP>>, TopWrapper<? extends TOP>> class2wrappers;
+
+  /**
+   * A mapping between the native hash code (aka identical Java Object reference id for each
+   * instance) of wrappers to the actual TOPs. Identical hash code (from
+   * {@link System#identityHashCode(Object)} should be used since most wrappers override original
+   * {@link Object#hashCode()} method. The mapping ensures the uniqueness of top while unwrapping.
+   */
+  private Map<Integer, TOP> wrapperHash2top;
+
+  /**
+   * A mapping between the identical address of TOPs to the actual wrappers. Identical address is
+   * generated from {@link TOP#getAddress()}. The mapping ensures the uniqueness of wrapper while
+   * wrapping.
+   */
+  private Map<Integer, TopWrapper<? extends TOP>> topAddress2wrapper;
+
+  private WrapperIndexer(JCas jcas) {
+    this.jcas = jcas;
+    class2wrappers = HashMultimap.create();
+    wrapperHash2top = Maps.newHashMap();
+    topAddress2wrapper = Maps.newHashMap();
+    addJCasWrapperIndexerPair(jcas, this);
+  }
+
+  public List<Set<TopWrapper<? extends TOP>>> getWrappersByClasses(
+          List<Class<? extends TopWrapper<?>>> classes) throws AnalysisEngineProcessException,
+          IllegalArgumentException, SecurityException, InstantiationException,
+          IllegalAccessException, NoSuchFieldException, ClassNotFoundException, CASException {
+    List<Set<TopWrapper<?>>> wrappers = Lists.newArrayList();
+    for (Class<? extends TopWrapper<?>> clazz : classes) {
+      if (!class2wrappers.containsKey(clazz)) {
+        addClassWrappersToIndex(clazz);
+      }
+      wrappers.add(class2wrappers.get(clazz));
+    }
+    return wrappers;
+  }
+
+  private void addClassWrappersToIndex(Class<? extends TopWrapper<? extends TOP>> clazz)
           throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
           InstantiationException, IllegalAccessException, NoSuchFieldException,
-          ClassNotFoundException {
+          ClassNotFoundException, CASException {
     if (class2wrappers.containsKey(clazz)) {
       return;
     }
@@ -35,21 +117,19 @@ public class WrapperIndexer {
     class2wrappers.putAll(clazz, WrapperHelper.wrapAllFromJCas(jcas, clazz));
   }
 
-  public void addAllClassesToIndex(Collection<Class<? extends TopWrapper<?>>> classes)
-          throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
-          InstantiationException, IllegalAccessException, NoSuchFieldException,
-          ClassNotFoundException {
-    for (Class<? extends TopWrapper<?>> clazz : classes) {
-      addClassWrappersToIndex(clazz);
-    }
+  public boolean checkWrapped(TOP top) {
+    return topAddress2wrapper.containsKey(top.getAddress());
   }
 
-  public List<Set<TopWrapper<? extends TOP>>> getWrappersByClasses(
-          List<Class<? extends TopWrapper<?>>> classes) {
-    List<Set<TopWrapper<?>>> wrappers = Lists.newArrayList();
-    for (Class<? extends TopWrapper<?>> clazz : classes) {
-      wrappers.add(class2wrappers.get(clazz));
-    }
-    return wrappers;
+  public TopWrapper<?> getWrapped(TOP top) {
+    return topAddress2wrapper.get(top.getAddress());
+  }
+
+  public JCas getJCas() {
+    return jcas;
+  }
+
+  public void setJCas(JCas jcas) {
+    this.jcas = jcas;
   }
 }
