@@ -1,0 +1,17 @@
+inherit: baseqa.gerpphase.Gerper
+
+generators: |
+  - inherit: baseqa.components.parse.DummyQuestionParseGenerator
+  - inherit: baseqa.components.parse.EmptyQuestionParseGenerator
+evidencers: |
+  - inherit: baseqa.components.parse.IdenticalQuestionParseEvidencer
+  - inherit: baseqa.components.parse.RandomQuestionParseEvidencer
+rankers: |
+  - inherit: baseqa.components.core.ranker.HeadFirstRanker
+  - inherit: baseqa.components.core.ranker.RandomRanker
+pruners: |
+  - inherit: baseqa.components.core.pruner.HeadPreservePruner
+  - inherit: baseqa.components.core.pruner.RandomPruner
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

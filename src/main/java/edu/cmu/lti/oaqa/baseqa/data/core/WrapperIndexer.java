@@ -78,7 +78,7 @@ public class WrapperIndexer {
    * {@link System#identityHashCode(Object)} should be used since most wrappers override original
    * {@link Object#hashCode()} method. The mapping ensures the uniqueness of top while unwrapping.
    */
-  private Map<Integer, TOP> wrapperHash2top;
+  private Map<Integer, TOP> wrapperHashcode2top;
 
   /**
    * A mapping between the identical address of TOPs to the actual wrappers. Identical address is
@@ -90,7 +90,7 @@ public class WrapperIndexer {
   private WrapperIndexer(JCas jcas) {
     this.jcas = jcas;
     class2wrappers = HashMultimap.create();
-    wrapperHash2top = Maps.newHashMap();
+    wrapperHashcode2top = Maps.newHashMap();
     topAddress2wrapper = Maps.newHashMap();
     addJCasWrapperIndexerPair(jcas, this);
   }
@@ -129,11 +129,11 @@ public class WrapperIndexer {
   }
 
   public boolean checkUnwrapped(TopWrapper<? extends TOP> wrapper) {
-    return wrapperHash2top.containsKey(System.identityHashCode(wrapper));
+    return wrapperHashcode2top.containsKey(System.identityHashCode(wrapper));
   }
 
   public TOP getUnwrapped(TopWrapper<? extends TOP> wrapper) {
-    return wrapperHash2top.get(System.identityHashCode(wrapper));
+    return wrapperHashcode2top.get(System.identityHashCode(wrapper));
   }
 
   public JCas getJCas() {

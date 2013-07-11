@@ -100,7 +100,8 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
   public void setImplementingWrapper(String implementingWrapper) {
     this.implementingWrapper = implementingWrapper;
   }
-
+  
+  @Override
   public int getBegin() {
     return begin;
   }
@@ -109,6 +110,7 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
     this.begin = begin;
   }
 
+  @Override
   public int getEnd() {
     return end;
   }
@@ -116,5 +118,5 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
   public void setEnd(int end) {
     this.end = end;
   }
-
+  
 }

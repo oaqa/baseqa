@@ -1,4 +1,4 @@
-package edu.cmu.lti.oaqa.baseqa.gerpphase.core;
+package edu.cmu.lti.oaqa.baseqa.gerpphase;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,6 +13,7 @@ import org.oaqa.model.gerp.GerpMeta;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.google.common.reflect.TypeToken;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperIndexer;
@@ -34,7 +35,7 @@ import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
  * Pruning, which are defined by the interfaces {@link AbstractGenerator}, {@link AbstractEvidencer}
  * , {@link AbstractRanker}, and {@link AbstractPruner}. The implementing classes and parameters
  * (together defined in a yaml file) need to be specified for the parameters "generators",
- * "gatherer", "rankers", and "pruners".
+ * "evidencers", "rankers", and "pruners".
  * <p>
  * For short yaml names, the following yaml syntax is recommended:
  * <p>
@@ -70,17 +71,19 @@ import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
  */
 public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends AbstractLoggedComponent {
 
-  protected List<AbstractGenerator<W>> generators;
+  protected TypeToken<W> type = new TypeToken<W>(getClass()) {
 
-  protected List<AbstractEvidencer<W>> evidencers;
+    private static final long serialVersionUID = 1L;
 
-  protected List<AbstractRanker> rankers;
+  };
 
-  protected List<AbstractPruner> pruners;
+  protected List<AbstractGenerator<W>> generators = Lists.newArrayList();
 
-  private AbstractGenerator<W> generatorInstance;
+  protected List<AbstractEvidencer<W>> evidencers = Lists.newArrayList();
 
-  private AbstractEvidencer<W> evidencerInstance;
+  protected List<AbstractRanker> rankers = Lists.newArrayList();
+
+  protected List<AbstractPruner> pruners = Lists.newArrayList();
 
   @SuppressWarnings("unchecked")
   @Override
@@ -88,13 +91,17 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
     super.initialize(c);
     Object generatorNames = c.getConfigParameterValue("generators");
     if (generatorNames != null) {
-      generators = (List<AbstractGenerator<W>>) BaseExperimentBuilder.createResourceList(
-              generatorNames, generatorInstance.getClass());
+      for (AbstractGenerator<?> generator : BaseExperimentBuilder.createResourceList(
+              generatorNames, AbstractGenerator.class)) {
+        generators.add((AbstractGenerator<W>) generator);
+      }
     }
     Object evidencerNames = c.getConfigParameterValue("evidencers");
     if (evidencerNames != null) {
-      evidencers = (List<AbstractEvidencer<W>>) BaseExperimentBuilder.createResourceList(
-              evidencerNames, evidencerInstance.getClass());
+      for (AbstractEvidencer<?> evidencer : BaseExperimentBuilder.createResourceList(
+              evidencerNames, AbstractEvidencer.class)) {
+        evidencers.add((AbstractEvidencer<W>) evidencer);
+      }
     }
     Object rankerNames = c.getConfigParameterValue("rankers");
     if (rankerNames != null) {
@@ -109,6 +116,7 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
   @Override
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
+    System.out.println(type);
     generateGerpMeta(jcas);
     executeGerp(jcas);
   }
@@ -164,4 +172,5 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
     }
     return classNames;
   }
+
 }

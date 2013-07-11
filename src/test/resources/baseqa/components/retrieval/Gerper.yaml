@@ -1,0 +1,17 @@
+inherit: baseqa.gerpphase.Gerper
+
+generators: |
+  - inherit: baseqa.components.retrieval.BagOfWordsQueryGenerator
+  - inherit: baseqa.components.retrieval.ConceptAwareQueryGenerator
+evidencers: |
+  - inherit: baseqa.components.retrieval.IdenticalQueryEvidencer
+  - inherit: baseqa.components.retrieval.RandomQueryEvidencer
+rankers: |
+  - inherit: baseqa.components.core.ranker.HeadFirstRanker
+  - inherit: baseqa.components.core.ranker.RandomRanker
+pruners: |
+  - inherit: baseqa.components.core.pruner.HeadPreservePruner
+  - inherit: baseqa.components.core.pruner.RandomPruner
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider
