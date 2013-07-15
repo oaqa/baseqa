@@ -13,7 +13,6 @@ import org.oaqa.model.gerp.GerpMeta;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.google.common.reflect.TypeToken;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperIndexer;
@@ -71,11 +70,7 @@ import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
  */
 public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends AbstractLoggedComponent {
 
-  protected TypeToken<W> type = new TypeToken<W>(getClass()) {
-
-    private static final long serialVersionUID = 1L;
-
-  };
+  private Class<W> wrapperClass;
 
   protected List<AbstractGenerator<W>> generators = Lists.newArrayList();
 
@@ -127,11 +122,13 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
     top.addToIndexes(jcas);
   }
 
+  @SuppressWarnings("unchecked")
   private void executeGerp(JCas jcas) throws AnalysisEngineProcessException {
     WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
     GerpableList<W> outputs = new GerpableList<W>();
     // generate
     for (AbstractGenerator<W> generator : generators) {
+      wrapperClass = (Class<W>) generator.type.getClass();
       // collecting required types from jcas as inputs
       List<Set<TopWrapper<? extends TOP>>> inputOptions;
       try {
@@ -141,14 +138,14 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
       }
       Set<List<TopWrapper<? extends TOP>>> inputCombinations = Sets.cartesianProduct(inputOptions);
       log(generator.getClass().getSimpleName() + " requires "
-              + generator.getRequiredInputTypes().size() + " input types, retrieves "
-              + inputCombinations.size() + " input combinations.");
+              + generator.getRequiredInputTypes().size() + " input type(s), retrieves "
+              + inputCombinations.size() + " input combination(s).");
       for (List<TopWrapper<? extends TOP>> inputCombination : inputCombinations) {
         W gerpable = generator.generate(inputCombination);
         outputs.add(gerpable, generator.getClass().getSimpleName());
       }
     }
-    log("Generate " + outputs.getSize() + " " + type.getClass().getSimpleName() + "(s).");
+    log("Generate " + outputs.getSize() + " " + wrapperClass.getSimpleName() + "(s).");
     // evidence
     for (AbstractEvidencer<W> evidencer : evidencers) {
       List<W> gerpables = outputs.getGerpables();
