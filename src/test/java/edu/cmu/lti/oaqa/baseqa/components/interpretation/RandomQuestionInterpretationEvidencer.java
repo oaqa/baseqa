@@ -4,15 +4,15 @@ import java.util.Random;
 
 import edu.cmu.lti.oaqa.baseqa.data.gerp.DefaultEvidenceWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.EvidenceWrapper;
-import edu.cmu.lti.oaqa.baseqa.data.nlp.ParseWrapper;
-import edu.cmu.lti.oaqa.baseqa.gerpphase.parse.AbstractQuestionParseEvidencer;
+import edu.cmu.lti.oaqa.baseqa.data.kb.InterpretationWrapper;
+import edu.cmu.lti.oaqa.baseqa.gerpphase.interpretation.AbstractQuestionInterpretationEvidencer;
 
-public class RandomQuestionInterpretationEvidencer extends AbstractQuestionParseEvidencer {
+public class RandomQuestionInterpretationEvidencer extends AbstractQuestionInterpretationEvidencer {
 
   private static Random random = new Random();
 
   @Override
-  protected EvidenceWrapper<?, ?> evidence(ParseWrapper gerpable) {
+  protected EvidenceWrapper<?, ?> evidence(InterpretationWrapper gerpable) {
     return new DefaultEvidenceWrapper(random.nextFloat());
   }
 
