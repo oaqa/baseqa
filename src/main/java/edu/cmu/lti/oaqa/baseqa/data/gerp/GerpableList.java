@@ -76,6 +76,10 @@ public class GerpableList<W extends Gerpable & TopWrapper<? extends TOP>> {
       top.addToIndexes(indexer.getJCas());
     }
   }
+  
+  public int getSize() {
+    return gerpables.size();
+  }
 
   @Override
   public int hashCode() {

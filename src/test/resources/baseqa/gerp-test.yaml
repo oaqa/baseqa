@@ -9,6 +9,8 @@ collection-reader:
   inherit: adhoc.adhoc-collection-reader
 
 pipeline:
+  - inherit: baseqa.gerpphase.input.QuestionDecorator
+
   - inherit: ecd.phase
     name: question-parsing
     options: |

@@ -172,13 +172,12 @@ public class WrapperHelper {
   }
 
   public static <T extends TOP, W extends TopWrapper<T>> Set<? extends W> wrapAllFromJCas(
-          JCas jcas, Class<W> clazz) throws InstantiationException, IllegalAccessException,
+          JCas jcas, int type) throws InstantiationException, IllegalAccessException,
           IllegalArgumentException, NoSuchFieldException, SecurityException,
           AnalysisEngineProcessException, ClassNotFoundException, CASException {
-    int type = clazz.newInstance().getTypeClass().getField("type").getInt(null);
     Set<W> tops = Sets.newHashSet();
     for (TOP top : ImmutableList.copyOf(jcas.getJFSIndexRepository().getAllIndexedFS(type))) {
-      tops.add(matchSubclassAndWrapIfNotWrapped(top, clazz));
+      tops.add(WrapperHelper.<T, W> wrapIfNotWrapped(top));
     }
     return tops;
   }
@@ -193,6 +192,14 @@ public class WrapperHelper {
   }
 
   @SuppressWarnings("unchecked")
+  public static <T extends TOP, W extends TopWrapper<T>> W wrapIfNotWrapped(TOP top)
+          throws AnalysisEngineProcessException, InstantiationException, IllegalAccessException,
+          ClassNotFoundException, CASException {
+    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(top.getCAS().getJCas());
+    return (W) (indexer.checkWrapped(top) ? indexer.getWrapped(top) : wrap(top));
+  }
+
+  @SuppressWarnings("unchecked")
   private static <T extends TOP, W extends TopWrapper<T>> W matchSubclassAndWrap(TOP top,
           Class<W> superClass) throws AnalysisEngineProcessException, InstantiationException,
           IllegalAccessException, ClassNotFoundException {
@@ -203,6 +210,20 @@ public class WrapperHelper {
     Feature feature = top.getType().getFeatureByBaseName("implementingWrapper");
     String className = top.getFeatureValueAsString(feature);
     Class<? extends W> clazz = Class.forName(className).asSubclass(superClass);
+    return wrap((T) top, clazz);
+  }
+
+  @SuppressWarnings("unchecked")
+  private static <T extends TOP, W extends TopWrapper<T>> W wrap(TOP top)
+          throws AnalysisEngineProcessException, InstantiationException, IllegalAccessException,
+          ClassNotFoundException {
+    // FIXME Different TopWrapper implementations may have different ways to store the actual
+    // implementation subclass in TOP, the following method is only used for OAQATop. A method needs
+    // to be defined in the interface class, e.g. Class<? extends TopWrapper<?
+    // extends T>> getWrapperClass(TOP top);
+    Feature feature = top.getType().getFeatureByBaseName("implementingWrapper");
+    String className = top.getFeatureValueAsString(feature);
+    Class<? extends W> clazz = (Class<? extends W>) Class.forName(className);
     return wrap((T) top, clazz);
   }
 

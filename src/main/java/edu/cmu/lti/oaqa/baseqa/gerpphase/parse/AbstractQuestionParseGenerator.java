@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.cas.TOP;
+import org.oaqa.model.input.Question;
 
 import com.google.common.collect.Lists;
 
@@ -14,10 +15,9 @@ import edu.cmu.lti.oaqa.baseqa.gerpphase.core.generator.AbstractGenerator;
 
 public abstract class AbstractQuestionParseGenerator extends AbstractGenerator<ParseWrapper> {
 
-  @SuppressWarnings("unchecked")
   @Override
-  public List<Class<? extends TopWrapper<?>>> getRequiredInputTypes() {
-    return Lists.<Class<? extends TopWrapper<?>>> newArrayList(QuestionWrapper.class);
+  public List<Integer> getRequiredInputTypes() {
+    return Lists.newArrayList(Question.type);
   }
 
   @Override

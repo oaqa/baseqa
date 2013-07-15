@@ -116,7 +116,6 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
   @Override
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
-    System.out.println(type);
     generateGerpMeta(jcas);
     executeGerp(jcas);
   }
@@ -130,39 +129,49 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
 
   private void executeGerp(JCas jcas) throws AnalysisEngineProcessException {
     WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
+    GerpableList<W> outputs = new GerpableList<W>();
+    // generate
     for (AbstractGenerator<W> generator : generators) {
       // collecting required types from jcas as inputs
-      List<Class<? extends TopWrapper<?>>> classes = generator.getRequiredInputTypes();
-      List<Set<TopWrapper<? extends TOP>>> inputs;
+      List<Set<TopWrapper<? extends TOP>>> inputOptions;
       try {
-        inputs = indexer.getWrappersByClasses(classes);
+        inputOptions = indexer.getWrappersByTypes(generator.getRequiredInputTypes());
       } catch (Exception e) {
         throw new AnalysisEngineProcessException(e);
       }
-      for (List<TopWrapper<? extends TOP>> input : Sets.cartesianProduct(inputs)) {
-        // gerping for all combinations of inputs
-        GerpableList<W> outputs = new GerpableList<W>();
-        W gerpable = generator.generate(input);
+      Set<List<TopWrapper<? extends TOP>>> inputCombinations = Sets.cartesianProduct(inputOptions);
+      log(generator.getClass().getSimpleName() + " requires "
+              + generator.getRequiredInputTypes().size() + " input types, retrieves "
+              + inputCombinations.size() + " input combinations.");
+      for (List<TopWrapper<? extends TOP>> inputCombination : inputCombinations) {
+        W gerpable = generator.generate(inputCombination);
         outputs.add(gerpable, generator.getClass().getSimpleName());
-        for (AbstractEvidencer<W> evidencer : evidencers) {
-          List<W> gerpables = outputs.getGerpables();
-          List<EvidenceWrapper<?, ?>> evidences = evidencer.evidence(gerpables);
-          outputs.addAllEvidences(evidences);
-        }
-        for (AbstractRanker ranker : rankers) {
-          List<Collection<EvidenceWrapper<?, ?>>> evidences = outputs.getAllEvidences();
-          List<RankWrapper> ranks = ranker.rank(evidences);
-          outputs.addAllRanks(ranks);
-        }
-        for (AbstractPruner pruner : pruners) {
-          List<Collection<RankWrapper>> ranks = outputs.getAllRanks();
-          List<PruningDecisionWrapper> pruningDecisions = pruner.prune(ranks);
-          outputs.addAllPruningDecisions(pruningDecisions);
-        }
-        // persisting outputs
-        outputs.unwrapAllAndAddToIndexes(indexer);
       }
     }
+    log("Generate " + outputs.getSize() + " " + type.getClass().getSimpleName() + "(s).");
+    // evidence
+    for (AbstractEvidencer<W> evidencer : evidencers) {
+      List<W> gerpables = outputs.getGerpables();
+      List<EvidenceWrapper<?, ?>> evidences = evidencer.evidence(gerpables);
+      outputs.addAllEvidences(evidences);
+      log(evidencer.getClass().getSimpleName() + " gives evidences of " + evidences);
+    }
+    // rank
+    for (AbstractRanker ranker : rankers) {
+      List<Collection<EvidenceWrapper<?, ?>>> evidences = outputs.getAllEvidences();
+      List<RankWrapper> ranks = ranker.rank(evidences);
+      outputs.addAllRanks(ranks);
+      log(ranker.getClass().getSimpleName() + " gives ranks of " + ranks);
+    }
+    // prune
+    for (AbstractPruner pruner : pruners) {
+      List<Collection<RankWrapper>> ranks = outputs.getAllRanks();
+      List<PruningDecisionWrapper> pruningDecisions = pruner.prune(ranks);
+      outputs.addAllPruningDecisions(pruningDecisions);
+      log(pruner.getClass().getSimpleName() + " gives pruning decisions of " + pruningDecisions);
+    }
+    // persisting outputs
+    outputs.unwrapAllAndAddToIndexes(indexer);
   }
 
   private static List<String> toClassNames(List<? extends Object> objects) {
@@ -171,6 +180,10 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
       classNames.add(object.getClass().getSimpleName());
     }
     return classNames;
+  }
+
+  private void log(String message) {
+    log(GerpLogEntry.getMetaLog(), message);
   }
 
 }

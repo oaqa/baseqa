@@ -24,7 +24,7 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
 
   private QuestionType questionType;
 
-  protected QuestionWrapper(int begin, int end, String id, String source, String text,
+  public QuestionWrapper(int begin, int end, String id, String source, String text,
           QuestionType questionType) {
     super(begin, end);
     this.id = id;
@@ -33,7 +33,7 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
     this.questionType = questionType;
   }
 
-  protected QuestionWrapper(int begin, int end, String id, String source, String text,
+  public QuestionWrapper(int begin, int end, String id, String source, String text,
           QuestionType questionClass, String generator) {
     super(begin, end, generator);
     this.id = id;

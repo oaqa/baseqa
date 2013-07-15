@@ -1,6 +1,5 @@
 package edu.cmu.lti.oaqa.baseqa.data.core;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +21,7 @@ import com.google.common.collect.SetMultimap;
  * <p>
  * To use it as a wrapper for {@link JCas}, one can retrieve all the wrappers by the {@link Class}
  * of the wrapper, similar to {@link JCas#getAnnotationIndex(int)}, by invoking
- * {@link #getWrappersByClasses(List)}.
+ * {@link #getWrappersByTypes(List)}.
  * <p>
  * Since this class is responsible to guarantee the one-to-one correspondence between {@link TOP}s
  * in the view of the {@link JCas} and the wrappers included in an instance of this class. Two
@@ -70,7 +69,7 @@ public class WrapperIndexer {
   /**
    * A local cache for the mapping between wrapper {@link Class} and actual wrappers.
    */
-  private SetMultimap<Class<? extends TopWrapper<? extends TOP>>, TopWrapper<? extends TOP>> class2wrappers;
+  private SetMultimap<Integer, TopWrapper<? extends TOP>> type2wrappers;
 
   /**
    * A mapping between the native hash code (aka identical Java Object reference id for each
@@ -89,35 +88,33 @@ public class WrapperIndexer {
 
   private WrapperIndexer(JCas jcas) {
     this.jcas = jcas;
-    class2wrappers = HashMultimap.create();
+    type2wrappers = HashMultimap.create();
     wrapperHashcode2top = Maps.newHashMap();
     topAddress2wrapper = Maps.newHashMap();
     addJCasWrapperIndexerPair(jcas, this);
   }
 
-  public List<Set<TopWrapper<? extends TOP>>> getWrappersByClasses(
-          List<Class<? extends TopWrapper<?>>> classes) throws AnalysisEngineProcessException,
-          IllegalArgumentException, SecurityException, InstantiationException,
-          IllegalAccessException, NoSuchFieldException, ClassNotFoundException, CASException {
+  public List<Set<TopWrapper<? extends TOP>>> getWrappersByTypes(List<Integer> types)
+          throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
+          InstantiationException, IllegalAccessException, NoSuchFieldException,
+          ClassNotFoundException, CASException {
     List<Set<TopWrapper<?>>> wrappers = Lists.newArrayList();
-    for (Class<? extends TopWrapper<?>> clazz : classes) {
-      if (!class2wrappers.containsKey(clazz)) {
-        addClassWrappersToIndex(clazz);
+    for (int type : types) {
+      if (!type2wrappers.containsKey(type)) {
+        addClassWrappersToIndex(type);
       }
-      wrappers.add(class2wrappers.get(clazz));
+      wrappers.add(type2wrappers.get(type));
     }
     return wrappers;
   }
 
-  private void addClassWrappersToIndex(Class<? extends TopWrapper<? extends TOP>> clazz)
-          throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
-          InstantiationException, IllegalAccessException, NoSuchFieldException,
-          ClassNotFoundException, CASException {
-    if (class2wrappers.containsKey(clazz)) {
+  private void addClassWrappersToIndex(int type) throws AnalysisEngineProcessException,
+          IllegalArgumentException, SecurityException, InstantiationException,
+          IllegalAccessException, NoSuchFieldException, ClassNotFoundException, CASException {
+    if (type2wrappers.containsKey(type)) {
       return;
     }
-    assert Arrays.asList(clazz.getInterfaces()).contains(TopWrapper.class);
-    class2wrappers.putAll(clazz, WrapperHelper.wrapAllFromJCas(jcas, clazz));
+    type2wrappers.putAll(type, WrapperHelper.wrapAllFromJCas(jcas, type));
   }
 
   public boolean checkWrapped(TOP top) {
