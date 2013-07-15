@@ -67,14 +67,11 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
     this.conceptType = top.getConceptType();
     this.text = top.getText();
     this.originalText = top.getOriginalText();
-    try {
+    if (top.getOperator() != null) {
       this.operator = WrapperHelper.matchSubclassAndWrapIfNotWrapped(top.getOperator(),
               QueryOperatorWrapper.class);
-      this.operatorArgs = WrapperHelper.wrapTopList(top.getOperatorArgs(),
-              QueryConceptWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
     }
+    this.operatorArgs = WrapperHelper.wrapTopList(top.getOperatorArgs(), QueryConceptWrapper.class);
     this.partOfSpeech = top.getPartOfSpeech();
   }
 
@@ -85,7 +82,9 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
     top.setConceptType(conceptType);
     top.setText(text);
     top.setOriginalText(originalText);
-    top.setOperator(operator.unwrapIfNotUnwrapped(jcas));
+    if (operator != null) {
+      top.setOperator(operator.unwrapIfNotUnwrapped(jcas));
+    }
     top.setOperatorArgs(WrapperHelper.unwrapTopList(operatorArgs, jcas));
     top.setPartOfSpeech(partOfSpeech);
     return top;

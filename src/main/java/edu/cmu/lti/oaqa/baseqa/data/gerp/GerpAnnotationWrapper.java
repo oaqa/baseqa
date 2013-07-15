@@ -82,14 +82,10 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
   public void wrap(T annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     generators = WrapperHelper.wrapStringList(annotation.getGenerators());
-    try {
-      evidences = WrapperHelper.wrapTopList(annotation.getEvidences(), EvidenceWrapper.class);
-      ranks = WrapperHelper.wrapTopList(annotation.getRanks(), RankWrapper.class);
-      pruningDecisions = WrapperHelper.wrapTopList(annotation.getPruningDecisions(),
-              PruningDecisionWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    evidences = WrapperHelper.wrapTopList(annotation.getEvidences(), EvidenceWrapper.class);
+    ranks = WrapperHelper.wrapTopList(annotation.getRanks(), RankWrapper.class);
+    pruningDecisions = WrapperHelper.wrapTopList(annotation.getPruningDecisions(),
+            PruningDecisionWrapper.class);
   }
 
   @Override

@@ -36,7 +36,7 @@ public class QueryOperatorWrapper extends GerpTopWrapper<QueryOperator> {
   }
 
   public QueryOperatorWrapper() {
-    this(null, Lists.<String> newArrayList());
+    this(QueryOperatorName.REQUIRED, Lists.<String> newArrayList());
   }
 
   @Override

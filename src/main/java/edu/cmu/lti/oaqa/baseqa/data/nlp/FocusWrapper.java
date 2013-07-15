@@ -40,11 +40,9 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
   @Override
   public void wrap(Focus annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
-    try {
+    if (annotation.getToken() != null) {
       this.token = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getToken(),
               TokenWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
     }
     this.label = annotation.getLabel();
   }
@@ -52,7 +50,9 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
   @Override
   public Focus unwrap(JCas jcas) throws AnalysisEngineProcessException {
     Focus annotation = super.unwrap(jcas);
-    annotation.setToken(token.unwrapIfNotUnwrapped(jcas));
+    if (token != null) {
+      annotation.setToken(token.unwrapIfNotUnwrapped(jcas));
+    }
     annotation.setLabel(label);
     return annotation;
   }

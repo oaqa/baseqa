@@ -43,12 +43,8 @@ public class RelationWrapper extends ConceptWrapper {
   @Override
   public void wrap(Concept top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    try {
-      this.arguments = WrapperHelper.wrapTopList(((Relation) top).getArguments(),
-              EntityWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    this.arguments = WrapperHelper
+            .wrapTopList(((Relation) top).getArguments(), EntityWrapper.class);
   }
 
   @Override

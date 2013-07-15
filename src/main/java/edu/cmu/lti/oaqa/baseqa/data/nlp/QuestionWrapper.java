@@ -40,7 +40,7 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
   }
 
   public QuestionWrapper() {
-    this(0, Integer.MAX_VALUE, null, null, null, null);
+    this(0, Integer.MAX_VALUE, null, null, null, QuestionClassType.UNCLASSIFIED);
   }
 
   @Override

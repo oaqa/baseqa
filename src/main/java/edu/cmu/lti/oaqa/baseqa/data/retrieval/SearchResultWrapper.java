@@ -63,12 +63,8 @@ public abstract class SearchResultWrapper extends GerpTopWrapper<SearchResult> {
     this.rank = top.getRank();
     this.queryString = top.getQueryString();
     this.searchId = top.getSearchId();
-    try {
-      this.candidateAnswers = WrapperHelper.wrapTopArray(top.getCandidateAnswers(),
-              CandidateAnswerVariantWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    this.candidateAnswers = WrapperHelper.wrapTopArray(top.getCandidateAnswers(),
+            CandidateAnswerVariantWrapper.class);
   }
 
   @Override

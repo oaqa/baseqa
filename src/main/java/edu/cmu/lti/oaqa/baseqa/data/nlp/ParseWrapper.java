@@ -39,13 +39,9 @@ public class ParseWrapper extends GerpTopWrapper<Parse> {
   @Override
   public void wrap(Parse top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    try {
-      this.tokens = WrapperHelper.wrapAnnotationList(top.getTokens(), TokenWrapper.class);
-      this.semanticRoles = WrapperHelper.wrapAnnotationList(top.getSemanticRoles(),
-              SemanticRoleWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    this.tokens = WrapperHelper.wrapAnnotationList(top.getTokens(), TokenWrapper.class);
+    this.semanticRoles = WrapperHelper.wrapAnnotationList(top.getSemanticRoles(),
+            SemanticRoleWrapper.class);
   }
 
   @Override

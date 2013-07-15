@@ -48,12 +48,8 @@ public class RelationSearchResultWrapper extends AnswerSearchResultWrapper {
   @Override
   public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    try {
-      this.context = WrapperHelper.wrapTopArray(((RelationSearchResult) top).getContext(),
-              RelationWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    this.context = WrapperHelper.wrapTopArray(((RelationSearchResult) top).getContext(),
+            RelationWrapper.class);
   }
 
   @Override

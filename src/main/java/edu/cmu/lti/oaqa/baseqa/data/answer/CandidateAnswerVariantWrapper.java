@@ -60,12 +60,8 @@ public class CandidateAnswerVariantWrapper extends GerpTopWrapper<CandidateAnswe
   @Override
   public void wrap(CandidateAnswerVariant top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    try {
-      this.occurrences = WrapperHelper.wrapAnnotationList(top.getOccurrences(),
-              CandidateAnswerOccurrenceWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    this.occurrences = WrapperHelper.wrapAnnotationList(top.getOccurrences(),
+            CandidateAnswerOccurrenceWrapper.class);
     this.candidateId = top.getCandidateId();
     this.text = top.getText();
     this.alternativeNames = WrapperHelper.wrapStringList(top.getAlternativeNames());

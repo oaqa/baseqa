@@ -49,12 +49,8 @@ public class ConceptWrapper extends GerpTopWrapper<Concept> {
     super.wrap(top);
     this.name = top.getName();
     this.ids = WrapperHelper.wrapStringList(top.getIds());
-    try {
-      this.mentions = WrapperHelper.wrapAnnotationList(top.getMentions(),
-              ConceptMentionWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    this.mentions = WrapperHelper
+            .wrapAnnotationList(top.getMentions(), ConceptMentionWrapper.class);
   }
 
   @Override

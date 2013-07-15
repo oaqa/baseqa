@@ -42,12 +42,8 @@ public class RelationMentionWrapper extends ConceptMentionWrapper {
   @Override
   public void wrap(ConceptMention top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    try {
-      this.argumentMentions = WrapperHelper.wrapAnnotationList(
-              ((RelationMention) top).getArgumentMentions(), EntityMentionWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    this.argumentMentions = WrapperHelper.wrapAnnotationList(
+            ((RelationMention) top).getArgumentMentions(), EntityMentionWrapper.class);
   }
 
   @Override

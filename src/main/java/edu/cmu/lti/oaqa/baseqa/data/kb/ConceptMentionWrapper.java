@@ -37,18 +37,18 @@ public class ConceptMentionWrapper extends GerpAnnotationWrapper<ConceptMention>
   @Override
   public void wrap(ConceptMention annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
-    try {
+    if (annotation.getConcept() != null) {
       this.concept = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getConcept(),
               ConceptWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
     }
   }
 
   @Override
   public ConceptMention unwrap(JCas jcas) throws AnalysisEngineProcessException {
     ConceptMention annotation = super.unwrap(jcas);
-    annotation.setConcept(concept.unwrapIfNotUnwrapped(jcas));
+    if (concept != null) {
+      annotation.setConcept(concept.unwrapIfNotUnwrapped(jcas));
+    }
     return annotation;
   }
 

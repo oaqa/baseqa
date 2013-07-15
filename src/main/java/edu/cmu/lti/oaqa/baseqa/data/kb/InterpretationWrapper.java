@@ -44,13 +44,9 @@ public class InterpretationWrapper extends GerpTopWrapper<Interpretation> {
   @Override
   public void wrap(Interpretation top) throws AnalysisEngineProcessException {
     super.wrap(top);
-    try {
-      this.concepts = WrapperHelper.wrapTopList(top.getConcepts(), ConceptWrapper.class);
-      this.mentions = WrapperHelper.wrapAnnotationList(top.getMentions(),
-              ConceptMentionWrapper.class);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    this.concepts = WrapperHelper.wrapTopList(top.getConcepts(), ConceptWrapper.class);
+    this.mentions = WrapperHelper
+            .wrapAnnotationList(top.getMentions(), ConceptMentionWrapper.class);
   }
 
   @Override

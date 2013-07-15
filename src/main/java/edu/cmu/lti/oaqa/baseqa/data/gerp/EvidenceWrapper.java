@@ -56,12 +56,8 @@ public abstract class EvidenceWrapper<T extends TOP, W extends TopWrapper<T>> ex
   public void wrap(Evidence top) throws AnalysisEngineProcessException {
     super.wrap(top);
     confidence = top.getConfidence();
-    try {
-      additionalEvidences = WrapperHelper.wrapTopList(top.getAdditionalEvidences(),
-              additionalEvidenceWrapperClass);
-    } catch (Exception e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    additionalEvidences = WrapperHelper.wrapTopList(top.getAdditionalEvidences(),
+            additionalEvidenceWrapperClass);
   }
 
   @Override
