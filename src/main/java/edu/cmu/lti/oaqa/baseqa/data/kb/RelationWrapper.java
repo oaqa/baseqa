@@ -8,6 +8,7 @@ import org.oaqa.model.kb.Concept;
 import org.oaqa.model.kb.Relation;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 
@@ -25,8 +26,13 @@ public class RelationWrapper extends ConceptWrapper {
 
   public RelationWrapper(String name, List<String> ids, List<ConceptMentionWrapper> mentions,
           List<EntityWrapper> arguments, String generator) {
-    super(name, ids, mentions, generator);
-    this.arguments = arguments;
+    this(name, ids, mentions, arguments);
+    addGenerator(generator);
+  }
+
+  public RelationWrapper() {
+    this(null, Lists.<String> newArrayList(), Lists.<ConceptMentionWrapper> newArrayList(), Lists
+            .<EntityWrapper> newArrayList());
   }
 
   @Override

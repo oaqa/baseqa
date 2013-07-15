@@ -8,7 +8,7 @@ import org.oaqa.model.gerp.Rank;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
-public final class RankWrapper extends GerpBaseWrapper<Rank> implements Comparable<RankWrapper> {
+public class RankWrapper extends GerpBaseWrapper<Rank> implements Comparable<RankWrapper> {
 
   private static final long serialVersionUID = 1L;
 
@@ -20,6 +20,10 @@ public final class RankWrapper extends GerpBaseWrapper<Rank> implements Comparab
     super();
     this.rank = rank;
     this.score = score;
+  }
+
+  public RankWrapper() {
+    this(Integer.MAX_VALUE, Float.NEGATIVE_INFINITY);
   }
 
   @Override
@@ -74,6 +78,11 @@ public final class RankWrapper extends GerpBaseWrapper<Rank> implements Comparab
       return false;
     RankWrapper other = (RankWrapper) obj;
     return Objects.equal(rank, other.rank) && Objects.equal(score, other.score);
+  }
+
+  @Override
+  public String toString() {
+    return score + "(" + rank + ")";
   }
 
   public int getRank() {

@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.nlp.Token;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpAnnotationWrapper;
@@ -53,16 +54,14 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
           List<String> argumentLabels, TokenWrapper parse, String semanticType,
           String partOfSpeech, String lemmaForm, boolean isMainReference, boolean isVariable,
           String determiner, String generator) {
-    super(begin, end, generator);
-    this.arguments = arguments;
-    this.argumentLabels = argumentLabels;
-    this.parse = parse;
-    this.semanticType = semanticType;
-    this.partOfSpeech = partOfSpeech;
-    this.lemmaForm = lemmaForm;
-    this.isMainReference = isMainReference;
-    this.isVariable = isVariable;
-    this.determiner = determiner;
+    this(begin, end, arguments, argumentLabels, parse, semanticType, partOfSpeech, lemmaForm,
+            isMainReference, isVariable, determiner);
+    addGenerator(generator);
+  }
+
+  public TokenWrapper() {
+    this(0, Integer.MAX_VALUE, Lists.<TokenWrapper> newArrayList(), Lists.<String> newArrayList(),
+            null, null, null, null, false, false, null);
   }
 
   @Override
@@ -81,7 +80,8 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
     }
     this.argumentLabels = WrapperHelper.wrapStringArray(annotation.getArgumentLabels());
     try {
-      this.parse = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getParse(), this.getClass());
+      this.parse = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getParse(),
+              this.getClass());
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

@@ -10,6 +10,7 @@ import org.oaqa.model.retrieval.PassageFromRelation;
 import org.oaqa.model.retrieval.SearchResult;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
@@ -34,9 +35,15 @@ public class PassageFromRelationWrapper extends PassageWrapper {
           String queryString, String searchId,
           List<CandidateAnswerVariantWrapper> candidateAnswers, String title, String docId,
           int begin, int end, String aspects, RelationWrapper sourceRelation, String generator) {
-    super(uri, score, text, rank, queryString, searchId, candidateAnswers, title, docId, begin,
-            end, aspects, generator);
-    this.sourceRelation = sourceRelation;
+    this(uri, score, text, rank, queryString, searchId, candidateAnswers, title, docId, begin, end,
+            aspects, sourceRelation);
+    addGenerator(generator);
+  }
+
+  public PassageFromRelationWrapper() {
+    this(null, Float.NEGATIVE_INFINITY, null, Integer.MAX_VALUE, null, null, Lists
+            .<CandidateAnswerVariantWrapper> newArrayList(), null, null, 0, Integer.MAX_VALUE,
+            null, null);
   }
 
   @Override

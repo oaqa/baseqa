@@ -32,6 +32,10 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
     this.end = end;
   }
 
+  public OAQAAnnotationWrapper() {
+    this(0, Integer.MAX_VALUE);
+  }
+
   @SuppressWarnings("unchecked")
   public T unwrapIfNotUnwrapped(JCas jcas) throws AnalysisEngineProcessException {
     if (WrapperIndexer.getWrapperIndexer(jcas).checkUnwrapped(this)) {
@@ -100,7 +104,7 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
   public void setImplementingWrapper(String implementingWrapper) {
     this.implementingWrapper = implementingWrapper;
   }
-  
+
   @Override
   public int getBegin() {
     return begin;
@@ -118,5 +122,5 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
   public void setEnd(int end) {
     this.end = end;
   }
-  
+
 }

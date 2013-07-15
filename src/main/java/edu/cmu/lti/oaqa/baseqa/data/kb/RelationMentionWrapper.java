@@ -8,6 +8,7 @@ import org.oaqa.model.kb.ConceptMention;
 import org.oaqa.model.kb.RelationMention;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 
@@ -25,8 +26,12 @@ public class RelationMentionWrapper extends ConceptMentionWrapper {
 
   public RelationMentionWrapper(int begin, int end, ConceptWrapper concept,
           List<EntityMentionWrapper> argumentMentions, String generator) {
-    super(begin, end, concept, generator);
-    this.argumentMentions = argumentMentions;
+    this(begin, end, concept, argumentMentions);
+    addGenerator(generator);
+  }
+
+  public RelationMentionWrapper() {
+    this(0, Integer.MAX_VALUE, null, Lists.<EntityMentionWrapper> newArrayList());
   }
 
   @Override

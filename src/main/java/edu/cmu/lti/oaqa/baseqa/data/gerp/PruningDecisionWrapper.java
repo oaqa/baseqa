@@ -8,7 +8,7 @@ import org.oaqa.model.gerp.PruningDecision;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
-public final class PruningDecisionWrapper extends GerpBaseWrapper<PruningDecision> implements
+public class PruningDecisionWrapper extends GerpBaseWrapper<PruningDecision> implements
         Comparable<PruningDecisionWrapper> {
 
   private static final long serialVersionUID = 1L;
@@ -18,6 +18,10 @@ public final class PruningDecisionWrapper extends GerpBaseWrapper<PruningDecisio
   public PruningDecisionWrapper(boolean decision) {
     super();
     this.decision = decision;
+  }
+
+  public PruningDecisionWrapper() {
+    this(false);
   }
 
   @Override
@@ -70,6 +74,11 @@ public final class PruningDecisionWrapper extends GerpBaseWrapper<PruningDecisio
       return false;
     PruningDecisionWrapper other = (PruningDecisionWrapper) obj;
     return Objects.equal(decision, other.decision);
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(decision);
   }
 
   public boolean isPruned() {

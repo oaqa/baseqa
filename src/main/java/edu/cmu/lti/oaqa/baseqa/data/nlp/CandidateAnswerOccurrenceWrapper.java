@@ -23,11 +23,14 @@ public class CandidateAnswerOccurrenceWrapper extends
     this.mentionType = mentionType;
   }
 
-  public CandidateAnswerOccurrenceWrapper(int begin, int end, String label, String mentionType,
+  public CandidateAnswerOccurrenceWrapper(int begin, int end, String text, String mentionType,
           String generator) {
-    super(begin, end, generator);
-    this.text = label;
-    this.mentionType = mentionType;
+    this(begin, end, text, mentionType);
+    addGenerator(generator);
+  }
+
+  public CandidateAnswerOccurrenceWrapper() {
+    this(0, Integer.MAX_VALUE, null, null);
   }
 
   @Override

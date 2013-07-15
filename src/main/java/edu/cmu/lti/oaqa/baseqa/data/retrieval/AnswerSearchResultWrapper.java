@@ -18,7 +18,8 @@ public class AnswerSearchResultWrapper extends SearchResultWrapper {
   public AnswerSearchResultWrapper(String uri, float score, String text, int rank,
           String queryString, String searchId,
           List<CandidateAnswerVariantWrapper> candidateAnswers, String generator) {
-    super(uri, score, text, rank, queryString, searchId, candidateAnswers, generator);
+    this(uri, score, text, rank, queryString, searchId, candidateAnswers);
+    addGenerator(generator);
   }
 
   @Override

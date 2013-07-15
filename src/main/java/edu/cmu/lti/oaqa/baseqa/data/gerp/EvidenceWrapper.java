@@ -15,7 +15,7 @@ import com.google.common.collect.ComparisonChain;
 import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 
-public class EvidenceWrapper<T extends TOP, W extends TopWrapper<T>> extends
+public abstract class EvidenceWrapper<T extends TOP, W extends TopWrapper<T>> extends
         GerpBaseWrapper<Evidence> implements Comparable<EvidenceWrapper<T, W>> {
 
   private static final long serialVersionUID = 1L;
@@ -30,17 +30,17 @@ public class EvidenceWrapper<T extends TOP, W extends TopWrapper<T>> extends
     super();
   }
 
-  public EvidenceWrapper(float confidence, Class<W> additionalEvidenceWrapperClass) {
+  protected EvidenceWrapper(float confidence, Class<W> additionalEvidenceWrapperClass) {
     super();
     this.confidence = confidence;
     this.additionalEvidenceWrapperClass = additionalEvidenceWrapperClass;
     this.additionalEvidences = new ArrayList<W>();
   }
 
-  public EvidenceWrapper(float confidence, W additionalEvidence,
+  protected EvidenceWrapper(float confidence, W additionalEvidence,
           Class<W> additionalEvidenceWrapperClass) {
     this(confidence, additionalEvidenceWrapperClass);
-    this.addAdditionalEvidence(additionalEvidence);
+    addAdditionalEvidence(additionalEvidence);
   }
 
   public void addAdditionalEvidence(W additionalEvidence) {
@@ -106,6 +106,11 @@ public class EvidenceWrapper<T extends TOP, W extends TopWrapper<T>> extends
     EvidenceWrapper other = (EvidenceWrapper) obj;
     return Objects.equal(this.confidence, other.confidence)
             && Objects.equal(this.additionalEvidences, other.additionalEvidences);
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(confidence);
   }
 
   public float getConfidence() {

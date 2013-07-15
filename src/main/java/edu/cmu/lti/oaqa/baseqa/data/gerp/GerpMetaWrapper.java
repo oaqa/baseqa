@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.gerp.GerpMeta;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
@@ -30,6 +31,11 @@ public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
     this.evidencers = evidencers;
     this.rankers = rankers;
     this.pruners = pruners;
+  }
+
+  public GerpMetaWrapper() {
+    this(Lists.<String> newArrayList(), Lists.<String> newArrayList(), Lists
+            .<String> newArrayList(), Lists.<String> newArrayList());
   }
 
   @Override

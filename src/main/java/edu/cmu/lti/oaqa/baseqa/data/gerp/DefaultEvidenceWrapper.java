@@ -21,7 +21,11 @@ public class DefaultEvidenceWrapper extends EvidenceWrapper<OAQATop, OAQATopWrap
 
   public DefaultEvidenceWrapper(float confidence, OAQATopWrapper<OAQATop> additionalEvidence) {
     this(confidence);
-    this.addAdditionalEvidence(additionalEvidence);
+    addAdditionalEvidence(additionalEvidence);
+  }
+
+  public DefaultEvidenceWrapper() {
+    this(0f);
   }
 
 }

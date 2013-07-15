@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.answer.CandidateAnswerVariant;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
@@ -39,16 +40,16 @@ public class CandidateAnswerVariantWrapper extends GerpTopWrapper<CandidateAnswe
     this.docId = docId;
   }
 
+  public CandidateAnswerVariantWrapper() {
+    this(Lists.<CandidateAnswerOccurrenceWrapper> newArrayList(), null, null, Lists
+            .<String> newArrayList(), null, null);
+  }
+
   public CandidateAnswerVariantWrapper(List<CandidateAnswerOccurrenceWrapper> occurrences,
           String candidateId, String text, List<String> alternativeNames, String uri, String docId,
           String generator) {
-    super(generator);
-    this.occurrences = occurrences;
-    this.candidateId = candidateId;
-    this.text = text;
-    this.alternativeNames = alternativeNames;
-    this.uri = uri;
-    this.docId = docId;
+    this(occurrences, candidateId, text, alternativeNames, uri, docId);
+    addGenerator(generator);
   }
 
   @Override

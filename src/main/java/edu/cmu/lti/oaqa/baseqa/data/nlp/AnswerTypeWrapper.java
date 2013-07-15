@@ -27,9 +27,12 @@ public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
 
   public AnswerTypeWrapper(int begin, int end, String label, OAQAAnnotationWrapper<?> targetType,
           String generator) {
-    super(begin, end, generator);
-    this.label = label;
-    this.targetType = targetType;
+    this(begin, end, label, targetType);
+    addGenerator(generator);
+  }
+
+  public AnswerTypeWrapper() {
+    this(0, Integer.MAX_VALUE, null, null, null);
   }
 
   @Override

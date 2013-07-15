@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.Search;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
@@ -34,11 +35,12 @@ public class SearchWrapper extends GerpTopWrapper<Search> {
 
   public SearchWrapper(String query, List<SearchResultWrapper> hitList,
           AbstractQueryWrapper abstractQuery, String searchId, String generator) {
-    super(generator);
-    this.query = query;
-    this.hitList = hitList;
-    this.abstractQuery = abstractQuery;
-    this.searchId = searchId;
+    this(query, hitList, abstractQuery, searchId);
+    addGenerator(generator);
+  }
+
+  public SearchWrapper() {
+    this(null, Lists.<SearchResultWrapper> newArrayList(), null, null);
   }
 
   @Override

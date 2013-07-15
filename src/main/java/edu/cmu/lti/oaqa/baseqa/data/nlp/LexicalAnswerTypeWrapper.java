@@ -25,9 +25,12 @@ public class LexicalAnswerTypeWrapper extends GerpAnnotationWrapper<LexicalAnswe
 
   public LexicalAnswerTypeWrapper(int begin, int end, TokenWrapper token, String label,
           String generator) {
-    super(begin, end, generator);
-    this.token = token;
-    this.label = label;
+    this(begin, end, token, label);
+    addGenerator(generator);
+  }
+
+  public LexicalAnswerTypeWrapper() {
+    this(0, Integer.MAX_VALUE, null, null);
   }
 
   @Override
@@ -39,7 +42,8 @@ public class LexicalAnswerTypeWrapper extends GerpAnnotationWrapper<LexicalAnswe
   public void wrap(LexicalAnswerType annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     try {
-      this.token = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getToken(), TokenWrapper.class);
+      this.token = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getToken(),
+              TokenWrapper.class);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

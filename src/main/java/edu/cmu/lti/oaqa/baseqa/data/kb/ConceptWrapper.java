@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.kb.Concept;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
@@ -30,10 +31,12 @@ public class ConceptWrapper extends GerpTopWrapper<Concept> {
 
   public ConceptWrapper(String name, List<String> ids, List<ConceptMentionWrapper> mentions,
           String generator) {
-    super(generator);
-    this.name = name;
-    this.ids = ids;
-    this.mentions = mentions;
+    this(name, ids, mentions);
+    addGenerator(generator);
+  }
+
+  public ConceptWrapper() {
+    this(null, Lists.<String> newArrayList(), Lists.<ConceptMentionWrapper> newArrayList());
   }
 
   @Override

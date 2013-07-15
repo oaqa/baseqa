@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.QueryOperator;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
@@ -30,9 +31,12 @@ public class QueryOperatorWrapper extends GerpTopWrapper<QueryOperator> {
   }
 
   public QueryOperatorWrapper(QueryOperatorName name, List<String> args, String generator) {
-    super(generator);
-    this.name = name;
-    this.args = args;
+    this(name, args);
+    addGenerator(generator);
+  }
+
+  public QueryOperatorWrapper() {
+    this(null, Lists.<String> newArrayList());
   }
 
   @Override

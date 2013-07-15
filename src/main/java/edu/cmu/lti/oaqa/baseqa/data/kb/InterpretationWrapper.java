@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.kb.Interpretation;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
@@ -27,9 +28,12 @@ public class InterpretationWrapper extends GerpTopWrapper<Interpretation> {
 
   public InterpretationWrapper(List<ConceptWrapper> concepts, List<ConceptMentionWrapper> mentions,
           String generator) {
-    super(generator);
-    this.concepts = concepts;
-    this.mentions = mentions;
+    this(concepts, mentions);
+    addGenerator(generator);
+  }
+
+  public InterpretationWrapper() {
+    this(Lists.<ConceptWrapper> newArrayList(), Lists.<ConceptMentionWrapper> newArrayList());
   }
 
   @Override

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.oaqa.model.kb.Entity;
 
+import com.google.common.collect.Lists;
+
 public class EntityWrapper extends ConceptWrapper {
 
   private static final long serialVersionUID = 1L;
@@ -14,7 +16,12 @@ public class EntityWrapper extends ConceptWrapper {
 
   public EntityWrapper(String name, List<String> ids, List<ConceptMentionWrapper> mentions,
           String generator) {
-    super(name, ids, mentions, generator);
+    this(name, ids, mentions);
+    addGenerator(generator);
+  }
+
+  public EntityWrapper() {
+    this(null, Lists.<String> newArrayList(), Lists.<ConceptMentionWrapper> newArrayList());
   }
 
   @Override

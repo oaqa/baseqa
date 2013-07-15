@@ -8,6 +8,7 @@ import org.oaqa.model.retrieval.Document;
 import org.oaqa.model.retrieval.SearchResult;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 
@@ -30,9 +31,13 @@ public class DocumentWrapper extends SearchResultWrapper {
   public DocumentWrapper(String uri, float score, String text, int rank, String queryString,
           String searchId, List<CandidateAnswerVariantWrapper> candidateAnswers, String title,
           String docId, String generator) {
-    super(uri, score, text, rank, queryString, searchId, candidateAnswers, generator);
-    this.title = title;
-    this.docId = docId;
+    this(uri, score, text, rank, queryString, searchId, candidateAnswers, title, docId);
+    addGenerator(generator);
+  }
+
+  public DocumentWrapper() {
+    this(null, Float.NEGATIVE_INFINITY, null, Integer.MAX_VALUE, null, null, Lists
+            .<CandidateAnswerVariantWrapper> newArrayList(), null, null);
   }
 
   @Override

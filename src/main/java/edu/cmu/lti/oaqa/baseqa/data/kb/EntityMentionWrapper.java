@@ -11,7 +11,12 @@ public class EntityMentionWrapper extends ConceptMentionWrapper {
   }
 
   public EntityMentionWrapper(int begin, int end, ConceptWrapper concept, String generator) {
-    super(begin, end, concept, generator);
+    this(begin, end, concept);
+    addGenerator(generator);
+  }
+
+  public EntityMentionWrapper() {
+    this(0, Integer.MAX_VALUE, null);
   }
 
   @Override

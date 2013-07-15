@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.AbstractQuery;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
@@ -23,8 +24,12 @@ public class AbstractQueryWrapper extends GerpTopWrapper<AbstractQuery> {
   }
 
   public AbstractQueryWrapper(List<QueryConceptWrapper> concepts, String generator) {
-    super(generator);
-    this.concepts = concepts;
+    this(concepts);
+    addGenerator(generator);
+  }
+
+  public AbstractQueryWrapper() {
+    this(Lists.<QueryConceptWrapper> newArrayList());
   }
 
   @Override

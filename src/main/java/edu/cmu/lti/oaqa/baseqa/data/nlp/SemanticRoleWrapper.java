@@ -20,8 +20,12 @@ public class SemanticRoleWrapper extends GerpAnnotationWrapper<SemanticRole> {
   }
 
   public SemanticRoleWrapper(int begin, int end, String label, String generator) {
-    super(begin, end, generator);
-    this.label = label;
+    this(begin, end, label);
+    addGenerator(generator);
+  }
+
+  public SemanticRoleWrapper() {
+    this(0, Integer.MAX_VALUE, null);
   }
 
   @Override

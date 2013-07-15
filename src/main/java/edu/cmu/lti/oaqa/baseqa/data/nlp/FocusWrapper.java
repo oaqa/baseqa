@@ -24,9 +24,12 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
   }
 
   public FocusWrapper(int begin, int end, TokenWrapper token, String label, String generator) {
-    super(begin, end, generator);
-    this.token = token;
-    this.label = label;
+    this(begin, end, token, label);
+    addGenerator(generator);
+  }
+
+  public FocusWrapper() {
+    this(0, Integer.MAX_VALUE, null, null);
   }
 
   @Override
@@ -38,7 +41,8 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
   public void wrap(Focus annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     try {
-      this.token = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getToken(), TokenWrapper.class);
+      this.token = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getToken(),
+              TokenWrapper.class);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

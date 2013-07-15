@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.SearchResult;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
@@ -44,14 +45,13 @@ public abstract class SearchResultWrapper extends GerpTopWrapper<SearchResult> {
 
   public SearchResultWrapper(String uri, float score, String text, int rank, String queryString,
           String searchId, List<CandidateAnswerVariantWrapper> candidateAnswers, String generator) {
-    super(generator);
-    this.uri = uri;
-    this.score = score;
-    this.text = text;
-    this.rank = rank;
-    this.queryString = queryString;
-    this.searchId = searchId;
-    this.candidateAnswers = candidateAnswers;
+    this(uri, score, text, rank, queryString, searchId, candidateAnswers);
+    addGenerator(generator);
+  }
+
+  public SearchResultWrapper() {
+    this(null, Float.NEGATIVE_INFINITY, null, Integer.MAX_VALUE, null, null, Lists
+            .<CandidateAnswerVariantWrapper> newArrayList());
   }
 
   @Override

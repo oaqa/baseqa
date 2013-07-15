@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.answer.Answer;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
@@ -25,10 +26,13 @@ public class AnswerWrapper extends GerpTopWrapper<Answer> {
     this.variants = variants;
   }
 
+  public AnswerWrapper() {
+    this(null, Lists.<String> newArrayList());
+  }
+
   public AnswerWrapper(String text, List<String> variants, String generator) {
-    super(generator);
-    this.text = text;
-    this.variants = variants;
+    this(text, variants);
+    addGenerator(generator);
   }
 
   @Override

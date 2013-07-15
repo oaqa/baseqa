@@ -12,7 +12,7 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
 
   private static final long serialVersionUID = 1L;
 
-  public static enum QuestionType {
+  public static enum QuestionClassType {
     FACTOID, DEFINITION, MULTI_SENTENCE, COMPOUND, ABBREVIATION, UNCLASSIFIED, LIST, OPINION
   };
 
@@ -22,24 +22,25 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
 
   private String text;
 
-  private QuestionType questionType;
+  private QuestionClassType classType;
 
   public QuestionWrapper(int begin, int end, String id, String source, String text,
-          QuestionType questionType) {
+          QuestionClassType classType) {
     super(begin, end);
     this.id = id;
     this.source = source;
     this.text = text;
-    this.questionType = questionType;
+    this.classType = classType;
   }
 
   public QuestionWrapper(int begin, int end, String id, String source, String text,
-          QuestionType questionClass, String generator) {
-    super(begin, end, generator);
-    this.id = id;
-    this.source = source;
-    this.text = text;
-    this.questionType = questionClass;
+          QuestionClassType classType, String generator) {
+    this(begin, end, id, source, text, classType);
+    addGenerator(generator);
+  }
+
+  public QuestionWrapper() {
+    this(0, Integer.MAX_VALUE, null, null, null, null);
   }
 
   @Override
@@ -53,7 +54,7 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
     this.id = annotation.getId();
     this.source = annotation.getSource();
     this.text = annotation.getText();
-    this.questionType = QuestionType.valueOf(annotation.getQuestionType());
+    this.classType = QuestionClassType.valueOf(annotation.getQuestionType());
   }
 
   @Override
@@ -62,7 +63,7 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
     annotation.setId(id);
     annotation.setSource(source);
     annotation.setText(text);
-    annotation.setQuestionType(questionType.toString());
+    annotation.setQuestionType(classType.toString());
     return annotation;
   }
 
@@ -107,12 +108,12 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
     this.text = text;
   }
 
-  public QuestionType getQuestionClass() {
-    return questionType;
+  public QuestionClassType getClassType() {
+    return classType;
   }
 
-  public void setQuestionClass(QuestionType questionClass) {
-    this.questionType = questionClass;
+  public void setClassType(QuestionClassType classType) {
+    this.classType = classType;
   }
 
 }

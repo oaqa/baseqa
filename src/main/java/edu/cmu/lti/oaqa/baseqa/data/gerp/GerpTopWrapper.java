@@ -34,7 +34,7 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
 
   protected GerpTopWrapper(String generator) {
     this();
-    this.addGenerator(generator);
+    addGenerator(generator);
   }
 
   @Override

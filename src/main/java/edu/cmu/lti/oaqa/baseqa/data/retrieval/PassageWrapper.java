@@ -8,6 +8,7 @@ import org.oaqa.model.retrieval.Passage;
 import org.oaqa.model.retrieval.SearchResult;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 
@@ -39,12 +40,14 @@ public class PassageWrapper extends SearchResultWrapper {
   public PassageWrapper(String uri, float score, String text, int rank, String queryString,
           String searchId, List<CandidateAnswerVariantWrapper> candidateAnswers, String title,
           String docId, int begin, int end, String aspects, String generator) {
-    super(uri, score, text, rank, queryString, searchId, candidateAnswers, generator);
-    this.title = title;
-    this.docId = docId;
-    this.begin = begin;
-    this.end = end;
-    this.aspects = aspects;
+    this(uri, score, text, rank, queryString, searchId, candidateAnswers, title, docId, begin, end,
+            aspects);
+    addGenerator(generator);
+  }
+
+  public PassageWrapper() {
+    this(null, Float.NEGATIVE_INFINITY, null, Integer.MAX_VALUE, null, null, Lists
+            .<CandidateAnswerVariantWrapper> newArrayList(), null, null, 0, Integer.MAX_VALUE, null);
   }
 
   @Override

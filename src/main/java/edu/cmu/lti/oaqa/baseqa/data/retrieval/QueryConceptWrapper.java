@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.QueryConcept;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
@@ -45,14 +46,13 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
   public QueryConceptWrapper(List<String> namedEntityTypes, String conceptType, String text,
           String originalText, QueryOperatorWrapper operator,
           List<QueryConceptWrapper> operatorArgs, String partOfSpeech, String generator) {
-    super(generator);
-    this.namedEntityTypes = namedEntityTypes;
-    this.conceptType = conceptType;
-    this.text = text;
-    this.originalText = originalText;
-    this.operator = operator;
-    this.operatorArgs = operatorArgs;
-    this.partOfSpeech = partOfSpeech;
+    this(namedEntityTypes, conceptType, text, originalText, operator, operatorArgs, partOfSpeech);
+    addGenerator(generator);
+  }
+
+  public QueryConceptWrapper() {
+    this(Lists.<String> newArrayList(), null, null, null, null, Lists
+            .<QueryConceptWrapper> newArrayList(), null);
   }
 
   @Override

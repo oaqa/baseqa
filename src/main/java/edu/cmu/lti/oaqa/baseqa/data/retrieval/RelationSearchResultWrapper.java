@@ -8,6 +8,7 @@ import org.oaqa.model.retrieval.RelationSearchResult;
 import org.oaqa.model.retrieval.SearchResult;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
@@ -30,8 +31,13 @@ public class RelationSearchResultWrapper extends AnswerSearchResultWrapper {
           String queryString, String searchId,
           List<CandidateAnswerVariantWrapper> candidateAnswers, List<RelationWrapper> context,
           String generator) {
-    super(uri, score, text, rank, queryString, searchId, candidateAnswers, generator);
-    this.context = context;
+    this(uri, score, text, rank, queryString, searchId, candidateAnswers, context);
+    addGenerator(generator);
+  }
+
+  public RelationSearchResultWrapper() {
+    this(null, Float.NEGATIVE_INFINITY, null, Integer.MAX_VALUE, null, null, Lists
+            .<CandidateAnswerVariantWrapper> newArrayList(), Lists.<RelationWrapper> newArrayList());
   }
 
   @Override

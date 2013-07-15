@@ -7,6 +7,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.nlp.Parse;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
@@ -27,9 +28,12 @@ public class ParseWrapper extends GerpTopWrapper<Parse> {
 
   public ParseWrapper(List<TokenWrapper> tokens, List<SemanticRoleWrapper> semanticRoles,
           String generator) {
-    super(generator);
-    this.tokens = tokens;
-    this.semanticRoles = semanticRoles;
+    this(tokens, semanticRoles);
+    addGenerator(generator);
+  }
+
+  public ParseWrapper() {
+    this(Lists.<TokenWrapper> newArrayList(), Lists.<SemanticRoleWrapper> newArrayList());
   }
 
   @Override

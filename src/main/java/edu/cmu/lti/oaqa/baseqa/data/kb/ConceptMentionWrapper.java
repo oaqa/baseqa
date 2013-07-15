@@ -21,8 +21,12 @@ public class ConceptMentionWrapper extends GerpAnnotationWrapper<ConceptMention>
   }
 
   public ConceptMentionWrapper(int begin, int end, ConceptWrapper concept, String generator) {
-    super(begin, end, generator);
-    this.concept = concept;
+    this(begin, end, concept);
+    addGenerator(generator);
+  }
+
+  public ConceptMentionWrapper() {
+    this(0, Integer.MAX_VALUE, null);
   }
 
   @Override
