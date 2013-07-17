@@ -75,8 +75,7 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
     this.arguments = WrapperHelper.wrapAnnotationArray(annotation.getArguments(), this.getClass());
     this.argumentLabels = WrapperHelper.wrapStringArray(annotation.getArgumentLabels());
     if (annotation.getParse() != null) {
-      this.parse = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getParse(),
-              this.getClass());
+      this.parse = WrapperHelper.matchSubclassAndWrap(annotation.getParse(), this.getClass());
     }
     this.semanticType = annotation.getSemanticType();
     this.partOfSpeech = annotation.getPartOfSpeech();

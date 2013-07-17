@@ -41,8 +41,7 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
   public void wrap(Focus annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     if (annotation.getToken() != null) {
-      this.token = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getToken(),
-              TokenWrapper.class);
+      this.token = WrapperHelper.matchSubclassAndWrap(annotation.getToken(), TokenWrapper.class);
     }
     this.label = annotation.getLabel();
   }

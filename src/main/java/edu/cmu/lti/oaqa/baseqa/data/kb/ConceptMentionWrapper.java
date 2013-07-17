@@ -38,7 +38,7 @@ public class ConceptMentionWrapper extends GerpAnnotationWrapper<ConceptMention>
   public void wrap(ConceptMention annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     if (annotation.getConcept() != null) {
-      this.concept = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getConcept(),
+      this.concept = WrapperHelper.matchSubclassAndWrap(annotation.getConcept(),
               ConceptWrapper.class);
     }
   }
@@ -47,7 +47,7 @@ public class ConceptMentionWrapper extends GerpAnnotationWrapper<ConceptMention>
   public ConceptMention unwrap(JCas jcas) throws AnalysisEngineProcessException {
     ConceptMention annotation = super.unwrap(jcas);
     if (concept != null) {
-      annotation.setConcept(concept.unwrapIfNotUnwrapped(jcas));
+      annotation.setConcept(concept.unwrap(jcas));
     }
     return annotation;
   }

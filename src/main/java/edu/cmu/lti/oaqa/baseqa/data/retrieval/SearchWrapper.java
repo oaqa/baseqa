@@ -49,7 +49,7 @@ public class SearchWrapper extends GerpTopWrapper<Search> {
     this.query = top.getQuery();
     this.hitList = WrapperHelper.wrapTopArray(top.getHitList(), SearchResultWrapper.class);
     if (top.getAbstractQuery() != null) {
-      this.abstractQuery = WrapperHelper.matchSubclassAndWrapIfNotWrapped(top.getAbstractQuery(),
+      this.abstractQuery = WrapperHelper.matchSubclassAndWrap(top.getAbstractQuery(),
               AbstractQueryWrapper.class);
     }
     this.searchId = top.getSearchId();
@@ -61,7 +61,7 @@ public class SearchWrapper extends GerpTopWrapper<Search> {
     top.setQuery(query);
     top.setHitList(WrapperHelper.unwrapTopArray(hitList, jcas));
     if (abstractQuery != null) {
-      top.setAbstractQuery(abstractQuery.unwrapIfNotUnwrapped(jcas));
+      top.setAbstractQuery(abstractQuery.unwrap(jcas));
     }
     top.setSearchId(searchId);
     return top;

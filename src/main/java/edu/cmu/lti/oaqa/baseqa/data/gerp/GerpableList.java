@@ -72,7 +72,7 @@ public class GerpableList<W extends Gerpable & TopWrapper<? extends TOP>> {
   public void unwrapAllAndAddToIndexes(WrapperIndexer indexer)
           throws AnalysisEngineProcessException {
     for (W gerpable : gerpables) {
-      TOP top = gerpable.unwrapIfNotUnwrapped(indexer.getJCas());
+      TOP top = gerpable.unwrap(indexer.getJCas());
       top.addToIndexes(indexer.getJCas());
     }
   }

@@ -55,7 +55,7 @@ public class PassageFromRelationWrapper extends PassageWrapper {
   public void wrap(SearchResult top) throws AnalysisEngineProcessException {
     super.wrap(top);
     if (((PassageFromRelation) top).getSourceRelation() != null) {
-      sourceRelation = WrapperHelper.matchSubclassAndWrapIfNotWrapped(
+      sourceRelation = WrapperHelper.matchSubclassAndWrap(
               ((PassageFromRelation) top).getSourceRelation(), RelationWrapper.class);
     }
   }
@@ -64,7 +64,7 @@ public class PassageFromRelationWrapper extends PassageWrapper {
   public PassageFromRelation unwrap(JCas jcas) throws AnalysisEngineProcessException {
     PassageFromRelation top = (PassageFromRelation) super.unwrap(jcas);
     if (sourceRelation != null) {
-      top.setSourceRelation((Relation) sourceRelation.unwrapIfNotUnwrapped(jcas));
+      top.setSourceRelation((Relation) sourceRelation.unwrap(jcas));
     }
     return top;
   }

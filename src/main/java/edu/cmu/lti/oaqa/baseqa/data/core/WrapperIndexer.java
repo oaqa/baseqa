@@ -125,12 +125,21 @@ public class WrapperIndexer {
     return topAddress2wrapper.get(top.getAddress());
   }
 
+  public void addWrapped(TOP top, TopWrapper<? extends TOP> wrapper) {
+    topAddress2wrapper.put(top.getAddress(), wrapper);
+  }
+
   public boolean checkUnwrapped(TopWrapper<? extends TOP> wrapper) {
+    System.out.println(wrapperHashcode2top.keySet() + " " + System.identityHashCode(wrapper));
     return wrapperHashcode2top.containsKey(System.identityHashCode(wrapper));
   }
 
   public TOP getUnwrapped(TopWrapper<? extends TOP> wrapper) {
     return wrapperHashcode2top.get(System.identityHashCode(wrapper));
+  }
+
+  public void addUnwrapped(TopWrapper<? extends TOP> wrapper, TOP top) {
+    wrapperHashcode2top.put(System.identityHashCode(wrapper), top);
   }
 
   public JCas getJCas() {
@@ -140,4 +149,21 @@ public class WrapperIndexer {
   public void setJCas(JCas jcas) {
     this.jcas = jcas;
   }
+
+  public Map<Integer, TOP> getWrapperHashcode2top() {
+    return wrapperHashcode2top;
+  }
+
+  public void setWrapperHashcode2top(Map<Integer, TOP> wrapperHashcode2top) {
+    this.wrapperHashcode2top = wrapperHashcode2top;
+  }
+
+  public Map<Integer, TopWrapper<? extends TOP>> getTopAddress2wrapper() {
+    return topAddress2wrapper;
+  }
+
+  public void setTopAddress2wrapper(Map<Integer, TopWrapper<? extends TOP>> topAddress2wrapper) {
+    this.topAddress2wrapper = topAddress2wrapper;
+  }
+
 }

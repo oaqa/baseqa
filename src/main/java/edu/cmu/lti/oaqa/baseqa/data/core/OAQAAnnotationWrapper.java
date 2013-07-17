@@ -38,18 +38,27 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
 
   @SuppressWarnings("unchecked")
   public T unwrapIfNotUnwrapped(JCas jcas) throws AnalysisEngineProcessException {
-    if (WrapperIndexer.getWrapperIndexer(jcas).checkUnwrapped(this)) {
-      return (T) WrapperIndexer.getWrapperIndexer(jcas).getUnwrapped(this);
+    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
+    if (indexer.checkUnwrapped(this)) {
+      return (T) indexer.getUnwrapped(this);
     } else {
-      return unwrap(jcas);
+      T annotation = unwrap(jcas);
+      indexer.addUnwrapped(this, annotation);
+      return annotation;
     }
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public T unwrap(JCas jcas) throws AnalysisEngineProcessException {
+    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
+    if (indexer.checkUnwrapped(this)) {
+      return (T) indexer.getUnwrapped(this);
+    }
     try {
       Constructor<? extends T> c = typeClass.getConstructor(JCas.class);
       T annotation = c.newInstance(jcas);
+      indexer.addUnwrapped(this, annotation);
       annotation.setImplementingWrapper(implementingWrapper);
       annotation.setBegin(begin);
       annotation.setEnd(end);
@@ -97,10 +106,12 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
     return Objects.equal(this.begin, other.begin) && Objects.equal(this.end, other.end);
   }
 
+  @Override
   public String getImplementingWrapper() {
     return implementingWrapper;
   }
 
+  @Override
   public void setImplementingWrapper(String implementingWrapper) {
     this.implementingWrapper = implementingWrapper;
   }

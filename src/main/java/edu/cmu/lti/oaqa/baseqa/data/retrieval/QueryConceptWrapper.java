@@ -68,7 +68,7 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
     this.text = top.getText();
     this.originalText = top.getOriginalText();
     if (top.getOperator() != null) {
-      this.operator = WrapperHelper.matchSubclassAndWrapIfNotWrapped(top.getOperator(),
+      this.operator = WrapperHelper.matchSubclassAndWrap(top.getOperator(),
               QueryOperatorWrapper.class);
     }
     this.operatorArgs = WrapperHelper.wrapTopList(top.getOperatorArgs(), QueryConceptWrapper.class);
@@ -83,7 +83,7 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
     top.setText(text);
     top.setOriginalText(originalText);
     if (operator != null) {
-      top.setOperator(operator.unwrapIfNotUnwrapped(jcas));
+      top.setOperator(operator.unwrap(jcas));
     }
     top.setOperatorArgs(WrapperHelper.unwrapTopList(operatorArgs, jcas));
     top.setPartOfSpeech(partOfSpeech);

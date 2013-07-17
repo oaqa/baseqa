@@ -42,8 +42,7 @@ public class LexicalAnswerTypeWrapper extends GerpAnnotationWrapper<LexicalAnswe
   public void wrap(LexicalAnswerType annotation) throws AnalysisEngineProcessException {
     super.wrap(annotation);
     if (annotation.getToken() != null) {
-      this.token = WrapperHelper.matchSubclassAndWrapIfNotWrapped(annotation.getToken(),
-              TokenWrapper.class);
+      this.token = WrapperHelper.matchSubclassAndWrap(annotation.getToken(), TokenWrapper.class);
     }
     this.label = annotation.getLabel();
   }

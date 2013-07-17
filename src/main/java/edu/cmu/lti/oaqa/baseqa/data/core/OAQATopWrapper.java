@@ -23,19 +23,16 @@ public abstract class OAQATopWrapper<T extends OAQATop> implements TopWrapper<T>
   }
 
   @SuppressWarnings("unchecked")
-  public T unwrapIfNotUnwrapped(JCas jcas) throws AnalysisEngineProcessException {
-    if (WrapperIndexer.getWrapperIndexer(jcas).checkUnwrapped(this)) {
-      return (T) WrapperIndexer.getWrapperIndexer(jcas).getUnwrapped(this);
-    } else {
-      return unwrap(jcas);
-    }
-  }
-
   @Override
   public T unwrap(JCas jcas) throws AnalysisEngineProcessException {
+    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
+    if (indexer.checkUnwrapped(this)) {
+      return (T) indexer.getUnwrapped(this);
+    }
     try {
       Constructor<? extends T> c = typeClass.getConstructor(JCas.class);
       T top = c.newInstance(jcas);
+      indexer.addUnwrapped(this, top);
       top.setImplementingWrapper(implementingWrapper);
       return top;
     } catch (NoSuchMethodException e) {
@@ -56,10 +53,12 @@ public abstract class OAQATopWrapper<T extends OAQATop> implements TopWrapper<T>
     implementingWrapper = top.getImplementingWrapper();
   }
 
+  @Override
   public String getImplementingWrapper() {
     return implementingWrapper;
   }
 
+  @Override
   public void setImplementingWrapper(String implementingWrapper) {
     this.implementingWrapper = implementingWrapper;
   }
