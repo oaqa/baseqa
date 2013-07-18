@@ -16,9 +16,13 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
 
   private static final long serialVersionUID = 1L;
 
+  public static enum ConceptType {
+    KEYWORD_TYPE, QATOKEN_TYPE, ANSWER_TYPE
+  }
+
   private List<String> namedEntityTypes;
 
-  private String conceptType;
+  private ConceptType conceptType;
 
   private String text;
 
@@ -30,7 +34,7 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
 
   private String partOfSpeech;
 
-  public QueryConceptWrapper(List<String> namedEntityTypes, String conceptType, String text,
+  public QueryConceptWrapper(List<String> namedEntityTypes, ConceptType conceptType, String text,
           String originalText, QueryOperatorWrapper operator,
           List<QueryConceptWrapper> operatorArgs, String partOfSpeech) {
     super();
@@ -43,7 +47,7 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
     this.partOfSpeech = partOfSpeech;
   }
 
-  public QueryConceptWrapper(List<String> namedEntityTypes, String conceptType, String text,
+  public QueryConceptWrapper(List<String> namedEntityTypes, ConceptType conceptType, String text,
           String originalText, QueryOperatorWrapper operator,
           List<QueryConceptWrapper> operatorArgs, String partOfSpeech, String generator) {
     this(namedEntityTypes, conceptType, text, originalText, operator, operatorArgs, partOfSpeech);
@@ -51,7 +55,7 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
   }
 
   public QueryConceptWrapper() {
-    this(Lists.<String> newArrayList(), null, null, null, null, Lists
+    this(Lists.<String> newArrayList(), ConceptType.QATOKEN_TYPE, null, null, null, Lists
             .<QueryConceptWrapper> newArrayList(), null);
   }
 
@@ -64,7 +68,7 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
   public void wrap(QueryConcept top) throws AnalysisEngineProcessException {
     super.wrap(top);
     this.namedEntityTypes = WrapperHelper.wrapStringList(top.getNamedEntityTypes());
-    this.conceptType = top.getConceptType();
+    this.conceptType = ConceptType.valueOf(top.getConceptType());
     this.text = top.getText();
     this.originalText = top.getOriginalText();
     if (top.getOperator() != null) {
@@ -80,7 +84,7 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
     super.unwrap(top);
     JCas jcas = WrapperHelper.getJCas(top);
     top.setNamedEntityTypes(WrapperHelper.unwrapStringList(namedEntityTypes, jcas));
-    top.setConceptType(conceptType);
+    top.setConceptType(conceptType.toString());
     top.setText(text);
     top.setOriginalText(originalText);
     if (operator != null) {
@@ -118,11 +122,11 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
     this.namedEntityTypes = namedEntityTypes;
   }
 
-  public String getConceptType() {
+  public ConceptType getConceptType() {
     return conceptType;
   }
 
-  public void setConceptType(String conceptType) {
+  public void setConceptType(ConceptType conceptType) {
     this.conceptType = conceptType;
   }
 

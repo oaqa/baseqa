@@ -31,8 +31,8 @@ public class GerpableList<T extends TOP, W extends Gerpable & TopWrapper<T>> {
     } else {
       gerpable.addGenerator(generator);
       gerpables.add(gerpable);
+      gerpableCount++;
     }
-    gerpableCount++;
   }
 
   public void addAllEvidences(List<EvidenceWrapper<?, ?>> evidences) {
