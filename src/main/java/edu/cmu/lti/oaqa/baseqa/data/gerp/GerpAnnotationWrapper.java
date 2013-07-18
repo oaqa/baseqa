@@ -6,9 +6,13 @@ import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.TOP;
 import org.oaqa.model.gerp.GerpAnnotation;
 
+import com.google.common.collect.Lists;
+
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQAAnnotationWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 
 public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
@@ -24,12 +28,18 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
 
   protected List<PruningDecisionWrapper> pruningDecisions;
 
+  protected GerpMetaWrapper gerpMeta;
+
+  protected List<? extends TopWrapper<? extends TOP>> dependencies;
+
   protected GerpAnnotationWrapper(int begin, int end) {
     super(begin, end);
     generators = new ArrayList<String>();
     evidences = new ArrayList<EvidenceWrapper<?, ?>>();
     ranks = new ArrayList<RankWrapper>();
     pruningDecisions = new ArrayList<PruningDecisionWrapper>();
+    gerpMeta = null;
+    dependencies = Lists.newArrayList();
   }
 
   protected GerpAnnotationWrapper(int begin, int end, String generator) {
@@ -86,6 +96,11 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
     ranks = WrapperHelper.wrapTopList(annotation.getRanks(), RankWrapper.class);
     pruningDecisions = WrapperHelper.wrapTopList(annotation.getPruningDecisions(),
             PruningDecisionWrapper.class);
+    if (annotation.getGerpMeta() != null) {
+      gerpMeta = WrapperHelper
+              .matchSubclassAndWrap(annotation.getGerpMeta(), GerpMetaWrapper.class);
+    }
+    dependencies = WrapperHelper.wrapTopList(annotation.getDependencies(), TopWrapper.class);
   }
 
   @Override
@@ -96,6 +111,10 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
     annotation.setEvidences(WrapperHelper.unwrapTopList(evidences, jcas));
     annotation.setRanks(WrapperHelper.unwrapTopList(ranks, jcas));
     annotation.setPruningDecisions(WrapperHelper.unwrapTopList(pruningDecisions, jcas));
+    if (gerpMeta != null) {
+      annotation.setGerpMeta(WrapperHelper.unwrap(gerpMeta, jcas));
+    }
+    annotation.setDependencies(WrapperHelper.unwrapTopList(dependencies, jcas));
   }
 
   @Override
@@ -136,6 +155,26 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
   @Override
   public void setPruningDecisions(List<PruningDecisionWrapper> pruningDecisions) {
     this.pruningDecisions = pruningDecisions;
+  }
+
+  @Override
+  public GerpMetaWrapper getGerpMeta() {
+    return gerpMeta;
+  }
+
+  @Override
+  public void setGerpMeta(GerpMetaWrapper gerpMeta) {
+    this.gerpMeta = gerpMeta;
+  }
+
+  @Override
+  public List<? extends TopWrapper<? extends TOP>> getDependencies() {
+    return dependencies;
+  }
+
+  @Override
+  public void setDependencies(List<? extends TopWrapper<? extends TOP>> dependencies) {
+    this.dependencies = dependencies;
   }
 
 }

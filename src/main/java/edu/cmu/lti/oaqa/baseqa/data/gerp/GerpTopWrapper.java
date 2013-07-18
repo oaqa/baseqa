@@ -1,14 +1,17 @@
 package edu.cmu.lti.oaqa.baseqa.data.gerp;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.TOP;
 import org.oaqa.model.gerp.GerpTop;
 
+import com.google.common.collect.Lists;
+
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 
 public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T> implements
@@ -24,12 +27,18 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
 
   protected List<PruningDecisionWrapper> pruningDecisions;
 
+  protected GerpMetaWrapper gerpMeta;
+
+  protected List<? extends TopWrapper<? extends TOP>> dependencies;
+
   protected GerpTopWrapper() {
     super();
-    generators = new ArrayList<String>();
-    evidences = new ArrayList<EvidenceWrapper<?, ?>>();
-    ranks = new ArrayList<RankWrapper>();
-    pruningDecisions = new ArrayList<PruningDecisionWrapper>();
+    generators = Lists.newArrayList();
+    evidences = Lists.newArrayList();
+    ranks = Lists.newArrayList();
+    pruningDecisions = Lists.newArrayList();
+    gerpMeta = null;
+    dependencies = Lists.newArrayList();
   }
 
   protected GerpTopWrapper(String generator) {
@@ -86,6 +95,10 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
     ranks = WrapperHelper.wrapTopList(top.getRanks(), RankWrapper.class);
     pruningDecisions = WrapperHelper.wrapTopList(top.getPruningDecisions(),
             PruningDecisionWrapper.class);
+    if (top.getGerpMeta() != null) {
+      gerpMeta = WrapperHelper.matchSubclassAndWrap(top.getGerpMeta(), GerpMetaWrapper.class);
+    }
+    dependencies = WrapperHelper.wrapTopList(top.getDependencies(), TopWrapper.class);
   }
 
   @Override
@@ -96,6 +109,10 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
     top.setEvidences(WrapperHelper.unwrapTopList(evidences, jcas));
     top.setRanks(WrapperHelper.unwrapTopList(ranks, jcas));
     top.setPruningDecisions(WrapperHelper.unwrapTopList(pruningDecisions, jcas));
+    if (gerpMeta != null) {
+      top.setGerpMeta(WrapperHelper.unwrap(gerpMeta, jcas));
+    }
+    top.setDependencies(WrapperHelper.unwrapTopList(dependencies, jcas));
   }
 
   @Override
@@ -136,6 +153,26 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
   @Override
   public void setPruningDecisions(List<PruningDecisionWrapper> pruningDecisions) {
     this.pruningDecisions = pruningDecisions;
+  }
+
+  @Override
+  public GerpMetaWrapper getGerpMeta() {
+    return gerpMeta;
+  }
+
+  @Override
+  public void setGerpMeta(GerpMetaWrapper gerpMeta) {
+    this.gerpMeta = gerpMeta;
+  }
+
+  @Override
+  public List<? extends TopWrapper<? extends TOP>> getDependencies() {
+    return dependencies;
+  }
+
+  @Override
+  public void setDependencies(List<? extends TopWrapper<? extends TOP>> dependencies) {
+    this.dependencies = dependencies;
   }
 
 }

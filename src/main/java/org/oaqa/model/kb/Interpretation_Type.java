@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** A container that integrates Concepts and ConceptMentions.
- * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
+ * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
  * @generated */
 public class Interpretation_Type extends GerpTop_Type {
   /** @generated */

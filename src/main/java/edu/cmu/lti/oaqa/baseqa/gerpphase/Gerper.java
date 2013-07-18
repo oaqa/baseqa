@@ -82,6 +82,8 @@ public class Gerper<T extends TOP, W extends Gerpable & TopWrapper<T>> extends
 
   protected List<AbstractPruner> pruners = Lists.newArrayList();
 
+  private GerpMetaWrapper gerpMeta;
+
   @SuppressWarnings("unchecked")
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
@@ -118,8 +120,8 @@ public class Gerper<T extends TOP, W extends Gerpable & TopWrapper<T>> extends
   }
 
   private void generateGerpMeta(JCas jcas) throws AnalysisEngineProcessException {
-    GerpMetaWrapper gerpMeta = new GerpMetaWrapper(toClassNames(generators),
-            toClassNames(evidencers), toClassNames(rankers), toClassNames(pruners));
+    gerpMeta = new GerpMetaWrapper(toClassNames(generators), toClassNames(evidencers),
+            toClassNames(rankers), toClassNames(pruners));
     GerpMeta top = WrapperHelper.unwrap(gerpMeta, jcas);
     top.addToIndexes(jcas);
   }
@@ -144,6 +146,8 @@ public class Gerper<T extends TOP, W extends Gerpable & TopWrapper<T>> extends
               + inputCombinations.size() + " input combination(s).");
       for (List<TopWrapper<? extends TOP>> inputCombination : inputCombinations) {
         W gerpable = generator.generate(inputCombination);
+        gerpable.setDependencies(inputCombination);
+        gerpable.setGerpMeta(gerpMeta);
         outputs.add(gerpable, generator.getClass().getSimpleName());
       }
     }

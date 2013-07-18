@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** An object that holds a query and results for a search (text search, fact search, KB search, etc.)
- * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
+ * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
  * @generated */
 public class Search_Type extends GerpTop_Type {
   /** @generated */
@@ -85,7 +85,7 @@ public class Search_Type extends GerpTop_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i);
-	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i);
+  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_hitList), i);
   }
    
   /** @generated */ 

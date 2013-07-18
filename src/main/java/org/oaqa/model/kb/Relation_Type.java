@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A relation concept. It represents the relationship between entities. which is generalized from a triple, e.g., and RDF triple.
- * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
+ * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
  * @generated */
 public class Relation_Type extends Concept_Type {
   /** @generated */

@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A named relation mention that identify or define the named relation concept.
- * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
+ * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
  * @generated */
 public class RelationMention_Type extends ConceptMention_Type {
   /** @generated */

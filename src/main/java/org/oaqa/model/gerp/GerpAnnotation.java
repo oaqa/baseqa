@@ -13,7 +13,7 @@ import org.oaqa.model.core.OAQAAnnotation;
 
 
 /** A higher level supertype for all GERPified annotations that defines the common attributes (G/E/R/P).
- * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
+ * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class GerpAnnotation extends OAQAAnnotation {
@@ -134,6 +134,42 @@ public class GerpAnnotation extends OAQAAnnotation {
     if (GerpAnnotation_Type.featOkTst && ((GerpAnnotation_Type)jcasType).casFeat_pruningDecisions == null)
       jcasType.jcas.throwFeatMissing("pruningDecisions", "org.oaqa.model.gerp.GerpAnnotation");
     jcasType.ll_cas.ll_setRefValue(addr, ((GerpAnnotation_Type)jcasType).casFeatCode_pruningDecisions, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
+  //* Feature: gerpMeta
+
+  /** getter for gerpMeta - gets The pointer to the meta information (generators, evidencers, rankers, pruners).
+   * @generated */
+  public GerpMeta getGerpMeta() {
+    if (GerpAnnotation_Type.featOkTst && ((GerpAnnotation_Type)jcasType).casFeat_gerpMeta == null)
+      jcasType.jcas.throwFeatMissing("gerpMeta", "org.oaqa.model.gerp.GerpAnnotation");
+    return (GerpMeta)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((GerpAnnotation_Type)jcasType).casFeatCode_gerpMeta)));}
+    
+  /** setter for gerpMeta - sets The pointer to the meta information (generators, evidencers, rankers, pruners). 
+   * @generated */
+  public void setGerpMeta(GerpMeta v) {
+    if (GerpAnnotation_Type.featOkTst && ((GerpAnnotation_Type)jcasType).casFeat_gerpMeta == null)
+      jcasType.jcas.throwFeatMissing("gerpMeta", "org.oaqa.model.gerp.GerpAnnotation");
+    jcasType.ll_cas.ll_setRefValue(addr, ((GerpAnnotation_Type)jcasType).casFeatCode_gerpMeta, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
+  //* Feature: dependencies
+
+  /** getter for dependencies - gets The pointers to the inputs that are being used to generate the Annotation.
+   * @generated */
+  public FSList getDependencies() {
+    if (GerpAnnotation_Type.featOkTst && ((GerpAnnotation_Type)jcasType).casFeat_dependencies == null)
+      jcasType.jcas.throwFeatMissing("dependencies", "org.oaqa.model.gerp.GerpAnnotation");
+    return (FSList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((GerpAnnotation_Type)jcasType).casFeatCode_dependencies)));}
+    
+  /** setter for dependencies - sets The pointers to the inputs that are being used to generate the Annotation. 
+   * @generated */
+  public void setDependencies(FSList v) {
+    if (GerpAnnotation_Type.featOkTst && ((GerpAnnotation_Type)jcasType).casFeat_dependencies == null)
+      jcasType.jcas.throwFeatMissing("dependencies", "org.oaqa.model.gerp.GerpAnnotation");
+    jcasType.ll_cas.ll_setRefValue(addr, ((GerpAnnotation_Type)jcasType).casFeatCode_dependencies, jcasType.ll_cas.ll_getFSRef(v));}    
   }
 
     

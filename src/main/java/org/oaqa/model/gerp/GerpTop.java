@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** The base class for Gerp feature structures that are not Annotations, with G/E/E/P features defined.
- * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
+ * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class GerpTop extends OAQATop {
@@ -126,6 +126,42 @@ public class GerpTop extends OAQATop {
     if (GerpTop_Type.featOkTst && ((GerpTop_Type)jcasType).casFeat_pruningDecisions == null)
       jcasType.jcas.throwFeatMissing("pruningDecisions", "org.oaqa.model.gerp.GerpTop");
     jcasType.ll_cas.ll_setRefValue(addr, ((GerpTop_Type)jcasType).casFeatCode_pruningDecisions, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
+  //* Feature: gerpMeta
+
+  /** getter for gerpMeta - gets The pointer to the meta information (generators, evidencers, rankers, pruners).
+   * @generated */
+  public GerpMeta getGerpMeta() {
+    if (GerpTop_Type.featOkTst && ((GerpTop_Type)jcasType).casFeat_gerpMeta == null)
+      jcasType.jcas.throwFeatMissing("gerpMeta", "org.oaqa.model.gerp.GerpTop");
+    return (GerpMeta)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((GerpTop_Type)jcasType).casFeatCode_gerpMeta)));}
+    
+  /** setter for gerpMeta - sets The pointer to the meta information (generators, evidencers, rankers, pruners). 
+   * @generated */
+  public void setGerpMeta(GerpMeta v) {
+    if (GerpTop_Type.featOkTst && ((GerpTop_Type)jcasType).casFeat_gerpMeta == null)
+      jcasType.jcas.throwFeatMissing("gerpMeta", "org.oaqa.model.gerp.GerpTop");
+    jcasType.ll_cas.ll_setRefValue(addr, ((GerpTop_Type)jcasType).casFeatCode_gerpMeta, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
+  //* Feature: dependencies
+
+  /** getter for dependencies - gets The pointers to the inputs that are being used to generate the Top.
+   * @generated */
+  public FSList getDependencies() {
+    if (GerpTop_Type.featOkTst && ((GerpTop_Type)jcasType).casFeat_dependencies == null)
+      jcasType.jcas.throwFeatMissing("dependencies", "org.oaqa.model.gerp.GerpTop");
+    return (FSList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((GerpTop_Type)jcasType).casFeatCode_dependencies)));}
+    
+  /** setter for dependencies - sets The pointers to the inputs that are being used to generate the Top. 
+   * @generated */
+  public void setDependencies(FSList v) {
+    if (GerpTop_Type.featOkTst && ((GerpTop_Type)jcasType).casFeat_dependencies == null)
+      jcasType.jcas.throwFeatMissing("dependencies", "org.oaqa.model.gerp.GerpTop");
+    jcasType.ll_cas.ll_setRefValue(addr, ((GerpTop_Type)jcasType).casFeatCode_dependencies, jcasType.ll_cas.ll_getFSRef(v));}    
   }
 
     

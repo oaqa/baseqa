@@ -3,38 +3,50 @@ package edu.cmu.lti.oaqa.baseqa.data.gerp;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.uima.jcas.cas.TOP;
+
+import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
+
 public interface Gerpable {
 
-  public abstract void addGenerator(String generator);
+  void addGenerator(String generator);
 
-  public abstract void addGenerators(Collection<String> generators);
+  void addGenerators(Collection<String> generators);
 
-  public abstract void addEvidence(EvidenceWrapper<?, ?> evidence);
+  void addEvidence(EvidenceWrapper<?, ?> evidence);
 
-  public abstract void addEvidences(Collection<EvidenceWrapper<?, ?>> evidences);
+  void addEvidences(Collection<EvidenceWrapper<?, ?>> evidences);
 
-  public abstract void addRank(RankWrapper rank);
+  void addRank(RankWrapper rank);
 
-  public abstract void addRanks(Collection<RankWrapper> ranks);
+  void addRanks(Collection<RankWrapper> ranks);
 
-  public abstract void addPruningDecision(PruningDecisionWrapper pruningDecision);
+  void addPruningDecision(PruningDecisionWrapper pruningDecision);
 
-  public abstract void addPruningDecisions(Collection<PruningDecisionWrapper> pruningDecisions);
+  void addPruningDecisions(Collection<PruningDecisionWrapper> pruningDecisions);
 
-  public abstract List<String> getGenerators();
+  List<String> getGenerators();
 
-  public abstract void setGenerators(List<String> generators);
+  void setGenerators(List<String> generators);
 
-  public abstract List<EvidenceWrapper<?, ?>> getEvidences();
+  List<EvidenceWrapper<?, ?>> getEvidences();
 
-  public abstract void setEvidences(List<EvidenceWrapper<?, ?>> evidences);
+  void setEvidences(List<EvidenceWrapper<?, ?>> evidences);
 
-  public abstract List<RankWrapper> getRanks();
+  List<RankWrapper> getRanks();
 
-  public abstract void setRanks(List<RankWrapper> ranks);
+  void setRanks(List<RankWrapper> ranks);
 
-  public abstract List<PruningDecisionWrapper> getPruningDecisions();
+  List<PruningDecisionWrapper> getPruningDecisions();
 
-  public abstract void setPruningDecisions(List<PruningDecisionWrapper> pruningDecisions);
+  void setPruningDecisions(List<PruningDecisionWrapper> pruningDecisions);
+
+  GerpMetaWrapper getGerpMeta();
+
+  void setGerpMeta(GerpMetaWrapper gerpMeta);
+
+  List<? extends TopWrapper<? extends TOP>> getDependencies();
+
+  void setDependencies(List<? extends TopWrapper<? extends TOP>> dependencies);
 
 }

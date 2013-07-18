@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.core.OAQATop_Type;
 
 /** The base class for Gerp feature structures that are not Annotations, with G/E/E/P features defined.
- * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
+ * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
  * @generated */
 public class GerpTop_Type extends OAQATop_Type {
   /** @generated */
@@ -115,6 +115,42 @@ public class GerpTop_Type extends OAQATop_Type {
     ll_cas.ll_setRefValue(addr, casFeatCode_pruningDecisions, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_gerpMeta;
+  /** @generated */
+  final int     casFeatCode_gerpMeta;
+  /** @generated */ 
+  public int getGerpMeta(int addr) {
+        if (featOkTst && casFeat_gerpMeta == null)
+      jcas.throwFeatMissing("gerpMeta", "org.oaqa.model.gerp.GerpTop");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_gerpMeta);
+  }
+  /** @generated */    
+  public void setGerpMeta(int addr, int v) {
+        if (featOkTst && casFeat_gerpMeta == null)
+      jcas.throwFeatMissing("gerpMeta", "org.oaqa.model.gerp.GerpTop");
+    ll_cas.ll_setRefValue(addr, casFeatCode_gerpMeta, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_dependencies;
+  /** @generated */
+  final int     casFeatCode_dependencies;
+  /** @generated */ 
+  public int getDependencies(int addr) {
+        if (featOkTst && casFeat_dependencies == null)
+      jcas.throwFeatMissing("dependencies", "org.oaqa.model.gerp.GerpTop");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_dependencies);
+  }
+  /** @generated */    
+  public void setDependencies(int addr, int v) {
+        if (featOkTst && casFeat_dependencies == null)
+      jcas.throwFeatMissing("dependencies", "org.oaqa.model.gerp.GerpTop");
+    ll_cas.ll_setRefValue(addr, casFeatCode_dependencies, v);}
+    
+  
 
 
 
@@ -139,6 +175,14 @@ public class GerpTop_Type extends OAQATop_Type {
  
     casFeat_pruningDecisions = jcas.getRequiredFeatureDE(casType, "pruningDecisions", "uima.cas.FSList", featOkTst);
     casFeatCode_pruningDecisions  = (null == casFeat_pruningDecisions) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_pruningDecisions).getCode();
+
+ 
+    casFeat_gerpMeta = jcas.getRequiredFeatureDE(casType, "gerpMeta", "org.oaqa.model.gerp.GerpMeta", featOkTst);
+    casFeatCode_gerpMeta  = (null == casFeat_gerpMeta) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_gerpMeta).getCode();
+
+ 
+    casFeat_dependencies = jcas.getRequiredFeatureDE(casType, "dependencies", "uima.cas.FSList", featOkTst);
+    casFeatCode_dependencies  = (null == casFeat_dependencies) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_dependencies).getCode();
 
   }
 }

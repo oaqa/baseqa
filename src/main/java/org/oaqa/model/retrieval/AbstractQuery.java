@@ -12,7 +12,7 @@ import org.apache.uima.jcas.cas.FSList;
 
 
 /** An abstract search query for the question that represents query concepts and query operators over those concepts.
- * Updated by JCasGen Mon Jul 08 17:12:14 EDT 2013
+ * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class AbstractQuery extends GerpTop {
