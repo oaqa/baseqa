@@ -1,9 +1,12 @@
 package edu.cmu.lti.oaqa.baseqa.test;
 
+import java.io.StringWriter;
 import java.util.UUID;
 
-import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
+import org.dom4j.Document;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 import org.junit.Test;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
@@ -19,11 +22,17 @@ public class GerpTest {
 
   @Test
   public void testGerp() throws Exception {
-    testPipeline("baseqa.gerp-test", "Gerp One Question Set", "TEST", "This is an empty question");
+    Document xmi = runPipeline("baseqa.gerp-test", "Gerp One Question Set", "TEST",
+            "This is an empty question");
+    StringWriter xmiStr = new StringWriter();
+    XMLWriter writer = new XMLWriter(xmiStr, OutputFormat.createPrettyPrint());
+    writer.write(xmi);
+    writer.close();
+    System.out.println(xmiStr);
   }
 
-  public void testPipeline(String pipelinePath, final String datasetName, final String sequenceId,
-          String question) throws Exception {
+  public Document runPipeline(String pipelinePath, final String datasetName,
+          final String sequenceId, String question) throws Exception {
     String uuid = UUID.randomUUID().toString();
     TypeSystemDescription typeSystem = TypeSystemDescriptionFactory.createTypeSystemDescription();
     ExperimentBuilder builder = new BaseExperimentBuilder(uuid, pipelinePath, typeSystem);
@@ -34,13 +43,13 @@ public class GerpTest {
         getReader().putQuestion(result);
       }
     };
-    JCasReturnCallbackListener callback = new JCasReturnCallbackListener();
+    XmiReturnCallbackListener callback = new XmiReturnCallbackListener();
     AdHocCollectionReader reader = driver.setupAndRun(source, callback);
     String quuid = UUID.randomUUID().toString();
     source.publish(quuid, question);
     callback.await();
-    JCas jcas = callback.getJCas();
-    System.out.println(jcas);
+    Document xmi = callback.getXmi();
     reader.shutdown();
+    return xmi;
   }
 }
