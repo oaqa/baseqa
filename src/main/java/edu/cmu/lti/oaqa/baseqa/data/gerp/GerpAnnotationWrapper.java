@@ -89,13 +89,13 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
   }
 
   @Override
-  public T unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    T annotation = super.unwrap(jcas);
+  public void unwrap(T annotation) throws AnalysisEngineProcessException {
+    super.unwrap(annotation);
+    JCas jcas = WrapperHelper.getJCas(annotation);
     annotation.setGenerators(WrapperHelper.unwrapStringList(generators, jcas));
     annotation.setEvidences(WrapperHelper.unwrapTopList(evidences, jcas));
     annotation.setRanks(WrapperHelper.unwrapTopList(ranks, jcas));
     annotation.setPruningDecisions(WrapperHelper.unwrapTopList(pruningDecisions, jcas));
-    return annotation;
   }
 
   @Override

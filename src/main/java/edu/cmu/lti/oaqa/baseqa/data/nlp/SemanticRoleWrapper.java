@@ -1,7 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.data.nlp;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.nlp.SemanticRole;
 
 import com.google.common.base.Objects;
@@ -40,10 +39,9 @@ public class SemanticRoleWrapper extends GerpAnnotationWrapper<SemanticRole> {
   }
 
   @Override
-  public SemanticRole unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    SemanticRole annotation = super.unwrap(jcas);
+  public void unwrap(SemanticRole annotation) throws AnalysisEngineProcessException {
+    super.unwrap(annotation);
     annotation.setLabel(label);
-    return annotation;
   }
 
   @Override

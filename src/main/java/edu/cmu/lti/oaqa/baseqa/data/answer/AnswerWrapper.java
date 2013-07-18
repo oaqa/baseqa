@@ -3,7 +3,6 @@ package edu.cmu.lti.oaqa.baseqa.data.answer;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.answer.Answer;
 
 import com.google.common.base.Objects;
@@ -48,11 +47,10 @@ public class AnswerWrapper extends GerpTopWrapper<Answer> {
   }
 
   @Override
-  public Answer unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Answer top = super.unwrap(jcas);
+  public void unwrap(Answer top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
     top.setText(text);
-    top.setVariants(WrapperHelper.unwrapStringArray(variants, jcas));
-    return top;
+    top.setVariants(WrapperHelper.unwrapStringArray(variants, WrapperHelper.getJCas(top)));
   }
 
   @Override

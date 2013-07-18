@@ -1,7 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.data.nlp;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.nlp.Focus;
 
 import com.google.common.base.Objects;
@@ -47,13 +46,12 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
   }
 
   @Override
-  public Focus unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Focus annotation = super.unwrap(jcas);
+  public void unwrap(Focus annotation) throws AnalysisEngineProcessException {
+    super.unwrap(annotation);
     if (token != null) {
-      annotation.setToken(token.unwrapIfNotUnwrapped(jcas));
+      annotation.setToken(WrapperHelper.unwrap(token, WrapperHelper.getJCas(annotation)));
     }
     annotation.setLabel(label);
-    return annotation;
   }
 
   @Override

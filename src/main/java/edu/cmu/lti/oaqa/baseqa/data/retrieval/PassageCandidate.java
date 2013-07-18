@@ -3,7 +3,6 @@ package edu.cmu.lti.oaqa.baseqa.data.retrieval;
 import java.io.Serializable;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.Passage;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
@@ -138,14 +137,13 @@ public class PassageCandidate extends OAQATopWrapper<Passage> implements Seriali
   }
 
   @Override
-  public Passage unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Passage passage = super.unwrap(jcas);
+  public void unwrap(Passage passage) throws AnalysisEngineProcessException {
+    super.unwrap(passage);
     passage.setUri(docID);
     passage.setBegin(start);
     passage.setEnd(end);
     passage.setRank(rank);
     passage.setQueryString(queryString);
-    return passage;
   }
 
   @Override

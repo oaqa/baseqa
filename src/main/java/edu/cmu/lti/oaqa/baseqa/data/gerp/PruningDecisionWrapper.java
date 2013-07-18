@@ -1,8 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.data.gerp;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSList;
 import org.oaqa.model.gerp.PruningDecision;
 
 import com.google.common.base.Objects;
@@ -36,10 +34,9 @@ public class PruningDecisionWrapper extends GerpBaseWrapper<PruningDecision> imp
   }
 
   @Override
-  public PruningDecision unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    PruningDecision top = super.unwrap(jcas);
+  public void unwrap(PruningDecision top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
     top.setDecision(decision);
-    return top;
   }
 
   @Override
@@ -49,9 +46,9 @@ public class PruningDecisionWrapper extends GerpBaseWrapper<PruningDecision> imp
   }
 
   @Override
-  protected FSList unwrapComments(JCas jcas) {
+  protected void unwrapComments(PruningDecision top) {
     // TODO Auto-generated method stub
-    return null;
+
   }
 
   @Override

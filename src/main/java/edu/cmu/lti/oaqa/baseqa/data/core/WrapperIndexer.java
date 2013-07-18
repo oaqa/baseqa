@@ -130,7 +130,6 @@ public class WrapperIndexer {
   }
 
   public boolean checkUnwrapped(TopWrapper<? extends TOP> wrapper) {
-    System.out.println(wrapperHashcode2top.keySet() + " " + System.identityHashCode(wrapper));
     return wrapperHashcode2top.containsKey(System.identityHashCode(wrapper));
   }
 

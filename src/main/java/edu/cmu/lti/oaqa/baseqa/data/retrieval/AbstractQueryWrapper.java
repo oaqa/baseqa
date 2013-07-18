@@ -3,7 +3,6 @@ package edu.cmu.lti.oaqa.baseqa.data.retrieval;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.AbstractQuery;
 
 import com.google.common.base.Objects;
@@ -44,10 +43,9 @@ public class AbstractQueryWrapper extends GerpTopWrapper<AbstractQuery> {
   }
 
   @Override
-  public AbstractQuery unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    AbstractQuery top = super.unwrap(jcas);
-    top.setConcepts(WrapperHelper.unwrapTopList(concepts, jcas));
-    return top;
+  public void unwrap(AbstractQuery top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
+    top.setConcepts(WrapperHelper.unwrapTopList(concepts, WrapperHelper.getJCas(top)));
   }
 
   @Override

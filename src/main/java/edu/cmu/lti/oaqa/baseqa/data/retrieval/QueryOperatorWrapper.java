@@ -3,7 +3,6 @@ package edu.cmu.lti.oaqa.baseqa.data.retrieval;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.QueryOperator;
 
 import com.google.common.base.Objects;
@@ -52,11 +51,10 @@ public class QueryOperatorWrapper extends GerpTopWrapper<QueryOperator> {
   }
 
   @Override
-  public QueryOperator unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    QueryOperator top = super.unwrap(jcas);
+  public void unwrap(QueryOperator top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
     top.setName(name.toString());
-    top.setArgs(WrapperHelper.unwrapStringList(args, jcas));
-    return top;
+    top.setArgs(WrapperHelper.unwrapStringList(args, WrapperHelper.getJCas(top)));
   }
 
   @Override

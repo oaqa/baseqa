@@ -45,11 +45,11 @@ public class ParseWrapper extends GerpTopWrapper<Parse> {
   }
 
   @Override
-  public Parse unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Parse top = super.unwrap(jcas);
+  public void unwrap(Parse top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
+    JCas jcas = WrapperHelper.getJCas(top);
     top.setTokens(WrapperHelper.unwrapAnnotationList(tokens, jcas));
     top.setSemanticRoles(WrapperHelper.unwrapAnnotationList(semanticRoles, jcas));
-    return top;
   }
 
   @Override

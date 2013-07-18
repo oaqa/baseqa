@@ -10,9 +10,10 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperIndexer;
 
-public class GerpableList<W extends Gerpable & TopWrapper<? extends TOP>> {
+public class GerpableList<T extends TOP, W extends Gerpable & TopWrapper<T>> {
 
   private List<W> gerpables;
 
@@ -72,11 +73,11 @@ public class GerpableList<W extends Gerpable & TopWrapper<? extends TOP>> {
   public void unwrapAllAndAddToIndexes(WrapperIndexer indexer)
           throws AnalysisEngineProcessException {
     for (W gerpable : gerpables) {
-      TOP top = gerpable.unwrap(indexer.getJCas());
+      TOP top = WrapperHelper.unwrap(gerpable, indexer.getJCas());
       top.addToIndexes(indexer.getJCas());
     }
   }
-  
+
   public int getSize() {
     return gerpables.size();
   }

@@ -56,15 +56,15 @@ public class SearchWrapper extends GerpTopWrapper<Search> {
   }
 
   @Override
-  public Search unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Search top = super.unwrap(jcas);
+  public void unwrap(Search top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
     top.setQuery(query);
+    JCas jcas = WrapperHelper.getJCas(top);
     top.setHitList(WrapperHelper.unwrapTopArray(hitList, jcas));
     if (abstractQuery != null) {
-      top.setAbstractQuery(abstractQuery.unwrap(jcas));
+      top.setAbstractQuery(WrapperHelper.unwrap(abstractQuery, jcas));
     }
     top.setSearchId(searchId);
-    return top;
   }
 
   @Override

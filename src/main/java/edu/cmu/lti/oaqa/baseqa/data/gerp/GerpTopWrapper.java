@@ -89,13 +89,13 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
   }
 
   @Override
-  public T unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    T annotation = super.unwrap(jcas);
-    annotation.setGenerators(WrapperHelper.unwrapStringList(generators, jcas));
-    annotation.setEvidences(WrapperHelper.unwrapTopList(evidences, jcas));
-    annotation.setRanks(WrapperHelper.unwrapTopList(ranks, jcas));
-    annotation.setPruningDecisions(WrapperHelper.unwrapTopList(pruningDecisions, jcas));
-    return annotation;
+  public void unwrap(T top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
+    JCas jcas = WrapperHelper.getJCas(top);
+    top.setGenerators(WrapperHelper.unwrapStringList(generators, jcas));
+    top.setEvidences(WrapperHelper.unwrapTopList(evidences, jcas));
+    top.setRanks(WrapperHelper.unwrapTopList(ranks, jcas));
+    top.setPruningDecisions(WrapperHelper.unwrapTopList(pruningDecisions, jcas));
   }
 
   @Override

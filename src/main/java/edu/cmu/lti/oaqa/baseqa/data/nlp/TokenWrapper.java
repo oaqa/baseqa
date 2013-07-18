@@ -86,12 +86,13 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
   }
 
   @Override
-  public Token unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Token annotation = super.unwrap(jcas);
+  public void unwrap(Token annotation) throws AnalysisEngineProcessException {
+    super.unwrap(annotation);
+    JCas jcas = WrapperHelper.getJCas(annotation);
     annotation.setArguments(WrapperHelper.unwrapAnnotationArray(arguments, jcas));
     annotation.setArgumentLabels(WrapperHelper.unwrapStringArray(argumentLabels, jcas));
     if (parse != null) {
-      annotation.setParse(parse.unwrapIfNotUnwrapped(jcas));
+      annotation.setParse(WrapperHelper.unwrap(parse, jcas));
     }
     annotation.setSemanticType(semanticType);
     annotation.setPartOfSpeech(partOfSpeech);
@@ -99,7 +100,6 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
     annotation.setIsMainReference(isMainReference);
     annotation.setIsVariable(isVariable);
     annotation.setDeterminer(determiner);
-    return annotation;
   }
 
   @Override

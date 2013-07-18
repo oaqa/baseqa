@@ -1,11 +1,8 @@
 package edu.cmu.lti.oaqa.baseqa.data.core;
 
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.core.OAQAAnnotation;
 
 import com.google.common.base.Objects;
@@ -36,44 +33,11 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
     this(0, Integer.MAX_VALUE);
   }
 
-  @SuppressWarnings("unchecked")
-  public T unwrapIfNotUnwrapped(JCas jcas) throws AnalysisEngineProcessException {
-    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
-    if (indexer.checkUnwrapped(this)) {
-      return (T) indexer.getUnwrapped(this);
-    } else {
-      T annotation = unwrap(jcas);
-      indexer.addUnwrapped(this, annotation);
-      return annotation;
-    }
-  }
-
-  @SuppressWarnings("unchecked")
   @Override
-  public T unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
-    if (indexer.checkUnwrapped(this)) {
-      return (T) indexer.getUnwrapped(this);
-    }
-    try {
-      Constructor<? extends T> c = typeClass.getConstructor(JCas.class);
-      T annotation = c.newInstance(jcas);
-      indexer.addUnwrapped(this, annotation);
-      annotation.setImplementingWrapper(implementingWrapper);
-      annotation.setBegin(begin);
-      annotation.setEnd(end);
-      return annotation;
-    } catch (NoSuchMethodException e) {
-      throw new AnalysisEngineProcessException(e);
-    } catch (RuntimeException e) {
-      throw new AnalysisEngineProcessException(e);
-    } catch (InstantiationException e) {
-      throw new AnalysisEngineProcessException(e);
-    } catch (IllegalAccessException e) {
-      throw new AnalysisEngineProcessException(e);
-    } catch (InvocationTargetException e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+  public void unwrap(T annotation) throws AnalysisEngineProcessException {
+    annotation.setImplementingWrapper(implementingWrapper);
+    annotation.setBegin(begin);
+    annotation.setEnd(end);
   }
 
   @Override

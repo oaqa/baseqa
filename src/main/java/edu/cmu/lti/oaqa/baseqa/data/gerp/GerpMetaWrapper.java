@@ -53,13 +53,13 @@ public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
   }
 
   @Override
-  public GerpMeta unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    GerpMeta top = super.unwrap(jcas);
+  public void unwrap(GerpMeta top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
+    JCas jcas = WrapperHelper.getJCas(top);
     top.setGenerators(WrapperHelper.unwrapStringArray(generators, jcas));
     top.setEvidencers(WrapperHelper.unwrapStringArray(evidencers, jcas));
     top.setRankers(WrapperHelper.unwrapStringArray(rankers, jcas));
     top.setPruners(WrapperHelper.unwrapStringArray(pruners, jcas));
-    return top;
   }
 
   @Override

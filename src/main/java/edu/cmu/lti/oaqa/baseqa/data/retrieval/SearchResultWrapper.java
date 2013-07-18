@@ -3,7 +3,6 @@ package edu.cmu.lti.oaqa.baseqa.data.retrieval;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.SearchResult;
 
 import com.google.common.base.Objects;
@@ -68,16 +67,16 @@ public abstract class SearchResultWrapper extends GerpTopWrapper<SearchResult> {
   }
 
   @Override
-  public SearchResult unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    SearchResult top = super.unwrap(jcas);
+  public void unwrap(SearchResult top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
     top.setUri(uri);
     top.setScore(score);
     top.setText(text);
     top.setRank(rank);
     top.setQueryString(queryString);
     top.setSearchId(searchId);
-    top.setCandidateAnswers(WrapperHelper.unwrapTopArray(candidateAnswers, jcas));
-    return top;
+    top.setCandidateAnswers(WrapperHelper.unwrapTopArray(candidateAnswers,
+            WrapperHelper.getJCas(top)));
   }
 
   @Override

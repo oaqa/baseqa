@@ -1,7 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.data.nlp;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.nlp.CandidateAnswerOccurrence;
 
 import com.google.common.base.Objects;
@@ -46,11 +45,10 @@ public class CandidateAnswerOccurrenceWrapper extends
   }
 
   @Override
-  public CandidateAnswerOccurrence unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    CandidateAnswerOccurrence annotation = super.unwrap(jcas);
+  public void unwrap(CandidateAnswerOccurrence annotation) throws AnalysisEngineProcessException {
+    super.unwrap(annotation);
     annotation.setText(text);
     annotation.setMentionType(mentionType);
-    return annotation;
   }
 
   @Override

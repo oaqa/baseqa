@@ -3,7 +3,6 @@ package edu.cmu.lti.oaqa.baseqa.data.retrieval;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.Document;
 import org.oaqa.model.retrieval.SearchResult;
 
@@ -53,11 +52,10 @@ public class DocumentWrapper extends SearchResultWrapper {
   }
 
   @Override
-  public Document unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Document top = (Document) super.unwrap(jcas);
-    top.setTitle(title);
-    top.setDocId(docId);
-    return top;
+  public void unwrap(SearchResult top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
+    ((Document) top).setTitle(title);
+    ((Document) top).setDocId(docId);
   }
 
   @Override

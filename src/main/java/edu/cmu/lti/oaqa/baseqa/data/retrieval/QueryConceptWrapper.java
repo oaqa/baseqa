@@ -76,18 +76,18 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
   }
 
   @Override
-  public QueryConcept unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    QueryConcept top = super.unwrap(jcas);
+  public void unwrap(QueryConcept top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
+    JCas jcas = WrapperHelper.getJCas(top);
     top.setNamedEntityTypes(WrapperHelper.unwrapStringList(namedEntityTypes, jcas));
     top.setConceptType(conceptType);
     top.setText(text);
     top.setOriginalText(originalText);
     if (operator != null) {
-      top.setOperator(operator.unwrap(jcas));
+      top.setOperator(WrapperHelper.unwrap(operator, jcas));
     }
     top.setOperatorArgs(WrapperHelper.unwrapTopList(operatorArgs, jcas));
     top.setPartOfSpeech(partOfSpeech);
-    return top;
   }
 
   @Override

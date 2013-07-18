@@ -3,7 +3,6 @@ package edu.cmu.lti.oaqa.baseqa.data.retrieval;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.RelationSearchResult;
 import org.oaqa.model.retrieval.SearchResult;
 
@@ -53,10 +52,10 @@ public class RelationSearchResultWrapper extends AnswerSearchResultWrapper {
   }
 
   @Override
-  public RelationSearchResult unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    RelationSearchResult top = (RelationSearchResult) super.unwrap(jcas);
-    top.setContext(WrapperHelper.unwrapTopArray(context, jcas));
-    return top;
+  public void unwrap(SearchResult top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
+    ((RelationSearchResult) top).setContext(WrapperHelper.unwrapTopArray(context,
+            WrapperHelper.getJCas(top)));
   }
 
   @Override

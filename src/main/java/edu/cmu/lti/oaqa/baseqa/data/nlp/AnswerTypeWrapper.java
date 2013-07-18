@@ -1,7 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.data.nlp;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.core.OAQAAnnotation;
 import org.oaqa.model.nlp.AnswerType;
 
@@ -53,13 +52,12 @@ public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
   }
 
   @Override
-  public AnswerType unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    AnswerType annotation = super.unwrap(jcas);
+  public void unwrap(AnswerType annotation) throws AnalysisEngineProcessException {
+    super.unwrap(annotation);
     annotation.setLabel(label);
     if (targetType != null) {
-      annotation.setTargetType(targetType.unwrapIfNotUnwrapped(jcas));
+      annotation.setTargetType(WrapperHelper.unwrap(targetType, WrapperHelper.getJCas(annotation)));
     }
-    return annotation;
   }
 
   @Override

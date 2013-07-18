@@ -1,7 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.data.nlp;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.input.Question;
 
 import com.google.common.base.Objects;
@@ -58,13 +57,12 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
   }
 
   @Override
-  public Question unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Question annotation = super.unwrap(jcas);
+  public void unwrap(Question annotation) throws AnalysisEngineProcessException {
+    super.unwrap(annotation);
     annotation.setId(id);
     annotation.setSource(source);
     annotation.setText(text);
     annotation.setQuestionType(classType.toString());
-    return annotation;
   }
 
   @Override

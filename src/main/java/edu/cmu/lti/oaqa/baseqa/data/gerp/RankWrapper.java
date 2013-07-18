@@ -1,8 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.data.gerp;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSList;
 import org.oaqa.model.gerp.Rank;
 
 import com.google.common.base.Objects;
@@ -39,11 +37,10 @@ public class RankWrapper extends GerpBaseWrapper<Rank> implements Comparable<Ran
   }
 
   @Override
-  public Rank unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Rank top = super.unwrap(jcas);
+  public void unwrap(Rank top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
     top.setRank(rank);
     top.setScore(score);
-    return top;
   }
 
   @Override
@@ -53,9 +50,9 @@ public class RankWrapper extends GerpBaseWrapper<Rank> implements Comparable<Ran
   }
 
   @Override
-  protected FSList unwrapComments(JCas jcas) {
+  protected void unwrapComments(Rank top) {
     // TODO Auto-generated method stub
-    return null;
+
   }
 
   @Override

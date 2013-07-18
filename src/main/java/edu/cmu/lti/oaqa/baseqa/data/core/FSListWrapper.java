@@ -24,8 +24,8 @@ public abstract class FSListWrapper<T extends OAQATop> implements ContainerWrapp
   }
 
   @Override
-  public void add(TopWrapper<T> annotation) throws AnalysisEngineProcessException {
-    list = BaseJCasHelper.addToFSList(jcas, list, annotation.unwrap(jcas));
+  public void add(TopWrapper<T> wrapper) throws AnalysisEngineProcessException {
+    list = BaseJCasHelper.addToFSList(jcas, list, WrapperHelper.unwrap(wrapper, jcas));
   }
 
   @Override

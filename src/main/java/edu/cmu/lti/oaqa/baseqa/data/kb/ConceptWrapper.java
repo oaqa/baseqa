@@ -54,12 +54,12 @@ public class ConceptWrapper extends GerpTopWrapper<Concept> {
   }
 
   @Override
-  public Concept unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Concept top = super.unwrap(jcas);
+  public void unwrap(Concept top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
     top.setName(name);
+    JCas jcas = WrapperHelper.getJCas(top);
     top.setIds(WrapperHelper.unwrapStringList(ids, jcas));
     top.setMentions(WrapperHelper.unwrapAnnotationList(mentions, jcas));
-    return top;
   }
 
   @Override

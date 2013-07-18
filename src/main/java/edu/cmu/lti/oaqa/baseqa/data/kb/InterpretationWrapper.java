@@ -50,11 +50,11 @@ public class InterpretationWrapper extends GerpTopWrapper<Interpretation> {
   }
 
   @Override
-  public Interpretation unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Interpretation top = super.unwrap(jcas);
+  public void unwrap(Interpretation top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
+    JCas jcas = WrapperHelper.getJCas(top);
     top.setConcepts(WrapperHelper.unwrapTopList(concepts, jcas));
     top.setMentions(WrapperHelper.unwrapAnnotationList(mentions, jcas));
-    return top;
   }
 
   @Override

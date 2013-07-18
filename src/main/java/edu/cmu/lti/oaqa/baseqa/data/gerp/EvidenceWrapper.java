@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.jcas.cas.TOP;
 import org.oaqa.model.gerp.Evidence;
 
@@ -61,11 +59,11 @@ public abstract class EvidenceWrapper<T extends TOP, W extends TopWrapper<T>> ex
   }
 
   @Override
-  public Evidence unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Evidence top = super.unwrap(jcas);
+  public void unwrap(Evidence top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
     top.setConfidence(confidence);
-    top.setAdditionalEvidences(WrapperHelper.unwrapTopList(additionalEvidences, jcas));
-    return top;
+    top.setAdditionalEvidences(WrapperHelper.unwrapTopList(additionalEvidences,
+            WrapperHelper.getJCas(top)));
   }
 
   @Override
@@ -75,9 +73,9 @@ public abstract class EvidenceWrapper<T extends TOP, W extends TopWrapper<T>> ex
   }
 
   @Override
-  protected FSList unwrapComments(JCas jcas) {
+  protected void unwrapComments(Evidence top) {
     // TODO Auto-generated method stub
-    return null;
+
   }
 
   @Override

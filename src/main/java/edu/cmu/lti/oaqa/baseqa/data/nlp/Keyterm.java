@@ -3,7 +3,6 @@ package edu.cmu.lti.oaqa.baseqa.data.nlp;
 import java.io.Serializable;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.QueryConcept;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
@@ -50,10 +49,9 @@ public class Keyterm extends OAQATopWrapper<QueryConcept> implements Serializabl
   }
 
   @Override
-  public QueryConcept unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    QueryConcept keyterm = super.unwrap(jcas);
-    keyterm.setText(text);
-    return keyterm;
+  public void unwrap(QueryConcept top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
+    top.setText(text);
   }
 
   @Override

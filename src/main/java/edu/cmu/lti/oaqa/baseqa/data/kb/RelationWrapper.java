@@ -3,7 +3,6 @@ package edu.cmu.lti.oaqa.baseqa.data.kb;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.kb.Concept;
 import org.oaqa.model.kb.Relation;
 
@@ -48,10 +47,10 @@ public class RelationWrapper extends ConceptWrapper {
   }
 
   @Override
-  public Relation unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Relation top = (Relation) super.unwrap(jcas);
-    top.setArguments(WrapperHelper.unwrapTopList(arguments, jcas));
-    return top;
+  public void unwrap(Concept top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
+    ((Relation) top)
+            .setArguments(WrapperHelper.unwrapTopList(arguments, WrapperHelper.getJCas(top)));
   }
 
   @Override

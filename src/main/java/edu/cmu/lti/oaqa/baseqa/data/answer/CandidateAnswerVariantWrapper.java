@@ -70,15 +70,15 @@ public class CandidateAnswerVariantWrapper extends GerpTopWrapper<CandidateAnswe
   }
 
   @Override
-  public CandidateAnswerVariant unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    CandidateAnswerVariant top = super.unwrap(jcas);
+  public void unwrap(CandidateAnswerVariant top) throws AnalysisEngineProcessException {
+    super.unwrap(top);
+    JCas jcas = WrapperHelper.getJCas(top);
     top.setOccurrences(WrapperHelper.unwrapAnnotationList(occurrences, jcas));
     top.setCandidateId(candidateId);
     top.setText(text);
     top.setAlternativeNames(WrapperHelper.unwrapStringList(alternativeNames, jcas));
     top.setUri(uri);
     top.setDocId(docId);
-    return top;
   }
 
   @Override

@@ -217,12 +217,7 @@ public class WrapperHelper {
   @SuppressWarnings("unchecked")
   private static <T extends TOP, W extends TopWrapper<T>> W wrap(T top, Class<W> wrapperClass)
           throws AnalysisEngineProcessException {
-    WrapperIndexer indexer;
-    try {
-      indexer = WrapperIndexer.getWrapperIndexer(top.getCAS().getJCas());
-    } catch (CASException e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(getJCas(top));
     if (indexer.checkWrapped(top)) {
       return (W) indexer.getWrapped(top);
     }
@@ -266,5 +261,13 @@ public class WrapperHelper {
     }
     wrapper.unwrap(top);
     return top;
+  }
+
+  public static JCas getJCas(TOP top) throws AnalysisEngineProcessException {
+    try {
+      return top.getCAS().getJCas();
+    } catch (CASException e) {
+      throw new AnalysisEngineProcessException(e);
+    }
   }
 }

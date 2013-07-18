@@ -26,8 +26,8 @@ public abstract class FSArrayWrapper<T extends OAQATop> implements ContainerWrap
   }
 
   @Override
-  public void add(TopWrapper<T> annotation) throws AnalysisEngineProcessException {
-    array.set(i++, annotation.unwrap(jcas));
+  public void add(TopWrapper<T> wrapper) throws AnalysisEngineProcessException {
+    array.set(i++, WrapperHelper.unwrap(wrapper, jcas));
   }
 
   @Override

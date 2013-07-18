@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.TopWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
 import edu.cmu.lti.oaqa.baseqa.data.core.WrapperIndexer;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.EvidenceWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpMetaWrapper;
@@ -68,7 +69,8 @@ import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
  */
-public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends AbstractLoggedComponent {
+public class Gerper<T extends TOP, W extends Gerpable & TopWrapper<T>> extends
+        AbstractLoggedComponent {
 
   private Class<W> wrapperClass;
 
@@ -118,14 +120,14 @@ public class Gerper<W extends Gerpable & TopWrapper<? extends TOP>> extends Abst
   private void generateGerpMeta(JCas jcas) throws AnalysisEngineProcessException {
     GerpMetaWrapper gerpMeta = new GerpMetaWrapper(toClassNames(generators),
             toClassNames(evidencers), toClassNames(rankers), toClassNames(pruners));
-    GerpMeta top = gerpMeta.unwrap(jcas);
+    GerpMeta top = WrapperHelper.unwrap(gerpMeta, jcas);
     top.addToIndexes(jcas);
   }
 
   @SuppressWarnings("unchecked")
   private void executeGerp(JCas jcas) throws AnalysisEngineProcessException {
     WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
-    GerpableList<W> outputs = new GerpableList<W>();
+    GerpableList<T, W> outputs = new GerpableList<T, W>();
     // generate
     for (AbstractGenerator<W> generator : generators) {
       wrapperClass = (Class<W>) generator.type.getClass();

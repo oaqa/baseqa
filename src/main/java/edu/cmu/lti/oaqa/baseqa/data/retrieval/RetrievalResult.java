@@ -3,10 +3,10 @@ package edu.cmu.lti.oaqa.baseqa.data.retrieval;
 import java.io.Serializable;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.Passage;
 
 import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
+import edu.cmu.lti.oaqa.baseqa.data.gerp.EvidenceWrapper;
 
 /**
  * Legacy type wrapper for Passage, used in phrases defined in basephase. In a GERP environment, one
@@ -94,12 +94,11 @@ public class RetrievalResult extends OAQATopWrapper<Passage> implements Serializ
   }
 
   @Override
-  public Passage unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    Passage passage = super.unwrap(jcas);
+  public void unwrap(Passage passage) throws AnalysisEngineProcessException {
+    super.unwrap(passage);
     passage.setUri(docID);
     passage.setQueryString(queryString);
     passage.setRank(rank);
-    return passage;
   }
 
   @Override

@@ -1,7 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.data.kb;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.jcas.JCas;
 import org.oaqa.model.kb.ConceptMention;
 
 import com.google.common.base.Objects;
@@ -44,12 +43,11 @@ public class ConceptMentionWrapper extends GerpAnnotationWrapper<ConceptMention>
   }
 
   @Override
-  public ConceptMention unwrap(JCas jcas) throws AnalysisEngineProcessException {
-    ConceptMention annotation = super.unwrap(jcas);
+  public void unwrap(ConceptMention annotation) throws AnalysisEngineProcessException {
+    super.unwrap(annotation);
     if (concept != null) {
-      annotation.setConcept(concept.unwrap(jcas));
+      annotation.setConcept(WrapperHelper.unwrap(concept, WrapperHelper.getJCas(annotation)));
     }
-    return annotation;
   }
 
   @Override
