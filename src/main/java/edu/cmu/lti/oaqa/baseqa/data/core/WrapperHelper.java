@@ -120,7 +120,7 @@ public class WrapperHelper {
     FSArray array = new FSArray(jcas, wrappers.size());
     int i = 0;
     for (W wrapper : wrappers) {
-      array.set(i, WrapperHelper.unwrap(wrapper, jcas));
+      array.set(i++, WrapperHelper.unwrap(wrapper, jcas));
     }
     return array;
   }
@@ -164,7 +164,7 @@ public class WrapperHelper {
     FSArray array = new FSArray(jcas, wrappers.size());
     int i = 0;
     for (W wrapper : wrappers) {
-      array.set(i, WrapperHelper.unwrap(wrapper, jcas));
+      array.set(i++, WrapperHelper.unwrap(wrapper, jcas));
     }
     return array;
   }
