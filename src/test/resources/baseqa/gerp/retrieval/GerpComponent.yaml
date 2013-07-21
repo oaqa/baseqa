@@ -1,0 +1,17 @@
+inherit: gerp.core.GerpComponent
+
+generators: |
+  - inherit: baseqa.gerp.retrieval.BagOfWordsQueryGeneratorProvider
+  - inherit: baseqa.gerp.retrieval.ConceptAwareQueryGeneratorProvider
+evidencers: |
+  - inherit: baseqa.gerp.retrieval.IdenticalQueryEvidencerProvider
+  - inherit: baseqa.gerp.retrieval.RandomQueryEvidencerProvider
+rankers: |
+  - inherit: gerp.ranker.HeadFirstRankerProvider
+  - inherit: gerp.ranker.RandomRankerProvider
+pruners: |
+  - inherit: gerp.pruner.HeadPreservePrunerProvider
+  - inherit: gerp.pruner.RandomPrunerProvider
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider
