@@ -9,8 +9,8 @@ import org.oaqa.model.nlp.Token;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
-import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpAnnotationWrapper;
+import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class TokenWrapper extends GerpAnnotationWrapper<Token> {
 

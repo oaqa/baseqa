@@ -22,7 +22,7 @@ public class GerpTest {
 
   @Test
   public void testGerp() throws Exception {
-    Document xmi = runPipeline("baseqa.gerp-test", "Gerp One Question Set", "TEST",
+    Document xmi = runPipeline("baseqa.gerp-providers-test", "Gerp One Question Set", "TEST",
             "This is an empty question");
     StringWriter xmiStr = new StringWriter();
     XMLWriter writer = new XMLWriter(xmiStr, OutputFormat.createPrettyPrint());

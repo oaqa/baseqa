@@ -1,0 +1,32 @@
+configuration:
+  name: gerp-test
+  author: ziy
+
+persistence-provider:
+  inherit: db.default-persistence-provider
+
+collection-reader:
+  inherit: adhoc.adhoc-collection-reader
+
+pipeline:
+  - inherit: baseqa.gerp.providers.input.QuestionDecorator
+
+  - inherit: ecd.phase
+    name: question-parsing
+    options: |
+      - inherit: baseqa.gerp.providers.parse.GerpComponent
+
+  - inherit: ecd.phase
+    name: question-interpretation
+    options: |
+      - inherit: baseqa.gerp.providers.interpretation.GerpComponent
+
+  - inherit: ecd.phase
+    name: query-formulation
+    options: |
+      - inherit: baseqa.gerp.providers.retrieval.GerpComponent
+
+  - inherit: ecd.phase
+    name: answering
+    options: |
+      - inherit: baseqa.gerp.providers.answer.GerpComponent

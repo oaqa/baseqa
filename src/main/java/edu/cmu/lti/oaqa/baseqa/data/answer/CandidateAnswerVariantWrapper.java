@@ -9,9 +9,9 @@ import org.oaqa.model.answer.CandidateAnswerVariant;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
-import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.CandidateAnswerOccurrenceWrapper;
+import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public class CandidateAnswerVariantWrapper extends GerpTopWrapper<CandidateAnswerVariant> {
 

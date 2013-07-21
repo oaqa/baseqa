@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.oaqa.model.retrieval.QueryConcept;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
+import edu.cmu.lti.oaqa.core.data.OAQATopWrapper;
 
 /**
  * TOKEN type refers to the original token terms, and phrases refer to the name entities identified

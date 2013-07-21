@@ -9,7 +9,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.AbstractQuery;
 import org.oaqa.model.retrieval.QueryConcept;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.FSListWrapper;
+import edu.cmu.lti.oaqa.core.data.FSListWrapper;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
 /**

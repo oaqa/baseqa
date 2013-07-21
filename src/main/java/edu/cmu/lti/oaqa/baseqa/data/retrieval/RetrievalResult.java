@@ -5,8 +5,8 @@ import java.io.Serializable;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.oaqa.model.retrieval.Passage;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.OAQATopWrapper;
-import edu.cmu.lti.oaqa.baseqa.data.gerp.EvidenceWrapper;
+import edu.cmu.lti.oaqa.core.data.OAQATopWrapper;
+import edu.cmu.lti.oaqa.gerp.data.EvidenceWrapper;
 
 /**
  * Legacy type wrapper for Passage, used in phrases defined in basephase. In a GERP environment, one

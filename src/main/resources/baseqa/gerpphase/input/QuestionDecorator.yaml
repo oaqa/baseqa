@@ -1,4 +1,0 @@
-class: edu.cmu.lti.oaqa.baseqa.gerpphase.input.QuestionDecorator
-
-persistence-provider: |
-  inherit: ecd.default-log-persistence-provider

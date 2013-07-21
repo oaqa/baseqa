@@ -5,7 +5,7 @@ import org.oaqa.model.input.Question;
 
 import com.google.common.base.Objects;
 
-import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpAnnotationWrapper;
+import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
 

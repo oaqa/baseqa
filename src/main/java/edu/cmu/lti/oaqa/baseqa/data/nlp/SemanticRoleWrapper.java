@@ -5,7 +5,7 @@ import org.oaqa.model.nlp.SemanticRole;
 
 import com.google.common.base.Objects;
 
-import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpAnnotationWrapper;
+import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class SemanticRoleWrapper extends GerpAnnotationWrapper<SemanticRole> {
 

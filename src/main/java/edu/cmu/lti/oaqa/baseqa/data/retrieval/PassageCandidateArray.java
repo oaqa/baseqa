@@ -10,7 +10,7 @@ import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.Passage;
 import org.oaqa.model.test.Search;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.FSArrayWrapper;
+import edu.cmu.lti.oaqa.core.data.FSArrayWrapper;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
 /**

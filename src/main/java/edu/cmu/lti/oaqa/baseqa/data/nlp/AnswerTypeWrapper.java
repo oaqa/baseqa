@@ -6,9 +6,9 @@ import org.oaqa.model.nlp.AnswerType;
 
 import com.google.common.base.Objects;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.OAQAAnnotationWrapper;
-import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
-import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpAnnotationWrapper;
+import edu.cmu.lti.oaqa.core.data.OAQAAnnotationWrapper;
+import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
 

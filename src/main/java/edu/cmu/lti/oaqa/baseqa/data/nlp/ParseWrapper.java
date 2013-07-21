@@ -9,8 +9,8 @@ import org.oaqa.model.nlp.Parse;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
-import edu.cmu.lti.oaqa.baseqa.data.core.WrapperHelper;
-import edu.cmu.lti.oaqa.baseqa.data.gerp.GerpTopWrapper;
+import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public class ParseWrapper extends GerpTopWrapper<Parse> {
 
