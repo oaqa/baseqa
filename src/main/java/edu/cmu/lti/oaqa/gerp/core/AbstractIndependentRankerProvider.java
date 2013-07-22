@@ -21,6 +21,6 @@ public abstract class AbstractIndependentRankerProvider extends AbstractRankerPr
     for (Collection<EvidenceWrapper<?, ?>> evidence : evidences) {
       ranks.add(rank(evidence));
     }
-    return null;
+    return ranks;
   }
 }
