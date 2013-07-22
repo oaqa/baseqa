@@ -1,5 +1,5 @@
 configuration:
-  name: gerp-test
+  name: gerp-providers-test
   author: ziy
 
 persistence-provider:

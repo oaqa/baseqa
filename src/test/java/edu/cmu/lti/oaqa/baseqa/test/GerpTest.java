@@ -1,5 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.test;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.UUID;
 
@@ -21,9 +22,20 @@ import edu.cmu.lti.oaqa.framework.collection.adhoc.BaseAdHocSource;
 public class GerpTest {
 
   @Test
-  public void testGerp() throws Exception {
+  public void testGerpPhases() throws Exception {
+    Document xmi = runPipeline("baseqa.gerp-phases-test", "Gerp One Question Set", "TEST",
+            "This is an empty question");
+    printXmi(xmi);
+  }
+
+  @Test
+  public void testGerpProviders() throws Exception {
     Document xmi = runPipeline("baseqa.gerp-providers-test", "Gerp One Question Set", "TEST",
             "This is an empty question");
+    printXmi(xmi);
+  }
+
+  protected void printXmi(Document xmi) throws IOException {
     StringWriter xmiStr = new StringWriter();
     XMLWriter writer = new XMLWriter(xmiStr, OutputFormat.createPrettyPrint());
     writer.write(xmi);
@@ -31,7 +43,7 @@ public class GerpTest {
     System.out.println(xmiStr);
   }
 
-  public Document runPipeline(String pipelinePath, final String datasetName,
+  protected Document runPipeline(String pipelinePath, final String datasetName,
           final String sequenceId, String question) throws Exception {
     String uuid = UUID.randomUUID().toString();
     TypeSystemDescription typeSystem = TypeSystemDescriptionFactory.createTypeSystemDescription();

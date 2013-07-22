@@ -1,0 +1,4 @@
+class: edu.cmu.lti.oaqa.gerp.pruner.HeadPreservePruner
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider

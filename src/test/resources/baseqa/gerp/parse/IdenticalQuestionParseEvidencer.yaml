@@ -1,0 +1,4 @@
+class: edu.cmu.lti.oaqa.baseqa.gerp.parse.IdenticalQuestionParseEvidencer
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider
