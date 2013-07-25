@@ -148,7 +148,7 @@ public class GerpComponent<T extends TOP, W extends Gerpable & TopWrapper<T>> ex
         outputs.add(gerpable, generator.getClass().getSimpleName());
       }
     }
-    log("Generate " + outputs.getSize() + " " + wrapperClass.getSimpleName() + "(s).");
+    log("Generate " + outputs.size() + " " + wrapperClass.getSimpleName() + "(s).");
     // evidence
     for (AbstractEvidencerProvider<W> evidencer : evidencers) {
       List<W> gerpables = outputs.getGerpables();

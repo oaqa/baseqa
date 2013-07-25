@@ -197,7 +197,7 @@ public class WrapperHelper {
   }
 
   @SuppressWarnings("unchecked")
-  private static <T extends TOP, W extends TopWrapper<T>> W wrap(TOP top)
+  public static <T extends TOP, W extends TopWrapper<T>> W wrap(TOP top)
           throws AnalysisEngineProcessException {
     // FIXME Different TopWrapper implementations may have different ways to store the actual
     // implementation subclass in TOP, the following method is only used for OAQATop. A method needs

@@ -94,6 +94,16 @@ public class WrapperIndexer {
     addJCasWrapperIndexerPair(jcas, this);
   }
 
+  public Set<TopWrapper<? extends TOP>> getWrappersByType(int type)
+          throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
+          InstantiationException, IllegalAccessException, NoSuchFieldException,
+          ClassNotFoundException, CASException {
+    if (!type2wrappers.containsKey(type)) {
+      addClassWrappersToIndex(type);
+    }
+    return type2wrappers.get(type);
+  }
+
   public List<Set<TopWrapper<? extends TOP>>> getWrappersByTypes(List<Integer> types)
           throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
           InstantiationException, IllegalAccessException, NoSuchFieldException,

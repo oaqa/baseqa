@@ -2,6 +2,7 @@ package edu.cmu.lti.oaqa.gerp.data;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.cas.TOP;
@@ -24,6 +25,16 @@ public class GerpableList<T extends TOP, W extends Gerpable & TopWrapper<T>> {
     this.gerpableCount = 0;
   }
 
+  public void add(W gerpable) {
+    int index = -1;
+    if ((index = gerpables.indexOf(gerpable)) > 0) {
+      gerpables.get(index).addGenerators(gerpable.getGenerators());
+    } else {
+      gerpables.add(gerpable);
+      gerpableCount++;
+    }
+  }
+
   public void add(W gerpable, String generator) {
     int index = -1;
     if ((index = gerpables.indexOf(gerpable)) > 0) {
@@ -42,6 +53,14 @@ public class GerpableList<T extends TOP, W extends Gerpable & TopWrapper<T>> {
     }
   }
 
+  public void addAllEvidences(Map<W, EvidenceWrapper<?, ?>> gerpable2evidence) {
+    assert gerpable2evidence.size() == gerpableCount;
+    for (W gerpable : gerpable2evidence.keySet()) {
+      int idx = gerpables.indexOf(gerpable);
+      gerpables.get(idx).addEvidence(gerpable2evidence.get(gerpable));
+    }
+  }
+
   public List<Collection<EvidenceWrapper<?, ?>>> getAllEvidences() {
     List<Collection<EvidenceWrapper<?, ?>>> evidences = Lists.newArrayList();
     for (W gerpable : gerpables) {
@@ -53,6 +72,14 @@ public class GerpableList<T extends TOP, W extends Gerpable & TopWrapper<T>> {
   public void addAllRanks(List<RankWrapper> ranks) {
     for (int i = 0; i < gerpableCount; i++) {
       gerpables.get(i).addRank(ranks.get(i));
+    }
+  }
+
+  public void addAllRanks(Map<W, RankWrapper> gerpable2ranks) {
+    assert gerpable2ranks.size() == gerpableCount;
+    for (W gerpable : gerpable2ranks.keySet()) {
+      int idx = gerpables.indexOf(gerpable);
+      gerpables.get(idx).addRank(gerpable2ranks.get(gerpable));
     }
   }
 
@@ -70,6 +97,14 @@ public class GerpableList<T extends TOP, W extends Gerpable & TopWrapper<T>> {
     }
   }
 
+  public void addAllPruningDecisions(Map<W, PruningDecisionWrapper> gerpable2pruningDecisions) {
+    assert gerpable2pruningDecisions.size() == gerpableCount;
+    for (W gerpable : gerpable2pruningDecisions.keySet()) {
+      int idx = gerpables.indexOf(gerpable);
+      gerpables.get(idx).addPruningDecision(gerpable2pruningDecisions.get(gerpable));
+    }
+  }
+
   public void unwrapAllAndAddToIndexes(WrapperIndexer indexer)
           throws AnalysisEngineProcessException {
     for (W gerpable : gerpables) {
@@ -78,7 +113,11 @@ public class GerpableList<T extends TOP, W extends Gerpable & TopWrapper<T>> {
     }
   }
 
-  public int getSize() {
+  public W get(int i) {
+    return gerpables.get(i);
+  }
+
+  public int size() {
     return gerpables.size();
   }
 
