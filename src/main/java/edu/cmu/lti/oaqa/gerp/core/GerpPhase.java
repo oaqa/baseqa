@@ -97,17 +97,19 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     } catch (Exception e) {
       throw new ResourceInitializationException(e);
     }
-    gerpMeta = new GerpMetaWrapper(toClassNames((String[]) confs.get("generators")),
-            toClassNames((String[]) confs.get("evidencers")),
-            toClassNames((String[]) confs.get("rankers")),
-            toClassNames((String[]) confs.get("pruners")));
+    gerpMeta = new GerpMetaWrapper(toClassNames((String) confs.get("generators")),
+            toClassNames((String) confs.get("evidencers")),
+            toClassNames((String) confs.get("rankers")),
+            toClassNames((String) confs.get("pruners")));
   }
 
   private static CharMatcher matcher = CharMatcher.anyOf("./ :");
 
-  private static List<String> toClassNames(String[] options) {
+  // TODO Since the vbar in the descritpor should be removed and replaced with the YAML list
+  // syntax, the returned value should be String array (String[])
+  private static List<String> toClassNames(String options) {
     List<String> names = Lists.newArrayList();
-    for (String option : options) {
+    for (String option : options.split("\\n+")) {
       names.add(option.substring(matcher.lastIndexIn(option) + 1));
     }
     return names;
@@ -160,9 +162,8 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       phaseAE = AnalysisEngineFactory.createAggregate(aeDescription);
       return phaseAE.processAndOutputNewCASes(jcas);
     } catch (ResourceInitializationException e) {
-      throw new AnalysisEngineProcessException(e);
-    } finally {
       phaseAE.destroy();
+      throw new AnalysisEngineProcessException(e);
     }
   }
 

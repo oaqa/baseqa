@@ -1,1 +1,4 @@
 class: edu.cmu.lti.oaqa.gerp.core.GerpPhase
+
+persistence-provider: |
+  class: edu.cmu.lti.oaqa.ecd.impl.DefaultPhasePersistenceProvider
