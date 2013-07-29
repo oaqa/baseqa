@@ -7,6 +7,7 @@ import org.apache.uima.jcas.cas.TOP;
 import org.oaqa.model.input.Question;
 import org.oaqa.model.kb.Interpretation;
 import org.oaqa.model.nlp.Parse;
+import org.oaqa.model.retrieval.AbstractQuery;
 
 import com.google.common.collect.Lists;
 
@@ -17,7 +18,8 @@ import edu.cmu.lti.oaqa.baseqa.data.retrieval.AbstractQueryWrapper;
 import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.gerp.core.AbstractGenerator;
 
-public abstract class AbstractQueryGenerator extends AbstractGenerator<AbstractQueryWrapper> {
+public abstract class AbstractQueryGenerator extends
+        AbstractGenerator<AbstractQuery, AbstractQueryWrapper> {
 
   @Override
   public List<Integer> getRequiredInputTypes() {

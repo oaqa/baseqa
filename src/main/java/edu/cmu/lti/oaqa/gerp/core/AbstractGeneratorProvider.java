@@ -12,7 +12,7 @@ public abstract class AbstractGeneratorProvider<W extends Gerpable> extends Conf
 
   public abstract List<Integer> getRequiredInputTypes();
 
-  public TypeToken<W> type = new TypeToken<W>(getClass()) {
+  public TypeToken<W> wrapperType = new TypeToken<W>(getClass()) {
 
     private static final long serialVersionUID = 1L;
 

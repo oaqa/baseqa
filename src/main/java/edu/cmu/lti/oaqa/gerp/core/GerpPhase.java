@@ -17,11 +17,13 @@ import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.CasCopier;
+import org.oaqa.model.gerp.GerpMeta;
 import org.uimafit.component.JCasMultiplier_ImplBase;
 import org.uimafit.descriptor.OperationalProperties;
 import org.uimafit.factory.AnalysisEngineFactory;
 
 import com.google.common.base.CharMatcher;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -71,7 +73,9 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
 
   private Map<String, Object> confs;
 
-  private int type;
+  private String gerpableClassName;
+
+  private int gerpableType;
 
   private GerpMetaWrapper gerpMeta;
 
@@ -91,13 +95,14 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
             BaseExperimentBuilder.STAGE_ID_PROPERTY, "generators", "evidencers", "rankers",
             "pruners");
     try {
-      Class<? extends TOP> topClass = Class.forName(
-              (String) context.getConfigParameterValue("type")).asSubclass(TOP.class);
-      type = (Integer) topClass.getDeclaredField("type").get(null);
+      gerpableClassName = (String) context.getConfigParameterValue("type");
+      Class<? extends TOP> topClass = Class.forName(gerpableClassName).asSubclass(TOP.class);
+      gerpableType = (Integer) topClass.getDeclaredField("type").get(null);
     } catch (Exception e) {
       throw new ResourceInitializationException(e);
     }
-    gerpMeta = new GerpMetaWrapper(toClassNames((String) confs.get("generators")),
+    gerpMeta = new GerpMetaWrapper(gerpableClassName,
+            toClassNames((String) confs.get("generators")),
             toClassNames((String) confs.get("evidencers")),
             toClassNames((String) confs.get("rankers")),
             toClassNames((String) confs.get("pruners")));
@@ -122,10 +127,12 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
             BaseExperimentBuilder.EXPERIMENT_UUID_PROPERTY, BaseExperimentBuilder.STAGE_ID_PROPERTY);
     mergedJcas = getEmptyJCas();
     CasCopier.copyCas(aJCas.getCas(), mergedJcas.getCas(), true);
+    removeAllTops(mergedJcas, GerpMeta.type);
+    WrapperHelper.unwrap(gerpMeta, mergedJcas).addToIndexes(mergedJcas);
     // execute generation subphase
     subPhaseConfs.put("name", confs.get("name") + "|GENERATION");
     subPhaseConfs.put("options", confs.get("generators"));
-    JCasIterator jcasIter = executeBasePhase(generatorSubPhase, subPhaseConfs, aJCas);
+    JCasIterator jcasIter = executeBasePhase(generatorSubPhase, subPhaseConfs, mergedJcas);
     // merge generated gerpables
     mergeGerpables(jcasIter);
     // execute evidencing subphase
@@ -170,13 +177,12 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   private void mergeGerpables(JCasIterator jcasIter) throws AnalysisEngineProcessException {
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
-      System.out.println(type + " " + jcas.getFSIndexRepository().getLabels());
-      for (TOP wrapper : getAllTops(jcas, type)) {
-        @SuppressWarnings("unchecked")
-        W gerpable = (W) WrapperHelper.wrap(wrapper);
-        gerpable.setGerpMeta(gerpMeta);
-        gerpables.add(gerpable);
-      }
+      System.out.println(gerpableType + " " + jcas.getFSIndexRepository().getLabels());
+      TOP top = Iterables.getOnlyElement(getAllTops(jcas, gerpableType));
+      @SuppressWarnings("unchecked")
+      W gerpable = (W) WrapperHelper.wrap(top);
+      gerpable.setGerpMeta(gerpMeta);
+      gerpables.add(gerpable);
       jcas.release();
     }
     for (W gerpable : gerpables.getGerpables()) {
@@ -186,13 +192,13 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   }
 
   private void mergeEvidences(JCasIterator jcasIter) throws AnalysisEngineProcessException {
-    removeAllTops(mergedJcas, type);
+    removeAllTops(mergedJcas, gerpableType);
     Map<W, EvidenceWrapper<?, ?>> gerpable2evidences = Maps.newHashMap();
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
-      for (TOP wrapper : getAllTops(jcas, type)) {
+      for (TOP top : getAllTops(jcas, gerpableType)) {
         @SuppressWarnings("unchecked")
-        W gerpable = (W) WrapperHelper.wrap(wrapper);
+        W gerpable = (W) WrapperHelper.wrap(top);
         gerpable2evidences.put(gerpable, gerpable.getEvidences().get(0));
       }
       gerpables.addAllEvidences(gerpable2evidences);
@@ -205,13 +211,13 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   }
 
   private void mergeRanks(JCasIterator jcasIter) throws AnalysisEngineProcessException {
-    removeAllTops(mergedJcas, type);
+    removeAllTops(mergedJcas, gerpableType);
     Map<W, RankWrapper> gerpable2ranks = Maps.newHashMap();
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
-      for (TOP wrapper : getAllTops(jcas, type)) {
+      for (TOP top : getAllTops(jcas, gerpableType)) {
         @SuppressWarnings("unchecked")
-        W gerpable = (W) WrapperHelper.wrap(wrapper);
+        W gerpable = (W) WrapperHelper.wrap(top);
         gerpable2ranks.put(gerpable, gerpable.getRanks().get(0));
       }
       gerpables.addAllRanks(gerpable2ranks);
@@ -224,13 +230,13 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   }
 
   private void mergePruningDecisions(JCasIterator jcasIter) throws AnalysisEngineProcessException {
-    removeAllTops(mergedJcas, type);
+    removeAllTops(mergedJcas, gerpableType);
     Map<W, PruningDecisionWrapper> gerpable2pruningDecisions = Maps.newHashMap();
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
-      for (TOP wrapper : getAllTops(jcas, type)) {
+      for (TOP top : getAllTops(jcas, gerpableType)) {
         @SuppressWarnings("unchecked")
-        W gerpable = (W) WrapperHelper.wrap(wrapper);
+        W gerpable = (W) WrapperHelper.wrap(top);
         gerpable2pruningDecisions.put(gerpable, gerpable.getPruningDecisions().get(0));
       }
       gerpables.addAllPruningDecisions(gerpable2pruningDecisions);

@@ -1,21 +1,36 @@
 package edu.cmu.lti.oaqa.gerp.core;
 
-import com.google.common.reflect.TypeToken;
+import java.util.List;
 
-import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.TOP;
+
+import edu.cmu.lti.oaqa.core.data.TopWrapper;
+import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.gerp.data.EvidenceWrapper;
 import edu.cmu.lti.oaqa.gerp.data.Gerpable;
+import edu.cmu.lti.oaqa.gerp.data.GerpableList;
 
-public abstract class AbstractEvidencer<W extends Gerpable> extends AbstractLoggedComponent
-        implements Evidencer<W> {
-
-  public TypeToken<W> type = new TypeToken<W>(getClass()) {
-
-    private static final long serialVersionUID = 1L;
-
-  };
+public abstract class AbstractEvidencer<T extends TOP, W extends Gerpable & TopWrapper<T>> extends
+        AbstractGerpSubPhase implements Evidencer<W> {
 
   protected void log(String message) {
-    super.log(GerpLogEntry.getEvidenceLog(type.getClass()), message);
+    super.log(GerpLogEntry.getEvidenceLog(gerpableClass), message);
   };
 
+  @SuppressWarnings("unchecked")
+  @Override
+  public void process(JCas jcas) throws AnalysisEngineProcessException {
+    super.process(jcas);
+    GerpableList<T, W> gerpables = new GerpableList<T, W>();
+    for (TopWrapper<?> gerpable : WrapperHelper.wrapAllFromJCas(jcas, gerpableType)) {
+      gerpables.add((W) gerpable);
+    }
+    List<EvidenceWrapper<?, ?>> evidences = evidence(gerpables.getGerpables());
+    gerpables.addAllEvidences(evidences);
+    for (Gerpable gerpable : gerpables.getGerpables()) {
+      WrapperHelper.unwrap((W) gerpable, jcas).addToIndexes(jcas);
+    }
+  }
 }

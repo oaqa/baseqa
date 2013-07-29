@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.cas.TOP;
 import org.oaqa.model.input.Question;
+import org.oaqa.model.nlp.Parse;
 
 import com.google.common.collect.Lists;
 
@@ -13,7 +14,7 @@ import edu.cmu.lti.oaqa.baseqa.data.nlp.QuestionWrapper;
 import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.gerp.core.AbstractGenerator;
 
-public abstract class AbstractQuestionParseGenerator extends AbstractGenerator<ParseWrapper> {
+public abstract class AbstractQuestionParseGenerator extends AbstractGenerator<Parse, ParseWrapper> {
 
   @Override
   public List<Integer> getRequiredInputTypes() {
