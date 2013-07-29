@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.gerp.GerpTop_Type;
 
 /** A data structure that represents various NLP annotations from a parser, e.g. lists of tokens, semantic roles, etc.
- * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
+ * Updated by JCasGen Mon Jul 29 18:17:35 EDT 2013
  * @generated */
 public class Parse_Type extends GerpTop_Type {
   /** @generated */

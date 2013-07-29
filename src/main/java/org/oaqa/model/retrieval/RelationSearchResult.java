@@ -12,7 +12,7 @@ import org.oaqa.model.kb.Relation;
 
 
 /** A search result from a triple store, e.g., an RDF store.
- * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
+ * Updated by JCasGen Mon Jul 29 18:17:35 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class RelationSearchResult extends AnswerSearchResult {

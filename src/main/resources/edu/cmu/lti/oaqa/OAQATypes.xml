@@ -3,8 +3,13 @@
   <name>OAQATypes</name>
   <description>Type system descriptor for the OAQA data model.
 
+Changes in 2.6:
+* Added gerpableClassName feature in the GerpMeta type.
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;
+
 Changes in 2.5;
 * Added gerpMeta and dependencies features for GerpTop and GerpAnnotation to store the pointers to the meta information (generators, evidencers, rankers, pruners) and the inputs that are being used to generate the Top or Annotation.
+- Zi Yang &lt;ziy@cs.cmu.edu&gt;
 
 Changes in 2.4:
 * Added super types from NEAL project: Concept and ConceptMention.
@@ -21,7 +26,6 @@ Changes in 2.4:
 
 Changes in 0.2.3:
 * Added new type Parse to aggregate NLP annotations, e.g. predicates, named entities, semantic roles.
-- Zi Yang &lt;ziy@cs.cmu.edu&gt;
 
 Changes in 0.2.2:
 * Merged annotation QuestionClass with Question, and rebased Question on GerpAnnotation instead of InputElement.
@@ -41,7 +45,7 @@ Changes in 0.2:
 * Updated superclass of most types from OAQATop/OAQAAnnotation to GerpTop/GerpAnnotation, e.g. QuestionClass
 * Added an imported type system frameworkTypesDescriptor, and updated the supertype of Question to InputElement.
 - Zi Yang &lt;ziy@cs.cmu.edu&gt;</description>
-  <version>2.5</version>
+  <version>2.6</version>
   <vendor>OAQA</vendor>
   <types>
     <typeDescription>
@@ -724,6 +728,11 @@ Changes in 0.2:
       <description>A GERP-style component type, which contains some generators, evidencers, rankers and pruners, that capture the common metadata shared across the feature structures (GerpTops and GerpAnnotations) to be generated in the component, e.g. the name of all generators, evidencers, rankers and pruners.</description>
       <supertypeName>org.oaqa.model.core.OAQATop</supertypeName>
       <features>
+        <featureDescription>
+          <name>gerpableClassName</name>
+          <description>The class name of the TOP or Annotation that will be generated from the gerp phase or component.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
         <featureDescription>
           <name>generators</name>
           <description>An array of generator names.</description>

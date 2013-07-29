@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.oaqa.model.core.OAQATop_Type;
 
 /** A GERP-style component type, which contains some generators, evidencers, rankers and pruners, that capture the common metadata shared across the feature structures (GerpTops and GerpAnnotations) to be generated in the component, e.g. the name of all generators, evidencers, rankers and pruners.
- * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
+ * Updated by JCasGen Mon Jul 29 18:17:35 EDT 2013
  * @generated */
 public class GerpMeta_Type extends OAQATop_Type {
   /** @generated */
@@ -43,6 +43,24 @@ public class GerpMeta_Type extends OAQATop_Type {
      @modifiable */
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.oaqa.model.gerp.GerpMeta");
+ 
+  /** @generated */
+  final Feature casFeat_gerpableClassName;
+  /** @generated */
+  final int     casFeatCode_gerpableClassName;
+  /** @generated */ 
+  public String getGerpableClassName(int addr) {
+        if (featOkTst && casFeat_gerpableClassName == null)
+      jcas.throwFeatMissing("gerpableClassName", "org.oaqa.model.gerp.GerpMeta");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_gerpableClassName);
+  }
+  /** @generated */    
+  public void setGerpableClassName(int addr, String v) {
+        if (featOkTst && casFeat_gerpableClassName == null)
+      jcas.throwFeatMissing("gerpableClassName", "org.oaqa.model.gerp.GerpMeta");
+    ll_cas.ll_setStringValue(addr, casFeatCode_gerpableClassName, v);}
+    
+  
  
   /** @generated */
   final Feature casFeat_generators;
@@ -199,6 +217,10 @@ public class GerpMeta_Type extends OAQATop_Type {
   public GerpMeta_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
+
+ 
+    casFeat_gerpableClassName = jcas.getRequiredFeatureDE(casType, "gerpableClassName", "uima.cas.String", featOkTst);
+    casFeatCode_gerpableClassName  = (null == casFeat_gerpableClassName) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_gerpableClassName).getCode();
 
  
     casFeat_generators = jcas.getRequiredFeatureDE(casType, "generators", "uima.cas.StringArray", featOkTst);

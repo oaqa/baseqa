@@ -16,6 +16,8 @@ public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
 
   private static final long serialVersionUID = 1L;
 
+  private String gerpableClassName;
+
   protected List<String> generators;
 
   protected List<String> evidencers;
@@ -24,9 +26,10 @@ public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
 
   protected List<String> pruners;
 
-  public GerpMetaWrapper(List<String> generators, List<String> evidencers, List<String> rankers,
-          List<String> pruners) {
+  public GerpMetaWrapper(String gerpableClassName, List<String> generators,
+          List<String> evidencers, List<String> rankers, List<String> pruners) {
     super();
+    this.gerpableClassName = gerpableClassName;
     this.generators = generators;
     this.evidencers = evidencers;
     this.rankers = rankers;
@@ -34,7 +37,7 @@ public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
   }
 
   public GerpMetaWrapper() {
-    this(Lists.<String> newArrayList(), Lists.<String> newArrayList(), Lists
+    this("", Lists.<String> newArrayList(), Lists.<String> newArrayList(), Lists
             .<String> newArrayList(), Lists.<String> newArrayList());
   }
 
@@ -46,6 +49,7 @@ public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
   @Override
   public void wrap(GerpMeta top) throws AnalysisEngineProcessException {
     super.wrap(top);
+    gerpableClassName = top.getGerpableClassName();
     generators = WrapperHelper.wrapStringArray(top.getGenerators());
     evidencers = WrapperHelper.wrapStringArray(top.getEvidencers());
     rankers = WrapperHelper.wrapStringArray(top.getRankers());
@@ -56,6 +60,7 @@ public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
   public void unwrap(GerpMeta top) throws AnalysisEngineProcessException {
     super.unwrap(top);
     JCas jcas = WrapperHelper.getJCas(top);
+    top.setGerpableClassName(gerpableClassName);
     top.setGenerators(WrapperHelper.unwrapStringArray(generators, jcas));
     top.setEvidencers(WrapperHelper.unwrapStringArray(evidencers, jcas));
     top.setRankers(WrapperHelper.unwrapStringArray(rankers, jcas));
@@ -64,7 +69,7 @@ public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(generators, evidencers, rankers, pruners);
+    return Objects.hashCode(gerpableClassName, generators, evidencers, rankers, pruners);
   }
 
   @Override
@@ -76,10 +81,19 @@ public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
     if (getClass() != obj.getClass())
       return false;
     GerpMetaWrapper other = (GerpMetaWrapper) obj;
-    return Objects.equal(this.generators, other.generators)
+    return Objects.equal(this.gerpableClassName, other.gerpableClassName)
+            && Objects.equal(this.generators, other.generators)
             && Objects.equal(this.evidencers, other.evidencers)
             && Objects.equal(this.rankers, other.rankers)
             && Objects.equal(this.pruners, other.pruners);
+  }
+
+  public String getGerpableClassName() {
+    return gerpableClassName;
+  }
+
+  public void setGerpableClassName(String gerpableClassName) {
+    this.gerpableClassName = gerpableClassName;
   }
 
   public List<String> getGenerators() {

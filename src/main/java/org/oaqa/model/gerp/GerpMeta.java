@@ -12,7 +12,7 @@ import org.apache.uima.jcas.cas.StringArray;
 
 
 /** A GERP-style component type, which contains some generators, evidencers, rankers and pruners, that capture the common metadata shared across the feature structures (GerpTops and GerpAnnotations) to be generated in the component, e.g. the name of all generators, evidencers, rankers and pruners.
- * Updated by JCasGen Thu Jul 18 17:30:38 EDT 2013
+ * Updated by JCasGen Mon Jul 29 18:17:35 EDT 2013
  * XML source: C:/Users/yangz13/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
  * @generated */
 public class GerpMeta extends OAQATop {
@@ -54,6 +54,24 @@ public class GerpMeta extends OAQATop {
   private void readObject() {/*default - does nothing empty block */}
      
  
+    
+  //*--------------*
+  //* Feature: gerpableClassName
+
+  /** getter for gerpableClassName - gets The class name of the TOP or Annotation that will be generated from the gerp phase or component.
+   * @generated */
+  public String getGerpableClassName() {
+    if (GerpMeta_Type.featOkTst && ((GerpMeta_Type)jcasType).casFeat_gerpableClassName == null)
+      jcasType.jcas.throwFeatMissing("gerpableClassName", "org.oaqa.model.gerp.GerpMeta");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((GerpMeta_Type)jcasType).casFeatCode_gerpableClassName);}
+    
+  /** setter for gerpableClassName - sets The class name of the TOP or Annotation that will be generated from the gerp phase or component. 
+   * @generated */
+  public void setGerpableClassName(String v) {
+    if (GerpMeta_Type.featOkTst && ((GerpMeta_Type)jcasType).casFeat_gerpableClassName == null)
+      jcasType.jcas.throwFeatMissing("gerpableClassName", "org.oaqa.model.gerp.GerpMeta");
+    jcasType.ll_cas.ll_setStringValue(addr, ((GerpMeta_Type)jcasType).casFeatCode_gerpableClassName, v);}    
+   
     
   //*--------------*
   //* Feature: generators
