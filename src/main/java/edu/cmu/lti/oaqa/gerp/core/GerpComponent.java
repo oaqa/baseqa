@@ -71,6 +71,8 @@ public class GerpComponent<T extends TOP, W extends Gerpable & TopWrapper<T>> ex
 
   private Class<W> wrapperClass;
 
+  private String gerpableClassName;
+
   protected List<AbstractGeneratorProvider<W>> generators = Lists.newArrayList();
 
   protected List<AbstractEvidencerProvider<W>> evidencers = Lists.newArrayList();
@@ -85,6 +87,7 @@ public class GerpComponent<T extends TOP, W extends Gerpable & TopWrapper<T>> ex
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
     super.initialize(c);
+    gerpableClassName = (String) c.getConfigParameterValue("type");
     Object generatorNames = c.getConfigParameterValue("generators");
     if (generatorNames != null) {
       for (AbstractGeneratorProvider<?> generator : BaseExperimentBuilder.createResourceList(
@@ -117,8 +120,8 @@ public class GerpComponent<T extends TOP, W extends Gerpable & TopWrapper<T>> ex
   }
 
   private void generateGerpMeta(JCas jcas) throws AnalysisEngineProcessException {
-    gerpMeta = new GerpMetaWrapper(toClassNames(generators), toClassNames(evidencers),
-            toClassNames(rankers), toClassNames(pruners));
+    gerpMeta = new GerpMetaWrapper(gerpableClassName, toClassNames(generators),
+            toClassNames(evidencers), toClassNames(rankers), toClassNames(pruners));
     GerpMeta top = WrapperHelper.unwrap(gerpMeta, jcas);
     top.addToIndexes(jcas);
   }
@@ -129,7 +132,7 @@ public class GerpComponent<T extends TOP, W extends Gerpable & TopWrapper<T>> ex
     GerpableList<T, W> outputs = new GerpableList<T, W>();
     // generate
     for (AbstractGeneratorProvider<W> generator : generators) {
-      wrapperClass = (Class<W>) generator.type.getClass();
+      wrapperClass = (Class<W>) generator.wrapperType.getClass();
       // collecting required types from jcas as inputs
       List<Set<TopWrapper<? extends TOP>>> inputOptions;
       try {

@@ -1,4 +1,5 @@
 inherit: gerp.core.GerpComponent
+type: org.oaqa.model.answer.AnswerList
 
 generators: |
   - inherit: baseqa.gerp.answer.QueryTermAnswerGeneratorProvider
