@@ -123,25 +123,25 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     mergedJcas = getEmptyJCas();
     CasCopier.copyCas(aJCas.getCas(), mergedJcas.getCas(), true);
     // execute generation subphase
-    subPhaseConfs.put("name", confs.get("name") + "/GENERATION");
+    subPhaseConfs.put("name", confs.get("name") + "|GENERATION");
     subPhaseConfs.put("options", confs.get("generators"));
     JCasIterator jcasIter = executeBasePhase(generatorSubPhase, subPhaseConfs, aJCas);
     // merge generated gerpables
     mergeGerpables(jcasIter);
     // execute evidencing subphase
-    subPhaseConfs.put("name", confs.get("name") + "/EVIDENCING");
+    subPhaseConfs.put("name", confs.get("name") + "|EVIDENCING");
     subPhaseConfs.put("options", confs.get("evidencers"));
     jcasIter = executeBasePhase(evidencerSubPhase, subPhaseConfs, mergedJcas);
     // merge evidences
     mergeEvidences(jcasIter);
     // execute ranking subphase
-    subPhaseConfs.put("name", confs.get("name") + "/RANKING");
+    subPhaseConfs.put("name", confs.get("name") + "|RANKING");
     subPhaseConfs.put("options", confs.get("rankers"));
     jcasIter = executeBasePhase(rankerSubPhase, subPhaseConfs, mergedJcas);
     // merge ranks
     mergeRanks(jcasIter);
     // execute pruning subphase
-    subPhaseConfs.put("name", confs.get("name") + "/PRUNING");
+    subPhaseConfs.put("name", confs.get("name") + "|PRUNING");
     subPhaseConfs.put("options", confs.get("pruners"));
     jcasIter = executeBasePhase(prunerSubPhase, subPhaseConfs, mergedJcas);
     // merge pruning decisions
@@ -170,6 +170,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   private void mergeGerpables(JCasIterator jcasIter) throws AnalysisEngineProcessException {
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
+      System.out.println(type + " " + jcas.getFSIndexRepository().getLabels());
       for (TOP wrapper : getAllTops(jcas, type)) {
         @SuppressWarnings("unchecked")
         W gerpable = (W) WrapperHelper.wrap(wrapper);
