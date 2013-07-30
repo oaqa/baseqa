@@ -26,6 +26,7 @@ public abstract class AbstractRanker extends AbstractGerpSubPhase implements Ran
     for (TopWrapper<?> gerpable : WrapperHelper.wrapAllFromJCas(jcas, gerpableType)) {
       gerpables.add((Gerpable) gerpable);
     }
+    GerpPhase.removeAllTops(jcas, gerpableType);
     List<RankWrapper> ranks = rank(gerpables.getGerpables());
     gerpables.addAllPruningDecisions(ranks);
     for (Object gerpable : gerpables.getGerpables()) {

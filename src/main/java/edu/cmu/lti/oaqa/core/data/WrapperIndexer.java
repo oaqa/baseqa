@@ -9,6 +9,7 @@ import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
 
+import com.google.common.collect.BiMap;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -139,6 +140,15 @@ public class WrapperIndexer {
     topAddress2wrapper.put(top.getAddress(), wrapper);
   }
 
+  public void removeWrapped(TOP top) {
+    topAddress2wrapper.remove(top.getAddress());
+  }
+
+  public void removeWrapped(TopWrapper<? extends TOP> wrapper) {
+    while (topAddress2wrapper.values().remove(wrapper))
+      ;
+  }
+
   public boolean checkUnwrapped(TopWrapper<? extends TOP> wrapper) {
     return wrapperHashcode2top.containsKey(System.identityHashCode(wrapper));
   }
@@ -149,6 +159,15 @@ public class WrapperIndexer {
 
   public void addUnwrapped(TopWrapper<? extends TOP> wrapper, TOP top) {
     wrapperHashcode2top.put(System.identityHashCode(wrapper), top);
+  }
+
+  public void removeUnwrapped(TopWrapper<? extends TOP> wrapper) {
+    wrapperHashcode2top.remove(System.identityHashCode(wrapper));
+  }
+
+  public void removeUnwrapped(TOP top) {
+    while (wrapperHashcode2top.values().remove(top))
+      ;
   }
 
   public JCas getJCas() {
@@ -163,7 +182,7 @@ public class WrapperIndexer {
     return wrapperHashcode2top;
   }
 
-  public void setWrapperHashcode2top(Map<Integer, TOP> wrapperHashcode2top) {
+  public void setWrapperHashcode2top(BiMap<Integer, TOP> wrapperHashcode2top) {
     this.wrapperHashcode2top = wrapperHashcode2top;
   }
 
@@ -171,7 +190,7 @@ public class WrapperIndexer {
     return topAddress2wrapper;
   }
 
-  public void setTopAddress2wrapper(Map<Integer, TopWrapper<? extends TOP>> topAddress2wrapper) {
+  public void setTopAddress2wrapper(BiMap<Integer, TopWrapper<? extends TOP>> topAddress2wrapper) {
     this.topAddress2wrapper = topAddress2wrapper;
   }
 

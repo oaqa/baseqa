@@ -3,6 +3,7 @@ package edu.cmu.lti.oaqa.gerp.core;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngine;
@@ -26,9 +27,11 @@ import com.google.common.base.CharMatcher;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 
 import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.ecd.phase.BasePhase;
 import edu.cmu.lti.oaqa.gerp.data.EvidenceWrapper;
@@ -287,10 +290,17 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     return tops;
   }
 
-  private static void removeAllTops(JCas jcas, int type) {
+  public static void removeAllTops(JCas jcas, int type) {
     FSIterator<TOP> topIter = jcas.getJFSIndexRepository().getAllIndexedFS(type);
+    Set<TOP> tops = Sets.newHashSet();
     while (topIter.hasNext()) {
-      topIter.next().removeFromIndexes(jcas);
+      tops.add(topIter.next());
+    }
+    for (TOP top : tops) {
+      top.removeFromIndexes(jcas);
+      WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
+      indexer.removeWrapped(top);
+      indexer.removeUnwrapped(top);
     }
   }
 

@@ -26,6 +26,7 @@ public abstract class AbstractPruner extends AbstractGerpSubPhase implements Pru
     for (TopWrapper<?> gerpable : WrapperHelper.wrapAllFromJCas(jcas, gerpableType)) {
       gerpables.add((Gerpable) gerpable);
     }
+    GerpPhase.removeAllTops(jcas, gerpableType);
     List<PruningDecisionWrapper> pruningDecisions = prune(gerpables.getGerpables());
     gerpables.addAllPruningDecisions(pruningDecisions);
     for (Object gerpable : gerpables.getGerpables()) {
