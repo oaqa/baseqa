@@ -1,6 +1,7 @@
 package edu.cmu.lti.oaqa.gerp.core;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.analysis_engine.JCasIterator;
 import org.apache.uima.cas.AbstractCas;
 import org.apache.uima.cas.CAS;
+import org.apache.uima.cas.FSIndex;
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
@@ -297,10 +299,10 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       tops.add(topIter.next());
     }
     for (TOP top : tops) {
-      top.removeFromIndexes(jcas);
       WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
       indexer.removeWrapped(top);
       indexer.removeUnwrapped(top);
+      top.removeFromIndexes(jcas);
     }
   }
 
@@ -318,6 +320,18 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       ret.put(key, map.get(key));
     }
     return ret;
+  }
+
+  public static void printCasIndexes(JCas jcas) {
+    Iterator<FSIndex<TOP>> indexes = jcas.getJFSIndexRepository().getIndexes();
+    while (indexes.hasNext()) {
+      FSIndex<TOP> index = indexes.next();
+      System.out.println(index.getType().getName());
+      FSIterator<TOP> it = index.iterator();
+      while (it.hasNext()) {
+        System.out.println(" - " + it.next());
+      }
+    }
   }
 
 }

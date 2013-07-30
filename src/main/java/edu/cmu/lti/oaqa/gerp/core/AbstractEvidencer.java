@@ -19,9 +19,14 @@ public abstract class AbstractEvidencer<T extends TOP, W extends Gerpable & TopW
     super.log(GerpLogEntry.getEvidenceLog(gerpableClass), message);
   };
 
+  public static int i = 0;
+  
   @SuppressWarnings("unchecked")
   @Override
   public void process(JCas jcas) throws AnalysisEngineProcessException {
+    if (i++ == 1) {
+    throw new AnalysisEngineProcessException();
+    }
     super.process(jcas);
     GerpableList<T, W> gerpables = new GerpableList<T, W>();
     for (TopWrapper<?> gerpable : WrapperHelper.wrapAllFromJCas(jcas, gerpableType)) {
@@ -31,8 +36,7 @@ public abstract class AbstractEvidencer<T extends TOP, W extends Gerpable & TopW
     List<EvidenceWrapper<?, ?>> evidences = evidence(gerpables.getGerpables());
     gerpables.addAllEvidences(evidences);
     for (Gerpable gerpable : gerpables.getGerpables()) {
-      TOP top = WrapperHelper.unwrap((W) gerpable, jcas);
-      top.addToIndexes(jcas);
+      WrapperHelper.unwrap((W) gerpable, jcas).addToIndexes(jcas);
     }
   }
 }

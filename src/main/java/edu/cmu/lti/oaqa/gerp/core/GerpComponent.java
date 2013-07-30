@@ -128,7 +128,7 @@ public class GerpComponent<T extends TOP, W extends Gerpable & TopWrapper<T>> ex
 
   @SuppressWarnings("unchecked")
   private void executeGerp(JCas jcas) throws AnalysisEngineProcessException {
-    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
+    WrapperIndexer indexer = new WrapperIndexer();
     GerpableList<T, W> outputs = new GerpableList<T, W>();
     // generate
     for (AbstractGeneratorProvider<W> generator : generators) {
@@ -136,7 +136,7 @@ public class GerpComponent<T extends TOP, W extends Gerpable & TopWrapper<T>> ex
       // collecting required types from jcas as inputs
       List<Set<TopWrapper<? extends TOP>>> inputOptions;
       try {
-        inputOptions = indexer.getWrappersByTypes(generator.getRequiredInputTypes());
+        inputOptions = indexer.getWrappersByTypes(jcas, generator.getRequiredInputTypes());
       } catch (Exception e) {
         throw new AnalysisEngineProcessException(e);
       }
@@ -174,7 +174,7 @@ public class GerpComponent<T extends TOP, W extends Gerpable & TopWrapper<T>> ex
       log(pruner.getClass().getSimpleName() + " gives pruning decisions of " + pruningDecisions);
     }
     // persisting outputs
-    outputs.unwrapAllAndAddToIndexes(indexer);
+    outputs.unwrapAllAndAddToIndexes(jcas);
   }
 
   private static List<String> toClassNames(List<? extends Object> objects) {

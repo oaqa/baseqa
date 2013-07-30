@@ -5,6 +5,7 @@ import org.oaqa.model.nlp.CandidateAnswerOccurrence;
 
 import com.google.common.base.Objects;
 
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class CandidateAnswerOccurrenceWrapper extends
@@ -38,15 +39,17 @@ public class CandidateAnswerOccurrenceWrapper extends
   }
 
   @Override
-  public void wrap(CandidateAnswerOccurrence annotation) throws AnalysisEngineProcessException {
-    super.wrap(annotation);
+  public void wrap(WrapperIndexer indexer, CandidateAnswerOccurrence annotation)
+          throws AnalysisEngineProcessException {
+    super.wrap(indexer, annotation);
     this.text = annotation.getText();
     this.mentionType = annotation.getMentionType();
   }
 
   @Override
-  public void unwrap(CandidateAnswerOccurrence annotation) throws AnalysisEngineProcessException {
-    super.unwrap(annotation);
+  public void unwrap(WrapperIndexer indexer, CandidateAnswerOccurrence annotation)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, annotation);
     annotation.setText(text);
     annotation.setMentionType(mentionType);
   }

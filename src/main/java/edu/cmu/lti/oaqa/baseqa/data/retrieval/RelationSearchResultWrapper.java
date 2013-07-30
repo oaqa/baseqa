@@ -12,6 +12,7 @@ import com.google.common.collect.Lists;
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.kb.RelationWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 
 public class RelationSearchResultWrapper extends AnswerSearchResultWrapper {
 
@@ -45,16 +46,17 @@ public class RelationSearchResultWrapper extends AnswerSearchResultWrapper {
   }
 
   @Override
-  public void wrap(SearchResult top) throws AnalysisEngineProcessException {
-    super.wrap(top);
-    this.context = WrapperHelper.wrapTopArray(((RelationSearchResult) top).getContext(),
+  public void wrap(WrapperIndexer indexer, SearchResult top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
+    this.context = WrapperHelper.wrapTopArray(indexer, ((RelationSearchResult) top).getContext(),
             RelationWrapper.class);
   }
 
   @Override
-  public void unwrap(SearchResult top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
-    ((RelationSearchResult) top).setContext(WrapperHelper.unwrapTopArray(context,
+  public void unwrap(WrapperIndexer indexer, SearchResult top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
+    ((RelationSearchResult) top).setContext(WrapperHelper.unwrapTopArray(indexer, context,
             WrapperHelper.getJCas(top)));
   }
 

@@ -10,6 +10,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 
 public class PassageWrapper extends SearchResultWrapper {
 
@@ -55,8 +56,8 @@ public class PassageWrapper extends SearchResultWrapper {
   }
 
   @Override
-  public void wrap(SearchResult top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, SearchResult top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     this.title = ((Passage) top).getTitle();
     this.docId = ((Passage) top).getDocId();
     this.begin = ((Passage) top).getBegin();
@@ -65,8 +66,9 @@ public class PassageWrapper extends SearchResultWrapper {
   }
 
   @Override
-  public void unwrap(SearchResult top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, SearchResult top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     ((Passage) top).setTitle(title);
     ((Passage) top).setDocId(docId);
     ((Passage) top).setBegin(begin);

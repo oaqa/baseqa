@@ -5,6 +5,7 @@ import org.oaqa.model.input.Question;
 
 import com.google.common.base.Objects;
 
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
@@ -48,8 +49,9 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
   }
 
   @Override
-  public void wrap(Question annotation) throws AnalysisEngineProcessException {
-    super.wrap(annotation);
+  public void wrap(WrapperIndexer indexer, Question annotation)
+          throws AnalysisEngineProcessException {
+    super.wrap(indexer, annotation);
     this.id = annotation.getId();
     this.source = annotation.getSource();
     this.text = annotation.getText();
@@ -57,8 +59,9 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
   }
 
   @Override
-  public void unwrap(Question annotation) throws AnalysisEngineProcessException {
-    super.unwrap(annotation);
+  public void unwrap(WrapperIndexer indexer, Question annotation)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, annotation);
     annotation.setId(id);
     annotation.setSource(source);
     annotation.setText(text);

@@ -6,6 +6,8 @@ import org.oaqa.model.gerp.Rank;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
+
 public class RankWrapper extends GerpBaseWrapper<Rank> implements Comparable<RankWrapper> {
 
   private static final long serialVersionUID = 1L;
@@ -30,27 +32,27 @@ public class RankWrapper extends GerpBaseWrapper<Rank> implements Comparable<Ran
   }
 
   @Override
-  public void wrap(Rank top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, Rank top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     rank = top.getRank();
     score = top.getScore();
   }
 
   @Override
-  public void unwrap(Rank top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, Rank top) throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     top.setRank(rank);
     top.setScore(score);
   }
 
   @Override
-  protected void wrapComments(Rank top) {
+  protected void wrapComments(WrapperIndexer indexer, Rank top) {
     // TODO Auto-generated method stub
 
   }
 
   @Override
-  protected void unwrapComments(Rank top) {
+  protected void unwrapComments(WrapperIndexer indexer, Rank top) {
     // TODO Auto-generated method stub
 
   }

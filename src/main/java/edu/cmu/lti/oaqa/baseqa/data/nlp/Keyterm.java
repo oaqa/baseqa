@@ -6,6 +6,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.oaqa.model.retrieval.QueryConcept;
 
 import edu.cmu.lti.oaqa.core.data.OAQATopWrapper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 
 /**
  * TOKEN type refers to the original token terms, and phrases refer to the name entities identified
@@ -43,14 +44,15 @@ public class Keyterm extends OAQATopWrapper<QueryConcept> implements Serializabl
   }
 
   @Override
-  public void wrap(QueryConcept top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, QueryConcept top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     text = top.getText();
   }
 
   @Override
-  public void unwrap(QueryConcept top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, QueryConcept top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     top.setText(text);
   }
 

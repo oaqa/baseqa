@@ -9,6 +9,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public class QueryOperatorWrapper extends GerpTopWrapper<QueryOperator> {
@@ -44,15 +45,16 @@ public class QueryOperatorWrapper extends GerpTopWrapper<QueryOperator> {
   }
 
   @Override
-  public void wrap(QueryOperator top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, QueryOperator top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     this.name = QueryOperatorName.valueOf(top.getName());
     this.args = WrapperHelper.wrapStringList(top.getArgs());
   }
 
   @Override
-  public void unwrap(QueryOperator top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, QueryOperator top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     top.setName(name.toString());
     top.setArgs(WrapperHelper.unwrapStringList(args, WrapperHelper.getJCas(top)));
   }

@@ -10,6 +10,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 
 public class RelationMentionWrapper extends ConceptMentionWrapper {
 
@@ -39,16 +40,18 @@ public class RelationMentionWrapper extends ConceptMentionWrapper {
   }
 
   @Override
-  public void wrap(ConceptMention top) throws AnalysisEngineProcessException {
-    super.wrap(top);
-    this.argumentMentions = WrapperHelper.wrapAnnotationList(
+  public void wrap(WrapperIndexer indexer, ConceptMention top)
+          throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
+    this.argumentMentions = WrapperHelper.wrapAnnotationList(indexer,
             ((RelationMention) top).getArgumentMentions(), EntityMentionWrapper.class);
   }
 
   @Override
-  public void unwrap(ConceptMention top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
-    ((RelationMention) top).setArgumentMentions(WrapperHelper.unwrapAnnotationList(
+  public void unwrap(WrapperIndexer indexer, ConceptMention top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
+    ((RelationMention) top).setArgumentMentions(WrapperHelper.unwrapAnnotationList(indexer,
             argumentMentions, WrapperHelper.getJCas(top)));
   }
 

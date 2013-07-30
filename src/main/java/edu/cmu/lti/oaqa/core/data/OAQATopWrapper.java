@@ -20,12 +20,12 @@ public abstract class OAQATopWrapper<T extends OAQATop> implements TopWrapper<T>
   }
 
   @Override
-  public void unwrap(T top) throws AnalysisEngineProcessException {
+  public void unwrap(WrapperIndexer indexer, T top) throws AnalysisEngineProcessException {
     top.setImplementingWrapper(implementingWrapper);
   }
 
   @Override
-  public void wrap(T top) throws AnalysisEngineProcessException {
+  public void wrap(WrapperIndexer indexer, T top) throws AnalysisEngineProcessException {
     implementingWrapper = top.getImplementingWrapper();
   }
 

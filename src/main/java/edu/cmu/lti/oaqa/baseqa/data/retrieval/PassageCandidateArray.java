@@ -11,6 +11,7 @@ import org.oaqa.model.retrieval.Passage;
 import org.oaqa.model.test.Search;
 
 import edu.cmu.lti.oaqa.core.data.FSArrayWrapper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
 /**
@@ -43,7 +44,7 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
     search.addToIndexes();
   }
 
-  private void appendPassageCandidates(List<PassageCandidate> results)
+  private void appendPassageCandidates(WrapperIndexer indexer, List<PassageCandidate> results)
           throws AnalysisEngineProcessException {
     Collections.sort(results, Collections.reverseOrder());
     double prevScore = Double.NaN;
@@ -59,10 +60,10 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
         candidate.setRank(prevRank);
       }
     }
-    appendArray(results);
+    appendArray(indexer, results);
   }
 
-  public void setPassageCandidates(List<PassageCandidate> results)
+  public void setPassageCandidates(WrapperIndexer indexer, List<PassageCandidate> results)
           throws AnalysisEngineProcessException {
     Collections.sort(results, Collections.reverseOrder());
     double prevScore = Double.NaN;
@@ -78,37 +79,38 @@ public class PassageCandidateArray extends FSArrayWrapper<Passage> {
         candidate.setRank(prevRank);
       }
     }
-    setArray(results);
+    setArray(indexer, results);
   }
 
-  public static void storePassageCandidates(JCas jcas, List<PassageCandidate> results,
-          boolean overwrite) throws AnalysisEngineProcessException {
+  public static void storePassageCandidates(WrapperIndexer indexer, JCas jcas,
+          List<PassageCandidate> results, boolean overwrite) throws AnalysisEngineProcessException {
     if (overwrite) {
-      new PassageCandidateArray(jcas, results.size()).setPassageCandidates(results);
+      new PassageCandidateArray(jcas, results.size()).setPassageCandidates(indexer, results);
     } else {
-      new PassageCandidateArray(jcas, results.size()).appendPassageCandidates(results);
+      new PassageCandidateArray(jcas, results.size()).appendPassageCandidates(indexer, results);
     }
   }
 
   @Deprecated
-  public static void storePassageCandidates(JCas jcas, List<PassageCandidate> results)
-          throws AnalysisEngineProcessException {
-    storePassageCandidates(jcas, results, true);
+  public static void storePassageCandidates(WrapperIndexer indexer, JCas jcas,
+          List<PassageCandidate> results) throws AnalysisEngineProcessException {
+    storePassageCandidates(indexer, jcas, results, true);
   }
 
-  public List<PassageCandidate> getPassageCandidates() throws AnalysisEngineProcessException {
+  public List<PassageCandidate> getPassageCandidates(WrapperIndexer indexer)
+          throws AnalysisEngineProcessException {
     Search search = (Search) BaseJCasHelper.getFS(jcas, Search.type);
     if (search != null) {
       array = search.getHitList();
-      return getArray(PassageCandidate.class);
+      return getArray(indexer, PassageCandidate.class);
     } else {
       return new ArrayList<PassageCandidate>();
     }
   }
 
-  public static List<PassageCandidate> retrievePassageCandidates(JCas jcas)
+  public static List<PassageCandidate> retrievePassageCandidates(WrapperIndexer indexer, JCas jcas)
           throws AnalysisEngineProcessException {
-    return new PassageCandidateArray(jcas, 0).getPassageCandidates();
+    return new PassageCandidateArray(jcas, 0).getPassageCandidates(indexer);
   }
 
 }

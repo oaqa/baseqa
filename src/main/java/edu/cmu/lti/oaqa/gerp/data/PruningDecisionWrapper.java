@@ -6,6 +6,8 @@ import org.oaqa.model.gerp.PruningDecision;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
+
 public class PruningDecisionWrapper extends GerpBaseWrapper<PruningDecision> implements
         Comparable<PruningDecisionWrapper> {
 
@@ -28,25 +30,27 @@ public class PruningDecisionWrapper extends GerpBaseWrapper<PruningDecision> imp
   }
 
   @Override
-  public void wrap(PruningDecision top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, PruningDecision top)
+          throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     decision = top.getDecision();
   }
 
   @Override
-  public void unwrap(PruningDecision top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, PruningDecision top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     top.setDecision(decision);
   }
 
   @Override
-  protected void wrapComments(PruningDecision top) {
+  protected void wrapComments(WrapperIndexer indexer, PruningDecision top) {
     // TODO Auto-generated method stub
 
   }
 
   @Override
-  protected void unwrapComments(PruningDecision top) {
+  protected void unwrapComments(WrapperIndexer indexer, PruningDecision top) {
     // TODO Auto-generated method stub
 
   }

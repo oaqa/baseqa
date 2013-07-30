@@ -10,6 +10,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 
 public class RelationWrapper extends ConceptWrapper {
 
@@ -40,17 +41,17 @@ public class RelationWrapper extends ConceptWrapper {
   }
 
   @Override
-  public void wrap(Concept top) throws AnalysisEngineProcessException {
-    super.wrap(top);
-    this.arguments = WrapperHelper
-            .wrapTopList(((Relation) top).getArguments(), EntityWrapper.class);
+  public void wrap(WrapperIndexer indexer, Concept top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
+    this.arguments = WrapperHelper.wrapTopList(indexer, ((Relation) top).getArguments(),
+            EntityWrapper.class);
   }
 
   @Override
-  public void unwrap(Concept top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
-    ((Relation) top)
-            .setArguments(WrapperHelper.unwrapTopList(arguments, WrapperHelper.getJCas(top)));
+  public void unwrap(WrapperIndexer indexer, Concept top) throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
+    ((Relation) top).setArguments(WrapperHelper.unwrapTopList(indexer, arguments,
+            WrapperHelper.getJCas(top)));
   }
 
   @Override

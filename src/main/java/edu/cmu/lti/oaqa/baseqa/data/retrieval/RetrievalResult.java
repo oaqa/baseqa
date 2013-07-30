@@ -6,6 +6,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.oaqa.model.retrieval.Passage;
 
 import edu.cmu.lti.oaqa.core.data.OAQATopWrapper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.EvidenceWrapper;
 
 /**
@@ -86,16 +87,16 @@ public class RetrievalResult extends OAQATopWrapper<Passage> implements Serializ
   }
 
   @Override
-  public void wrap(Passage passage) throws AnalysisEngineProcessException {
-    super.wrap(passage);
+  public void wrap(WrapperIndexer indexer, Passage passage) throws AnalysisEngineProcessException {
+    super.wrap(indexer, passage);
     docID = passage.getUri();
     queryString = passage.getQueryString();
     rank = passage.getRank();
   }
 
   @Override
-  public void unwrap(Passage passage) throws AnalysisEngineProcessException {
-    super.unwrap(passage);
+  public void unwrap(WrapperIndexer indexer, Passage passage) throws AnalysisEngineProcessException {
+    super.unwrap(indexer, passage);
     passage.setUri(docID);
     passage.setQueryString(queryString);
     passage.setRank(rank);

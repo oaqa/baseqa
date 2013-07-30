@@ -6,6 +6,7 @@ import org.oaqa.model.nlp.Focus;
 import com.google.common.base.Objects;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
@@ -37,19 +38,21 @@ public class FocusWrapper extends GerpAnnotationWrapper<Focus> {
   }
 
   @Override
-  public void wrap(Focus annotation) throws AnalysisEngineProcessException {
-    super.wrap(annotation);
+  public void wrap(WrapperIndexer indexer, Focus annotation) throws AnalysisEngineProcessException {
+    super.wrap(indexer, annotation);
     if (annotation.getToken() != null) {
-      this.token = WrapperHelper.matchSubclassAndWrap(annotation.getToken(), TokenWrapper.class);
+      this.token = WrapperHelper.matchSubclassAndWrap(indexer, annotation.getToken(),
+              TokenWrapper.class);
     }
     this.label = annotation.getLabel();
   }
 
   @Override
-  public void unwrap(Focus annotation) throws AnalysisEngineProcessException {
-    super.unwrap(annotation);
+  public void unwrap(WrapperIndexer indexer, Focus annotation)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, annotation);
     if (token != null) {
-      annotation.setToken(WrapperHelper.unwrap(token, WrapperHelper.getJCas(annotation)));
+      annotation.setToken(WrapperHelper.unwrap(indexer, token, WrapperHelper.getJCas(annotation)));
     }
     annotation.setLabel(label);
   }

@@ -34,14 +34,14 @@ public abstract class OAQAAnnotationWrapper<T extends OAQAAnnotation> implements
   }
 
   @Override
-  public void unwrap(T annotation) throws AnalysisEngineProcessException {
+  public void unwrap(WrapperIndexer indexer, T annotation) throws AnalysisEngineProcessException {
     annotation.setImplementingWrapper(implementingWrapper);
     annotation.setBegin(begin);
     annotation.setEnd(end);
   }
 
   @Override
-  public void wrap(T annotation) throws AnalysisEngineProcessException {
+  public void wrap(WrapperIndexer indexer, T annotation) throws AnalysisEngineProcessException {
     implementingWrapper = annotation.getImplementingWrapper();
     begin = annotation.getBegin();
     end = annotation.getEnd();

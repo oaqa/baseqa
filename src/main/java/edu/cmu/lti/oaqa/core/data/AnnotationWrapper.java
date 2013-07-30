@@ -7,9 +7,9 @@ public interface AnnotationWrapper<T extends Annotation> extends TopWrapper<T> {
 
   Class<? extends T> getTypeClass();
 
-  void unwrap(T annotation) throws AnalysisEngineProcessException;
+  void unwrap(WrapperIndexer indexer,T annotation) throws AnalysisEngineProcessException;
 
-  void wrap(T annotation) throws AnalysisEngineProcessException;
+  void wrap(WrapperIndexer indexer, T annotation) throws AnalysisEngineProcessException;
 
   int getBegin();
 

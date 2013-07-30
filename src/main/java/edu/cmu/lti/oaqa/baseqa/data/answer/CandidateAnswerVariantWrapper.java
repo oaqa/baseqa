@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.nlp.CandidateAnswerOccurrenceWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public class CandidateAnswerVariantWrapper extends GerpTopWrapper<CandidateAnswerVariant> {
@@ -58,9 +59,10 @@ public class CandidateAnswerVariantWrapper extends GerpTopWrapper<CandidateAnswe
   }
 
   @Override
-  public void wrap(CandidateAnswerVariant top) throws AnalysisEngineProcessException {
-    super.wrap(top);
-    this.occurrences = WrapperHelper.wrapAnnotationList(top.getOccurrences(),
+  public void wrap(WrapperIndexer indexer, CandidateAnswerVariant top)
+          throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
+    this.occurrences = WrapperHelper.wrapAnnotationList(indexer, top.getOccurrences(),
             CandidateAnswerOccurrenceWrapper.class);
     this.candidateId = top.getCandidateId();
     this.text = top.getText();
@@ -70,10 +72,11 @@ public class CandidateAnswerVariantWrapper extends GerpTopWrapper<CandidateAnswe
   }
 
   @Override
-  public void unwrap(CandidateAnswerVariant top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, CandidateAnswerVariant top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     JCas jcas = WrapperHelper.getJCas(top);
-    top.setOccurrences(WrapperHelper.unwrapAnnotationList(occurrences, jcas));
+    top.setOccurrences(WrapperHelper.unwrapAnnotationList(indexer, occurrences, jcas));
     top.setCandidateId(candidateId);
     top.setText(text);
     top.setAlternativeNames(WrapperHelper.unwrapStringList(alternativeNames, jcas));

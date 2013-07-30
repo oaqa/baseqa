@@ -7,9 +7,9 @@ public interface TopWrapper<T extends TOP> {
 
   Class<? extends T> getTypeClass();
 
-  void unwrap(T top) throws AnalysisEngineProcessException;
+  void unwrap(WrapperIndexer indexer, T top) throws AnalysisEngineProcessException;
 
-  void wrap(T top) throws AnalysisEngineProcessException;
+  void wrap(WrapperIndexer indexer, T top) throws AnalysisEngineProcessException;
 
   String getImplementingWrapper();
 

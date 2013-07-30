@@ -10,6 +10,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public class ParseWrapper extends GerpTopWrapper<Parse> {
@@ -37,19 +38,19 @@ public class ParseWrapper extends GerpTopWrapper<Parse> {
   }
 
   @Override
-  public void wrap(Parse top) throws AnalysisEngineProcessException {
-    super.wrap(top);
-    this.tokens = WrapperHelper.wrapAnnotationList(top.getTokens(), TokenWrapper.class);
-    this.semanticRoles = WrapperHelper.wrapAnnotationList(top.getSemanticRoles(),
+  public void wrap(WrapperIndexer indexer, Parse top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
+    this.tokens = WrapperHelper.wrapAnnotationList(indexer, top.getTokens(), TokenWrapper.class);
+    this.semanticRoles = WrapperHelper.wrapAnnotationList(indexer, top.getSemanticRoles(),
             SemanticRoleWrapper.class);
   }
 
   @Override
-  public void unwrap(Parse top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, Parse top) throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     JCas jcas = WrapperHelper.getJCas(top);
-    top.setTokens(WrapperHelper.unwrapAnnotationList(tokens, jcas));
-    top.setSemanticRoles(WrapperHelper.unwrapAnnotationList(semanticRoles, jcas));
+    top.setTokens(WrapperHelper.unwrapAnnotationList(indexer, tokens, jcas));
+    top.setSemanticRoles(WrapperHelper.unwrapAnnotationList(indexer, semanticRoles, jcas));
   }
 
   @Override

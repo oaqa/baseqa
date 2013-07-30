@@ -6,6 +6,7 @@ import org.oaqa.model.nlp.LexicalAnswerType;
 import com.google.common.base.Objects;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class LexicalAnswerTypeWrapper extends GerpAnnotationWrapper<LexicalAnswerType> {
@@ -38,19 +39,22 @@ public class LexicalAnswerTypeWrapper extends GerpAnnotationWrapper<LexicalAnswe
   }
 
   @Override
-  public void wrap(LexicalAnswerType annotation) throws AnalysisEngineProcessException {
-    super.wrap(annotation);
+  public void wrap(WrapperIndexer indexer, LexicalAnswerType annotation)
+          throws AnalysisEngineProcessException {
+    super.wrap(indexer, annotation);
     if (annotation.getToken() != null) {
-      this.token = WrapperHelper.matchSubclassAndWrap(annotation.getToken(), TokenWrapper.class);
+      this.token = WrapperHelper.matchSubclassAndWrap(indexer, annotation.getToken(),
+              TokenWrapper.class);
     }
     this.label = annotation.getLabel();
   }
 
   @Override
-  public void unwrap(LexicalAnswerType annotation) throws AnalysisEngineProcessException {
-    super.unwrap(annotation);
+  public void unwrap(WrapperIndexer indexer, LexicalAnswerType annotation)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, annotation);
     if (token != null) {
-      annotation.setToken(WrapperHelper.unwrap(token, WrapperHelper.getJCas(annotation)));
+      annotation.setToken(WrapperHelper.unwrap(indexer, token, WrapperHelper.getJCas(annotation)));
     }
     annotation.setLabel(label);
   }

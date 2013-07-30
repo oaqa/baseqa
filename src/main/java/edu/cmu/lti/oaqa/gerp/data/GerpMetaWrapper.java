@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.OAQATopWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 
 public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
 
@@ -47,8 +48,8 @@ public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
   }
 
   @Override
-  public void wrap(GerpMeta top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, GerpMeta top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     gerpableClassName = top.getGerpableClassName();
     generators = WrapperHelper.wrapStringArray(top.getGenerators());
     evidencers = WrapperHelper.wrapStringArray(top.getEvidencers());
@@ -57,8 +58,8 @@ public class GerpMetaWrapper extends OAQATopWrapper<GerpMeta> {
   }
 
   @Override
-  public void unwrap(GerpMeta top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, GerpMeta top) throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     JCas jcas = WrapperHelper.getJCas(top);
     top.setGerpableClassName(gerpableClassName);
     top.setGenerators(WrapperHelper.unwrapStringArray(generators, jcas));

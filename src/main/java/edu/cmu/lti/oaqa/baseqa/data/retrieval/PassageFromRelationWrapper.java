@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.kb.RelationWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 
 public class PassageFromRelationWrapper extends PassageWrapper {
 
@@ -51,20 +52,21 @@ public class PassageFromRelationWrapper extends PassageWrapper {
   }
 
   @Override
-  public void wrap(SearchResult top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, SearchResult top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     if (((PassageFromRelation) top).getSourceRelation() != null) {
-      sourceRelation = WrapperHelper.matchSubclassAndWrap(
+      sourceRelation = WrapperHelper.matchSubclassAndWrap(indexer,
               ((PassageFromRelation) top).getSourceRelation(), RelationWrapper.class);
     }
   }
 
   @Override
-  public void unwrap(SearchResult top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, SearchResult top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     if (sourceRelation != null) {
-      ((PassageFromRelation) top).setSourceRelation((Relation) WrapperHelper.unwrap(sourceRelation,
-              WrapperHelper.getJCas(top)));
+      ((PassageFromRelation) top).setSourceRelation((Relation) WrapperHelper.unwrap(indexer,
+              sourceRelation, WrapperHelper.getJCas(top)));
     }
   }
 

@@ -12,6 +12,7 @@ import com.google.common.collect.ComparisonChain;
 
 import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 
 public abstract class EvidenceWrapper<T extends TOP, W extends TopWrapper<T>> extends
         GerpBaseWrapper<Evidence> implements Comparable<EvidenceWrapper<T, W>> {
@@ -51,29 +52,29 @@ public abstract class EvidenceWrapper<T extends TOP, W extends TopWrapper<T>> ex
   }
 
   @Override
-  public void wrap(Evidence top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, Evidence top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     confidence = top.getConfidence();
-    additionalEvidences = WrapperHelper.wrapTopList(top.getAdditionalEvidences(),
+    additionalEvidences = WrapperHelper.wrapTopList(indexer, top.getAdditionalEvidences(),
             additionalEvidenceWrapperClass);
   }
 
   @Override
-  public void unwrap(Evidence top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, Evidence top) throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     top.setConfidence(confidence);
-    top.setAdditionalEvidences(WrapperHelper.unwrapTopList(additionalEvidences,
+    top.setAdditionalEvidences(WrapperHelper.unwrapTopList(indexer, additionalEvidences,
             WrapperHelper.getJCas(top)));
   }
 
   @Override
-  protected void wrapComments(Evidence top) {
+  protected void wrapComments(WrapperIndexer indexer, Evidence top) {
     // TODO Auto-generated method stub
 
   }
 
   @Override
-  protected void unwrapComments(Evidence top) {
+  protected void unwrapComments(WrapperIndexer indexer, Evidence top) {
     // TODO Auto-generated method stub
 
   }

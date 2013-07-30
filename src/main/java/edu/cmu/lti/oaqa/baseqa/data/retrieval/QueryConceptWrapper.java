@@ -10,6 +10,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
@@ -65,32 +66,34 @@ public class QueryConceptWrapper extends GerpTopWrapper<QueryConcept> {
   }
 
   @Override
-  public void wrap(QueryConcept top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, QueryConcept top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     this.namedEntityTypes = WrapperHelper.wrapStringList(top.getNamedEntityTypes());
     this.conceptType = ConceptType.valueOf(top.getConceptType());
     this.text = top.getText();
     this.originalText = top.getOriginalText();
     if (top.getOperator() != null) {
-      this.operator = WrapperHelper.matchSubclassAndWrap(top.getOperator(),
+      this.operator = WrapperHelper.matchSubclassAndWrap(indexer, top.getOperator(),
               QueryOperatorWrapper.class);
     }
-    this.operatorArgs = WrapperHelper.wrapTopList(top.getOperatorArgs(), QueryConceptWrapper.class);
+    this.operatorArgs = WrapperHelper.wrapTopList(indexer, top.getOperatorArgs(),
+            QueryConceptWrapper.class);
     this.partOfSpeech = top.getPartOfSpeech();
   }
 
   @Override
-  public void unwrap(QueryConcept top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, QueryConcept top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     JCas jcas = WrapperHelper.getJCas(top);
     top.setNamedEntityTypes(WrapperHelper.unwrapStringList(namedEntityTypes, jcas));
     top.setConceptType(conceptType.toString());
     top.setText(text);
     top.setOriginalText(originalText);
     if (operator != null) {
-      top.setOperator(WrapperHelper.unwrap(operator, jcas));
+      top.setOperator(WrapperHelper.unwrap(indexer, operator, jcas));
     }
-    top.setOperatorArgs(WrapperHelper.unwrapTopList(operatorArgs, jcas));
+    top.setOperatorArgs(WrapperHelper.unwrapTopList(indexer, operatorArgs, jcas));
     top.setPartOfSpeech(partOfSpeech);
   }
 

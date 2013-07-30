@@ -6,6 +6,7 @@ import org.oaqa.model.kb.ConceptMention;
 import com.google.common.base.Objects;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class ConceptMentionWrapper extends GerpAnnotationWrapper<ConceptMention> {
@@ -34,19 +35,22 @@ public class ConceptMentionWrapper extends GerpAnnotationWrapper<ConceptMention>
   }
 
   @Override
-  public void wrap(ConceptMention annotation) throws AnalysisEngineProcessException {
-    super.wrap(annotation);
+  public void wrap(WrapperIndexer indexer, ConceptMention annotation)
+          throws AnalysisEngineProcessException {
+    super.wrap(indexer, annotation);
     if (annotation.getConcept() != null) {
-      this.concept = WrapperHelper.matchSubclassAndWrap(annotation.getConcept(),
+      this.concept = WrapperHelper.matchSubclassAndWrap(indexer, annotation.getConcept(),
               ConceptWrapper.class);
     }
   }
 
   @Override
-  public void unwrap(ConceptMention annotation) throws AnalysisEngineProcessException {
-    super.unwrap(annotation);
+  public void unwrap(WrapperIndexer indexer, ConceptMention annotation)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, annotation);
     if (concept != null) {
-      annotation.setConcept(WrapperHelper.unwrap(concept, WrapperHelper.getJCas(annotation)));
+      annotation.setConcept(WrapperHelper.unwrap(indexer, concept,
+              WrapperHelper.getJCas(annotation)));
     }
   }
 

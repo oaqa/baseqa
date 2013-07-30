@@ -26,8 +26,9 @@ public abstract class FSArrayWrapper<T extends OAQATop> implements ContainerWrap
   }
 
   @Override
-  public void add(TopWrapper<T> wrapper) throws AnalysisEngineProcessException {
-    array.set(i++, WrapperHelper.unwrap(wrapper, jcas));
+  public void add(WrapperIndexer indexer, TopWrapper<T> wrapper)
+          throws AnalysisEngineProcessException {
+    array.set(i++, WrapperHelper.unwrap(indexer, wrapper, jcas));
   }
 
   @Override
@@ -36,26 +37,26 @@ public abstract class FSArrayWrapper<T extends OAQATop> implements ContainerWrap
   @Override
   public abstract void complete();
 
-  protected final <W extends TopWrapper<T>> void appendArray(Collection<W> wrappers)
-          throws AnalysisEngineProcessException {
+  protected final <W extends TopWrapper<T>> void appendArray(WrapperIndexer indexer,
+          Collection<W> wrappers) throws AnalysisEngineProcessException {
     for (W wrapper : wrappers) {
-      add(wrapper);
+      add(indexer, wrapper);
     }
     complete();
   }
 
-  protected final <W extends TopWrapper<T>> void setArray(Collection<W> wrappers)
-          throws AnalysisEngineProcessException {
+  protected final <W extends TopWrapper<T>> void setArray(WrapperIndexer indexer,
+          Collection<W> wrappers) throws AnalysisEngineProcessException {
     clear();
-    appendArray(wrappers);
+    appendArray(indexer, wrappers);
   }
 
-  protected final <W extends TopWrapper<T>> List<W> getArray(Class<W> classWrapper)
-          throws AnalysisEngineProcessException {
+  protected final <W extends TopWrapper<T>> List<W> getArray(WrapperIndexer indexer,
+          Class<W> classWrapper) throws AnalysisEngineProcessException {
     List<W> result = new ArrayList<W>();
     for (int i = 0; i < array.size(); i++) {
       try {
-        result.add(WrapperHelper.matchSubclassAndWrap((TOP) array.get(i), classWrapper));
+        result.add(WrapperHelper.matchSubclassAndWrap(indexer, (TOP) array.get(i), classWrapper));
       } catch (Exception e) {
         throw new AnalysisEngineProcessException(e);
       }

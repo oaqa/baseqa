@@ -5,6 +5,7 @@ import org.oaqa.model.nlp.SemanticRole;
 
 import com.google.common.base.Objects;
 
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class SemanticRoleWrapper extends GerpAnnotationWrapper<SemanticRole> {
@@ -33,14 +34,16 @@ public class SemanticRoleWrapper extends GerpAnnotationWrapper<SemanticRole> {
   }
 
   @Override
-  public void wrap(SemanticRole annotation) throws AnalysisEngineProcessException {
-    super.wrap(annotation);
+  public void wrap(WrapperIndexer indexer, SemanticRole annotation)
+          throws AnalysisEngineProcessException {
+    super.wrap(indexer, annotation);
     this.label = annotation.getLabel();
   }
 
   @Override
-  public void unwrap(SemanticRole annotation) throws AnalysisEngineProcessException {
-    super.unwrap(annotation);
+  public void unwrap(WrapperIndexer indexer, SemanticRole annotation)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, annotation);
     annotation.setLabel(label);
   }
 

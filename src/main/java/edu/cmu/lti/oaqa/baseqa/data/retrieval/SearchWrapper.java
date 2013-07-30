@@ -10,6 +10,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public class SearchWrapper extends GerpTopWrapper<Search> {
@@ -44,25 +45,25 @@ public class SearchWrapper extends GerpTopWrapper<Search> {
   }
 
   @Override
-  public void wrap(Search top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, Search top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     this.query = top.getQuery();
-    this.hitList = WrapperHelper.wrapTopArray(top.getHitList(), SearchResultWrapper.class);
+    this.hitList = WrapperHelper.wrapTopArray(indexer, top.getHitList(), SearchResultWrapper.class);
     if (top.getAbstractQuery() != null) {
-      this.abstractQuery = WrapperHelper.matchSubclassAndWrap(top.getAbstractQuery(),
+      this.abstractQuery = WrapperHelper.matchSubclassAndWrap(indexer, top.getAbstractQuery(),
               AbstractQueryWrapper.class);
     }
     this.searchId = top.getSearchId();
   }
 
   @Override
-  public void unwrap(Search top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, Search top) throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     top.setQuery(query);
     JCas jcas = WrapperHelper.getJCas(top);
-    top.setHitList(WrapperHelper.unwrapTopArray(hitList, jcas));
+    top.setHitList(WrapperHelper.unwrapTopArray(indexer, hitList, jcas));
     if (abstractQuery != null) {
-      top.setAbstractQuery(WrapperHelper.unwrap(abstractQuery, jcas));
+      top.setAbstractQuery(WrapperHelper.unwrap(indexer, abstractQuery, jcas));
     }
     top.setSearchId(searchId);
   }

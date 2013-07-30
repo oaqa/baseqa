@@ -11,6 +11,7 @@ import org.oaqa.model.retrieval.Passage;
 import org.oaqa.model.test.Search;
 
 import edu.cmu.lti.oaqa.core.data.FSArrayWrapper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 
 /**
@@ -43,7 +44,7 @@ public class RetrievalResultArray extends FSArrayWrapper<Passage> {
     search.addToIndexes();
   }
 
-  private void appendRetrievalResults(List<RetrievalResult> results)
+  private void appendRetrievalResults(WrapperIndexer indexer, List<RetrievalResult> results)
           throws AnalysisEngineProcessException {
     Collections.sort(results, Collections.reverseOrder());
     double prevScore = Double.NaN;
@@ -59,10 +60,10 @@ public class RetrievalResultArray extends FSArrayWrapper<Passage> {
         result.setRank(prevRank);
       }
     }
-    appendArray(results);
+    appendArray(indexer, results);
   }
 
-  public void setRetrievalResults(List<RetrievalResult> results)
+  public void setRetrievalResults(WrapperIndexer indexer, List<RetrievalResult> results)
           throws AnalysisEngineProcessException {
     Collections.sort(results, Collections.reverseOrder());
     double prevScore = Double.NaN;
@@ -78,37 +79,37 @@ public class RetrievalResultArray extends FSArrayWrapper<Passage> {
         result.setRank(prevRank);
       }
     }
-    setArray(results);
+    setArray(indexer, results);
   }
 
-  public static void storeRetrievalResults(JCas jcas, List<RetrievalResult> results,
-          boolean overwrite) throws AnalysisEngineProcessException {
+  public static void storeRetrievalResults(WrapperIndexer indexer, JCas jcas,
+          List<RetrievalResult> results, boolean overwrite) throws AnalysisEngineProcessException {
     if (overwrite) {
-      new RetrievalResultArray(jcas, results.size()).setRetrievalResults(results);
+      new RetrievalResultArray(jcas, results.size()).setRetrievalResults(indexer, results);
     } else {
-      new RetrievalResultArray(jcas, results.size()).appendRetrievalResults(results);
+      new RetrievalResultArray(jcas, results.size()).appendRetrievalResults(indexer, results);
     }
   }
 
   @Deprecated
-  public static void storeRetrievalResults(JCas jcas, List<RetrievalResult> results)
+  public static void storeRetrievalResults(WrapperIndexer indexer, JCas jcas, List<RetrievalResult> results)
           throws Exception {
-    storeRetrievalResults(jcas, results, true);
+    storeRetrievalResults(indexer, jcas, results, true);
   }
 
-  public List<RetrievalResult> getRetrievalResults() throws AnalysisEngineProcessException {
+  public List<RetrievalResult> getRetrievalResults(WrapperIndexer indexer) throws AnalysisEngineProcessException {
     Search search = (Search) BaseJCasHelper.getFS(jcas, Search.type);
     if (search != null) {
       array = search.getHitList();
-      return getArray(RetrievalResult.class);
+      return getArray(indexer, RetrievalResult.class);
     } else {
       return new ArrayList<RetrievalResult>();
     }
   }
 
-  public static List<RetrievalResult> retrieveRetrievalResults(JCas jcas)
+  public static List<RetrievalResult> retrieveRetrievalResults(WrapperIndexer indexer, JCas jcas)
           throws AnalysisEngineProcessException {
-    return new RetrievalResultArray(jcas, 0).getRetrievalResults();
+    return new RetrievalResultArray(jcas, 0).getRetrievalResults(indexer);
   }
 
 }

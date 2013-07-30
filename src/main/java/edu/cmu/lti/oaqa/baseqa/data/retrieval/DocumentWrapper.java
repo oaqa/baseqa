@@ -10,6 +10,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 
 public class DocumentWrapper extends SearchResultWrapper {
 
@@ -45,15 +46,16 @@ public class DocumentWrapper extends SearchResultWrapper {
   }
 
   @Override
-  public void wrap(SearchResult top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, SearchResult top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     this.title = ((Document) top).getTitle();
     this.docId = ((Document) top).getDocId();
   }
 
   @Override
-  public void unwrap(SearchResult top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, SearchResult top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     ((Document) top).setTitle(title);
     ((Document) top).setDocId(docId);
   }

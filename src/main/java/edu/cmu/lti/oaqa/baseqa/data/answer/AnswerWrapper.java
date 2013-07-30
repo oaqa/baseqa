@@ -9,6 +9,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public class AnswerWrapper extends GerpTopWrapper<Answer> {
@@ -40,15 +41,15 @@ public class AnswerWrapper extends GerpTopWrapper<Answer> {
   }
 
   @Override
-  public void wrap(Answer top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, Answer top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     this.text = top.getText();
     this.variants = WrapperHelper.wrapStringArray(top.getVariants());
   }
 
   @Override
-  public void unwrap(Answer top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, Answer top) throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     top.setText(text);
     top.setVariants(WrapperHelper.unwrapStringArray(variants, WrapperHelper.getJCas(top)));
   }

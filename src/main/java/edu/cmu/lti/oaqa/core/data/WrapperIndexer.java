@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.uima.analysis_component.JCasMultiplier_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;
@@ -36,6 +37,12 @@ import com.google.common.collect.SetMultimap;
  * be used to check and retrieve the wrapper by a {@link TOP}, {@link #checkUnwrapped(TopWrapper)}
  * and {@link #getUnwrapped(TopWrapper)} can be used to check and retrieve the TOP by a
  * {@link TopWrapper}.
+ * <p>
+ * Update: Since it is not a fully CAS-equivalent indexer, CAS passed into the method
+ * {@link JCasMultiplier_ImplBase#next()} as the only argument will share the same hash code, and
+ * once a CAS is release, the corresponding wrapper will not be released. Therefore, it is unsafe to
+ * use a global mapping between CASes and indexers. One should directly call the constructor
+ * {@link #WrapperIndexer()} to create a new instance.
  * 
  * @author Zi Yang <ziy@cs.cmu.edu>
  * 
@@ -48,14 +55,33 @@ public class WrapperIndexer {
   /**
    * A global mapping variable to simulate the whole CAS including multiple views.
    * <p>
-   * TODO a wrapper for the global JCas can be implemented.
+   * TODO A wrapper for the global JCas can be implemented, which needs to be aligned with CAS
+   * (release, multiply, etc.)
+   * 
+   * @deprecated Since it is not a fully CAS-equivalent indexer, CAS passed into the method
+   *             {@link JCasMultiplier_ImplBase#next()} as the only argument will share the same
+   *             hash code, and once a CAS is release, the corresponding wrapper will not be
+   *             released. Therefore, it is unsafe to use a global mapping between CASes and
+   *             indexers.
    */
+  @Deprecated
   private static Map<Integer, WrapperIndexer> jcasHash2wrapperIndexer = Maps.newHashMap();
 
+  @Deprecated
   private static void addJCasWrapperIndexerPair(JCas jcas, WrapperIndexer indexer) {
     jcasHash2wrapperIndexer.put(System.identityHashCode(jcas), indexer);
   }
 
+  /**
+   * 
+   * @param jcas
+   * @return
+   * 
+   * @deprecated
+   * @see #WrapperIndexer()
+   * 
+   */
+  @Deprecated
   public static WrapperIndexer getWrapperIndexer(JCas jcas) {
     int jcasHash = System.identityHashCode(jcas);
     return jcasHash2wrapperIndexer.containsKey(jcasHash) ? jcasHash2wrapperIndexer.get(jcasHash)
@@ -65,6 +91,7 @@ public class WrapperIndexer {
   /*
    * Member variables and methods
    */
+  @Deprecated
   private JCas jcas;
 
   /**
@@ -87,6 +114,19 @@ public class WrapperIndexer {
    */
   private Map<Integer, TopWrapper<? extends TOP>> topAddress2wrapper;
 
+  public WrapperIndexer() {
+    type2wrappers = HashMultimap.create();
+    wrapperHashcode2top = Maps.newHashMap();
+    topAddress2wrapper = Maps.newHashMap();
+  }
+
+  /**
+   * @param jcas
+   * 
+   * @deprecated
+   * @see #WrapperIndexer()
+   */
+  @Deprecated
   private WrapperIndexer(JCas jcas) {
     this.jcas = jcas;
     type2wrappers = HashMultimap.create();
@@ -95,6 +135,33 @@ public class WrapperIndexer {
     addJCasWrapperIndexerPair(jcas, this);
   }
 
+  public Set<TopWrapper<? extends TOP>> getWrappersByType(JCas jcas, int type)
+          throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
+          InstantiationException, IllegalAccessException, NoSuchFieldException,
+          ClassNotFoundException, CASException {
+    if (!type2wrappers.containsKey(type)) {
+      addClassWrappersToIndex(jcas, type);
+    }
+    return type2wrappers.get(type);
+  }
+
+  /**
+   * 
+   * @param type
+   * @return
+   * @throws AnalysisEngineProcessException
+   * @throws IllegalArgumentException
+   * @throws SecurityException
+   * @throws InstantiationException
+   * @throws IllegalAccessException
+   * @throws NoSuchFieldException
+   * @throws ClassNotFoundException
+   * @throws CASException
+   * 
+   * @deprecated
+   * @see #getWrappersByType(JCas, int)
+   */
+  @Deprecated
   public Set<TopWrapper<? extends TOP>> getWrappersByType(int type)
           throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
           InstantiationException, IllegalAccessException, NoSuchFieldException,
@@ -105,6 +172,37 @@ public class WrapperIndexer {
     return type2wrappers.get(type);
   }
 
+  public List<Set<TopWrapper<? extends TOP>>> getWrappersByTypes(JCas jcas, List<Integer> types)
+          throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
+          InstantiationException, IllegalAccessException, NoSuchFieldException,
+          ClassNotFoundException, CASException {
+    List<Set<TopWrapper<?>>> wrappers = Lists.newArrayList();
+    for (int type : types) {
+      if (!type2wrappers.containsKey(type)) {
+        addClassWrappersToIndex(jcas, type);
+      }
+      wrappers.add(type2wrappers.get(type));
+    }
+    return wrappers;
+  }
+
+  /**
+   * 
+   * @param types
+   * @return
+   * @throws AnalysisEngineProcessException
+   * @throws IllegalArgumentException
+   * @throws SecurityException
+   * @throws InstantiationException
+   * @throws IllegalAccessException
+   * @throws NoSuchFieldException
+   * @throws ClassNotFoundException
+   * @throws CASException
+   * 
+   * @deprecated
+   * @see #getWrappersByTypes(JCas, List)
+   */
+  @Deprecated
   public List<Set<TopWrapper<? extends TOP>>> getWrappersByTypes(List<Integer> types)
           throws AnalysisEngineProcessException, IllegalArgumentException, SecurityException,
           InstantiationException, IllegalAccessException, NoSuchFieldException,
@@ -119,13 +217,37 @@ public class WrapperIndexer {
     return wrappers;
   }
 
+  private void addClassWrappersToIndex(JCas jcas, int type) throws AnalysisEngineProcessException,
+          IllegalArgumentException, SecurityException, InstantiationException,
+          IllegalAccessException, NoSuchFieldException, ClassNotFoundException, CASException {
+    if (type2wrappers.containsKey(type)) {
+      return;
+    }
+    type2wrappers.putAll(type, WrapperHelper.wrapAllFromJCas(this, jcas, type));
+  }
+
+  /**
+   * 
+   * @param type
+   * @throws AnalysisEngineProcessException
+   * @throws IllegalArgumentException
+   * @throws SecurityException
+   * @throws InstantiationException
+   * @throws IllegalAccessException
+   * @throws NoSuchFieldException
+   * @throws ClassNotFoundException
+   * @throws CASException
+   * 
+   * @deprecated @
+   */
+  @Deprecated
   private void addClassWrappersToIndex(int type) throws AnalysisEngineProcessException,
           IllegalArgumentException, SecurityException, InstantiationException,
           IllegalAccessException, NoSuchFieldException, ClassNotFoundException, CASException {
     if (type2wrappers.containsKey(type)) {
       return;
     }
-    type2wrappers.putAll(type, WrapperHelper.wrapAllFromJCas(jcas, type));
+    type2wrappers.putAll(type, WrapperHelper.wrapAllFromJCas(this, jcas, type));
   }
 
   public boolean checkWrapped(TOP top) {
@@ -170,10 +292,12 @@ public class WrapperIndexer {
       ;
   }
 
+  @Deprecated
   public JCas getJCas() {
     return jcas;
   }
 
+  @Deprecated
   public void setJCas(JCas jcas) {
     this.jcas = jcas;
   }

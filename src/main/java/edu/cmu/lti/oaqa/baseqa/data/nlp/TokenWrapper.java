@@ -10,6 +10,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class TokenWrapper extends GerpAnnotationWrapper<Token> {
@@ -70,12 +71,14 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
   }
 
   @Override
-  public void wrap(Token annotation) throws AnalysisEngineProcessException {
-    super.wrap(annotation);
-    this.arguments = WrapperHelper.wrapAnnotationArray(annotation.getArguments(), this.getClass());
+  public void wrap(WrapperIndexer indexer, Token annotation) throws AnalysisEngineProcessException {
+    super.wrap(indexer, annotation);
+    this.arguments = WrapperHelper.wrapAnnotationArray(indexer, annotation.getArguments(),
+            this.getClass());
     this.argumentLabels = WrapperHelper.wrapStringArray(annotation.getArgumentLabels());
     if (annotation.getParse() != null) {
-      this.parse = WrapperHelper.matchSubclassAndWrap(annotation.getParse(), this.getClass());
+      this.parse = WrapperHelper.matchSubclassAndWrap(indexer, annotation.getParse(),
+              this.getClass());
     }
     this.semanticType = annotation.getSemanticType();
     this.partOfSpeech = annotation.getPartOfSpeech();
@@ -86,13 +89,14 @@ public class TokenWrapper extends GerpAnnotationWrapper<Token> {
   }
 
   @Override
-  public void unwrap(Token annotation) throws AnalysisEngineProcessException {
-    super.unwrap(annotation);
+  public void unwrap(WrapperIndexer indexer, Token annotation)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, annotation);
     JCas jcas = WrapperHelper.getJCas(annotation);
-    annotation.setArguments(WrapperHelper.unwrapAnnotationArray(arguments, jcas));
+    annotation.setArguments(WrapperHelper.unwrapAnnotationArray(indexer, arguments, jcas));
     annotation.setArgumentLabels(WrapperHelper.unwrapStringArray(argumentLabels, jcas));
     if (parse != null) {
-      annotation.setParse(WrapperHelper.unwrap(parse, jcas));
+      annotation.setParse(WrapperHelper.unwrap(indexer, parse, jcas));
     }
     annotation.setSemanticType(semanticType);
     annotation.setPartOfSpeech(partOfSpeech);

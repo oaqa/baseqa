@@ -24,8 +24,9 @@ public abstract class FSListWrapper<T extends OAQATop> implements ContainerWrapp
   }
 
   @Override
-  public void add(TopWrapper<T> wrapper) throws AnalysisEngineProcessException {
-    list = BaseJCasHelper.addToFSList(jcas, list, WrapperHelper.unwrap(wrapper, jcas));
+  public void add(WrapperIndexer indexer, TopWrapper<T> wrapper)
+          throws AnalysisEngineProcessException {
+    list = BaseJCasHelper.addToFSList(jcas, list, WrapperHelper.unwrap(indexer, wrapper, jcas));
   }
 
   @Override
@@ -34,26 +35,26 @@ public abstract class FSListWrapper<T extends OAQATop> implements ContainerWrapp
   @Override
   public abstract void complete();
 
-  protected final <W extends TopWrapper<T>> void appendList(Collection<W> wrappers)
-          throws AnalysisEngineProcessException {
+  protected final <W extends TopWrapper<T>> void appendList(WrapperIndexer indexer,
+          Collection<W> wrappers) throws AnalysisEngineProcessException {
     for (W wrapper : wrappers) {
-      add(wrapper);
+      add(indexer, wrapper);
     }
     complete();
   }
 
-  protected final <W extends TopWrapper<T>> void setList(Collection<W> wrappers)
-          throws AnalysisEngineProcessException {
+  protected final <W extends TopWrapper<T>> void setList(WrapperIndexer indexer,
+          Collection<W> wrappers) throws AnalysisEngineProcessException {
     clear();
-    appendList(wrappers);
+    appendList(indexer, wrappers);
   }
 
-  protected final <W extends TopWrapper<T>> List<W> getList(Class<W> classWrapper)
-          throws AnalysisEngineProcessException {
+  protected final <W extends TopWrapper<T>> List<W> getList(WrapperIndexer indexer,
+          Class<W> classWrapper) throws AnalysisEngineProcessException {
     List<W> result = new ArrayList<W>();
     for (OAQATop top : BaseJCasHelper.<OAQATop> fsIterator(list)) {
       try {
-        result.add(WrapperHelper.matchSubclassAndWrap(top, classWrapper));
+        result.add(WrapperHelper.matchSubclassAndWrap(indexer, top, classWrapper));
       } catch (Exception e) {
         throw new AnalysisEngineProcessException(e);
       }

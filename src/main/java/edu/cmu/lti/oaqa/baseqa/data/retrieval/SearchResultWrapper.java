@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.baseqa.data.answer.CandidateAnswerVariantWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public abstract class SearchResultWrapper extends GerpTopWrapper<SearchResult> {
@@ -54,28 +55,29 @@ public abstract class SearchResultWrapper extends GerpTopWrapper<SearchResult> {
   }
 
   @Override
-  public void wrap(SearchResult top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, SearchResult top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     this.uri = top.getUri();
     this.score = top.getScore();
     this.text = top.getText();
     this.rank = top.getRank();
     this.queryString = top.getQueryString();
     this.searchId = top.getSearchId();
-    this.candidateAnswers = WrapperHelper.wrapTopArray(top.getCandidateAnswers(),
+    this.candidateAnswers = WrapperHelper.wrapTopArray(indexer, top.getCandidateAnswers(),
             CandidateAnswerVariantWrapper.class);
   }
 
   @Override
-  public void unwrap(SearchResult top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, SearchResult top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     top.setUri(uri);
     top.setScore(score);
     top.setText(text);
     top.setRank(rank);
     top.setQueryString(queryString);
     top.setSearchId(searchId);
-    top.setCandidateAnswers(WrapperHelper.unwrapTopArray(candidateAnswers,
+    top.setCandidateAnswers(WrapperHelper.unwrapTopArray(indexer, candidateAnswers,
             WrapperHelper.getJCas(top)));
   }
 

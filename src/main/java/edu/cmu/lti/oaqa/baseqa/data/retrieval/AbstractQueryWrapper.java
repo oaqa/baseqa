@@ -9,6 +9,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public class AbstractQueryWrapper extends GerpTopWrapper<AbstractQuery> {
@@ -37,15 +38,17 @@ public class AbstractQueryWrapper extends GerpTopWrapper<AbstractQuery> {
   }
 
   @Override
-  public void wrap(AbstractQuery top) throws AnalysisEngineProcessException {
-    super.wrap(top);
-    this.concepts = WrapperHelper.wrapTopList(top.getConcepts(), QueryConceptWrapper.class);
+  public void wrap(WrapperIndexer indexer, AbstractQuery top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
+    this.concepts = WrapperHelper
+            .wrapTopList(indexer, top.getConcepts(), QueryConceptWrapper.class);
   }
 
   @Override
-  public void unwrap(AbstractQuery top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
-    top.setConcepts(WrapperHelper.unwrapTopList(concepts, WrapperHelper.getJCas(top)));
+  public void unwrap(WrapperIndexer indexer, AbstractQuery top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
+    top.setConcepts(WrapperHelper.unwrapTopList(indexer, concepts, WrapperHelper.getJCas(top)));
   }
 
   @Override

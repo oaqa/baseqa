@@ -81,106 +81,115 @@ public class WrapperHelper {
     return array;
   }
 
-  public static <T extends TOP, W extends TopWrapper<T>> List<W> wrapTopList(FSList list,
-          Class<W> wrapperClass) throws AnalysisEngineProcessException {
+  public static <T extends TOP, W extends TopWrapper<T>> List<W> wrapTopList(
+          WrapperIndexer indexer, FSList list, Class<W> wrapperClass)
+          throws AnalysisEngineProcessException {
     List<W> wrappers = new ArrayList<W>();
     FSList tail = list;
     while (tail instanceof NonEmptyFSList) {
       TOP head = ((NonEmptyFSList) tail).getHead();
-      wrappers.add(matchSubclassAndWrap(head, wrapperClass));
+      wrappers.add(matchSubclassAndWrap(indexer, head, wrapperClass));
       tail = ((NonEmptyFSList) tail).getTail();
     }
     return wrappers;
   }
 
-  public static <T extends TOP, W extends TopWrapper<T>> FSList unwrapTopList(List<W> wrappers,
-          JCas jcas) throws AnalysisEngineProcessException {
+  public static <T extends TOP, W extends TopWrapper<T>> FSList unwrapTopList(
+          WrapperIndexer indexer, List<W> wrappers, JCas jcas)
+          throws AnalysisEngineProcessException {
     FSList list = new EmptyFSList(jcas);
     FSList tail;
     for (W wrapper : Lists.reverse(wrappers)) {
       tail = list;
       list = new NonEmptyFSList(jcas);
-      ((NonEmptyFSList) list).setHead(WrapperHelper.unwrap(wrapper, jcas));
+      ((NonEmptyFSList) list).setHead(WrapperHelper.unwrap(indexer, wrapper, jcas));
       ((NonEmptyFSList) list).setTail(tail);
     }
     return list;
   }
 
-  public static <T extends TOP, W extends TopWrapper<T>> List<W> wrapTopArray(FSArray array,
-          Class<W> wrapperClass) throws AnalysisEngineProcessException {
+  public static <T extends TOP, W extends TopWrapper<T>> List<W> wrapTopArray(
+          WrapperIndexer indexer, FSArray array, Class<W> wrapperClass)
+          throws AnalysisEngineProcessException {
     List<W> wrappers = new ArrayList<W>(array.size());
     for (int i = 0; i < array.size(); i++) {
-      wrappers.add(matchSubclassAndWrap((TOP) array.get(i), wrapperClass));
+      wrappers.add(matchSubclassAndWrap(indexer, (TOP) array.get(i), wrapperClass));
     }
     return wrappers;
   }
 
-  public static <T extends TOP, W extends TopWrapper<T>> FSArray unwrapTopArray(List<W> wrappers,
-          JCas jcas) throws AnalysisEngineProcessException {
+  public static <T extends TOP, W extends TopWrapper<T>> FSArray unwrapTopArray(
+          WrapperIndexer indexer, List<W> wrappers, JCas jcas)
+          throws AnalysisEngineProcessException {
     FSArray array = new FSArray(jcas, wrappers.size());
     int i = 0;
     for (W wrapper : wrappers) {
-      array.set(i++, WrapperHelper.unwrap(wrapper, jcas));
+      array.set(i++, WrapperHelper.unwrap(indexer, wrapper, jcas));
     }
     return array;
   }
 
   public static <T extends Annotation, W extends AnnotationWrapper<T>> List<W> wrapAnnotationList(
-          FSList list, Class<W> wrapperClass) throws AnalysisEngineProcessException {
+          WrapperIndexer indexer, FSList list, Class<W> wrapperClass)
+          throws AnalysisEngineProcessException {
     List<W> wrappers = new ArrayList<W>();
     FSList tail = list;
     while (tail instanceof NonEmptyFSList) {
       TOP head = ((NonEmptyFSList) tail).getHead();
-      wrappers.add(matchSubclassAndWrap(head, wrapperClass));
+      wrappers.add(matchSubclassAndWrap(indexer, head, wrapperClass));
       tail = ((NonEmptyFSList) tail).getTail();
     }
     return wrappers;
   }
 
   public static <T extends Annotation, W extends AnnotationWrapper<T>> FSList unwrapAnnotationList(
-          List<W> wrappers, JCas jcas) throws AnalysisEngineProcessException {
+          WrapperIndexer indexer, List<W> wrappers, JCas jcas)
+          throws AnalysisEngineProcessException {
     FSList list = new EmptyFSList(jcas);
     FSList tail;
     for (W wrapper : Lists.reverse(wrappers)) {
       tail = list;
       list = new NonEmptyFSList(jcas);
-      ((NonEmptyFSList) list).setHead(WrapperHelper.unwrap(wrapper, jcas));
+      ((NonEmptyFSList) list).setHead(WrapperHelper.unwrap(indexer, wrapper, jcas));
       ((NonEmptyFSList) list).setTail(tail);
     }
     return list;
   }
 
   public static <T extends Annotation, W extends AnnotationWrapper<T>> List<W> wrapAnnotationArray(
-          FSArray array, Class<W> wrapperClass) throws AnalysisEngineProcessException {
+          WrapperIndexer indexer, FSArray array, Class<W> wrapperClass)
+          throws AnalysisEngineProcessException {
     List<W> wrappers = new ArrayList<W>(array.size());
     for (int i = 0; i < array.size(); i++) {
-      wrappers.add(matchSubclassAndWrap((TOP) array.get(i), wrapperClass));
+      wrappers.add(matchSubclassAndWrap(indexer, (TOP) array.get(i), wrapperClass));
     }
     return wrappers;
   }
 
   public static <T extends Annotation, W extends AnnotationWrapper<T>> FSArray unwrapAnnotationArray(
-          List<W> wrappers, JCas jcas) throws AnalysisEngineProcessException {
+          WrapperIndexer indexer, List<W> wrappers, JCas jcas)
+          throws AnalysisEngineProcessException {
     FSArray array = new FSArray(jcas, wrappers.size());
     int i = 0;
     for (W wrapper : wrappers) {
-      array.set(i++, WrapperHelper.unwrap(wrapper, jcas));
+      array.set(i++, WrapperHelper.unwrap(indexer, wrapper, jcas));
     }
     return array;
   }
 
   public static <T extends TOP, W extends TopWrapper<T>> Set<? extends W> wrapAllFromJCas(
-          JCas jcas, int type) throws AnalysisEngineProcessException {
+          WrapperIndexer indexer, JCas jcas, int type) throws AnalysisEngineProcessException {
     Set<W> tops = Sets.newHashSet();
     for (TOP top : ImmutableList.copyOf(jcas.getJFSIndexRepository().getAllIndexedFS(type))) {
-      tops.add(WrapperHelper.<T, W> wrap(top));
+      tops.add(WrapperHelper.<T, W> wrap(indexer, top));
     }
     return tops;
   }
 
   @SuppressWarnings("unchecked")
-  public static <T extends TOP, W extends TopWrapper<T>> W matchSubclassAndWrap(TOP top,
-          Class<W> superClass) throws AnalysisEngineProcessException {
+  public static <T extends TOP, W extends TopWrapper<T>> W matchSubclassAndWrap(
+          WrapperIndexer indexer, TOP top, Class<W> superClass)
+          throws AnalysisEngineProcessException {
     // FIXME Different TopWrapper implementations may have different ways to store the actual
     // implementation subclass in TOP, the following method is only used for OAQATop. A method needs
     // to be defined in the interface class, e.g. Class<? extends TopWrapper<?
@@ -193,11 +202,11 @@ public class WrapperHelper {
     } catch (ClassNotFoundException e) {
       throw new AnalysisEngineProcessException(e);
     }
-    return wrap((T) top, clazz);
+    return wrap(indexer, (T) top, clazz);
   }
 
   @SuppressWarnings("unchecked")
-  public static <T extends TOP, W extends TopWrapper<T>> W wrap(TOP top)
+  public static <T extends TOP, W extends TopWrapper<T>> W wrap(WrapperIndexer indexer, TOP top)
           throws AnalysisEngineProcessException {
     // FIXME Different TopWrapper implementations may have different ways to store the actual
     // implementation subclass in TOP, the following method is only used for OAQATop. A method needs
@@ -211,13 +220,12 @@ public class WrapperHelper {
     } catch (ClassNotFoundException e) {
       throw new AnalysisEngineProcessException(e);
     }
-    return wrap((T) top, clazz);
+    return wrap(indexer, (T) top, clazz);
   }
 
   @SuppressWarnings("unchecked")
-  private static <T extends TOP, W extends TopWrapper<T>> W wrap(T top, Class<W> wrapperClass)
-          throws AnalysisEngineProcessException {
-    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(getJCas(top));
+  private static <T extends TOP, W extends TopWrapper<T>> W wrap(WrapperIndexer indexer, T top,
+          Class<W> wrapperClass) throws AnalysisEngineProcessException {
     if (indexer.checkWrapped(top)) {
       return (W) indexer.getWrapped(top);
     }
@@ -230,14 +238,13 @@ public class WrapperHelper {
     } catch (IllegalAccessException e) {
       throw new AnalysisEngineProcessException(e);
     }
-    wrapper.wrap(top);
+    wrapper.wrap(indexer, top);
     return wrapper;
   }
 
   @SuppressWarnings("unchecked")
-  public static <T extends TOP, W extends TopWrapper<T>> T unwrap(W wrapper, JCas jcas)
-          throws AnalysisEngineProcessException {
-    WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
+  public static <T extends TOP, W extends TopWrapper<T>> T unwrap(WrapperIndexer indexer,
+          W wrapper, JCas jcas) throws AnalysisEngineProcessException {
     if (indexer.checkUnwrapped(wrapper)) {
       return (T) indexer.getUnwrapped(wrapper);
     }
@@ -259,7 +266,7 @@ public class WrapperHelper {
     } catch (NoSuchMethodException e) {
       throw new AnalysisEngineProcessException(e);
     }
-    wrapper.unwrap(top);
+    wrapper.unwrap(indexer, top);
     return top;
   }
 

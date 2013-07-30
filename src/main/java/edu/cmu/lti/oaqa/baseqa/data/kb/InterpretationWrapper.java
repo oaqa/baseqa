@@ -10,6 +10,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public class InterpretationWrapper extends GerpTopWrapper<Interpretation> {
@@ -42,19 +43,21 @@ public class InterpretationWrapper extends GerpTopWrapper<Interpretation> {
   }
 
   @Override
-  public void wrap(Interpretation top) throws AnalysisEngineProcessException {
-    super.wrap(top);
-    this.concepts = WrapperHelper.wrapTopList(top.getConcepts(), ConceptWrapper.class);
-    this.mentions = WrapperHelper
-            .wrapAnnotationList(top.getMentions(), ConceptMentionWrapper.class);
+  public void wrap(WrapperIndexer indexer, Interpretation top)
+          throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
+    this.concepts = WrapperHelper.wrapTopList(indexer, top.getConcepts(), ConceptWrapper.class);
+    this.mentions = WrapperHelper.wrapAnnotationList(indexer, top.getMentions(),
+            ConceptMentionWrapper.class);
   }
 
   @Override
-  public void unwrap(Interpretation top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, Interpretation top)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     JCas jcas = WrapperHelper.getJCas(top);
-    top.setConcepts(WrapperHelper.unwrapTopList(concepts, jcas));
-    top.setMentions(WrapperHelper.unwrapAnnotationList(mentions, jcas));
+    top.setConcepts(WrapperHelper.unwrapTopList(indexer, concepts, jcas));
+    top.setMentions(WrapperHelper.unwrapAnnotationList(indexer, mentions, jcas));
   }
 
   @Override

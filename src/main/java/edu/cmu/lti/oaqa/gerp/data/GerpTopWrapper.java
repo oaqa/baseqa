@@ -13,6 +13,7 @@ import com.google.common.collect.Lists;
 import edu.cmu.lti.oaqa.core.data.OAQATopWrapper;
 import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 
 public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T> implements
         Gerpable {
@@ -88,31 +89,32 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
 
   @SuppressWarnings("unchecked")
   @Override
-  public void wrap(T top) throws AnalysisEngineProcessException {
-    super.wrap(top);
+  public void wrap(WrapperIndexer indexer, T top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
     generators = WrapperHelper.wrapStringList(top.getGenerators());
-    evidences = WrapperHelper.wrapTopList(top.getEvidences(), EvidenceWrapper.class);
-    ranks = WrapperHelper.wrapTopList(top.getRanks(), RankWrapper.class);
-    pruningDecisions = WrapperHelper.wrapTopList(top.getPruningDecisions(),
+    evidences = WrapperHelper.wrapTopList(indexer, top.getEvidences(), EvidenceWrapper.class);
+    ranks = WrapperHelper.wrapTopList(indexer, top.getRanks(), RankWrapper.class);
+    pruningDecisions = WrapperHelper.wrapTopList(indexer, top.getPruningDecisions(),
             PruningDecisionWrapper.class);
     if (top.getGerpMeta() != null) {
-      gerpMeta = WrapperHelper.matchSubclassAndWrap(top.getGerpMeta(), GerpMetaWrapper.class);
+      gerpMeta = WrapperHelper.matchSubclassAndWrap(indexer, top.getGerpMeta(),
+              GerpMetaWrapper.class);
     }
-    dependencies = WrapperHelper.wrapTopList(top.getDependencies(), TopWrapper.class);
+    dependencies = WrapperHelper.wrapTopList(indexer, top.getDependencies(), TopWrapper.class);
   }
 
   @Override
-  public void unwrap(T top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
+  public void unwrap(WrapperIndexer indexer, T top) throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
     JCas jcas = WrapperHelper.getJCas(top);
     top.setGenerators(WrapperHelper.unwrapStringList(generators, jcas));
-    top.setEvidences(WrapperHelper.unwrapTopList(evidences, jcas));
-    top.setRanks(WrapperHelper.unwrapTopList(ranks, jcas));
-    top.setPruningDecisions(WrapperHelper.unwrapTopList(pruningDecisions, jcas));
+    top.setEvidences(WrapperHelper.unwrapTopList(indexer, evidences, jcas));
+    top.setRanks(WrapperHelper.unwrapTopList(indexer, ranks, jcas));
+    top.setPruningDecisions(WrapperHelper.unwrapTopList(indexer, pruningDecisions, jcas));
     if (gerpMeta != null) {
-      top.setGerpMeta(WrapperHelper.unwrap(gerpMeta, jcas));
+      top.setGerpMeta(WrapperHelper.unwrap(indexer, gerpMeta, jcas));
     }
-    top.setDependencies(WrapperHelper.unwrapTopList(dependencies, jcas));
+    top.setDependencies(WrapperHelper.unwrapTopList(indexer, dependencies, jcas));
   }
 
   @Override

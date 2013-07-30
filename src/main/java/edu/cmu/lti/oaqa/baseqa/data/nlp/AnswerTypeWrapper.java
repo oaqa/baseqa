@@ -8,6 +8,7 @@ import com.google.common.base.Objects;
 
 import edu.cmu.lti.oaqa.core.data.OAQAAnnotationWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpAnnotationWrapper;
 
 public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
@@ -41,22 +42,25 @@ public class AnswerTypeWrapper extends GerpAnnotationWrapper<AnswerType> {
 
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
-  public void wrap(AnswerType annotation) throws AnalysisEngineProcessException {
-    super.wrap(annotation);
+  public void wrap(WrapperIndexer indexer, AnswerType annotation)
+          throws AnalysisEngineProcessException {
+    super.wrap(indexer, annotation);
     this.label = annotation.getLabel();
     if (annotation.getTargetType() != null) {
-      this.targetType = WrapperHelper.matchSubclassAndWrap(
+      this.targetType = WrapperHelper.matchSubclassAndWrap(indexer,
               (OAQAAnnotation) annotation.getTargetType(),
               (Class<OAQAAnnotationWrapper<OAQAAnnotation>>) (Class) OAQAAnnotationWrapper.class);
     }
   }
 
   @Override
-  public void unwrap(AnswerType annotation) throws AnalysisEngineProcessException {
-    super.unwrap(annotation);
+  public void unwrap(WrapperIndexer indexer, AnswerType annotation)
+          throws AnalysisEngineProcessException {
+    super.unwrap(indexer, annotation);
     annotation.setLabel(label);
     if (targetType != null) {
-      annotation.setTargetType(WrapperHelper.unwrap(targetType, WrapperHelper.getJCas(annotation)));
+      annotation.setTargetType(WrapperHelper.unwrap(indexer, targetType,
+              WrapperHelper.getJCas(annotation)));
     }
   }
 

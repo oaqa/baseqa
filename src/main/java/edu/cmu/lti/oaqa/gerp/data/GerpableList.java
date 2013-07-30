@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
 
 import com.google.common.base.Objects;
@@ -105,11 +106,11 @@ public class GerpableList<T extends TOP, W extends Gerpable & TopWrapper<T>> {
     }
   }
 
-  public void unwrapAllAndAddToIndexes(WrapperIndexer indexer)
+  public void unwrapAllAndAddToIndexes(WrapperIndexer indexer, JCas jcas)
           throws AnalysisEngineProcessException {
     for (W gerpable : gerpables) {
-      TOP top = WrapperHelper.unwrap(gerpable, indexer.getJCas());
-      top.addToIndexes(indexer.getJCas());
+      TOP top = WrapperHelper.unwrap(indexer, gerpable, jcas);
+      top.addToIndexes(jcas);
     }
   }
 

@@ -9,6 +9,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.GerpTopWrapper;
 
 public class AnswerListWrapper extends GerpTopWrapper<AnswerList> {
@@ -32,15 +33,15 @@ public class AnswerListWrapper extends GerpTopWrapper<AnswerList> {
   }
 
   @Override
-  public void wrap(AnswerList top) throws AnalysisEngineProcessException {
-    super.wrap(top);
-    this.answerList = WrapperHelper.wrapTopArray(top.getAnswerList(), AnswerWrapper.class);
+  public void wrap(WrapperIndexer indexer, AnswerList top) throws AnalysisEngineProcessException {
+    super.wrap(indexer, top);
+    this.answerList = WrapperHelper.wrapTopArray(indexer, top.getAnswerList(), AnswerWrapper.class);
   }
 
   @Override
-  public void unwrap(AnswerList top) throws AnalysisEngineProcessException {
-    super.unwrap(top);
-    top.setAnswerList(WrapperHelper.unwrapTopArray(answerList, WrapperHelper.getJCas(top)));
+  public void unwrap(WrapperIndexer indexer, AnswerList top) throws AnalysisEngineProcessException {
+    super.unwrap(indexer, top);
+    top.setAnswerList(WrapperHelper.unwrapTopArray(indexer, answerList, WrapperHelper.getJCas(top)));
   }
 
   @Override

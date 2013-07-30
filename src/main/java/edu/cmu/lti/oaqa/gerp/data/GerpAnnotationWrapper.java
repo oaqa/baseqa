@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 import edu.cmu.lti.oaqa.core.data.OAQAAnnotationWrapper;
 import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 
 public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
         OAQAAnnotationWrapper<T> implements Gerpable {
@@ -89,32 +90,34 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
 
   @SuppressWarnings("unchecked")
   @Override
-  public void wrap(T annotation) throws AnalysisEngineProcessException {
-    super.wrap(annotation);
+  public void wrap(WrapperIndexer indexer, T annotation) throws AnalysisEngineProcessException {
+    super.wrap(indexer, annotation);
     generators = WrapperHelper.wrapStringList(annotation.getGenerators());
-    evidences = WrapperHelper.wrapTopList(annotation.getEvidences(), EvidenceWrapper.class);
-    ranks = WrapperHelper.wrapTopList(annotation.getRanks(), RankWrapper.class);
-    pruningDecisions = WrapperHelper.wrapTopList(annotation.getPruningDecisions(),
+    evidences = WrapperHelper
+            .wrapTopList(indexer, annotation.getEvidences(), EvidenceWrapper.class);
+    ranks = WrapperHelper.wrapTopList(indexer, annotation.getRanks(), RankWrapper.class);
+    pruningDecisions = WrapperHelper.wrapTopList(indexer, annotation.getPruningDecisions(),
             PruningDecisionWrapper.class);
     if (annotation.getGerpMeta() != null) {
-      gerpMeta = WrapperHelper
-              .matchSubclassAndWrap(annotation.getGerpMeta(), GerpMetaWrapper.class);
+      gerpMeta = WrapperHelper.matchSubclassAndWrap(indexer, annotation.getGerpMeta(),
+              GerpMetaWrapper.class);
     }
-    dependencies = WrapperHelper.wrapTopList(annotation.getDependencies(), TopWrapper.class);
+    dependencies = WrapperHelper.wrapTopList(indexer, annotation.getDependencies(),
+            TopWrapper.class);
   }
 
   @Override
-  public void unwrap(T annotation) throws AnalysisEngineProcessException {
-    super.unwrap(annotation);
+  public void unwrap(WrapperIndexer indexer, T annotation) throws AnalysisEngineProcessException {
+    super.unwrap(indexer, annotation);
     JCas jcas = WrapperHelper.getJCas(annotation);
     annotation.setGenerators(WrapperHelper.unwrapStringList(generators, jcas));
-    annotation.setEvidences(WrapperHelper.unwrapTopList(evidences, jcas));
-    annotation.setRanks(WrapperHelper.unwrapTopList(ranks, jcas));
-    annotation.setPruningDecisions(WrapperHelper.unwrapTopList(pruningDecisions, jcas));
+    annotation.setEvidences(WrapperHelper.unwrapTopList(indexer, evidences, jcas));
+    annotation.setRanks(WrapperHelper.unwrapTopList(indexer, ranks, jcas));
+    annotation.setPruningDecisions(WrapperHelper.unwrapTopList(indexer, pruningDecisions, jcas));
     if (gerpMeta != null) {
-      annotation.setGerpMeta(WrapperHelper.unwrap(gerpMeta, jcas));
+      annotation.setGerpMeta(WrapperHelper.unwrap(indexer, gerpMeta, jcas));
     }
-    annotation.setDependencies(WrapperHelper.unwrapTopList(dependencies, jcas));
+    annotation.setDependencies(WrapperHelper.unwrapTopList(indexer, dependencies, jcas));
   }
 
   @Override
