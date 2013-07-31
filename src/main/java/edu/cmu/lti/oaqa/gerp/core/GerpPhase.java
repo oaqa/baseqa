@@ -130,38 +130,46 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     Map<String, Object> subPhaseConfs = copyTuples(confs, "persistence-provider",
             QA_INTERNAL_PHASEID, TIMEOUT_KEY, LAZY_LOAD_KEY,
             BaseExperimentBuilder.EXPERIMENT_UUID_PROPERTY, BaseExperimentBuilder.STAGE_ID_PROPERTY);
-    mergedJcas = getEmptyJCas();
-    CasCopier.copyCas(aJCas.getCas(), mergedJcas.getCas(), true);
+    mergedJcas = aJCas;
     removeAllTops(mergedJcas, GerpMeta.type);
     WrapperHelper.unwrap(new WrapperIndexer(), gerpMeta, mergedJcas).addToIndexes(mergedJcas);
-    // execute generation subphase
+    JCasIterator jcasIter;
+    // create generation subphase
     subPhaseConfs.put("name", confs.get("name") + "|GENERATION");
     subPhaseConfs.put("options", confs.get("generators"));
-    JCasIterator jcasIter = executeBasePhase(generatorSubPhase, subPhaseConfs, mergedJcas);
+    generatorSubPhase = createBasePhase(subPhaseConfs);
+    // execute generation subphase
+    jcasIter = generatorSubPhase.processAndOutputNewCASes(mergedJcas);
     // merge generated gerpables
     mergeGerpables(jcasIter);
-    // execute evidencing subphase
+    // create evidencing subphase
     subPhaseConfs.put("name", confs.get("name") + "|EVIDENCING");
     subPhaseConfs.put("options", confs.get("evidencers"));
-    jcasIter = executeBasePhase(evidencerSubPhase, subPhaseConfs, mergedJcas);
+    evidencerSubPhase = createBasePhase(subPhaseConfs);
+    // execute evidencing subphase
+    jcasIter = evidencerSubPhase.processAndOutputNewCASes(mergedJcas);
     // merge evidences
     mergeEvidences(jcasIter);
-    // execute ranking subphase
+    // create ranking subphase
     subPhaseConfs.put("name", confs.get("name") + "|RANKING");
     subPhaseConfs.put("options", confs.get("rankers"));
-    jcasIter = executeBasePhase(rankerSubPhase, subPhaseConfs, mergedJcas);
+    rankerSubPhase = createBasePhase(subPhaseConfs);
+    // execute ranking subphase
+    jcasIter = rankerSubPhase.processAndOutputNewCASes(mergedJcas);
     // merge ranks
     mergeRanks(jcasIter);
-    // execute pruning subphase
+    // create pruning subphase
     subPhaseConfs.put("name", confs.get("name") + "|PRUNING");
     subPhaseConfs.put("options", confs.get("pruners"));
-    jcasIter = executeBasePhase(prunerSubPhase, subPhaseConfs, mergedJcas);
+    prunerSubPhase = createBasePhase(subPhaseConfs);
+    // execute pruning subphase
+    jcasIter = prunerSubPhase.processAndOutputNewCASes(mergedJcas);
     // merge pruning decisions
     mergePruningDecisions(jcasIter);
     ultimatePrune();
   }
 
-  private JCasIterator executeBasePhase(AnalysisEngine phaseAE, Map<String, Object> confs, JCas jcas)
+  private static AnalysisEngine createBasePhase(Map<String, Object> confs)
           throws AnalysisEngineProcessException {
     AnalysisEngineDescription aeDescription;
     try {
@@ -171,10 +179,8 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       throw new AnalysisEngineProcessException(e);
     }
     try {
-      phaseAE = AnalysisEngineFactory.createAggregate(aeDescription);
-      return phaseAE.processAndOutputNewCASes(jcas);
+      return AnalysisEngineFactory.createAggregate(aeDescription);
     } catch (ResourceInitializationException e) {
-      phaseAE.destroy();
       throw new AnalysisEngineProcessException(e);
     }
   }
