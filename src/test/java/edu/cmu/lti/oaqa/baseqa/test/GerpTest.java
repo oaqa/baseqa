@@ -2,6 +2,7 @@ package edu.cmu.lti.oaqa.baseqa.test;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.uima.resource.metadata.TypeSystemDescription;
@@ -10,6 +11,8 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 import org.junit.Test;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
+
+import com.google.common.collect.Iterables;
 
 import edu.cmu.lti.oaqa.cse.driver.AdHocDriver;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
@@ -23,16 +26,18 @@ public class GerpTest {
 
   @Test
   public void testGerpPhases() throws Exception {
-    Document xmi = runPipeline("baseqa.gerp-phases-test", "Gerp One Question Set", "TEST",
+    List<Document> CASes = runPipeline("baseqa.gerp-phases-test", "Gerp One Question Set", "TEST",
             "This is an empty question");
-    printXmi(xmi);
+    for (Document CAS : CASes) {
+      printXmi(CAS);
+    }
   }
 
   @Test
   public void testGerpProviders() throws Exception {
-    Document xmi = runPipeline("baseqa.gerp-providers-test", "Gerp One Question Set", "TEST",
-            "This is an empty question");
-    printXmi(xmi);
+    Document CAS = Iterables.getOnlyElement(runPipeline("baseqa.gerp-providers-test",
+            "Gerp One Question Set", "TEST", "This is an empty question"));
+    printXmi(CAS);
   }
 
   protected void printXmi(Document xmi) throws IOException {
@@ -43,7 +48,7 @@ public class GerpTest {
     System.out.println(xmiStr);
   }
 
-  protected Document runPipeline(String pipelinePath, final String datasetName,
+  protected List<Document> runPipeline(String pipelinePath, final String datasetName,
           final String sequenceId, String question) throws Exception {
     String uuid = UUID.randomUUID().toString();
     TypeSystemDescription typeSystem = TypeSystemDescriptionFactory.createTypeSystemDescription();
@@ -60,8 +65,8 @@ public class GerpTest {
     String quuid = UUID.randomUUID().toString();
     source.publish(quuid, question);
     callback.await();
-    Document xmi = callback.getXmi();
+    List<Document> CASes = callback.getCASes();
     reader.shutdown();
-    return xmi;
+    return CASes;
   }
 }
