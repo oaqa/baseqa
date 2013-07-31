@@ -9,6 +9,7 @@ import com.google.common.collect.Iterables;
 
 import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.gerp.data.GerpMetaWrapper;
 
@@ -21,8 +22,9 @@ public class AbstractGerpSubPhase extends AbstractLoggedComponent {
   @Override
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
-    GerpMetaWrapper gerpMeta = (GerpMetaWrapper) (TopWrapper<?>) Iterables
-            .getOnlyElement(WrapperHelper.wrapAllFromJCas(jcas, GerpMeta.type));
+    TopWrapper<TOP> wrapper = Iterables.getOnlyElement(WrapperHelper.wrapAllFromJCas(
+            new WrapperIndexer(), jcas, GerpMeta.type));
+    GerpMetaWrapper gerpMeta = (GerpMetaWrapper) (TopWrapper<?>) wrapper;
     try {
       gerpableClass = Class.forName(gerpMeta.getGerpableClassName()).asSubclass(TOP.class);
       gerpableType = (Integer) gerpableClass.getDeclaredField("type").get(null);
@@ -30,5 +32,4 @@ public class AbstractGerpSubPhase extends AbstractLoggedComponent {
       throw new AnalysisEngineProcessException(e);
     }
   }
-
 }

@@ -133,7 +133,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     mergedJcas = getEmptyJCas();
     CasCopier.copyCas(aJCas.getCas(), mergedJcas.getCas(), true);
     removeAllTops(mergedJcas, GerpMeta.type);
-    WrapperHelper.unwrap(gerpMeta, mergedJcas).addToIndexes(mergedJcas);
+    WrapperHelper.unwrap(new WrapperIndexer(), gerpMeta, mergedJcas).addToIndexes(mergedJcas);
     // execute generation subphase
     subPhaseConfs.put("name", confs.get("name") + "|GENERATION");
     subPhaseConfs.put("options", confs.get("generators"));
@@ -182,16 +182,16 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   private void mergeGerpables(JCasIterator jcasIter) throws AnalysisEngineProcessException {
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
-      System.out.println(gerpableType + " " + jcas.getFSIndexRepository().getLabels());
       TOP top = Iterables.getOnlyElement(getAllTops(jcas, gerpableType));
       @SuppressWarnings("unchecked")
-      W gerpable = (W) WrapperHelper.wrap(top);
+      W gerpable = (W) WrapperHelper.wrap(new WrapperIndexer(), top);
       gerpable.setGerpMeta(gerpMeta);
       gerpables.add(gerpable);
       jcas.release();
     }
+    WrapperIndexer indexer = new WrapperIndexer();
     for (W gerpable : gerpables.getGerpables()) {
-      T top = WrapperHelper.unwrap(gerpable, mergedJcas);
+      T top = WrapperHelper.unwrap(indexer, gerpable, mergedJcas);
       top.addToIndexes(mergedJcas);
     }
   }
@@ -203,14 +203,15 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       JCas jcas = jcasIter.next();
       for (TOP top : getAllTops(jcas, gerpableType)) {
         @SuppressWarnings("unchecked")
-        W gerpable = (W) WrapperHelper.wrap(top);
+        W gerpable = (W) WrapperHelper.wrap(new WrapperIndexer(), top);
         gerpable2evidences.put(gerpable, gerpable.getEvidences().get(0));
       }
       gerpables.addAllEvidences(gerpable2evidences);
       jcas.release();
     }
+    WrapperIndexer indexer = new WrapperIndexer();
     for (W gerpable : gerpables.getGerpables()) {
-      T top = WrapperHelper.unwrap(gerpable, mergedJcas);
+      T top = WrapperHelper.unwrap(indexer, gerpable, mergedJcas);
       top.addToIndexes(mergedJcas);
     }
   }
@@ -222,14 +223,15 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       JCas jcas = jcasIter.next();
       for (TOP top : getAllTops(jcas, gerpableType)) {
         @SuppressWarnings("unchecked")
-        W gerpable = (W) WrapperHelper.wrap(top);
+        W gerpable = (W) WrapperHelper.wrap(new WrapperIndexer(), top);
         gerpable2ranks.put(gerpable, gerpable.getRanks().get(0));
       }
       gerpables.addAllRanks(gerpable2ranks);
       jcas.release();
     }
+    WrapperIndexer indexer = new WrapperIndexer();
     for (W gerpable : gerpables.getGerpables()) {
-      T top = WrapperHelper.unwrap(gerpable, mergedJcas);
+      T top = WrapperHelper.unwrap(indexer, gerpable, mergedJcas);
       top.addToIndexes(mergedJcas);
     }
   }
@@ -241,7 +243,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       JCas jcas = jcasIter.next();
       for (TOP top : getAllTops(jcas, gerpableType)) {
         @SuppressWarnings("unchecked")
-        W gerpable = (W) WrapperHelper.wrap(top);
+        W gerpable = (W) WrapperHelper.wrap(new WrapperIndexer(), top);
         gerpable2pruningDecisions.put(gerpable, gerpable.getPruningDecisions().get(0));
       }
       gerpables.addAllPruningDecisions(gerpable2pruningDecisions);
@@ -256,8 +258,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
 
   @Override
   public boolean hasNext() throws AnalysisEngineProcessException {
-    boolean hasNext = gerpableIdx < gerpables.size();
-    if (hasNext) {
+    if (gerpableIdx < gerpables.size()) {
       return true;
     } else {
       mergedJcas.release();
@@ -269,9 +270,9 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   public AbstractCas next() throws AnalysisEngineProcessException {
     JCas output = getEmptyJCas();
     CasCopier.copyCas(mergedJcas.getCas(), output.getCas(), true);
-    T top = WrapperHelper.unwrap(gerpables.get(gerpableIdx++), mergedJcas);
-    top.addToIndexes(mergedJcas);
-    return mergedJcas;
+    T top = WrapperHelper.unwrap(new WrapperIndexer(), gerpables.get(gerpableIdx++), output);
+    top.addToIndexes(output);
+    return output;
   }
 
   @Override
@@ -299,9 +300,6 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       tops.add(topIter.next());
     }
     for (TOP top : tops) {
-      WrapperIndexer indexer = WrapperIndexer.getWrapperIndexer(jcas);
-      indexer.removeWrapped(top);
-      indexer.removeUnwrapped(top);
       top.removeFromIndexes(jcas);
     }
   }

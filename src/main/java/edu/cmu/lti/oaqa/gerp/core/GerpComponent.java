@@ -115,20 +115,21 @@ public class GerpComponent<T extends TOP, W extends Gerpable & TopWrapper<T>> ex
   @Override
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
-    generateGerpMeta(jcas);
-    executeGerp(jcas);
+    WrapperIndexer indexer = new WrapperIndexer();
+    generateGerpMeta(indexer, jcas);
+    executeGerp(indexer, jcas);
   }
 
-  private void generateGerpMeta(JCas jcas) throws AnalysisEngineProcessException {
+  private void generateGerpMeta(WrapperIndexer indexer, JCas jcas)
+          throws AnalysisEngineProcessException {
     gerpMeta = new GerpMetaWrapper(gerpableClassName, toClassNames(generators),
             toClassNames(evidencers), toClassNames(rankers), toClassNames(pruners));
-    GerpMeta top = WrapperHelper.unwrap(gerpMeta, jcas);
+    GerpMeta top = WrapperHelper.unwrap(indexer, gerpMeta, jcas);
     top.addToIndexes(jcas);
   }
 
   @SuppressWarnings("unchecked")
-  private void executeGerp(JCas jcas) throws AnalysisEngineProcessException {
-    WrapperIndexer indexer = new WrapperIndexer();
+  private void executeGerp(WrapperIndexer indexer, JCas jcas) throws AnalysisEngineProcessException {
     GerpableList<T, W> outputs = new GerpableList<T, W>();
     // generate
     for (AbstractGeneratorProvider<W> generator : generators) {
@@ -174,7 +175,7 @@ public class GerpComponent<T extends TOP, W extends Gerpable & TopWrapper<T>> ex
       log(pruner.getClass().getSimpleName() + " gives pruning decisions of " + pruningDecisions);
     }
     // persisting outputs
-    outputs.unwrapAllAndAddToIndexes(jcas);
+    outputs.unwrapAllAndAddToIndexes(indexer, jcas);
   }
 
   private static List<String> toClassNames(List<? extends Object> objects) {
