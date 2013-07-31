@@ -26,6 +26,7 @@ import edu.cmu.lti.oaqa.baseqa.data.nlp.KeytermList;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResult;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResultArray;
 import edu.cmu.lti.oaqa.baseqa.framework.QALogEntry;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
@@ -47,15 +48,17 @@ public abstract class AbstractRetrievalUpdater extends AbstractLoggedComponent {
     super.process(jcas);
     try {
       // prepare input
+      WrapperIndexer indexer = new WrapperIndexer();
       InputElement input = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type));
-      List<Keyterm> keyterms = KeytermList.retrieveKeyterms(jcas);
-      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(ViewManager
-              .getDocumentView(jcas));
+      List<Keyterm> keyterms = KeytermList.retrieveKeyterms(indexer, jcas);
+      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(indexer,
+              ViewManager.getDocumentView(jcas));
       // do task
       documents = updateDocuments(input.getQuestion(), keyterms, documents);
       log("RETRIEVED: " + documents.size());
       // save output
-      RetrievalResultArray.storeRetrievalResults(ViewManager.getDocumentView(jcas), documents);
+      RetrievalResultArray.storeRetrievalResults(indexer, ViewManager.getDocumentView(jcas),
+              documents);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

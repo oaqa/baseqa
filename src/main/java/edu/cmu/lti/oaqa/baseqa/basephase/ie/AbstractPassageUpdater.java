@@ -28,6 +28,7 @@ import edu.cmu.lti.oaqa.baseqa.data.retrieval.PassageCandidateArray;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResult;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResultArray;
 import edu.cmu.lti.oaqa.baseqa.framework.QALogEntry;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
@@ -49,19 +50,21 @@ public abstract class AbstractPassageUpdater extends AbstractLoggedComponent {
     super.process(jcas);
     try {
       // prepare input
+      WrapperIndexer indexer = new WrapperIndexer();
       String questionText = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type))
               .getQuestion();
       KeytermList keytermList = new KeytermList(jcas);
-      List<Keyterm> keyterms = keytermList.getKeyterms();
-      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(ViewManager
-              .getDocumentView(jcas));
-      List<PassageCandidate> passages = PassageCandidateArray.retrievePassageCandidates(ViewManager
-              .getCandidateView(jcas));
+      List<Keyterm> keyterms = keytermList.getKeyterms(indexer);
+      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(indexer,
+              ViewManager.getDocumentView(jcas));
+      List<PassageCandidate> passages = PassageCandidateArray.retrievePassageCandidates(indexer,
+              ViewManager.getCandidateView(jcas));
       // do task
       passages = updatePassages(questionText, keyterms, documents, passages);
       log("ANSWER PASSAGES: " + passages.size());
       // save output
-      PassageCandidateArray.storePassageCandidates(ViewManager.getCandidateView(jcas), passages);
+      PassageCandidateArray.storePassageCandidates(new WrapperIndexer(),
+              ViewManager.getCandidateView(jcas), passages);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

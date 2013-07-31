@@ -24,6 +24,7 @@ import org.apache.uima.jcas.JCas;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.Keyterm;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.KeytermList;
 import edu.cmu.lti.oaqa.baseqa.framework.QALogEntry;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
@@ -46,12 +47,12 @@ public abstract class AbstractKeytermUpdater extends AbstractLoggedComponent {
       String question = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type))
               .getQuestion();
       List<Keyterm> keyterms;
-      keyterms = KeytermList.retrieveKeyterms(jcas);
+      keyterms = KeytermList.retrieveKeyterms(new WrapperIndexer(), jcas);
       // do task
       keyterms = updateKeyterms(question, keyterms);
       log(keyterms.toString());
       // save output
-      KeytermList.storeKeyterms(jcas, keyterms);
+      KeytermList.storeKeyterms(new WrapperIndexer(), jcas, keyterms);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }

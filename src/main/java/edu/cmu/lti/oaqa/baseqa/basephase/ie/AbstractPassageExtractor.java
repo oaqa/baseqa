@@ -28,6 +28,7 @@ import edu.cmu.lti.oaqa.baseqa.data.retrieval.PassageCandidateArray;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResult;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.RetrievalResultArray;
 import edu.cmu.lti.oaqa.baseqa.framework.QALogEntry;
+import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.ecd.log.AbstractLoggedComponent;
 import edu.cmu.lti.oaqa.framework.BaseJCasHelper;
 import edu.cmu.lti.oaqa.framework.ViewManager;
@@ -49,16 +50,18 @@ public abstract class AbstractPassageExtractor extends AbstractLoggedComponent {
     super.process(jcas);
     try {
       // prepare input
+      WrapperIndexer indexer = new WrapperIndexer();
       String questionText = ((InputElement) BaseJCasHelper.getAnnotation(jcas, InputElement.type))
               .getQuestion();
-      List<Keyterm> keyterms = KeytermList.retrieveKeyterms(jcas);
-      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(ViewManager
-              .getDocumentView(jcas));
+      List<Keyterm> keyterms = KeytermList.retrieveKeyterms(indexer, jcas);
+      List<RetrievalResult> documents = RetrievalResultArray.retrieveRetrievalResults(indexer,
+              ViewManager.getDocumentView(jcas));
       // do task
       List<PassageCandidate> answers = extractPassages(questionText, keyterms, documents);
       log("ANSWER PASSAGES: " + answers.size());
       // save output
-      PassageCandidateArray.storePassageCandidates(ViewManager.getCandidateView(jcas), answers);
+      PassageCandidateArray.storePassageCandidates(new WrapperIndexer(),
+              ViewManager.getCandidateView(jcas), answers);
     } catch (Exception e) {
       throw new AnalysisEngineProcessException(e);
     }
