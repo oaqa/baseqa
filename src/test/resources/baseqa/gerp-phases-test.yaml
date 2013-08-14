@@ -26,51 +26,51 @@ pipeline:
     pruners: |
       - inherit: gerp.pruner.HeadPreservePruner
       - inherit: gerp.pruner.RandomPruner
-
-  - inherit: gerp.core.GerpPhase
-    name: question-interpretation
-    type: org.oaqa.model.kb.Interpretation
-    generators: |
-      - inherit: baseqa.gerp.interpretation.DummyQuestionInterpretationGenerator
-      - inherit: baseqa.gerp.interpretation.EmptyQuestionInterpretationGenerator
-    evidencers: |
-      - inherit: baseqa.gerp.interpretation.IdenticalQuestionInterpretationEvidencer
-      - inherit: baseqa.gerp.interpretation.RandomQuestionInterpretationEvidencer
-    rankers: |
-      - inherit: gerp.ranker.HeadFirstRanker
-      - inherit: gerp.ranker.RandomRanker
-    pruners: |
-      - inherit: gerp.pruner.HeadPreservePruner
-      - inherit: gerp.pruner.RandomPruner
-
-  - inherit: gerp.core.GerpPhase
-    name: query-formulation
-    type: org.oaqa.model.retrieval.AbstractQuery
-    generators: |
-      - inherit: baseqa.gerp.retrieval.BagOfWordsQueryGenerator
-      - inherit: baseqa.gerp.retrieval.ConceptAwareQueryGenerator
-    evidencers: |
-      - inherit: baseqa.gerp.retrieval.IdenticalQueryEvidencer
-      - inherit: baseqa.gerp.retrieval.RandomQueryEvidencer
-    rankers: |
-      - inherit: gerp.ranker.HeadFirstRanker
-      - inherit: gerp.ranker.RandomRanker
-    pruners: |
-      - inherit: gerp.pruner.HeadPreservePruner
-      - inherit: gerp.pruner.RandomPruner
-
-  - inherit: gerp.core.GerpPhase
-    name: answering
-    type: org.oaqa.model.answer.AnswerList
-    generators: |
-      - inherit: baseqa.gerp.answer.QueryTermAnswerGenerator
-      - inherit: baseqa.gerp.answer.RandomAnswerGenerator
-    evidencers: |
-      - inherit: baseqa.gerp.answer.IdenticalAnswerEvidencer
-      - inherit: baseqa.gerp.answer.RandomAnswerEvidencer
-    rankers: |
-      - inherit: gerp.ranker.HeadFirstRanker
-      - inherit: gerp.ranker.RandomRanker
-    pruners: |
-      - inherit: gerp.pruner.HeadPreservePruner
-      - inherit: gerp.pruner.RandomPruner
+#
+#  - inherit: gerp.core.GerpPhase
+#    name: question-interpretation
+#    type: org.oaqa.model.kb.Interpretation
+#    generators: |
+#      - inherit: baseqa.gerp.interpretation.DummyQuestionInterpretationGenerator
+#      - inherit: baseqa.gerp.interpretation.EmptyQuestionInterpretationGenerator
+#    evidencers: |
+#      - inherit: baseqa.gerp.interpretation.IdenticalQuestionInterpretationEvidencer
+#      - inherit: baseqa.gerp.interpretation.RandomQuestionInterpretationEvidencer
+#    rankers: |
+#      - inherit: gerp.ranker.HeadFirstRanker
+#      - inherit: gerp.ranker.RandomRanker
+#    pruners: |
+#      - inherit: gerp.pruner.HeadPreservePruner
+#      - inherit: gerp.pruner.RandomPruner
+#
+#  - inherit: gerp.core.GerpPhase
+#    name: query-formulation
+#    type: org.oaqa.model.retrieval.AbstractQuery
+#    generators: |
+#      - inherit: baseqa.gerp.retrieval.BagOfWordsQueryGenerator
+#      - inherit: baseqa.gerp.retrieval.ConceptAwareQueryGenerator
+#    evidencers: |
+#      - inherit: baseqa.gerp.retrieval.IdenticalQueryEvidencer
+#      - inherit: baseqa.gerp.retrieval.RandomQueryEvidencer
+#    rankers: |
+#      - inherit: gerp.ranker.HeadFirstRanker
+#      - inherit: gerp.ranker.RandomRanker
+#    pruners: |
+#      - inherit: gerp.pruner.HeadPreservePruner
+#      - inherit: gerp.pruner.RandomPruner
+#
+#  - inherit: gerp.core.GerpPhase
+#    name: answering
+#    type: org.oaqa.model.answer.AnswerList
+#    generators: |
+#      - inherit: baseqa.gerp.answer.QueryTermAnswerGenerator
+#      - inherit: baseqa.gerp.answer.RandomAnswerGenerator
+#    evidencers: |
+#      - inherit: baseqa.gerp.answer.IdenticalAnswerEvidencer
+#      - inherit: baseqa.gerp.answer.RandomAnswerEvidencer
+#    rankers: |
+#      - inherit: gerp.ranker.HeadFirstRanker
+#      - inherit: gerp.ranker.RandomRanker
+#    pruners: |
+#      - inherit: gerp.pruner.HeadPreservePruner
+#      - inherit: gerp.pruner.RandomPruner

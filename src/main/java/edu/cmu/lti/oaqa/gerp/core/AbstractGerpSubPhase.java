@@ -19,11 +19,13 @@ public class AbstractGerpSubPhase extends AbstractLoggedComponent {
 
   protected int gerpableType;
 
+  protected WrapperIndexer indexer = new WrapperIndexer();
+
   @Override
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     super.process(jcas);
-    TopWrapper<TOP> wrapper = Iterables.getOnlyElement(WrapperHelper.wrapAllFromJCas(
-            new WrapperIndexer(), jcas, GerpMeta.type));
+    TopWrapper<TOP> wrapper = Iterables.getOnlyElement(WrapperHelper.wrapAllFromJCas(indexer, jcas,
+            GerpMeta.type));
     GerpMetaWrapper gerpMeta = (GerpMetaWrapper) (TopWrapper<?>) wrapper;
     try {
       gerpableClass = Class.forName(gerpMeta.getGerpableClassName()).asSubclass(TOP.class);

@@ -226,13 +226,13 @@ public class WrapperHelper {
   @SuppressWarnings("unchecked")
   private static <T extends TOP, W extends TopWrapper<T>> W wrap(WrapperIndexer indexer, T top,
           Class<W> wrapperClass) throws AnalysisEngineProcessException {
-    if (indexer.checkWrapped(top)) {
-      return (W) indexer.getWrapped(top);
+    if (indexer.check(top)) {
+      return (W) indexer.get(top);
     }
     W wrapper;
     try {
       wrapper = wrapperClass.newInstance();
-      indexer.addWrapped(top, wrapper);
+      indexer.add(top, wrapper);
     } catch (InstantiationException e) {
       throw new AnalysisEngineProcessException(e);
     } catch (IllegalAccessException e) {
@@ -245,14 +245,14 @@ public class WrapperHelper {
   @SuppressWarnings("unchecked")
   public static <T extends TOP, W extends TopWrapper<T>> T unwrap(WrapperIndexer indexer,
           W wrapper, JCas jcas) throws AnalysisEngineProcessException {
-    if (indexer.checkUnwrapped(wrapper)) {
-      return (T) indexer.getUnwrapped(wrapper);
+    if (indexer.check(wrapper)) {
+      return (T) indexer.get(wrapper);
     }
     T top;
     try {
       Constructor<? extends T> c = wrapper.getTypeClass().getConstructor(JCas.class);
       top = c.newInstance(jcas);
-      indexer.addUnwrapped(wrapper, top);
+      indexer.add(wrapper, top);
     } catch (IllegalArgumentException e) {
       throw new AnalysisEngineProcessException(e);
     } catch (InstantiationException e) {

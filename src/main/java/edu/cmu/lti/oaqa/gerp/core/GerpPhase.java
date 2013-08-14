@@ -1,20 +1,13 @@
 package edu.cmu.lti.oaqa.gerp.core;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngine;
-import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.analysis_engine.JCasIterator;
 import org.apache.uima.cas.AbstractCas;
 import org.apache.uima.cas.CAS;
-import org.apache.uima.cas.FSIndex;
-import org.apache.uima.cas.FSIterator;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.jcas.tcas.Annotation;
@@ -23,19 +16,14 @@ import org.apache.uima.util.CasCopier;
 import org.oaqa.model.gerp.GerpMeta;
 import org.uimafit.component.JCasMultiplier_ImplBase;
 import org.uimafit.descriptor.OperationalProperties;
-import org.uimafit.factory.AnalysisEngineFactory;
 
-import com.google.common.base.CharMatcher;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 
 import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
 import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
-import edu.cmu.lti.oaqa.ecd.phase.BasePhase;
 import edu.cmu.lti.oaqa.gerp.data.EvidenceWrapper;
 import edu.cmu.lti.oaqa.gerp.data.GerpMetaWrapper;
 import edu.cmu.lti.oaqa.gerp.data.Gerpable;
@@ -88,6 +76,8 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
 
   private JCas mergedJcas;
 
+  private WrapperIndexer mergedCasIndexer = new WrapperIndexer();
+
   private GerpableList<T, W> gerpables = new GerpableList<T, W>();
 
   private int gerpableIdx = 0;
@@ -95,8 +85,9 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   @Override
   public void initialize(UimaContext context) throws ResourceInitializationException {
     super.initialize(context);
-    confs = getConfigurationTuples(context, "persistence-provider", "name", QA_INTERNAL_PHASEID,
-            TIMEOUT_KEY, LAZY_LOAD_KEY, BaseExperimentBuilder.EXPERIMENT_UUID_PROPERTY,
+    confs = GerpPhaseUtils.getConfigurationTuples(context, "persistence-provider", "name",
+            QA_INTERNAL_PHASEID, TIMEOUT_KEY, LAZY_LOAD_KEY,
+            BaseExperimentBuilder.EXPERIMENT_UUID_PROPERTY,
             BaseExperimentBuilder.STAGE_ID_PROPERTY, "generators", "evidencers", "rankers",
             "pruners");
     try {
@@ -106,37 +97,25 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     } catch (Exception e) {
       throw new ResourceInitializationException(e);
     }
-    gerpMeta = new GerpMetaWrapper(gerpableClassName,
-            toClassNames((String) confs.get("generators")),
-            toClassNames((String) confs.get("evidencers")),
-            toClassNames((String) confs.get("rankers")),
-            toClassNames((String) confs.get("pruners")));
-  }
-
-  private static CharMatcher matcher = CharMatcher.anyOf("./ :");
-
-  // TODO Since the vbar in the descritpor should be removed and replaced with the YAML list
-  // syntax, the returned value should be String array (String[])
-  private static List<String> toClassNames(String options) {
-    List<String> names = Lists.newArrayList();
-    for (String option : options.split("\\n+")) {
-      names.add(option.substring(matcher.lastIndexIn(option) + 1));
-    }
-    return names;
+    gerpMeta = new GerpMetaWrapper(gerpableClassName, GerpPhaseUtils.toClassNames((String) confs
+            .get("generators")), GerpPhaseUtils.toClassNames((String) confs.get("evidencers")),
+            GerpPhaseUtils.toClassNames((String) confs.get("rankers")),
+            GerpPhaseUtils.toClassNames((String) confs.get("pruners")));
   }
 
   @Override
   public void process(JCas aJCas) throws AnalysisEngineProcessException {
-    Map<String, Object> subPhaseConfs = copyTuples(confs, "persistence-provider",
-            QA_INTERNAL_PHASEID, TIMEOUT_KEY, LAZY_LOAD_KEY,
-            BaseExperimentBuilder.EXPERIMENT_UUID_PROPERTY, BaseExperimentBuilder.STAGE_ID_PROPERTY);
+    Map<String, Object> subPhaseConfs = GerpPhaseUtils
+            .copyTuples(confs, "persistence-provider", QA_INTERNAL_PHASEID, TIMEOUT_KEY,
+                    LAZY_LOAD_KEY, BaseExperimentBuilder.EXPERIMENT_UUID_PROPERTY,
+                    BaseExperimentBuilder.STAGE_ID_PROPERTY);
     mergedJcas = aJCas;
     WrapperHelper.unwrap(new WrapperIndexer(), gerpMeta, mergedJcas).addToIndexes(mergedJcas);
     JCasIterator jcasIter;
     // create generation subphase
     subPhaseConfs.put("name", confs.get("name") + "|GENERATION");
     subPhaseConfs.put("options", confs.get("generators"));
-    generatorSubPhase = createBasePhase(subPhaseConfs);
+    generatorSubPhase = GerpPhaseUtils.createBasePhase(subPhaseConfs);
     // execute generation subphase
     jcasIter = generatorSubPhase.processAndOutputNewCASes(mergedJcas);
     // merge generated gerpables
@@ -144,7 +123,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     // create evidencing subphase
     subPhaseConfs.put("name", confs.get("name") + "|EVIDENCING");
     subPhaseConfs.put("options", confs.get("evidencers"));
-    evidencerSubPhase = createBasePhase(subPhaseConfs);
+    evidencerSubPhase = GerpPhaseUtils.createBasePhase(subPhaseConfs);
     // execute evidencing subphase
     jcasIter = evidencerSubPhase.processAndOutputNewCASes(mergedJcas);
     // merge evidences
@@ -152,7 +131,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     // create ranking subphase
     subPhaseConfs.put("name", confs.get("name") + "|RANKING");
     subPhaseConfs.put("options", confs.get("rankers"));
-    rankerSubPhase = createBasePhase(subPhaseConfs);
+    rankerSubPhase = GerpPhaseUtils.createBasePhase(subPhaseConfs);
     // execute ranking subphase
     jcasIter = rankerSubPhase.processAndOutputNewCASes(mergedJcas);
     // merge ranks
@@ -160,45 +139,28 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     // create pruning subphase
     subPhaseConfs.put("name", confs.get("name") + "|PRUNING");
     subPhaseConfs.put("options", confs.get("pruners"));
-    prunerSubPhase = createBasePhase(subPhaseConfs);
+    prunerSubPhase = GerpPhaseUtils.createBasePhase(subPhaseConfs);
     // execute pruning subphase
     jcasIter = prunerSubPhase.processAndOutputNewCASes(mergedJcas);
     // merge pruning decisions
     mergePruningDecisions(jcasIter);
     // post processing
     ultimatePrune();
-    removeAllTops(mergedJcas, GerpMeta.type);
-  }
-
-  private static AnalysisEngine createBasePhase(Map<String, Object> confs)
-          throws AnalysisEngineProcessException {
-    AnalysisEngineDescription aeDescription;
-    try {
-      aeDescription = AnalysisEngineFactory.createPrimitiveDescription(BasePhase.class,
-              BaseExperimentBuilder.getParamList(confs));
-    } catch (ResourceInitializationException e) {
-      throw new AnalysisEngineProcessException(e);
-    }
-    try {
-      return AnalysisEngineFactory.createAggregate(aeDescription);
-    } catch (ResourceInitializationException e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    GerpPhaseUtils.removeAllTopsFromIndexesAndIndexer(mergedJcas, mergedCasIndexer, GerpMeta.type);
   }
 
   private void mergeGerpables(JCasIterator jcasIter) throws AnalysisEngineProcessException {
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
-      TOP top = Iterables.getOnlyElement(getAllTops(jcas, gerpableType));
+      TOP top = Iterables.getOnlyElement(GerpPhaseUtils.getAllTops(jcas, gerpableType));
       @SuppressWarnings("unchecked")
       W gerpable = (W) WrapperHelper.wrap(new WrapperIndexer(), top);
       gerpable.setGerpMeta(gerpMeta);
       gerpables.add(gerpable);
       jcas.release();
     }
-    WrapperIndexer indexer = new WrapperIndexer();
     for (W gerpable : gerpables.getGerpables()) {
-      T top = WrapperHelper.unwrap(indexer, gerpable, mergedJcas);
+      T top = WrapperHelper.unwrap(mergedCasIndexer, gerpable, mergedJcas);
       top.addToIndexes(mergedJcas);
     }
   }
@@ -207,7 +169,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     Map<W, EvidenceWrapper<?, ?>> gerpable2evidences = Maps.newHashMap();
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
-      for (TOP top : getAllTops(jcas, gerpableType)) {
+      for (TOP top : GerpPhaseUtils.getAllTops(jcas, gerpableType)) {
         @SuppressWarnings("unchecked")
         W gerpable = (W) WrapperHelper.wrap(new WrapperIndexer(), top);
         gerpable2evidences.put(gerpable, gerpable.getEvidences().get(0));
@@ -215,10 +177,9 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       gerpables.addAllEvidences(gerpable2evidences);
       jcas.release();
     }
-    removeAllTops(mergedJcas, gerpableType);
-    WrapperIndexer indexer = new WrapperIndexer();
+    GerpPhaseUtils.removeAllTopsFromIndexesAndIndexer(mergedJcas, mergedCasIndexer, gerpableType);
     for (W gerpable : gerpables.getGerpables()) {
-      T top = WrapperHelper.unwrap(indexer, gerpable, mergedJcas);
+      T top = WrapperHelper.unwrap(mergedCasIndexer, gerpable, mergedJcas);
       top.addToIndexes(mergedJcas);
     }
   }
@@ -227,7 +188,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     Map<W, RankWrapper> gerpable2ranks = Maps.newHashMap();
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
-      for (TOP top : getAllTops(jcas, gerpableType)) {
+      for (TOP top : GerpPhaseUtils.getAllTops(jcas, gerpableType)) {
         @SuppressWarnings("unchecked")
         W gerpable = (W) WrapperHelper.wrap(new WrapperIndexer(), top);
         gerpable2ranks.put(gerpable, gerpable.getRanks().get(0));
@@ -235,10 +196,9 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       gerpables.addAllRanks(gerpable2ranks);
       jcas.release();
     }
-    removeAllTops(mergedJcas, gerpableType);
-    WrapperIndexer indexer = new WrapperIndexer();
+    GerpPhaseUtils.removeAllTopsFromIndexesAndIndexer(mergedJcas, mergedCasIndexer, gerpableType);
     for (W gerpable : gerpables.getGerpables()) {
-      T top = WrapperHelper.unwrap(indexer, gerpable, mergedJcas);
+      T top = WrapperHelper.unwrap(mergedCasIndexer, gerpable, mergedJcas);
       top.addToIndexes(mergedJcas);
     }
   }
@@ -247,7 +207,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     Map<W, PruningDecisionWrapper> gerpable2pruningDecisions = Maps.newHashMap();
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
-      for (TOP top : getAllTops(jcas, gerpableType)) {
+      for (TOP top : GerpPhaseUtils.getAllTops(jcas, gerpableType)) {
         @SuppressWarnings("unchecked")
         W gerpable = (W) WrapperHelper.wrap(new WrapperIndexer(), top);
         gerpable2pruningDecisions.put(gerpable, gerpable.getPruningDecisions().get(0));
@@ -255,7 +215,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       gerpables.addAllPruningDecisions(gerpable2pruningDecisions);
       jcas.release();
     }
-    removeAllTops(mergedJcas, gerpableType);
+    GerpPhaseUtils.removeAllTopsFromIndexesAndIndexer(mergedJcas, mergedCasIndexer, gerpableType);
   }
 
   private void ultimatePrune() {
@@ -289,54 +249,6 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     evidencerSubPhase.collectionProcessComplete();
     rankerSubPhase.collectionProcessComplete();
     prunerSubPhase.collectionProcessComplete();
-  }
-
-  public static Collection<TOP> getAllTops(JCas jcas, int type) {
-    List<TOP> tops = Lists.newArrayList();
-    FSIterator<TOP> topIter = jcas.getJFSIndexRepository().getAllIndexedFS(type);
-    while (topIter.hasNext()) {
-      tops.add(topIter.next());
-    }
-    return tops;
-  }
-
-  public static void removeAllTops(JCas jcas, int type) {
-    FSIterator<TOP> topIter = jcas.getJFSIndexRepository().getAllIndexedFS(type);
-    Set<TOP> tops = Sets.newHashSet();
-    while (topIter.hasNext()) {
-      tops.add(topIter.next());
-    }
-    for (TOP top : tops) {
-      top.removeFromIndexes(jcas);
-    }
-  }
-
-  private static Map<String, Object> getConfigurationTuples(UimaContext context, String... keys) {
-    Map<String, Object> tuples = Maps.newLinkedHashMap();
-    for (String key : keys) {
-      tuples.put(key, context.getConfigParameterValue(key));
-    }
-    return tuples;
-  }
-
-  private static <K, V> Map<K, V> copyTuples(Map<K, V> map, K... keys) {
-    Map<K, V> ret = Maps.newLinkedHashMap();
-    for (K key : keys) {
-      ret.put(key, map.get(key));
-    }
-    return ret;
-  }
-
-  public static void printCasIndexes(JCas jcas) {
-    Iterator<FSIndex<TOP>> indexes = jcas.getJFSIndexRepository().getIndexes();
-    while (indexes.hasNext()) {
-      FSIndex<TOP> index = indexes.next();
-      System.out.println(index.getType().getName());
-      FSIterator<TOP> it = index.iterator();
-      while (it.hasNext()) {
-        System.out.println(" - " + it.next());
-      }
-    }
   }
 
 }

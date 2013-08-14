@@ -250,43 +250,166 @@ public class WrapperIndexer {
     type2wrappers.putAll(type, WrapperHelper.wrapAllFromJCas(this, jcas, type));
   }
 
+  public boolean check(TOP top) {
+    return topAddress2wrapper.containsKey(top.getAddress());
+  }
+
+  /**
+   * 
+   * @param top
+   * @return
+   * 
+   * @deprecated
+   * @see #check(TOP)
+   */
+  @Deprecated
   public boolean checkWrapped(TOP top) {
     return topAddress2wrapper.containsKey(top.getAddress());
   }
 
+  public TopWrapper<?> get(TOP top) {
+    return topAddress2wrapper.get(top.getAddress());
+  }
+
+  /**
+   * 
+   * @param top
+   * @return
+   * 
+   * @deprecated
+   * @see #get(TOP)
+   */
+  @Deprecated
   public TopWrapper<?> getWrapped(TOP top) {
     return topAddress2wrapper.get(top.getAddress());
   }
 
+  public void add(TOP top, TopWrapper<? extends TOP> wrapper) {
+    topAddress2wrapper.put(top.getAddress(), wrapper);
+    wrapperHashcode2top.put(System.identityHashCode(wrapper), top);
+  }
+
+  /**
+   * 
+   * @param top
+   * @param wrapper
+   * 
+   * @deprecated
+   * @see #add(TOP, TopWrapper)
+   */
+  @Deprecated
   public void addWrapped(TOP top, TopWrapper<? extends TOP> wrapper) {
     topAddress2wrapper.put(top.getAddress(), wrapper);
   }
 
+  public void remove(TOP top) {
+    topAddress2wrapper.remove(top.getAddress());
+    while (wrapperHashcode2top.values().remove(top))
+      ;
+  }
+
+  /**
+   * 
+   * @param top
+   * 
+   * @deprecated
+   * @see #remove(TOP)
+   */
+  @Deprecated
   public void removeWrapped(TOP top) {
     topAddress2wrapper.remove(top.getAddress());
   }
 
+  public void remove(TopWrapper<? extends TOP> wrapper) {
+    wrapperHashcode2top.remove(System.identityHashCode(wrapper));
+    while (topAddress2wrapper.values().remove(wrapper))
+      ;
+  }
+
+  /**
+   * 
+   * @param wrapper
+   * 
+   * @deprecated
+   * @see #remove(TopWrapper)
+   */
+  @Deprecated
   public void removeWrapped(TopWrapper<? extends TOP> wrapper) {
     while (topAddress2wrapper.values().remove(wrapper))
       ;
   }
 
+  public boolean check(TopWrapper<? extends TOP> wrapper) {
+    return wrapperHashcode2top.containsKey(System.identityHashCode(wrapper));
+  }
+  
+  /**
+   * 
+   * @param wrapper
+   * @return
+   * 
+   * @deprecated
+   * @see #check(TopWrapper)
+   */
+  @Deprecated
   public boolean checkUnwrapped(TopWrapper<? extends TOP> wrapper) {
     return wrapperHashcode2top.containsKey(System.identityHashCode(wrapper));
   }
 
+  public TOP get(TopWrapper<? extends TOP> wrapper) {
+    return wrapperHashcode2top.get(System.identityHashCode(wrapper));
+  }
+  
+  /**
+   * 
+   * @param wrapper
+   * @return
+   * 
+   * @deprecated
+   * @see #get(TopWrapper)
+   */
+  @Deprecated
   public TOP getUnwrapped(TopWrapper<? extends TOP> wrapper) {
     return wrapperHashcode2top.get(System.identityHashCode(wrapper));
   }
 
+  public void add(TopWrapper<? extends TOP> wrapper, TOP top) {
+    add(top, wrapper);
+  }
+  
+  /**
+   * 
+   * @param wrapper
+   * @param top
+   * 
+   * @deprecated
+   * @see #add(TopWrapper, TOP)
+   */
+  @Deprecated
   public void addUnwrapped(TopWrapper<? extends TOP> wrapper, TOP top) {
     wrapperHashcode2top.put(System.identityHashCode(wrapper), top);
   }
 
+  /**
+   * 
+   * @param wrapper
+   * 
+   * @deprecated
+   * @see #remove(TopWrapper)
+   */
+  @Deprecated
   public void removeUnwrapped(TopWrapper<? extends TOP> wrapper) {
     wrapperHashcode2top.remove(System.identityHashCode(wrapper));
   }
 
+  /**
+   * 
+   * @param top
+   * 
+   * @deprecated
+   * @see #remove(TOP)
+   */
+  @Deprecated
   public void removeUnwrapped(TOP top) {
     while (wrapperHashcode2top.values().remove(top))
       ;

@@ -11,7 +11,6 @@ import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
-import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.gerp.data.Gerpable;
 
 public abstract class AbstractGenerator<T extends TOP, W extends Gerpable & TopWrapper<T>> extends
@@ -28,12 +27,11 @@ public abstract class AbstractGenerator<T extends TOP, W extends Gerpable & TopW
     super.process(jcas);
     List<TopWrapper<? extends TOP>> inputs = Lists.newArrayList();
     for (int type : getRequiredInputTypes()) {
-      inputs.add(Iterables.getOnlyElement(WrapperHelper.wrapAllFromJCas(new WrapperIndexer(), jcas,
-              type)));
+      inputs.add(Iterables.getOnlyElement(WrapperHelper.wrapAllFromJCas(indexer, jcas, type)));
     }
     W output = generate(inputs);
     output.setDependencies(inputs);
-    WrapperHelper.unwrap(new WrapperIndexer(), output, jcas).addToIndexes(jcas);
+    WrapperHelper.unwrap(indexer, output, jcas).addToIndexes(jcas);
   }
 
 }
