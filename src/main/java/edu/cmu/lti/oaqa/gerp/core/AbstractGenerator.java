@@ -32,6 +32,7 @@ public abstract class AbstractGenerator<T extends TOP, W extends Gerpable & TopW
               type)));
     }
     W output = generate(inputs);
+    output.setDependencies(inputs);
     WrapperHelper.unwrap(new WrapperIndexer(), output, jcas).addToIndexes(jcas);
   }
 
