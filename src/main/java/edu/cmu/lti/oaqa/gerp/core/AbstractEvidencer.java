@@ -31,9 +31,9 @@ public abstract class AbstractEvidencer<T extends TOP, W extends Gerpable & TopW
             gerpableType)) {
       gerpables.add((W) gerpable);
     }
-    GerpPhase.removeAllTops(jcas, gerpableType);
     List<EvidenceWrapper<?, ?>> evidences = evidence(gerpables.getGerpables());
     gerpables.addAllEvidences(evidences);
+    GerpPhase.removeAllTops(jcas, gerpableType);
     WrapperIndexer indexer = new WrapperIndexer();
     for (Gerpable gerpable : gerpables.getGerpables()) {
       WrapperHelper.unwrap(indexer, (W) gerpable, jcas).addToIndexes(jcas);

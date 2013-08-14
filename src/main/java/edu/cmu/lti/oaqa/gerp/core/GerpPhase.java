@@ -203,7 +203,6 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   }
 
   private void mergeEvidences(JCasIterator jcasIter) throws AnalysisEngineProcessException {
-    removeAllTops(mergedJcas, gerpableType);
     Map<W, EvidenceWrapper<?, ?>> gerpable2evidences = Maps.newHashMap();
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
@@ -215,6 +214,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       gerpables.addAllEvidences(gerpable2evidences);
       jcas.release();
     }
+    removeAllTops(mergedJcas, gerpableType);
     WrapperIndexer indexer = new WrapperIndexer();
     for (W gerpable : gerpables.getGerpables()) {
       T top = WrapperHelper.unwrap(indexer, gerpable, mergedJcas);
@@ -223,7 +223,6 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   }
 
   private void mergeRanks(JCasIterator jcasIter) throws AnalysisEngineProcessException {
-    removeAllTops(mergedJcas, gerpableType);
     Map<W, RankWrapper> gerpable2ranks = Maps.newHashMap();
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
@@ -235,6 +234,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       gerpables.addAllRanks(gerpable2ranks);
       jcas.release();
     }
+    removeAllTops(mergedJcas, gerpableType);
     WrapperIndexer indexer = new WrapperIndexer();
     for (W gerpable : gerpables.getGerpables()) {
       T top = WrapperHelper.unwrap(indexer, gerpable, mergedJcas);
@@ -243,7 +243,6 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   }
 
   private void mergePruningDecisions(JCasIterator jcasIter) throws AnalysisEngineProcessException {
-    removeAllTops(mergedJcas, gerpableType);
     Map<W, PruningDecisionWrapper> gerpable2pruningDecisions = Maps.newHashMap();
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
@@ -255,6 +254,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       gerpables.addAllPruningDecisions(gerpable2pruningDecisions);
       jcas.release();
     }
+    removeAllTops(mergedJcas, gerpableType);
   }
 
   private void ultimatePrune() {
@@ -290,7 +290,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     prunerSubPhase.collectionProcessComplete();
   }
 
-  private static Collection<TOP> getAllTops(JCas jcas, int type) {
+  public static Collection<TOP> getAllTops(JCas jcas, int type) {
     List<TOP> tops = Lists.newArrayList();
     FSIterator<TOP> topIter = jcas.getJFSIndexRepository().getAllIndexedFS(type);
     while (topIter.hasNext()) {
