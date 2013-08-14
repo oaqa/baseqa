@@ -131,7 +131,6 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
             QA_INTERNAL_PHASEID, TIMEOUT_KEY, LAZY_LOAD_KEY,
             BaseExperimentBuilder.EXPERIMENT_UUID_PROPERTY, BaseExperimentBuilder.STAGE_ID_PROPERTY);
     mergedJcas = aJCas;
-    removeAllTops(mergedJcas, GerpMeta.type);
     WrapperHelper.unwrap(new WrapperIndexer(), gerpMeta, mergedJcas).addToIndexes(mergedJcas);
     JCasIterator jcasIter;
     // create generation subphase
@@ -166,7 +165,9 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     jcasIter = prunerSubPhase.processAndOutputNewCASes(mergedJcas);
     // merge pruning decisions
     mergePruningDecisions(jcasIter);
+    // post processing
     ultimatePrune();
+    removeAllTops(mergedJcas, GerpMeta.type);
   }
 
   private static AnalysisEngine createBasePhase(Map<String, Object> confs)
