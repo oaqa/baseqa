@@ -13,7 +13,6 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.FSIndex;
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.cas.impl.XmiCasSerializer;
@@ -126,13 +125,23 @@ public class GerpPhaseUtils {
     }
   }
 
-  public static void printCas(CAS cas) throws IOException, DocumentException, SAXException {
+  public static void printCas(JCas jcas) {
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    XmiCasSerializer.serialize(cas, baos);
+    try {
+      XmiCasSerializer.serialize(jcas.getCas(), baos);
+    } catch (SAXException e) {
+      e.printStackTrace();
+    }
     StringWriter xmiStr = new StringWriter();
     XMLWriter writer = new XMLWriter(xmiStr, OutputFormat.createPrettyPrint());
-    writer.write(DocumentHelper.parseText(baos.toString()));
-    writer.close();
+    try {
+      writer.write(DocumentHelper.parseText(baos.toString()));
+      writer.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (DocumentException e) {
+      e.printStackTrace();
+    }
     System.out.println(xmiStr);
   }
 }
