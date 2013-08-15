@@ -76,11 +76,11 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
 
   private JCas mergedJcas;
 
-  private WrapperIndexer mergedCasIndexer = new WrapperIndexer();
+  private WrapperIndexer mergedCasIndexer;
 
-  private GerpableList<T, W> gerpables = new GerpableList<T, W>();
+  private GerpableList<T, W> gerpables;
 
-  private int gerpableIdx = 0;
+  private int gerpableIdx;
 
   @Override
   public void initialize(UimaContext context) throws ResourceInitializationException {
@@ -105,6 +105,10 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
 
   @Override
   public void process(JCas aJCas) throws AnalysisEngineProcessException {
+    // initialize
+    mergedCasIndexer = new WrapperIndexer();
+    gerpables = new GerpableList<T, W>();
+    gerpableIdx = 0;
     Map<String, Object> subPhaseConfs = GerpPhaseUtils
             .copyTuples(confs, "persistence-provider", QA_INTERNAL_PHASEID, TIMEOUT_KEY,
                     LAZY_LOAD_KEY, BaseExperimentBuilder.EXPERIMENT_UUID_PROPERTY,
