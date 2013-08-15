@@ -30,6 +30,7 @@ public abstract class AbstractGenerator<T extends TOP, W extends Gerpable & TopW
       inputs.add(Iterables.getOnlyElement(WrapperHelper.wrapAllFromJCas(indexer, jcas, type)));
     }
     W output = generate(inputs);
+    output.addGenerator(getClass().getCanonicalName());
     // TODO should fix the problem that causes "dependencies" references pointing to new instances,
     // rather than existing ones in the CAS.
     // output.setDependencies(inputs);
