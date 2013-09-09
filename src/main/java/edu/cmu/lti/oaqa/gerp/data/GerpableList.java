@@ -28,7 +28,7 @@ public class GerpableList<T extends TOP, W extends Gerpable & TopWrapper<T>> {
 
   public void add(W gerpable) {
     int index = -1;
-    if ((index = gerpables.indexOf(gerpable)) > 0) {
+    if ((index = gerpables.indexOf(gerpable)) >= 0) {
       gerpables.get(index).addGenerators(gerpable.getGenerators());
     } else {
       gerpables.add(gerpable);
