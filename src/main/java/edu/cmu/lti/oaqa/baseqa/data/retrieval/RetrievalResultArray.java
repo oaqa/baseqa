@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.retrieval.Passage;
-import org.oaqa.model.test.Search;
+import org.oaqa.model.retrieval.Search;
 
 import edu.cmu.lti.oaqa.core.data.FSArrayWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperIndexer;

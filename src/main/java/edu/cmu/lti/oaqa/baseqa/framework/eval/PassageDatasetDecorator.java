@@ -25,7 +25,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.oaqa.model.retrieval.Passage;
-import org.oaqa.model.test.Search;
+import org.oaqa.model.retrieval.Search;
 
 import edu.cmu.lti.oaqa.baseqa.framework.eval.gs.GoldStandardPersistenceProvider;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
