@@ -117,7 +117,7 @@ public abstract class GerpAnnotationWrapper<T extends GerpAnnotation> extends
     if (gerpMeta != null) {
       annotation.setGerpMeta(WrapperHelper.unwrap(indexer, gerpMeta, jcas));
     }
-    annotation.setDependencies(WrapperHelper.unwrapTopList(indexer, dependencies, jcas));
+    annotation.setDependencies(WrapperHelper.unwrapTopListUnsafe(indexer, dependencies, jcas));
   }
 
   @Override

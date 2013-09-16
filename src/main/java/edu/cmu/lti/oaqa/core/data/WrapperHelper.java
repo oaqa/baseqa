@@ -108,6 +108,20 @@ public class WrapperHelper {
     return list;
   }
 
+  public static FSList unwrapTopListUnsafe(WrapperIndexer indexer,
+          List<? extends TopWrapper<? extends TOP>> wrappers, JCas jcas)
+          throws AnalysisEngineProcessException {
+    FSList list = new EmptyFSList(jcas);
+    FSList tail;
+    for (TopWrapper<? extends TOP> wrapper : Lists.reverse(wrappers)) {
+      tail = list;
+      list = new NonEmptyFSList(jcas);
+      ((NonEmptyFSList) list).setHead(WrapperHelper.unwrap(indexer, wrapper, jcas));
+      ((NonEmptyFSList) list).setTail(tail);
+    }
+    return list;
+  }
+
   public static <T extends TOP, W extends TopWrapper<T>> List<W> wrapTopArray(
           WrapperIndexer indexer, FSArray array, Class<W> wrapperClass)
           throws AnalysisEngineProcessException {
@@ -124,6 +138,17 @@ public class WrapperHelper {
     FSArray array = new FSArray(jcas, wrappers.size());
     int i = 0;
     for (W wrapper : wrappers) {
+      array.set(i++, WrapperHelper.unwrap(indexer, wrapper, jcas));
+    }
+    return array;
+  }
+
+  public static FSArray unwrapTopArrayUnsafe(WrapperIndexer indexer,
+          List<? extends TopWrapper<? extends TOP>> wrappers, JCas jcas)
+          throws AnalysisEngineProcessException {
+    FSArray array = new FSArray(jcas, wrappers.size());
+    int i = 0;
+    for (TopWrapper<? extends TOP> wrapper : wrappers) {
       array.set(i++, WrapperHelper.unwrap(indexer, wrapper, jcas));
     }
     return array;
@@ -156,6 +181,20 @@ public class WrapperHelper {
     return list;
   }
 
+  public static FSList unwrapAnnotationListUnsafe(WrapperIndexer indexer,
+          List<? extends AnnotationWrapper<? extends Annotation>> wrappers, JCas jcas)
+          throws AnalysisEngineProcessException {
+    FSList list = new EmptyFSList(jcas);
+    FSList tail;
+    for (AnnotationWrapper<? extends Annotation> wrapper : Lists.reverse(wrappers)) {
+      tail = list;
+      list = new NonEmptyFSList(jcas);
+      ((NonEmptyFSList) list).setHead(WrapperHelper.unwrap(indexer, wrapper, jcas));
+      ((NonEmptyFSList) list).setTail(tail);
+    }
+    return list;
+  }
+
   public static <T extends Annotation, W extends AnnotationWrapper<T>> List<W> wrapAnnotationArray(
           WrapperIndexer indexer, FSArray array, Class<W> wrapperClass)
           throws AnalysisEngineProcessException {
@@ -172,6 +211,17 @@ public class WrapperHelper {
     FSArray array = new FSArray(jcas, wrappers.size());
     int i = 0;
     for (W wrapper : wrappers) {
+      array.set(i++, WrapperHelper.unwrap(indexer, wrapper, jcas));
+    }
+    return array;
+  }
+
+  public static FSArray unwrapAnnotationArrayUnsafe(WrapperIndexer indexer,
+          List<? extends AnnotationWrapper<? extends Annotation>> wrappers, JCas jcas)
+          throws AnalysisEngineProcessException {
+    FSArray array = new FSArray(jcas, wrappers.size());
+    int i = 0;
+    for (AnnotationWrapper<? extends Annotation> wrapper : wrappers) {
       array.set(i++, WrapperHelper.unwrap(indexer, wrapper, jcas));
     }
     return array;

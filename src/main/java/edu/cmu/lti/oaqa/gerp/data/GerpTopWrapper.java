@@ -114,7 +114,7 @@ public abstract class GerpTopWrapper<T extends GerpTop> extends OAQATopWrapper<T
     if (gerpMeta != null) {
       top.setGerpMeta(WrapperHelper.unwrap(indexer, gerpMeta, jcas));
     }
-    top.setDependencies(WrapperHelper.unwrapTopList(indexer, dependencies, jcas));
+    top.setDependencies(WrapperHelper.unwrapTopListUnsafe(indexer, dependencies, jcas));
   }
 
   @Override
