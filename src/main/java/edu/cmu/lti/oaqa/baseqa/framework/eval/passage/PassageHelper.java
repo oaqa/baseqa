@@ -22,7 +22,7 @@ import java.util.List;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
 import org.oaqa.model.retrieval.Passage;
-import org.oaqa.model.test.Search;
+import org.oaqa.model.retrieval.Search;
 
 import com.google.common.collect.Lists;
 
