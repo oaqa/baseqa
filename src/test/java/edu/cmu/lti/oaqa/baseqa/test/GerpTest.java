@@ -2,9 +2,9 @@ package edu.cmu.lti.oaqa.baseqa.test;
 
 import java.util.UUID;
 
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.junit.Test;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import edu.cmu.lti.oaqa.cse.driver.AdHocDriver;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;

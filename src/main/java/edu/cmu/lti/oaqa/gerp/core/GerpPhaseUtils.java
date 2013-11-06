@@ -16,6 +16,7 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.FSIndex;
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.cas.impl.XmiCasSerializer;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -23,7 +24,6 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
-import org.uimafit.factory.AnalysisEngineFactory;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.CharMatcher;
@@ -53,13 +53,13 @@ public class GerpPhaseUtils {
           throws AnalysisEngineProcessException {
     AnalysisEngineDescription aeDescription;
     try {
-      aeDescription = AnalysisEngineFactory.createPrimitiveDescription(BasePhase.class,
+      aeDescription = AnalysisEngineFactory.createEngineDescription(BasePhase.class,
               BaseExperimentBuilder.getParamList(confs));
     } catch (ResourceInitializationException e) {
       throw new AnalysisEngineProcessException(e);
     }
     try {
-      return AnalysisEngineFactory.createAggregate(aeDescription);
+      return AnalysisEngineFactory.createEngine(aeDescription);
     } catch (ResourceInitializationException e) {
       throw new AnalysisEngineProcessException(e);
     }

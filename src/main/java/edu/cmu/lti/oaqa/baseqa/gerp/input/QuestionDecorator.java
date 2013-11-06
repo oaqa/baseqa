@@ -1,9 +1,9 @@
 package edu.cmu.lti.oaqa.baseqa.gerp.input;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.jcas.JCas;
 import org.oaqa.model.input.Question;
-import org.uimafit.component.JCasAnnotator_ImplBase;
 
 import edu.cmu.lti.oaqa.baseqa.data.nlp.QuestionWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.QuestionWrapper.QuestionClassType;

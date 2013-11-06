@@ -8,14 +8,14 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.analysis_engine.JCasIterator;
 import org.apache.uima.cas.AbstractCas;
 import org.apache.uima.cas.CAS;
+import org.apache.uima.fit.component.JCasMultiplier_ImplBase;
+import org.apache.uima.fit.descriptor.OperationalProperties;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.CasCopier;
 import org.oaqa.model.gerp.GerpMeta;
-import org.uimafit.component.JCasMultiplier_ImplBase;
-import org.uimafit.descriptor.OperationalProperties;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;

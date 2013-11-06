@@ -23,11 +23,11 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.text.AnnotationIndex;
+import org.apache.uima.fit.component.CasConsumer_ImplBase;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.oaqa.model.retrieval.Passage;
-import org.uimafit.component.CasConsumer_ImplBase;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
