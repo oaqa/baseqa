@@ -1,5 +1,7 @@
 package edu.cmu.lti.oaqa.gerp.core;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.uima.UimaContext;
@@ -8,8 +10,10 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.analysis_engine.JCasIterator;
 import org.apache.uima.cas.AbstractCas;
 import org.apache.uima.cas.CAS;
+import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.fit.component.JCasMultiplier_ImplBase;
 import org.apache.uima.fit.descriptor.OperationalProperties;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.jcas.tcas.Annotation;
@@ -17,13 +21,17 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.CasCopier;
 import org.oaqa.model.gerp.GerpMeta;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.core.data.WrapperHelper;
 import edu.cmu.lti.oaqa.core.data.WrapperIndexer;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
+import edu.cmu.lti.oaqa.framework.types.ProcessingStep;
 import edu.cmu.lti.oaqa.gerp.data.EvidenceWrapper;
 import edu.cmu.lti.oaqa.gerp.data.GerpMetaWrapper;
 import edu.cmu.lti.oaqa.gerp.data.Gerpable;
@@ -153,6 +161,8 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     GerpPhaseUtils.removeAllTopsFromIndexesAndIndexer(mergedJcas, mergedCasIndexer, GerpMeta.type);
   }
 
+  private ListMultimap<W, ProcessingStep> gerpable2steps = ArrayListMultimap.create();
+
   private void mergeGerpables(JCasIterator jcasIter) throws AnalysisEngineProcessException {
     while (jcasIter.hasNext()) {
       JCas jcas = jcasIter.next();
@@ -161,6 +171,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
       W gerpable = (W) WrapperHelper.wrap(new WrapperIndexer(), top);
       gerpable.setGerpMeta(gerpMeta);
       gerpables.add(gerpable);
+      gerpable2steps.putAll(gerpable, copyAllProcessingSteps(jcas, mergedJcas));
       jcas.release();
     }
     for (W gerpable : gerpables.getGerpables()) {
@@ -179,6 +190,9 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
         gerpable2evidences.put(gerpable, gerpable.getEvidences().get(0));
       }
       gerpables.addAllEvidences(gerpable2evidences);
+      for (W gerpable : gerpable2steps.keySet()) {
+        gerpable2steps.putAll(gerpable, copyAllProcessingSteps(jcas, mergedJcas));
+      }
       jcas.release();
     }
     GerpPhaseUtils.removeAllTopsFromIndexesAndIndexer(mergedJcas, mergedCasIndexer, gerpableType);
@@ -198,6 +212,9 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
         gerpable2ranks.put(gerpable, gerpable.getRanks().get(0));
       }
       gerpables.addAllRanks(gerpable2ranks);
+      for (W gerpable : gerpable2steps.keySet()) {
+        gerpable2steps.putAll(gerpable, copyAllProcessingSteps(jcas, mergedJcas));
+      }
       jcas.release();
     }
     GerpPhaseUtils.removeAllTopsFromIndexesAndIndexer(mergedJcas, mergedCasIndexer, gerpableType);
@@ -217,6 +234,9 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
         gerpable2pruningDecisions.put(gerpable, gerpable.getPruningDecisions().get(0));
       }
       gerpables.addAllPruningDecisions(gerpable2pruningDecisions);
+      for (W gerpable : gerpable2steps.keySet()) {
+        gerpable2steps.putAll(gerpable, copyAllProcessingSteps(jcas, mergedJcas));
+      }
       jcas.release();
     }
     GerpPhaseUtils.removeAllTopsFromIndexesAndIndexer(mergedJcas, mergedCasIndexer, gerpableType);
@@ -240,8 +260,11 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   @Override
   public AbstractCas next() throws AnalysisEngineProcessException {
     JCas output = getEmptyJCas();
+    W gerpable = gerpables.get(gerpableIdx++);
+    addAllToIndex(mergedJcas, gerpable2steps.get(gerpable));
     CasCopier.copyCas(mergedJcas.getCas(), output.getCas(), true);
-    T top = WrapperHelper.unwrap(new WrapperIndexer(), gerpables.get(gerpableIdx++), output);
+    removeAllFromIndex(mergedJcas, gerpable2steps.get(gerpable));
+    T top = WrapperHelper.unwrap(new WrapperIndexer(), gerpable, output);
     top.addToIndexes(output);
     return output;
   }
@@ -253,6 +276,27 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     evidencerSubPhase.collectionProcessComplete();
     rankerSubPhase.collectionProcessComplete();
     prunerSubPhase.collectionProcessComplete();
+  }
+
+  public static List<ProcessingStep> copyAllProcessingSteps(JCas srcJcas, JCas destJcas) {
+    List<ProcessingStep> processingSteps = Lists.newArrayList();
+    CasCopier copier = new CasCopier(srcJcas.getCas(), destJcas.getCas());
+    for (ProcessingStep processingStep : JCasUtil.select(srcJcas, ProcessingStep.class)) {
+      processingSteps.add((ProcessingStep) copier.copyFs(processingStep));
+    }
+    return processingSteps;
+  }
+
+  public static void addAllToIndex(JCas jcas, Collection<? extends FeatureStructure> fss) {
+    for (FeatureStructure fs : fss) {
+      jcas.addFsToIndexes(fs);
+    }
+  }
+
+  public static void removeAllFromIndex(JCas jcas, Collection<? extends FeatureStructure> fss) {
+    for (FeatureStructure fs : fss) {
+      jcas.removeFsFromIndexes(fs);
+    }
   }
 
 }
