@@ -12,6 +12,8 @@ import edu.cmu.lti.oaqa.baseqa.data.nlp.QuestionWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.AbstractQueryWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.QueryConceptWrapper;
 import edu.cmu.lti.oaqa.baseqa.gerp.answer.AbstractAnswerGeneratorProvider;
+import edu.cmu.lti.oaqa.gerp.data.DefaultEvidenceWrapper;
+import edu.cmu.lti.oaqa.gerp.data.RankWrapper;
 
 public class QueryTermAnswerGeneratorProvider extends AbstractAnswerGeneratorProvider {
 
@@ -19,8 +21,13 @@ public class QueryTermAnswerGeneratorProvider extends AbstractAnswerGeneratorPro
   protected AnswerListWrapper generate(QuestionWrapper question, ParseWrapper parse,
           InterpretationWrapper interpretation, AbstractQueryWrapper abstractQuery) {
     List<AnswerWrapper> answers = Lists.newArrayList();
+    float answerConfidence = 1.0f / abstractQuery.getConcepts().size();
     for (QueryConceptWrapper queryConcept : abstractQuery.getConcepts()) {
-      answers.add(new AnswerWrapper(queryConcept.getText(), Lists.<String> newArrayList()));
+      AnswerWrapper answer = new AnswerWrapper(queryConcept.getText(),
+              Lists.<String> newArrayList());
+      answer.addEvidence(new DefaultEvidenceWrapper(answerConfidence));
+      answer.addRank(new RankWrapper(1, answerConfidence));
+      answers.add(answer);
     }
     return new AnswerListWrapper(answers);
   }
