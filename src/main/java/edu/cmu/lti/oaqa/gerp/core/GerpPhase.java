@@ -10,7 +10,6 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.analysis_engine.JCasIterator;
 import org.apache.uima.cas.AbstractCas;
 import org.apache.uima.cas.CAS;
-import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.fit.component.JCasMultiplier_ImplBase;
 import org.apache.uima.fit.descriptor.OperationalProperties;
 import org.apache.uima.fit.util.JCasUtil;
@@ -88,6 +87,8 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
 
   private GerpableList<T, W> gerpables;
 
+  private ListMultimap<W, ProcessingStep> gerpable2steps;
+
   private int gerpableIdx;
 
   @Override
@@ -116,6 +117,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     // initialize
     mergedCasIndexer = new WrapperIndexer();
     gerpables = new GerpableList<T, W>();
+    gerpable2steps = ArrayListMultimap.create();
     gerpableIdx = 0;
     Map<String, Object> subPhaseConfs = GerpPhaseUtils
             .copyTuples(confs, "persistence-provider", QA_INTERNAL_PHASEID, TIMEOUT_KEY,
@@ -160,8 +162,6 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     ultimatePrune();
     GerpPhaseUtils.removeAllTopsFromIndexesAndIndexer(mergedJcas, mergedCasIndexer, GerpMeta.type);
   }
-
-  private ListMultimap<W, ProcessingStep> gerpable2steps = ArrayListMultimap.create();
 
   private void mergeGerpables(JCasIterator jcasIter) throws AnalysisEngineProcessException {
     while (jcasIter.hasNext()) {
@@ -261,9 +261,8 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
   public AbstractCas next() throws AnalysisEngineProcessException {
     JCas output = getEmptyJCas();
     W gerpable = gerpables.get(gerpableIdx++);
-    addAllToIndex(mergedJcas, gerpable2steps.get(gerpable));
     CasCopier.copyCas(mergedJcas.getCas(), output.getCas(), true);
-    removeAllFromIndex(mergedJcas, gerpable2steps.get(gerpable));
+    copyAndIndexAllProcessingSteps(gerpable2steps.get(gerpable), output);
     T top = WrapperHelper.unwrap(new WrapperIndexer(), gerpable, output);
     top.addToIndexes(output);
     return output;
@@ -278,7 +277,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     prunerSubPhase.collectionProcessComplete();
   }
 
-  public static List<ProcessingStep> copyAllProcessingSteps(JCas srcJcas, JCas destJcas) {
+  private static List<ProcessingStep> copyAllProcessingSteps(JCas srcJcas, JCas destJcas) {
     List<ProcessingStep> processingSteps = Lists.newArrayList();
     CasCopier copier = new CasCopier(srcJcas.getCas(), destJcas.getCas());
     for (ProcessingStep processingStep : JCasUtil.select(srcJcas, ProcessingStep.class)) {
@@ -287,15 +286,11 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     return processingSteps;
   }
 
-  public static void addAllToIndex(JCas jcas, Collection<? extends FeatureStructure> fss) {
-    for (FeatureStructure fs : fss) {
-      jcas.addFsToIndexes(fs);
-    }
-  }
-
-  public static void removeAllFromIndex(JCas jcas, Collection<? extends FeatureStructure> fss) {
-    for (FeatureStructure fs : fss) {
-      jcas.removeFsFromIndexes(fs);
+  private static void copyAndIndexAllProcessingSteps(Collection<ProcessingStep> srcProcessingSteps,
+          JCas destJcas) {
+    for (ProcessingStep processingStep : srcProcessingSteps) {
+      CasCopier copier = new CasCopier(processingStep.getCAS(), destJcas.getCas());
+      destJcas.addFsToIndexes((ProcessingStep) copier.copyFs(processingStep));
     }
   }
 
