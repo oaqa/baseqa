@@ -131,7 +131,8 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     subPhaseConfs.put("options", confs.get("generators"));
     generatorSubPhase = GerpPhaseUtils.createBasePhase(subPhaseConfs);
     // execute generation subphase
-    jcasIter = generatorSubPhase.processAndOutputNewCASes(mergedJcas);
+    JCas inputJcas = copyJcas(mergedJcas);
+    jcasIter = generatorSubPhase.processAndOutputNewCASes(inputJcas);
     // merge generated gerpables
     mergeGerpables(jcasIter);
     // create evidencing subphase
@@ -139,7 +140,8 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     subPhaseConfs.put("options", confs.get("evidencers"));
     evidencerSubPhase = GerpPhaseUtils.createBasePhase(subPhaseConfs);
     // execute evidencing subphase
-    jcasIter = evidencerSubPhase.processAndOutputNewCASes(mergedJcas);
+    inputJcas = copyJcas(mergedJcas);
+    jcasIter = evidencerSubPhase.processAndOutputNewCASes(inputJcas);
     // merge evidences
     mergeEvidences(jcasIter);
     // create ranking subphase
@@ -147,7 +149,8 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     subPhaseConfs.put("options", confs.get("rankers"));
     rankerSubPhase = GerpPhaseUtils.createBasePhase(subPhaseConfs);
     // execute ranking subphase
-    jcasIter = rankerSubPhase.processAndOutputNewCASes(mergedJcas);
+    inputJcas = copyJcas(mergedJcas);
+    jcasIter = rankerSubPhase.processAndOutputNewCASes(inputJcas);
     // merge ranks
     mergeRanks(jcasIter);
     // create pruning subphase
@@ -155,12 +158,19 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     subPhaseConfs.put("options", confs.get("pruners"));
     prunerSubPhase = GerpPhaseUtils.createBasePhase(subPhaseConfs);
     // execute pruning subphase
-    jcasIter = prunerSubPhase.processAndOutputNewCASes(mergedJcas);
+    inputJcas = copyJcas(mergedJcas);
+    jcasIter = prunerSubPhase.processAndOutputNewCASes(inputJcas);
     // merge pruning decisions
     mergePruningDecisions(jcasIter);
     // post processing
     ultimatePrune();
     GerpPhaseUtils.removeAllTopsFromIndexesAndIndexer(mergedJcas, mergedCasIndexer, GerpMeta.type);
+  }
+
+  private JCas copyJcas(JCas jcas) {
+    JCas ret = getEmptyJCas();
+    CasCopier.copyCas(jcas.getCas(), ret.getCas(), true);
+    return ret;
   }
 
   private void mergeGerpables(JCasIterator jcasIter) throws AnalysisEngineProcessException {
