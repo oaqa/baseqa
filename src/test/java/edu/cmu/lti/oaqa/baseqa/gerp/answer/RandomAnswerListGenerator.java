@@ -11,7 +11,7 @@ import edu.cmu.lti.oaqa.baseqa.data.retrieval.AbstractQueryWrapper;
 import edu.cmu.lti.oaqa.gerp.data.DefaultEvidenceWrapper;
 import edu.cmu.lti.oaqa.gerp.data.RankWrapper;
 
-public class RandomAnswerGenerator extends AbstractAnswerGenerator {
+public class RandomAnswerListGenerator extends AbstractAnswerListGenerator {
 
   @Override
   protected AnswerListWrapper generate(QuestionWrapper question, ParseWrapper parse,

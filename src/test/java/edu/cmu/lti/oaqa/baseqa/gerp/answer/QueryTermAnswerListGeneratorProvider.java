@@ -11,10 +11,11 @@ import edu.cmu.lti.oaqa.baseqa.data.nlp.ParseWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.QuestionWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.AbstractQueryWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.QueryConceptWrapper;
+import edu.cmu.lti.oaqa.baseqa.gerp.answer.AbstractAnswerListGeneratorProvider;
 import edu.cmu.lti.oaqa.gerp.data.DefaultEvidenceWrapper;
 import edu.cmu.lti.oaqa.gerp.data.RankWrapper;
 
-public class QueryTermAnswerGenerator extends AbstractAnswerGenerator {
+public class QueryTermAnswerListGeneratorProvider extends AbstractAnswerListGeneratorProvider {
 
   @Override
   protected AnswerListWrapper generate(QuestionWrapper question, ParseWrapper parse,
@@ -30,5 +31,4 @@ public class QueryTermAnswerGenerator extends AbstractAnswerGenerator {
     }
     return new AnswerListWrapper(answers);
   }
-
 }

@@ -8,11 +8,11 @@ import edu.cmu.lti.oaqa.baseqa.data.kb.InterpretationWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.ParseWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.QuestionWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.AbstractQueryWrapper;
-import edu.cmu.lti.oaqa.baseqa.gerp.answer.AbstractAnswerGeneratorProvider;
+import edu.cmu.lti.oaqa.baseqa.gerp.answer.AbstractAnswerListGeneratorProvider;
 import edu.cmu.lti.oaqa.gerp.data.DefaultEvidenceWrapper;
 import edu.cmu.lti.oaqa.gerp.data.RankWrapper;
 
-public class RandomAnswerGeneratorProvider extends AbstractAnswerGeneratorProvider {
+public class RandomAnswerListGeneratorProvider extends AbstractAnswerListGeneratorProvider {
 
   @Override
   protected AnswerListWrapper generate(QuestionWrapper question, ParseWrapper parse,

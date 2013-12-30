@@ -20,7 +20,7 @@ import edu.cmu.lti.oaqa.baseqa.data.retrieval.AbstractQueryWrapper;
 import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.gerp.core.AbstractGenerator;
 
-public abstract class AbstractAnswerGenerator extends
+public abstract class AbstractAnswerListGenerator extends
         AbstractGenerator<AnswerList, AnswerListWrapper> {
 
   @Override

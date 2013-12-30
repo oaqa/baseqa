@@ -2,11 +2,11 @@ inherit: gerp.core.GerpComponent
 type: org.oaqa.model.answer.AnswerList
 
 generators: |
-  - inherit: baseqa.gerp.answer.QueryTermAnswerGeneratorProvider
-  - inherit: baseqa.gerp.answer.RandomAnswerGeneratorProvider
+  - inherit: baseqa.gerp.answer.QueryTermAnswerListGeneratorProvider
+  - inherit: baseqa.gerp.answer.RandomAnswerListGeneratorProvider
 evidencers: |
-  - inherit: baseqa.gerp.answer.IdenticalAnswerEvidencerProvider
-  - inherit: baseqa.gerp.answer.RandomAnswerEvidencerProvider
+  - inherit: baseqa.gerp.answer.IdenticalAnswerListEvidencerProvider
+  - inherit: baseqa.gerp.answer.RandomAnswerListEvidencerProvider
 rankers: |
   - inherit: gerp.ranker.HeadFirstRankerProvider
   - inherit: gerp.ranker.RandomRankerProvider

@@ -63,11 +63,11 @@ pipeline:
     name: answering
     type: org.oaqa.model.answer.AnswerList
     generators: |
-      - inherit: baseqa.gerp.answer.QueryTermAnswerGenerator
-      - inherit: baseqa.gerp.answer.RandomAnswerGenerator
+      - inherit: baseqa.gerp.answer.QueryTermAnswerListGenerator
+      - inherit: baseqa.gerp.answer.RandomAnswerListGenerator
     evidencers: |
-      - inherit: baseqa.gerp.answer.IdenticalAnswerEvidencer
-      - inherit: baseqa.gerp.answer.RandomAnswerEvidencer
+      - inherit: baseqa.gerp.answer.IdenticalAnswerListEvidencer
+      - inherit: baseqa.gerp.answer.RandomAnswerListEvidencer
     rankers: |
       - inherit: gerp.ranker.HeadFirstRanker
       - inherit: gerp.ranker.RandomRanker

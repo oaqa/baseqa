@@ -13,7 +13,7 @@ public class QuestionWrapper extends GerpAnnotationWrapper<Question> {
   private static final long serialVersionUID = 1L;
 
   public static enum QuestionClassType {
-    FACTOID, DEFINITION, MULTI_SENTENCE, COMPOUND, ABBREVIATION, UNCLASSIFIED, LIST, OPINION
+    FACTOID, DEFINITION, MULTI_SENTENCE, COMPOUND, ABBREVIATION, UNCLASSIFIED, LIST, OPINION, YES_NO
   };
 
   private String id;

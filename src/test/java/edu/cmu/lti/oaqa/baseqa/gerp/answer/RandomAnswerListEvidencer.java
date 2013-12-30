@@ -6,7 +6,7 @@ import edu.cmu.lti.oaqa.baseqa.data.answer.AnswerListWrapper;
 import edu.cmu.lti.oaqa.gerp.data.DefaultEvidenceWrapper;
 import edu.cmu.lti.oaqa.gerp.data.EvidenceWrapper;
 
-public class RandomAnswerEvidencer extends AbstractAnswerEvidencer {
+public class RandomAnswerListEvidencer extends AbstractAnswerListEvidencer {
 
   private static Random random = new Random();
 
