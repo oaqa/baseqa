@@ -15,6 +15,12 @@ import edu.cmu.lti.oaqa.framework.collection.adhoc.AdHocSource;
 import edu.cmu.lti.oaqa.framework.collection.adhoc.BaseAdHocSource;
 
 public class GerpTest {
+  
+  @Test
+  public void testGerpProviders() throws Exception {
+    runPipeline("baseqa.gerp-providers-test", "Gerp One Question Set", "TEST",
+            "This is an empty question");
+  }
 
   @Test
   public void testGerpPhases() throws Exception {
@@ -23,8 +29,8 @@ public class GerpTest {
   }
 
   @Test
-  public void testGerpProviders() throws Exception {
-    runPipeline("baseqa.gerp-providers-test", "Gerp One Question Set", "TEST",
+  public void testGerpPhasesWithGerpedAnswers() throws Exception {
+    runPipeline("baseqa.gerp-phases-with-gerped-answers-test", "Gerp One Question Set", "TEST",
             "This is an empty question");
   }
 

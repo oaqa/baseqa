@@ -39,6 +39,7 @@ public abstract class AbstractAnswerListGenerator extends
   }
 
   protected abstract AnswerListWrapper generate(QuestionWrapper question, ParseWrapper parse,
-          InterpretationWrapper interpretation, AbstractQueryWrapper abstractQuery);
+          InterpretationWrapper interpretation, AbstractQueryWrapper abstractQuery)
+          throws AnalysisEngineProcessException;
 
 }

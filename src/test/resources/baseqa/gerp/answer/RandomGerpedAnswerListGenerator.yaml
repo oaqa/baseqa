@@ -1,0 +1,14 @@
+inherit: baseqa.gerp.answer.GerpedAnswerListGenerator
+generator: |
+  inherit: baseqa.gerp.answer.RandomGerpedAnswerListGeneratorProvider
+evidencers: |
+  - inherit: baseqa.gerp.answer.IdenticalGerpedAnswerListEvidencerProvider
+rankers: |
+  - inherit: gerp.ranker.HeadFirstRankerProvider
+  - inherit: gerp.ranker.RandomRankerProvider
+pruners: |
+  - inherit: gerp.pruner.HeadPreservePrunerProvider
+  - inherit: gerp.pruner.RandomPrunerProvider
+
+persistence-provider: |
+  inherit: ecd.default-log-persistence-provider
