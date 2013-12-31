@@ -21,6 +21,7 @@ import org.apache.uima.util.CasCopier;
 import org.oaqa.model.gerp.GerpMeta;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
@@ -136,6 +137,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     // merge generated gerpables
     mergeGerpables(jcasIter);
     inputJcas.release();
+    removeAllProcessingSteps(mergedJcas);
     // create evidencing subphase
     subPhaseConfs.put("name", confs.get("name") + "|EVIDENCING");
     subPhaseConfs.put("options", confs.get("evidencers"));
@@ -146,6 +148,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     // merge evidences
     mergeEvidences(jcasIter);
     inputJcas.release();
+    removeAllProcessingSteps(mergedJcas);
     // create ranking subphase
     subPhaseConfs.put("name", confs.get("name") + "|RANKING");
     subPhaseConfs.put("options", confs.get("rankers"));
@@ -156,6 +159,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     // merge ranks
     mergeRanks(jcasIter);
     inputJcas.release();
+    removeAllProcessingSteps(mergedJcas);
     // create pruning subphase
     subPhaseConfs.put("name", confs.get("name") + "|PRUNING");
     subPhaseConfs.put("options", confs.get("pruners"));
@@ -166,6 +170,7 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     // merge pruning decisions
     mergePruningDecisions(jcasIter);
     inputJcas.release();
+    removeAllProcessingSteps(mergedJcas);
     // post processing
     ultimatePrune();
     GerpPhaseUtils.removeAllTopsFromIndexesAndIndexer(mergedJcas, mergedCasIndexer, GerpMeta.type);
@@ -289,6 +294,14 @@ public class GerpPhase<T extends TOP, W extends Gerpable & TopWrapper<T>> extend
     evidencerSubPhase.collectionProcessComplete();
     rankerSubPhase.collectionProcessComplete();
     prunerSubPhase.collectionProcessComplete();
+  }
+
+  private void removeAllProcessingSteps(JCas mergedJcas2) {
+    List<ProcessingStep> steps = ImmutableList.copyOf(JCasUtil.select(mergedJcas,
+            ProcessingStep.class).iterator());
+    for (ProcessingStep step : steps) {
+      step.removeFromIndexes(mergedJcas);
+    }
   }
 
   private static List<ProcessingStep> copyAllProcessingSteps(JCas srcJcas, JCas destJcas) {
