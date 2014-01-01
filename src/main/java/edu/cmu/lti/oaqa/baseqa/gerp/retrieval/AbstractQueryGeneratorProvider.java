@@ -26,15 +26,15 @@ public abstract class AbstractQueryGeneratorProvider extends
   }
 
   @Override
-  public AbstractQueryWrapper generate(List<? extends TopWrapper<? extends TOP>> input)
+  public AbstractQueryWrapper generate(List<? extends TopWrapper<? extends TOP>> inputs)
           throws AnalysisEngineProcessException {
-    QuestionWrapper question = (QuestionWrapper) input.get(0);
-    ParseWrapper parse = (ParseWrapper) input.get(1);
-    InterpretationWrapper interpretation = (InterpretationWrapper) input.get(2);
+    QuestionWrapper question = (QuestionWrapper) inputs.get(0);
+    ParseWrapper parse = (ParseWrapper) inputs.get(1);
+    InterpretationWrapper interpretation = (InterpretationWrapper) inputs.get(2);
     return generate(question, parse, interpretation);
   }
 
   protected abstract AbstractQueryWrapper generate(QuestionWrapper question, ParseWrapper parse,
-          InterpretationWrapper interpretation);
+          InterpretationWrapper interpretation) throws AnalysisEngineProcessException;
 
 }

@@ -14,14 +14,15 @@ import edu.cmu.lti.oaqa.gerp.data.Gerpable;
 public abstract class AbstractIndependentEvidencer<T extends TOP, W extends Gerpable & TopWrapper<T>>
         extends AbstractEvidencer<T, W> {
 
-  protected abstract EvidenceWrapper<?, ?> evidence(W gerpable);
+  protected abstract EvidenceWrapper<?, ?> evidence(W gerpable,
+          List<? extends TopWrapper<? extends TOP>> inputs) throws AnalysisEngineProcessException;
 
   @Override
-  public List<EvidenceWrapper<?, ?>> evidence(List<W> gerpables)
-          throws AnalysisEngineProcessException {
+  public List<EvidenceWrapper<?, ?>> evidence(List<W> gerpables,
+          List<? extends TopWrapper<? extends TOP>> inputs) throws AnalysisEngineProcessException {
     List<EvidenceWrapper<?, ?>> evidences = Lists.newArrayList();
     for (W gerpable : gerpables) {
-      evidences.add(evidence(gerpable));
+      evidences.add(evidence(gerpable, inputs));
     }
     return evidences;
   }

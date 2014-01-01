@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import com.google.common.base.Function;
@@ -18,6 +19,7 @@ import edu.cmu.lti.oaqa.baseqa.data.kb.InterpretationWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.ParseWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.QuestionWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.AbstractQueryWrapper;
+import edu.cmu.lti.oaqa.core.data.TopWrapper;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.gerp.core.AbstractPrunerProvider;
 import edu.cmu.lti.oaqa.gerp.core.AbstractRankerProvider;
@@ -39,7 +41,8 @@ public class GerpedAnswerListGenerator extends AbstractAnswerListGenerator {
   public void initialize(UimaContext c) throws ResourceInitializationException {
     super.initialize(c);
     String generatorName = (String) c.getConfigParameterValue("generator");
-    generator = BaseExperimentBuilder.loadProvider(generatorName, AbstractAnswerListGeneratorProvider.class);
+    generator = BaseExperimentBuilder.loadProvider(generatorName,
+            AbstractAnswerListGeneratorProvider.class);
     Object evidencerNames = c.getConfigParameterValue("evidencers");
     if (evidencerNames != null) {
       evidencers = BaseExperimentBuilder.createResourceList(evidencerNames,
@@ -64,7 +67,10 @@ public class GerpedAnswerListGenerator extends AbstractAnswerListGenerator {
     int numCandidate = answers.size();
     // evidence
     for (AbstractAnswerEvidencerProvider evidencer : evidencers) {
-      List<EvidenceWrapper<?, ?>> evidences = evidencer.evidence(answers);
+      @SuppressWarnings("unchecked")
+      List<? extends TopWrapper<? extends TOP>> inputs = Lists.newArrayList(question, parse,
+              interpretation, abstractQuery);
+      List<EvidenceWrapper<?, ?>> evidences = evidencer.evidence(answers, inputs);
       assert numCandidate == evidences.size();
       for (int i = 0; i < numCandidate; i++) {
         answers.get(i).addEvidence(evidences.get(i));

@@ -22,12 +22,12 @@ public abstract class AbstractQuestionParseGeneratorProvider extends
   }
 
   @Override
-  public ParseWrapper generate(List<? extends TopWrapper<? extends TOP>> input)
+  public ParseWrapper generate(List<? extends TopWrapper<? extends TOP>> inputs)
           throws AnalysisEngineProcessException {
-    QuestionWrapper question = (QuestionWrapper) input.get(0);
+    QuestionWrapper question = (QuestionWrapper) inputs.get(0);
     return generate(question);
   }
 
-  protected abstract ParseWrapper generate(QuestionWrapper question);
+  protected abstract ParseWrapper generate(QuestionWrapper question) throws AnalysisEngineProcessException;
 
 }

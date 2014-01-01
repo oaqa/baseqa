@@ -156,9 +156,18 @@ public class GerpComponent<T extends TOP, W extends Gerpable & TopWrapper<T>> ex
     // evidence
     for (AbstractEvidencerProvider<W> evidencer : evidencers) {
       List<W> gerpables = outputs.getGerpables();
-      List<EvidenceWrapper<?, ?>> evidences = evidencer.evidence(gerpables);
-      outputs.addAllEvidences(evidences);
-      log(evidencer.getClass().getSimpleName() + " gives evidences of " + evidences);
+      List<Set<TopWrapper<? extends TOP>>> inputOptions;
+      try {
+        inputOptions = indexer.getWrappersByTypes(jcas, evidencer.getRequiredInputTypes());
+      } catch (Exception e) {
+        throw new AnalysisEngineProcessException(e);
+      }
+      Set<List<TopWrapper<? extends TOP>>> inputCombinations = Sets.cartesianProduct(inputOptions);
+      for (List<TopWrapper<? extends TOP>> inputCombination : inputCombinations) {
+        List<EvidenceWrapper<?, ?>> evidences = evidencer.evidence(gerpables, inputCombination);
+        outputs.addAllEvidences(evidences);
+        log(evidencer.getClass().getSimpleName() + " gives evidences of " + evidences);
+      }
     }
     // rank
     for (AbstractRankerProvider ranker : rankers) {

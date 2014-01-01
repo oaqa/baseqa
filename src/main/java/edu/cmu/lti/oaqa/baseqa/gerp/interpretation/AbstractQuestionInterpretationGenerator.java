@@ -25,13 +25,14 @@ public abstract class AbstractQuestionInterpretationGenerator extends
   }
 
   @Override
-  public InterpretationWrapper generate(List<? extends TopWrapper<? extends TOP>> input)
+  public InterpretationWrapper generate(List<? extends TopWrapper<? extends TOP>> inputs)
           throws AnalysisEngineProcessException {
-    QuestionWrapper question = (QuestionWrapper) input.get(0);
-    ParseWrapper parse = (ParseWrapper) input.get(1);
+    QuestionWrapper question = (QuestionWrapper) inputs.get(0);
+    ParseWrapper parse = (ParseWrapper) inputs.get(1);
     return generate(question, parse);
   }
 
-  protected abstract InterpretationWrapper generate(QuestionWrapper question, ParseWrapper parse);
+  protected abstract InterpretationWrapper generate(QuestionWrapper question, ParseWrapper parse)
+          throws AnalysisEngineProcessException;
 
 }
