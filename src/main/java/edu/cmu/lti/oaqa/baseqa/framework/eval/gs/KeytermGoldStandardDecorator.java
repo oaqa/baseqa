@@ -1,4 +1,4 @@
-package edu.cmu.lti.oaqa.baseqa.framework.eval;
+package edu.cmu.lti.oaqa.baseqa.framework.eval.gs;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.oaqa.model.retrieval.QueryConcept;
 
-import edu.cmu.lti.oaqa.baseqa.framework.eval.gs.GoldStandardPersistenceProvider;
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.framework.CasUtils;
 import edu.cmu.lti.oaqa.framework.ViewManager;
