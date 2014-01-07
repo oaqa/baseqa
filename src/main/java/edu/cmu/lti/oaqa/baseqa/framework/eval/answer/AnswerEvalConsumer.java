@@ -1,5 +1,6 @@
 package edu.cmu.lti.oaqa.baseqa.framework.eval.answer;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.uima.cas.CASException;
@@ -10,6 +11,8 @@ import org.oaqa.model.answer.Answer;
 import org.oaqa.model.answer.AnswerList;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 
 import edu.cmu.lti.oaqa.framework.ViewManager;
@@ -43,7 +46,7 @@ public class AnswerEvalConsumer extends RetrievalEvalConsumer<Answer> {
 
   @Override
   protected List<Answer> getGoldStandard(JCas jcas) throws CASException {
-    return getAnswers(ViewManager.getView(jcas, ViewType.FINAL_ANSWER_GS));
+    return getAnswers(ViewManager.getOrCreateView(jcas, ViewType.FINAL_ANSWER_GS));
   }
 
   @Override
@@ -52,8 +55,13 @@ public class AnswerEvalConsumer extends RetrievalEvalConsumer<Answer> {
   }
 
   private List<Answer> getAnswers(JCas view) {
-    AnswerList answerList = JCasUtil.selectSingle(view, AnswerList.class);
-    return (List<Answer>) FSCollectionFactory.create(answerList.getAnswerList(), Answer.class);
+    Collection<AnswerList> answerLists = JCasUtil.select(view, AnswerList.class);
+    if (answerLists.size() == 0) {
+      return Lists.newArrayList();
+    } else {
+      return (List<Answer>) FSCollectionFactory.create(Iterables.getLast(answerLists)
+              .getAnswerList(), Answer.class);
+    }
   }
 
 }
