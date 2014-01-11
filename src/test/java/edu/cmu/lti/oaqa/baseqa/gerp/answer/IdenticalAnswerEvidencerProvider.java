@@ -10,7 +10,7 @@ import edu.cmu.lti.oaqa.baseqa.data.retrieval.AbstractQueryWrapper;
 import edu.cmu.lti.oaqa.gerp.data.DefaultEvidenceWrapper;
 import edu.cmu.lti.oaqa.gerp.data.EvidenceWrapper;
 
-public class IdenticalGerpedAnswerListEvidencerProvider extends AbstractAnswerEvidencerProvider {
+public class IdenticalAnswerEvidencerProvider extends AbstractAnswerEvidencerProvider {
 
   @Override
   protected EvidenceWrapper<?, ?> evidence(AnswerWrapper answer, QuestionWrapper question,

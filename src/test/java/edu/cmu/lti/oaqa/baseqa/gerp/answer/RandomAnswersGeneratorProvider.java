@@ -9,7 +9,7 @@ import edu.cmu.lti.oaqa.baseqa.data.nlp.ParseWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.nlp.QuestionWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.AbstractQueryWrapper;
 
-public class RandomGerpedAnswerListGeneratorProvider extends AbstractAnswerListGeneratorProvider {
+public class RandomAnswersGeneratorProvider extends AbstractAnswerListGeneratorProvider {
 
   @Override
   protected AnswerListWrapper generate(QuestionWrapper question, ParseWrapper parse,

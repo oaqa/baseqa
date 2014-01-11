@@ -1,6 +1,4 @@
-inherit: baseqa.gerp.answer.generator-provider-gerped-answer-list-generator
-generator: |
-  inherit: baseqa.gerp.answer.RandomAnswersGeneratorProvider
+inherit: baseqa.gerp.answer.candidate-loader-gerped-answer-list-generator
 evidencers: |
   - inherit: baseqa.gerp.answer.IdenticalAnswerEvidencerProvider
 rankers: |

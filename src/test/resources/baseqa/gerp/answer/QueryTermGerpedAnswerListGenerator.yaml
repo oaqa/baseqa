@@ -1,8 +1,8 @@
-inherit: baseqa.gerp.answer.GerpedAnswerListGenerator
+inherit: baseqa.gerp.answer.generator-provider-gerped-answer-list-generator
 generator: |
-  inherit: baseqa.gerp.answer.QueryTermGerpedAnswerListGeneratorProvider
+  inherit: baseqa.gerp.answer.QueryTermAnswersGeneratorProvider
 evidencers: |
-  - inherit: baseqa.gerp.answer.IdenticalGerpedAnswerListEvidencerProvider
+  - inherit: baseqa.gerp.answer.IdenticalAnswerEvidencerProvider
 rankers: |
   - inherit: gerp.ranker.HeadFirstRankerProvider
   - inherit: gerp.ranker.RandomRankerProvider

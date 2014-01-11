@@ -12,7 +12,7 @@ import edu.cmu.lti.oaqa.baseqa.data.nlp.QuestionWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.AbstractQueryWrapper;
 import edu.cmu.lti.oaqa.baseqa.data.retrieval.QueryConceptWrapper;
 
-public class QueryTermGerpedAnswerListGeneratorProvider extends AbstractAnswerListGeneratorProvider {
+public class QueryTermAnswersGeneratorProvider extends AbstractAnswerListGeneratorProvider {
 
   @Override
   protected AnswerListWrapper generate(QuestionWrapper question, ParseWrapper parse,

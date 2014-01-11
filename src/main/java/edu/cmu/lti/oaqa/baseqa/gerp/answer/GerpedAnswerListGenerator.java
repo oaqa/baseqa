@@ -27,9 +27,7 @@ import edu.cmu.lti.oaqa.gerp.data.EvidenceWrapper;
 import edu.cmu.lti.oaqa.gerp.data.PruningDecisionWrapper;
 import edu.cmu.lti.oaqa.gerp.data.RankWrapper;
 
-public class GerpedAnswerListGenerator extends AbstractAnswerListGenerator {
-
-  private AbstractAnswerListGeneratorProvider generator;
+public abstract class GerpedAnswerListGenerator extends AbstractAnswerListGenerator {
 
   private List<AbstractAnswerEvidencerProvider> evidencers;
 
@@ -40,9 +38,6 @@ public class GerpedAnswerListGenerator extends AbstractAnswerListGenerator {
   @Override
   public void initialize(UimaContext c) throws ResourceInitializationException {
     super.initialize(c);
-    String generatorName = (String) c.getConfigParameterValue("generator");
-    generator = BaseExperimentBuilder.loadProvider(generatorName,
-            AbstractAnswerListGeneratorProvider.class);
     Object evidencerNames = c.getConfigParameterValue("evidencers");
     if (evidencerNames != null) {
       evidencers = BaseExperimentBuilder.createResourceList(evidencerNames,
@@ -58,12 +53,16 @@ public class GerpedAnswerListGenerator extends AbstractAnswerListGenerator {
     }
   }
 
+  protected abstract List<AnswerWrapper> getAnswerCandidates(QuestionWrapper question,
+          ParseWrapper parse, InterpretationWrapper interpretation,
+          AbstractQueryWrapper abstractQuery) throws AnalysisEngineProcessException;
+
   protected AnswerListWrapper generate(QuestionWrapper question, ParseWrapper parse,
           InterpretationWrapper interpretation, AbstractQueryWrapper abstractQuery)
           throws AnalysisEngineProcessException {
     // generate answers
-    List<AnswerWrapper> answers = generator
-            .generate(question, parse, interpretation, abstractQuery).getAnswerList();
+    List<AnswerWrapper> answers = getAnswerCandidates(question, parse, interpretation,
+            abstractQuery);
     int numCandidate = answers.size();
     // evidence
     for (AbstractAnswerEvidencerProvider evidencer : evidencers) {
