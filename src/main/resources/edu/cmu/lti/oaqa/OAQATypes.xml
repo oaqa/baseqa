@@ -400,6 +400,10 @@ Changes in 0.2:
           <string>OPINION</string>
           <description>The question is asking for an opinion.</description>
         </value>
+        <value>
+          <string>YES_NO</string>
+          <description>The answer is either yes or no.</description>
+        </value>
       </allowedValues>
     </typeDescription>
     <typeDescription>
