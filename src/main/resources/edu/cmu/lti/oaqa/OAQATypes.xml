@@ -3,6 +3,9 @@
   <name>OAQATypes</name>
   <description>Type system descriptor for the OAQA data model.
 
+Changes in 2.7
+* Added EntitySearchResult.
+
 Changes in 2.6:
 * Added gerpableClassName feature in the GerpMeta type.
 - Zi Yang &lt;ziy@cs.cmu.edu&gt;
@@ -45,7 +48,7 @@ Changes in 0.2:
 * Updated superclass of most types from OAQATop/OAQAAnnotation to GerpTop/GerpAnnotation, e.g. QuestionClass
 * Added an imported type system frameworkTypesDescriptor, and updated the supertype of Question to InputElement.
 - Zi Yang &lt;ziy@cs.cmu.edu&gt;</description>
-  <version>2.6</version>
+  <version>2.7</version>
   <vendor>OAQA</vendor>
   <types>
     <typeDescription>
@@ -565,6 +568,19 @@ Changes in 0.2:
           <description>The context of the triple store search result, i.e., triples identifying all neighboring nodes in the store.</description>
           <rangeTypeName>uima.cas.FSArray</rangeTypeName>
           <elementType>org.oaqa.model.kb.Relation</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.retrieval.EntitySearchResult</name>
+      <description>A search result from an ontology.</description>
+      <supertypeName>org.oaqa.model.retrieval.AnswerSearchResult</supertypeName>
+      <features>
+        <featureDescription>
+          <name>entities</name>
+          <description>The relevant concepts searched in the ontology.</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.oaqa.model.kb.Entity</elementType>
         </featureDescription>
       </features>
     </typeDescription>

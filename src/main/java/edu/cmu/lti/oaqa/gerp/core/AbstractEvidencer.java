@@ -24,8 +24,6 @@ public abstract class AbstractEvidencer<T extends TOP, W extends Gerpable & TopW
     super.log(GerpLogEntry.getEvidenceLog(gerpableClass), message);
   };
 
-  public static int i = 0;
-
   @SuppressWarnings("unchecked")
   @Override
   public void process(JCas jcas) throws AnalysisEngineProcessException {

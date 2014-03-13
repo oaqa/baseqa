@@ -1,6 +1,7 @@
 package edu.cmu.lti.oaqa.gerp.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.oaqa.model.retrieval.SearchResult;
 
@@ -15,6 +16,13 @@ public class DocumentEvidenceWrapper extends EvidenceWrapper<SearchResult, Docum
     this.confidence = confidence;
     this.additionalEvidenceWrapperClass = DocumentWrapper.class;
     this.additionalEvidences = new ArrayList<DocumentWrapper>();
+  }
+
+  public DocumentEvidenceWrapper(float confidence, List<DocumentWrapper> documents) {
+    super();
+    this.confidence = confidence;
+    this.additionalEvidenceWrapperClass = DocumentWrapper.class;
+    this.additionalEvidences = documents;
   }
 
   public DocumentEvidenceWrapper() {
