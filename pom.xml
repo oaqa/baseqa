@@ -24,9 +24,9 @@
         </license>
     </licenses>
     <scm>
-        <url>git@github.com:oaqa/baseqa.git</url>
-        <connection>scm:git:git@github.com:oaqa/baseqa.git</connection>
-        <developerConnection>scm:git:git@github.com:oaqa/baseqa.git</developerConnection>
+        <url>https://github.com/oaqa/baseqa</url>
+        <connection>scm:git:https://github.com:oaqa/baseqa.git</connection>
+        <developerConnection>scm:git:https://github.com:oaqa/baseqa.git</developerConnection>
     </scm>
     <build>
         <plugins>
