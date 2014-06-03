@@ -21,18 +21,30 @@ import java.util.List;
 
 import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;
+import org.oaqa.model.answer.AnswerList;
+import org.oaqa.model.gerp.Evidence;
 import org.oaqa.model.retrieval.Passage;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 
+import edu.cmu.lti.oaqa.baseqa.framework.eval.document.DocumentEvalConsumer;
 import edu.cmu.lti.oaqa.baseqa.framework.eval.passage.PassageHelper;
 import edu.cmu.lti.oaqa.baseqa.framework.eval.passage.PassageToIdString;
 import edu.cmu.lti.oaqa.baseqa.framework.eval.passage.TRECPassageOrdering;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.RetrievalEvalConsumer;
+import edu.cmu.lti.oaqa.gerp.data.DocumentEvidenceWrapper;
 
+/**
+ * 
+ * @author yangzi
+ * @deprecated use {@link DocumentEvalConsumer} instead for documents stored as
+ *             {@link DocumentEvidenceWrapper} inside {@link Evidence} of an {@link AnswerList}.
+ *
+ */
+@Deprecated
 public class PassageRetrievalEvalConsumer extends RetrievalEvalConsumer<Passage> {
 
   @Override
@@ -47,7 +59,7 @@ public class PassageRetrievalEvalConsumer extends RetrievalEvalConsumer<Passage>
 
   private List<Passage> getDocuments(JCas jcas, ViewType viewType) throws CASException {
     JCas view = ViewManager.getView(jcas, viewType);
-    return (view != null) ? PassageHelper.loadDocumentSet(view) : Collections.<Passage>emptyList();
+    return (view != null) ? PassageHelper.loadDocumentSet(view) : Collections.<Passage> emptyList();
   }
 
   @Override
