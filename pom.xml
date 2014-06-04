@@ -24,9 +24,9 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/oaqa/baseqa</url>
-        <connection>scm:git:https://github.com:oaqa/baseqa.git</connection>
-        <developerConnection>scm:git:https://github.com:oaqa/baseqa.git</developerConnection>
+        <url>git@github.com:oaqa/baseqa.git</url>
+        <connection>scm:git:git@github.com:oaqa/baseqa.git</connection>
+        <developerConnection>scm:git:git@github.com:oaqa/baseqa.git</developerConnection>
     </scm>
     <build>
         <plugins>
@@ -55,7 +55,8 @@
          <groupId>net.sf.josql</groupId>
        </exclusion>
      </exclusions>
-</dependency>
+
+        </dependency>
         <dependency>
           <groupId>com.google.guava</groupId>
           <artifactId>guava</artifactId>
