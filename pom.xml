@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.cmu.lti.oaqa.bio.core</groupId>
     <artifactId>baseqa</artifactId>
-    <version>1.10.4-SNAPSHOT</version>
+    <version>1.10.3</version>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
@@ -11,7 +11,13 @@
     </parent>
     <name>Base Question Answering Pipeline</name>
     <url>https://github.com/oaqa/baseqa</url>
-    <issueManagement>
+<distributionManagement>
+   <repository>
+    <id>nexus-releases</id>
+    <url>http://localhost:8081/nexus/content/repositories/releases</url>
+   </repository>
+</distributionManagement>   
+ <issueManagement>
         <system>github.com</system>
         <url>https://github.com/oaqa/baseqa/issues</url>
     </issueManagement>
@@ -28,7 +34,14 @@
        <developerConnection>scm:git:git@github.com:oaqa/baseqa.git</developerConnection>
        <url>git@github.com:oaqa/baseqa.git</url>
     </scm>
-    <build>
+<developers>
+<developer>
+	<id> amaiberg </id>
+	<name> Avner Maiberg</name>	
+<email>avnermaiberg@gmail.com</email>
+</developer>
+</developers> 
+   <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
