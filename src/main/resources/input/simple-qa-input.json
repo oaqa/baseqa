@@ -1,0 +1,14 @@
+{
+  "questions": [
+    {
+      "body": "What is the role of PrnP in mad cow disease?", 
+      "type": "factoid", 
+      "id": "160"
+    },
+    {
+      "body": "What is the role of IDE in Alzheimer's disease?", 
+      "type": "factoid", 
+      "id": "161"
+    }
+  ]
+}

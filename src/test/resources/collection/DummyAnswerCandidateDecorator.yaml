@@ -1,2 +1,0 @@
-inherit: collection.answer-candidate-decorator
-candidates: /baseqa/gerp-one-question.candidates

@@ -1,0 +1,4 @@
+class: edu.cmu.lti.oaqa.baseqa.collection.json.JsonGoldStandardDecorator
+
+# add a string value for parameter <file> for a single json file as input or 
+# a string array for multiple json files.

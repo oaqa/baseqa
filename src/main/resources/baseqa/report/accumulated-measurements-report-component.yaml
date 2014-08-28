@@ -1,0 +1,10 @@
+class: edu.cmu.lti.oaqa.baseqa.report.JdbcReportComponentBuilder
+
+keys: traceId
+measure: measure
+value: value
+format: '%.4f'
+
+query: |
+  SELECT calculator, traceId, measure, value FROM accumulated_measurements 
+  WHERE experimentId = ? AND stage = ?

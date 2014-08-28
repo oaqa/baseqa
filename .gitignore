@@ -6,3 +6,4 @@
 *.ear
 /launches
 /target
+/persistence

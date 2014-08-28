@@ -1,4 +1,0 @@
-class: edu.cmu.lti.oaqa.gerp.ranker.HeadFirstRanker
-
-persistence-provider: |
-  inherit: ecd.default-log-persistence-provider

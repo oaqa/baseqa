@@ -1,2 +1,0 @@
-class: edu.cmu.lti.oaqa.baseqa.framework.eval.gs.AnswerGoldStandardFilePersistenceProvider
-LineSyntax: ([^\|]+)\|(.*)
