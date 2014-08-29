@@ -27,7 +27,7 @@ public class JdbcEvalPersistenceProvider extends ConfigurableProvider implements
 
   @Override
   public void insertPartialMeasurements(Key key, String sequenceId, String calculatorName,
-          Map<Measure, Double> measure2value) {
+          String evaluateeName, Map<Measure, Double> measure2value) {
     String sql = (String) getParameterValue("insert-partial-meaurements-query");
     List<Map.Entry<Measure, Double>> pairs = new ArrayList<>(measure2value.entrySet());
     DataStoreImpl.getInstance().jdbcTemplate().batchUpdate(sql, new BatchPreparedStatementSetter() {
@@ -37,11 +37,12 @@ public class JdbcEvalPersistenceProvider extends ConfigurableProvider implements
         ps.setString(1, key.getExperiment());
         ps.setString(2, key.getTrace().getTrace());
         ps.setString(3, calculatorName);
-        ps.setString(4, pairs.get(i).getKey().toString());
-        ps.setDouble(5, pairs.get(i).getValue());
-        ps.setString(6, sequenceId); // TODO: JDBC OAQA
-        ps.setInt(7, key.getStage());
-        ps.setString(8, key.getTrace().getTraceHash());
+        ps.setString(4, evaluateeName);
+        ps.setString(5, pairs.get(i).getKey().toString());
+        ps.setDouble(6, pairs.get(i).getValue());
+        ps.setString(7, sequenceId); // TODO: JDBC OAQA
+        ps.setInt(8, key.getStage());
+        ps.setString(9, key.getTrace().getTraceHash());
       }
 
       @Override
@@ -53,7 +54,7 @@ public class JdbcEvalPersistenceProvider extends ConfigurableProvider implements
 
   @Override
   public Table<Key, Measure, List<Double>> selectPartialMeasurements(ExperimentKey experiment,
-          String calculatorName) {
+          String calculatorName, String evaluateeName) {
     String sql = (String) getParameterValue("select-partial-meaurements-query");
     Table<Key, Measure, List<Double>> counts = HashBasedTable.create();
     RowCallbackHandler handler = new RowCallbackHandler() {
@@ -74,13 +75,15 @@ public class JdbcEvalPersistenceProvider extends ConfigurableProvider implements
         ps.setString(1, experiment.getExperiment());
         ps.setInt(2, experiment.getStage());
         ps.setString(3, calculatorName);
+        ps.setString(4, evaluateeName);
       }
     }, handler);
     return counts;
   }
 
   @Override
-  public void deletePartialMeasurements(Key key, String sequenceId, String calculatorName) {
+  public void deletePartialMeasurements(Key key, String sequenceId, String calculatorName,
+          String evaluateeName) {
     String insert = (String) getParameterValue("delete-partial-meaurements-query");
     DataStoreImpl.getInstance().jdbcTemplate().update(insert, new PreparedStatementSetter() {
 
@@ -89,12 +92,13 @@ public class JdbcEvalPersistenceProvider extends ConfigurableProvider implements
         ps.setString(2, key.getTrace().getTraceHash());
         ps.setString(3, sequenceId); // TODO: JDBC OAQA
         ps.setString(4, calculatorName);
+        ps.setString(5, evaluateeName);
       }
     });
   }
 
   @Override
-  public void insertAccumulatedMeasurements(Key key, String calculatorName,
+  public void insertAccumulatedMeasurements(Key key, String calculatorName, String evaluateeName,
           Map<Measure, Double> measure2value) {
     String sql = (String) getParameterValue("insert-accumulated-measurements-query");
     List<Map.Entry<Measure, Double>> pairs = new ArrayList<>(measure2value.entrySet());
@@ -105,10 +109,11 @@ public class JdbcEvalPersistenceProvider extends ConfigurableProvider implements
         ps.setString(1, key.getExperiment());
         ps.setString(2, key.getTrace().getTrace());
         ps.setString(3, calculatorName);
-        ps.setString(4, pairs.get(i).getKey().toString());
-        ps.setDouble(5, pairs.get(i).getValue());
-        ps.setInt(6, key.getStage());
-        ps.setString(7, key.getTrace().getTraceHash());
+        ps.setString(4, evaluateeName);
+        ps.setString(5, pairs.get(i).getKey().toString());
+        ps.setDouble(6, pairs.get(i).getValue());
+        ps.setInt(7, key.getStage());
+        ps.setString(8, key.getTrace().getTraceHash());
       }
 
       @Override
@@ -119,7 +124,8 @@ public class JdbcEvalPersistenceProvider extends ConfigurableProvider implements
   }
 
   @Override
-  public void deleteAccumulatedMeasurements(ExperimentKey experiment, String calculatorName) {
+  public void deleteAccumulatedMeasurements(ExperimentKey experiment, String calculatorName,
+          String evaluateeName) {
     String sql = (String) getParameterValue("delete-accumulated-measurements-query");
     DataStoreImpl.getInstance().jdbcTemplate().update(sql, new PreparedStatementSetter() {
 
@@ -127,6 +133,7 @@ public class JdbcEvalPersistenceProvider extends ConfigurableProvider implements
         ps.setString(1, experiment.getExperiment());
         ps.setInt(2, experiment.getStage());
         ps.setString(3, calculatorName);
+        ps.setString(4, evaluateeName);
       }
     });
   }

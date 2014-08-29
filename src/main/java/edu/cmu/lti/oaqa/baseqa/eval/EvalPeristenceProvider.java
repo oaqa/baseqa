@@ -13,16 +13,18 @@ import edu.cmu.lti.oaqa.framework.eval.Key;
 public interface EvalPeristenceProvider extends Resource {
 
   void insertPartialMeasurements(Key key, String sequenceId, String calculatorName,
-          Map<Measure, Double> measure2value);
+          String evaluateeName, Map<Measure, Double> measure2value);
 
   Table<Key, Measure, List<Double>> selectPartialMeasurements(ExperimentKey experiment,
-          String calculatorName);
+          String calculatorName, String evaluateeName);
 
-  void deletePartialMeasurements(Key key, String sequenceId, String calculatorName);
+  void deletePartialMeasurements(Key key, String sequenceId, String calculatorName,
+          String evaluateeName);
 
-  void insertAccumulatedMeasurements(Key key, String calculatorName,
+  void insertAccumulatedMeasurements(Key key, String calculatorName, String evaluateeName,
           Map<Measure, Double> measure2value);
 
-  void deleteAccumulatedMeasurements(ExperimentKey experiment, String calculatorName);
+  void deleteAccumulatedMeasurements(ExperimentKey experiment, String calculatorName,
+          String evaluateeName);
 
 }

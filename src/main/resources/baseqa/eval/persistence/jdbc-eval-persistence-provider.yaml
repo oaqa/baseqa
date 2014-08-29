@@ -1,24 +1,25 @@
 class: edu.cmu.lti.oaqa.baseqa.eval.persistence.JdbcEvalPersistenceProvider
 
 insert-partial-meaurements-query: |
-  INSERT INTO partial_measurements (experimentId, traceId, calculator,
-   measure, value, sequenceId, stage, traceHash) 
-  VALUES (?,?,?,?,?,?,?,?)
+  INSERT INTO partial_measurements (experimentId, traceId, calculator, 
+   evaluatee, measure, value, sequenceId, stage, traceHash) 
+  VALUES (?,?,?,?,?,?,?,?,?)
 
 select-partial-meaurements-query: |
-  SELECT experimentId, traceId, calculator, measure, value, stage
+  SELECT experimentId, traceId, calculator, evaluatee, measure, value, stage
   FROM partial_measurements
-  WHERE experimentId = ? AND stage = ? AND calculator = ?
+  WHERE experimentId = ? AND stage = ? AND calculator = ? AND evaluatee = ?
 
 delete-partial-meaurements-query: |
   DELETE FROM partial_measurements 
-  WHERE experimentId = ? AND traceHash = ? AND sequenceId = ? AND calculator = ?
+  WHERE experimentId = ? AND traceHash = ? AND sequenceId = ? 
+  AND calculator = ? AND evaluatee = ?
 
 insert-accumulated-measurements-query: |
-  INSERT INTO accumulated_measurements (experimentId, traceId, calculator,
-   measure, value, stage, traceHash) 
-  VALUES (?,?,?,?,?,?,?)
+  INSERT INTO accumulated_measurements (experimentId, traceId, calculator, 
+   evaluatee, measure, value, stage, traceHash) 
+  VALUES (?,?,?,?,?,?,?,?)
 
 delete-accumulated-measurements-query: |
   DELETE FROM accumulated_measurements
-  WHERE experimentId = ? AND stage = ? AND calculator = ?
+  WHERE experimentId = ? AND stage = ? AND calculator = ? AND evaluatee = ?

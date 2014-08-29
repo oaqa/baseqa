@@ -27,11 +27,13 @@ import edu.cmu.lti.oaqa.framework.types.ExperimentUUID;
 
 public final class Evaluator<T> extends JCasConsumer_ImplBase {
 
-  private EvaluateeProvider<T> evaluatee;
-
   private EvalCalculator<T> calculator;
 
   private String calculatorName;
+
+  private EvaluateeProvider<T> evaluatee;
+
+  private String evaluateeName;
 
   private EvalPeristenceProvider persistence;
 
@@ -41,11 +43,12 @@ public final class Evaluator<T> extends JCasConsumer_ImplBase {
   @Override
   public void initialize(UimaContext context) throws ResourceInitializationException {
     super.initialize(context);
-    String ep = UimaContextHelper.getConfigParameterStringValue(context, "evaluatee-provider");
-    evaluatee = BaseExperimentBuilder.loadProvider(ep, EvaluateeProvider.class);
     String c = UimaContextHelper.getConfigParameterStringValue(context, "calculator");
     calculator = BaseExperimentBuilder.loadProvider(c, EvalCalculator.class);
     calculatorName = calculator.getClass().getSimpleName();
+    String ep = UimaContextHelper.getConfigParameterStringValue(context, "evaluatee-provider");
+    evaluatee = BaseExperimentBuilder.loadProvider(ep, EvaluateeProvider.class);
+    evaluateeName = evaluatee.getClass().getSimpleName();
     String pp = UimaContextHelper.getConfigParameterStringValue(context, "persistence-provider");
     persistence = BaseExperimentBuilder.loadProvider(pp, EvalPeristenceProvider.class);
   }
@@ -74,21 +77,23 @@ public final class Evaluator<T> extends JCasConsumer_ImplBase {
     Trace trace = ProcessingStepUtils.getTrace(jcas);
     Key key = new Key(experiment.getUuid(), trace, experiment.getStageId());
     String sequenceId = ProcessingStepUtils.getSequenceId(jcas);
-    persistence.deletePartialMeasurements(key, sequenceId, calculatorName);
-    persistence.insertPartialMeasurements(key, sequenceId, calculatorName, measurements);
+    persistence.deletePartialMeasurements(key, sequenceId, calculatorName, evaluateeName);
+    persistence.insertPartialMeasurements(key, sequenceId, calculatorName, evaluateeName,
+            measurements);
   }
 
   @Override
   public void collectionProcessComplete() throws AnalysisEngineProcessException {
     super.collectionProcessComplete();
     experiments.forEach(experiment -> {
-      persistence.deleteAccumulatedMeasurements(experiment, calculatorName);
-      Table<Key, Measure, List<Double>> measurements = persistence.selectPartialMeasurements(
-              experiment, calculatorName);
-      measurements.rowKeySet().forEach(key -> {
-        Map<Measure, Double> accuMeasurement = calculator.accumulate(measurements.row(key));
-        persistence.insertAccumulatedMeasurements(key, calculatorName, accuMeasurement);
+      persistence.deleteAccumulatedMeasurements(experiment, calculatorName, evaluateeName);
+      Table<Key, Measure, List<Double>> part = persistence.selectPartialMeasurements(experiment,
+              calculatorName, evaluateeName);
+      part.rowKeySet().forEach(key -> {
+        Map<Measure, Double> accu = calculator.accumulate(part.row(key));
+        persistence.insertAccumulatedMeasurements(key, calculatorName, evaluateeName, accu);
       });
     });
   }
+
 }

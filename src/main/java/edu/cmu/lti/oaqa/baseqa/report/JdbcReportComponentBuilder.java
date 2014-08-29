@@ -28,9 +28,9 @@ import edu.cmu.lti.oaqa.framework.report.ReportComponentBuilder;
 
 public class JdbcReportComponentBuilder extends Resource_ImplBase implements ReportComponentBuilder {
 
-  private List<String> keys;
+  private List<String> idFields;
 
-  private String measureField;
+  private List<String> measureFields;
 
   private String valueField;
 
@@ -41,8 +41,9 @@ public class JdbcReportComponentBuilder extends Resource_ImplBase implements Rep
   @Override
   public boolean initialize(ResourceSpecifier specifier, Map<String, Object> additionalParams)
           throws ResourceInitializationException {
-    this.keys = Splitter.on(',').trimResults().splitToList(((String) additionalParams.get("keys")));
-    this.measureField = (String) additionalParams.get("measure");
+    Splitter splitter = Splitter.on(',').trimResults();
+    this.idFields = splitter.splitToList(((String) additionalParams.get("id")));
+    this.measureFields = splitter.splitToList((String) additionalParams.get("measure"));
     this.valueField = (String) additionalParams.get("value");
     this.valueFormat = (String) additionalParams.get("format");
     this.query = (String) additionalParams.get("query");
@@ -53,25 +54,32 @@ public class JdbcReportComponentBuilder extends Resource_ImplBase implements Rep
   public ReportComponent getReportComponent(String... args) {
     ImmutableTable.Builder<String, String, String> builder = ImmutableTable.builder();
     Set<String> measures = new HashSet<>();
-    measures.addAll(keys);
-    Set<String> rowIds = new HashSet<>();
+    measures.addAll(idFields);
+    Set<String> ids = new HashSet<>();
     RowCallbackHandler handler = new RowCallbackHandler() {
       public void processRow(ResultSet rs) throws SQLException {
-        Map<String, String> key2value = new HashMap<>();
-        for (String key : keys) {
-          key2value.put(key, rs.getString(key));
+        // retrieve ids
+        Map<String, String> field2id = new HashMap<>();
+        for (String idField : idFields) {
+          field2id.put(idField, rs.getString(idField));
         }
-        String rowId = keys.stream().map(key -> key2value.get(key)).collect(joining("/"));
-        String measure = rs.getString(measureField);
+        String id = idFields.stream().map(key -> field2id.get(key)).collect(joining("/"));
+        // retrieve measures
+        Map<String, String> field2measure = new HashMap<>();
+        for (String measureField : measureFields) {
+          field2measure.put(measureField, rs.getString(measureField));
+        }
+        String measure = measureFields.stream().map(key -> field2measure.get(key))
+                .collect(joining("/"));
         // add measure name to header
         measures.add(measure);
-        // add measure name/value to table
-        builder.put(rowId, measure, String.format(valueFormat, rs.getDouble(valueField)));
         // add keys/values to table
-        if (!rowIds.contains(rowId)) {
-          keys.stream().forEach(key -> builder.put(rowId, key, key2value.get(key)));
-          rowIds.add(rowId);
+        if (!ids.contains(id)) {
+          idFields.stream().forEach(key -> builder.put(id, key, field2id.get(key)));
+          ids.add(id);
         }
+        // add measure name/value to table
+        builder.put(id, measure, String.format(valueFormat, rs.getDouble(valueField)));
       }
     };
     PreparedStatementSetter pss = new PreparedStatementSetter() {
