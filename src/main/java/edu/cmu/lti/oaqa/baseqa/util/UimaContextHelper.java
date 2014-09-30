@@ -91,4 +91,14 @@ public class UimaContextHelper {
     return value;
   }
 
+  public static String[] getConfigParameterStringArrayValue(UimaContext aContext, String paramName)
+          throws ResourceInitializationException {
+    String[] value = (String[]) aContext.getConfigParameterValue(paramName);
+    if (value == null) {
+      throw new ResourceInitializationException(new IllegalArgumentException(
+              "Must provide a parameter of type <" + paramName + ">"));
+    }
+    return value;
+  }
+
 }

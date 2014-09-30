@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** A query concept in the abstract search query model.
- * Updated by JCasGen Sat Aug 16 20:55:37 EDT 2014
+ * Updated by JCasGen Tue Sep 30 18:21:25 EDT 2014
  * @generated */
 public class QueryConcept_Type extends TOP_Type {
   /** @generated 
@@ -93,126 +93,6 @@ public class QueryConcept_Type extends TOP_Type {
     ll_cas.ll_setStringValue(addr, casFeatCode_conceptType, v);}
     
   
- 
-  /** @generated */
-  final Feature casFeat_text;
-  /** @generated */
-  final int     casFeatCode_text;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public String getText(int addr) {
-        if (featOkTst && casFeat_text == null)
-      jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.retrieval.QueryConcept");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_text);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setText(int addr, String v) {
-        if (featOkTst && casFeat_text == null)
-      jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.retrieval.QueryConcept");
-    ll_cas.ll_setStringValue(addr, casFeatCode_text, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_originalText;
-  /** @generated */
-  final int     casFeatCode_originalText;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public String getOriginalText(int addr) {
-        if (featOkTst && casFeat_originalText == null)
-      jcas.throwFeatMissing("originalText", "edu.cmu.lti.oaqa.type.retrieval.QueryConcept");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_originalText);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setOriginalText(int addr, String v) {
-        if (featOkTst && casFeat_originalText == null)
-      jcas.throwFeatMissing("originalText", "edu.cmu.lti.oaqa.type.retrieval.QueryConcept");
-    ll_cas.ll_setStringValue(addr, casFeatCode_originalText, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_operator;
-  /** @generated */
-  final int     casFeatCode_operator;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public int getOperator(int addr) {
-        if (featOkTst && casFeat_operator == null)
-      jcas.throwFeatMissing("operator", "edu.cmu.lti.oaqa.type.retrieval.QueryConcept");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_operator);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setOperator(int addr, int v) {
-        if (featOkTst && casFeat_operator == null)
-      jcas.throwFeatMissing("operator", "edu.cmu.lti.oaqa.type.retrieval.QueryConcept");
-    ll_cas.ll_setRefValue(addr, casFeatCode_operator, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_operatorArgs;
-  /** @generated */
-  final int     casFeatCode_operatorArgs;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public int getOperatorArgs(int addr) {
-        if (featOkTst && casFeat_operatorArgs == null)
-      jcas.throwFeatMissing("operatorArgs", "edu.cmu.lti.oaqa.type.retrieval.QueryConcept");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_operatorArgs);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setOperatorArgs(int addr, int v) {
-        if (featOkTst && casFeat_operatorArgs == null)
-      jcas.throwFeatMissing("operatorArgs", "edu.cmu.lti.oaqa.type.retrieval.QueryConcept");
-    ll_cas.ll_setRefValue(addr, casFeatCode_operatorArgs, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_partOfSpeech;
-  /** @generated */
-  final int     casFeatCode_partOfSpeech;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public String getPartOfSpeech(int addr) {
-        if (featOkTst && casFeat_partOfSpeech == null)
-      jcas.throwFeatMissing("partOfSpeech", "edu.cmu.lti.oaqa.type.retrieval.QueryConcept");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_partOfSpeech);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setPartOfSpeech(int addr, String v) {
-        if (featOkTst && casFeat_partOfSpeech == null)
-      jcas.throwFeatMissing("partOfSpeech", "edu.cmu.lti.oaqa.type.retrieval.QueryConcept");
-    ll_cas.ll_setStringValue(addr, casFeatCode_partOfSpeech, v);}
-    
-  
 
 
 
@@ -230,28 +110,8 @@ public class QueryConcept_Type extends TOP_Type {
     casFeatCode_namedEntityTypes  = (null == casFeat_namedEntityTypes) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_namedEntityTypes).getCode();
 
  
-    casFeat_conceptType = jcas.getRequiredFeatureDE(casType, "conceptType", "edu.cmu.lti.oaqa.type.nlp.ConceptType", featOkTst);
+    casFeat_conceptType = jcas.getRequiredFeatureDE(casType, "conceptType", "edu.cmu.lti.oaqa.type.retrieval.ConceptType", featOkTst);
     casFeatCode_conceptType  = (null == casFeat_conceptType) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_conceptType).getCode();
-
- 
-    casFeat_text = jcas.getRequiredFeatureDE(casType, "text", "uima.cas.String", featOkTst);
-    casFeatCode_text  = (null == casFeat_text) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_text).getCode();
-
- 
-    casFeat_originalText = jcas.getRequiredFeatureDE(casType, "originalText", "uima.cas.String", featOkTst);
-    casFeatCode_originalText  = (null == casFeat_originalText) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_originalText).getCode();
-
- 
-    casFeat_operator = jcas.getRequiredFeatureDE(casType, "operator", "edu.cmu.lti.oaqa.type.retrieval.QueryOperator", featOkTst);
-    casFeatCode_operator  = (null == casFeat_operator) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_operator).getCode();
-
- 
-    casFeat_operatorArgs = jcas.getRequiredFeatureDE(casType, "operatorArgs", "uima.cas.FSList", featOkTst);
-    casFeatCode_operatorArgs  = (null == casFeat_operatorArgs) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_operatorArgs).getCode();
-
- 
-    casFeat_partOfSpeech = jcas.getRequiredFeatureDE(casType, "partOfSpeech", "uima.cas.String", featOkTst);
-    casFeatCode_partOfSpeech  = (null == casFeat_partOfSpeech) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_partOfSpeech).getCode();
 
   }
 }

@@ -11,8 +11,8 @@ import org.apache.uima.jcas.cas.FSList;
 
 
 /** A relation concept. It represents the relationship between entities. which is generalized from a triple, e.g., and RDF triple.
- * Updated by JCasGen Sat Aug 16 20:55:37 EDT 2014
- * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Tue Sep 30 18:21:24 EDT 2014
+ * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class Relation extends Concept {
   /** @generated

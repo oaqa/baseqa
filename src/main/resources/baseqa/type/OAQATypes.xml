@@ -393,33 +393,7 @@
         <featureDescription>
           <name>conceptType</name>
           <description>The type of this concept.</description>
-          <rangeTypeName>edu.cmu.lti.oaqa.type.nlp.ConceptType</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>text</name>
-          <description>The keyword text.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>originalText</name>
-          <description>The lexical string in the question.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>operator</name>
-          <description>The operator associated with this concept.  This must be a complex concept.</description>
-          <rangeTypeName>edu.cmu.lti.oaqa.type.retrieval.QueryOperator</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>operatorArgs</name>
-          <description>The operator arguments in a complex query concept.</description>
-          <rangeTypeName>uima.cas.FSList</rangeTypeName>
-          <elementType>edu.cmu.lti.oaqa.type.QueryConcept</elementType>
-        </featureDescription>
-        <featureDescription>
-          <name>partOfSpeech</name>
-          <description>The part of speech of the concept.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
+          <rangeTypeName>edu.cmu.lti.oaqa.type.retrieval.ConceptType</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
@@ -454,7 +428,7 @@
       </features>
     </typeDescription>
     <typeDescription>
-      <name>edu.cmu.lti.oaqa.type.nlp.ConceptType</name>
+      <name>edu.cmu.lti.oaqa.type.retrieval.ConceptType</name>
       <description>An enumeration of the allowed abstract query concept types.</description>
       <supertypeName>uima.cas.String</supertypeName>
       <allowedValues>
@@ -716,6 +690,41 @@
           <elementType>edu.cmu.lti.oaqa.type.kb.ConceptMention</elementType>
         </featureDescription>
       </features>
+    </typeDescription>
+  <typeDescription>
+      <name>edu.cmu.lti.oaqa.type.retrieval.AtomicQueryConcept</name>
+      <description>A primitive query concept represented by a single text string</description>
+      <supertypeName>edu.cmu.lti.oaqa.type.retrieval.QueryConcept</supertypeName>
+      <features>
+        <featureDescription>
+          <name>text</name>
+          <description>The keyword text.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>originalText</name>
+          <description>The lexical string in the question.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+  <typeDescription>
+      <name>edu.cmu.lti.oaqa.type.retrieval.ComplexQueryConcept</name>
+      <description>A hierarchical query concept represented by a query operation on a list of concepts</description>
+      <supertypeName>edu.cmu.lti.oaqa.type.retrieval.QueryConcept</supertypeName>
+    <features>
+        <featureDescription>
+          <name>operator</name>
+          <description>The operator associated with this concept.</description>
+          <rangeTypeName>edu.cmu.lti.oaqa.type.retrieval.QueryOperator</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>operatorArgs</name>
+          <description>The operator arguments in a complex query concept.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>edu.cmu.lti.oaqa.type.QueryConcept</elementType>
+        </featureDescription>
+        </features>
     </typeDescription>
   </types>
 </typeSystemDescription>

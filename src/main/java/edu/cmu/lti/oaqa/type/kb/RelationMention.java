@@ -11,8 +11,8 @@ import org.apache.uima.jcas.cas.FSList;
 
 
 /** A named relation mention that identify or define the named relation concept.
- * Updated by JCasGen Sat Aug 16 20:55:37 EDT 2014
- * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Tue Sep 30 18:21:24 EDT 2014
+ * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class RelationMention extends ConceptMention {
   /** @generated

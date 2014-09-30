@@ -12,8 +12,8 @@ import edu.cmu.lti.oaqa.type.kb.Relation;
 
 
 /** A search result from a triple store, e.g., an RDF store.
- * Updated by JCasGen Sat Aug 16 20:55:38 EDT 2014
- * XML source: /home/yangzi/QA/baseqa/src/main/resources/edu/cmu/lti/oaqa/OAQATypes.xml
+ * Updated by JCasGen Tue Sep 30 18:21:25 EDT 2014
+ * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class RelationSearchResult extends AnswerSearchResult {
   /** @generated

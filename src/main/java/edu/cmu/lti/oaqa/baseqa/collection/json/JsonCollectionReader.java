@@ -46,7 +46,8 @@ public class JsonCollectionReader extends IterableCollectionReader {
       @Override
       public DataElement next() {
         TestQuestion input = inputs.get(++seqId);
-        return new DataElement(getDataset(), String.valueOf(seqId), input.getBody(), input.getId());
+        return new DataElement(getDataset(), String.valueOf(seqId), input.getBody().trim()
+                .replaceAll("\\s+", " "), input.getId());
       }
 
       @Override

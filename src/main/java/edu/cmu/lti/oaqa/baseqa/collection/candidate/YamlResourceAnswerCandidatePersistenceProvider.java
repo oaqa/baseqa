@@ -33,7 +33,7 @@ public class YamlResourceAnswerCandidatePersistenceProvider extends Configurable
   @Override
   public List<Answer> getAnswerCandidates(String questionId, JCas candidateView) {
     return id2candidates.get(questionId).stream()
-            .map(text -> TypeFactory.createAnswer(text, candidateView)).collect(toList());
+            .map(text -> TypeFactory.createAnswer(candidateView, text)).collect(toList());
   }
 
 }

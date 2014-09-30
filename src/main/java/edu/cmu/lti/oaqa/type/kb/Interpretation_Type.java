@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** A container that integrates Concepts and ConceptMentions.
- * Updated by JCasGen Sat Aug 16 20:55:37 EDT 2014
+ * Updated by JCasGen Tue Sep 30 18:21:24 EDT 2014
  * @generated */
 public class Interpretation_Type extends TOP_Type {
   /** @generated 
