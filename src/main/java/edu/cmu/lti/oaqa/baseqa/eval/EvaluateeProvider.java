@@ -18,4 +18,6 @@ public interface EvaluateeProvider<T> extends Resource {
 
   Function<T, String> uniqueIdMapper();
 
+  String getName();
+
 }

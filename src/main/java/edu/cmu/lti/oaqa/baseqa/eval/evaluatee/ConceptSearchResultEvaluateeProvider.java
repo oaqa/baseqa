@@ -37,5 +37,10 @@ public class ConceptSearchResultEvaluateeProvider extends ConfigurableProvider i
   public Function<ConceptSearchResult, String> uniqueIdMapper() {
     return ConceptSearchResult::getUri;
   }
+  
+  @Override
+  public String getName() {
+    return "Concept";
+  }
 
 }

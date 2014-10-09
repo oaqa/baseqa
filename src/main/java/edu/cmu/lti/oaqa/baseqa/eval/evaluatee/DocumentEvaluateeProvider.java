@@ -37,4 +37,9 @@ public class DocumentEvaluateeProvider extends ConfigurableProvider implements
     return Document::getUri;
   }
 
+  @Override
+  public String getName() {
+    return "Document";
+  }
+  
 }

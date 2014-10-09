@@ -54,7 +54,6 @@ public class JdbcReportComponentBuilder extends Resource_ImplBase implements Rep
   public ReportComponent getReportComponent(String... args) {
     ImmutableTable.Builder<String, String, String> builder = ImmutableTable.builder();
     Set<String> measures = new HashSet<>();
-    measures.addAll(idFields);
     Set<String> ids = new HashSet<>();
     RowCallbackHandler handler = new RowCallbackHandler() {
       public void processRow(ResultSet rs) throws SQLException {
@@ -98,8 +97,11 @@ public class JdbcReportComponentBuilder extends Resource_ImplBase implements Rep
 
       @Override
       public List<String> getHeaders() {
-        return new ArrayList<>(measures);
+        List<String> headers = new ArrayList<>(idFields);
+        measures.stream().sorted().forEach(m -> headers.add(m));
+        return headers;
       }
     };
   }
+
 }

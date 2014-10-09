@@ -37,4 +37,9 @@ public class AnswerEvaluateeProvider extends ConfigurableProvider implements
     return Answer::getText;
   }
 
+  @Override
+  public String getName() {
+    return "Answer";
+  }
+
 }

@@ -42,4 +42,9 @@ public class PassageEvaluateeProvider extends ConfigurableProvider implements
             + result.getOffsetInEndSection() + "]";
   }
 
+  @Override
+  public String getName() {
+    return "Passage";
+  }
+  
 }

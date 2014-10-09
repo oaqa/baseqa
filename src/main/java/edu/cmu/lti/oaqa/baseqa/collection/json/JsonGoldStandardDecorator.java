@@ -1,9 +1,11 @@
 package edu.cmu.lti.oaqa.baseqa.collection.json;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.reducing;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -23,8 +25,8 @@ public class JsonGoldStandardDecorator extends JCasAnnotator_ImplBase {
 
   private Map<String, TrainingQuestion> id2input;
 
-  private static final Collector<TrainingQuestion, ?, Map<String, TrainingQuestion>> TO_MAP_COLLECTOR = Collectors
-          .groupingBy(TrainingQuestion::getId, Collectors.reducing(null, (x, y) -> y));
+  private static final Collector<TrainingQuestion, ?, Map<String, TrainingQuestion>> TO_MAP_COLLECTOR = groupingBy(
+          TrainingQuestion::getId, reducing(null, (x, y) -> y));
 
   @Override
   public void initialize(UimaContext context) throws ResourceInitializationException {

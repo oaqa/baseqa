@@ -42,4 +42,9 @@ public class TripleSearchResultEvaluateeProvider extends ConfigurableProvider im
     };
   }
 
+  @Override
+  public String getName() {
+    return "Triple";
+  }
+
 }

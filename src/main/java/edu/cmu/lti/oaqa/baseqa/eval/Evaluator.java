@@ -45,10 +45,10 @@ public final class Evaluator<T> extends JCasConsumer_ImplBase {
     super.initialize(context);
     String c = UimaContextHelper.getConfigParameterStringValue(context, "calculator");
     calculator = BaseExperimentBuilder.loadProvider(c, EvalCalculator.class);
-    calculatorName = calculator.getClass().getSimpleName();
+    calculatorName = calculator.getName();
     String ep = UimaContextHelper.getConfigParameterStringValue(context, "evaluatee-provider");
     evaluatee = BaseExperimentBuilder.loadProvider(ep, EvaluateeProvider.class);
-    evaluateeName = evaluatee.getClass().getSimpleName();
+    evaluateeName = evaluatee.getName();
     String pp = UimaContextHelper.getConfigParameterStringValue(context, "persistence-provider");
     persistence = BaseExperimentBuilder.loadProvider(pp, EvalPeristenceProvider.class);
   }

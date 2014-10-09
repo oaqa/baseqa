@@ -225,5 +225,10 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
     return StreamSupport.stream(aspects.spliterator(), true)
             .flatMap(aspect -> Stream.of(aspect.split("\\|"))).collect(toSet());
   }
+  
+  @Override
+  public String getName() {
+    return "Trec";
+  }
 
 }

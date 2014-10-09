@@ -13,4 +13,6 @@ public interface EvalCalculator<T> extends Resource {
 
   Map<Measure, Double> accumulate(Map<Measure, ? extends Iterable<Double>> measure2values);
 
+  String getName();
+
 }

@@ -86,5 +86,10 @@ public class RetrievalEvalCalculator<T> extends ConfigurableProvider implements 
   public static double calculateF1(double precision, double recall) {
     return ((precision + recall) != 0) ? (2 * precision * recall) / (precision + recall) : 0.0;
   }
+  
+  @Override
+  public String getName() {
+    return "Retrieval";
+  }
 
 }
