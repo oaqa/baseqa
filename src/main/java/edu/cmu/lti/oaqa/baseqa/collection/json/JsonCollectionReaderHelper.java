@@ -13,10 +13,10 @@ import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingListQuestion;
 import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingQuestion;
 import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingYesNoQuestion;
 import edu.cmu.lti.oaqa.type.answer.Answer;
-import edu.cmu.lti.oaqa.type.kb.Concept;
-import edu.cmu.lti.oaqa.type.kb.Relation;
+import edu.cmu.lti.oaqa.type.retrieval.ConceptSearchResult;
 import edu.cmu.lti.oaqa.type.retrieval.Document;
 import edu.cmu.lti.oaqa.type.retrieval.Passage;
+import edu.cmu.lti.oaqa.type.retrieval.TripleSearchResult;
 import edu.cmu.lti.oaqa.util.TypeFactory;
 
 public class JsonCollectionReaderHelper {
@@ -27,26 +27,30 @@ public class JsonCollectionReaderHelper {
             input.getBody()).addToIndexes();
     // if documents, snippets, concepts, and triples are found in the input, then add them to CAS
     if (input.getDocuments() != null) {
-      input.getDocuments().stream().map(docId -> TypeFactory.createDocument(jcas, docId))
+      input.getDocuments().stream().map(uri -> TypeFactory.createDocument(jcas, uri))
               .forEach(Document::addToIndexes);
     }
     if (input.getSnippets() != null) {
       input.getSnippets()
               .stream()
               .map(snippet -> TypeFactory.createPassage(jcas, snippet.getDocument(),
-                      snippet.getOffsetInBeginSection(), snippet.getOffsetInEndSection(),
-                      snippet.getBeginSection(), snippet.getEndSection(), snippet.getText()))
-              .forEach(Passage::addToIndexes);
+                      snippet.getText(), snippet.getOffsetInBeginSection(),
+                      snippet.getOffsetInEndSection(), snippet.getBeginSection(),
+                      snippet.getEndSection())).forEach(Passage::addToIndexes);
     }
     if (input.getConcepts() != null) {
-      input.getConcepts().stream().map(concept -> TypeFactory.createConcept(jcas, concept))
-              .forEach(Concept::addToIndexes);
+      input.getConcepts()
+              .stream()
+              .map(concept -> TypeFactory.createConceptSearchResult(jcas,
+                      TypeFactory.createConcept(jcas, concept), concept))
+              .forEach(ConceptSearchResult::addToIndexes);
     }
     if (input.getTriples() != null) {
       input.getTriples()
               .stream()
-              .map(triple -> TypeFactory.createRelation(jcas, triple.getS(), triple.getP(),
-                      triple.getO())).forEach(Relation::addToIndexes);
+              .map(triple -> TypeFactory.createTripleSearchResult(jcas,
+                      TypeFactory.createTriple(jcas, triple.getS(), triple.getP(), triple.getO())))
+              .forEach(TripleSearchResult::addToIndexes);
     }
     // add answers to CAS index
     if (input instanceof TestQuestion) {

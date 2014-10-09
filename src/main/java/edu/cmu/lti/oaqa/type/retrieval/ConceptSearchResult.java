@@ -7,19 +7,19 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
 
-import edu.cmu.lti.oaqa.type.kb.Triple;
+import edu.cmu.lti.oaqa.type.kb.Concept;
 
 
-/** A passage search result that was the result of a search from the subject and object of a triple
+/** A search result from an ontology.
  * Updated by JCasGen Mon Oct 06 20:47:19 EDT 2014
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
-public class PassageFromRelation extends Passage {
+public class ConceptSearchResult extends AnswerSearchResult {
   /** @generated
    * @ordered 
    */
   @SuppressWarnings ("hiding")
-  public final static int typeIndexID = JCasRegistry.register(PassageFromRelation.class);
+  public final static int typeIndexID = JCasRegistry.register(ConceptSearchResult.class);
   /** @generated
    * @ordered 
    */
@@ -33,14 +33,14 @@ public class PassageFromRelation extends Passage {
  
   /** Never called.  Disable default constructor
    * @generated */
-  protected PassageFromRelation() {/* intentionally empty block */}
+  protected ConceptSearchResult() {/* intentionally empty block */}
     
   /** Internal - constructor used by generator 
    * @generated
    * @param addr low level Feature Structure reference
    * @param type the type of this Feature Structure 
    */
-  public PassageFromRelation(int addr, TOP_Type type) {
+  public ConceptSearchResult(int addr, TOP_Type type) {
     super(addr, type);
     readObject();
   }
@@ -48,7 +48,7 @@ public class PassageFromRelation extends Passage {
   /** @generated
    * @param jcas JCas to which this Feature Structure belongs 
    */
-  public PassageFromRelation(JCas jcas) {
+  public ConceptSearchResult(JCas jcas) {
     super(jcas);
     readObject();   
   } 
@@ -65,25 +65,25 @@ public class PassageFromRelation extends Passage {
  
     
   //*--------------*
-  //* Feature: sourceRelation
+  //* Feature: concept
 
-  /** getter for sourceRelation - gets The triple from which the search result was generated
+  /** getter for concept - gets The relevant concept searched in the ontology.
    * @generated
    * @return value of the feature 
    */
-  public Triple getSourceRelation() {
-    if (PassageFromRelation_Type.featOkTst && ((PassageFromRelation_Type)jcasType).casFeat_sourceRelation == null)
-      jcasType.jcas.throwFeatMissing("sourceRelation", "edu.cmu.lti.oaqa.type.retrieval.PassageFromRelation");
-    return (Triple)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((PassageFromRelation_Type)jcasType).casFeatCode_sourceRelation)));}
+  public Concept getConcept() {
+    if (ConceptSearchResult_Type.featOkTst && ((ConceptSearchResult_Type)jcasType).casFeat_concept == null)
+      jcasType.jcas.throwFeatMissing("concept", "edu.cmu.lti.oaqa.type.retrieval.ConceptSearchResult");
+    return (Concept)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((ConceptSearchResult_Type)jcasType).casFeatCode_concept)));}
     
-  /** setter for sourceRelation - sets The triple from which the search result was generated 
+  /** setter for concept - sets The relevant concept searched in the ontology. 
    * @generated
    * @param v value to set into the feature 
    */
-  public void setSourceRelation(Triple v) {
-    if (PassageFromRelation_Type.featOkTst && ((PassageFromRelation_Type)jcasType).casFeat_sourceRelation == null)
-      jcasType.jcas.throwFeatMissing("sourceRelation", "edu.cmu.lti.oaqa.type.retrieval.PassageFromRelation");
-    jcasType.ll_cas.ll_setRefValue(addr, ((PassageFromRelation_Type)jcasType).casFeatCode_sourceRelation, jcasType.ll_cas.ll_getFSRef(v));}    
+  public void setConcept(Concept v) {
+    if (ConceptSearchResult_Type.featOkTst && ((ConceptSearchResult_Type)jcasType).casFeat_concept == null)
+      jcasType.jcas.throwFeatMissing("concept", "edu.cmu.lti.oaqa.type.retrieval.ConceptSearchResult");
+    jcasType.ll_cas.ll_setRefValue(addr, ((ConceptSearchResult_Type)jcasType).casFeatCode_concept, jcasType.ll_cas.ll_getFSRef(v));}    
   }
 
     

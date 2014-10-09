@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Tue Aug 05 23:03:53 EDT 2014 */
+/* First created by JCasGen Sun Oct 05 18:02:25 EDT 2014 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** An object that holds a query and results for a search (text search, fact search, KB search, etc.)
- * Updated by JCasGen Tue Sep 30 18:21:25 EDT 2014
+ * Updated by JCasGen Mon Oct 06 20:47:19 EDT 2014
  * @generated */
 public class Search_Type extends TOP_Type {
   /** @generated 

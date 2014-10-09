@@ -504,41 +504,53 @@
       <supertypeName>edu.cmu.lti.oaqa.type.retrieval.SearchResult</supertypeName>
     </typeDescription>
     <typeDescription>
-      <name>edu.cmu.lti.oaqa.type.retrieval.RelationSearchResult</name>
+      <name>edu.cmu.lti.oaqa.type.retrieval.TripleSearchResult</name>
       <description>A search result from a triple store, e.g., an RDF store.</description>
       <supertypeName>edu.cmu.lti.oaqa.type.retrieval.AnswerSearchResult</supertypeName>
       <features>
         <featureDescription>
-          <name>context</name>
-          <description>The context of the triple store search result, i.e., triples identifying all neighboring nodes in the store.</description>
-          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>edu.cmu.lti.oaqa.type.kb.Relation</elementType>
-        </featureDescription>
+          <name>triple</name>
+          <description>The relevant triple searched in the RDF store.</description>
+          <rangeTypeName>edu.cmu.lti.oaqa.type.kb.Triple</rangeTypeName>
+          </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
-      <name>edu.cmu.lti.oaqa.type.retrieval.EntitySearchResult</name>
+      <name>edu.cmu.lti.oaqa.type.retrieval.ConceptSearchResult</name>
       <description>A search result from an ontology.</description>
       <supertypeName>edu.cmu.lti.oaqa.type.retrieval.AnswerSearchResult</supertypeName>
       <features>
         <featureDescription>
-          <name>entities</name>
-          <description>The relevant concepts searched in the ontology.</description>
-          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>edu.cmu.lti.oaqa.type.kb.Entity</elementType>
-        </featureDescription>
+          <name>concept</name>
+          <description>The relevant concept searched in the ontology.</description>
+          <rangeTypeName>edu.cmu.lti.oaqa.type.kb.Concept</rangeTypeName>
+          </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
-      <name>edu.cmu.lti.oaqa.type.kb.Relation</name>
-      <description>A relation concept. It represents the relationship between entities. which is generalized from a triple, e.g., and RDF triple.</description>
-      <supertypeName>edu.cmu.lti.oaqa.type.kb.Concept</supertypeName>
+      <name>edu.cmu.lti.oaqa.type.kb.Triple</name>
+      <description>A triple, e.g., and RDF triple.</description>
+      <supertypeName>uima.cas.TOP</supertypeName>
       <features>
         <featureDescription>
-          <name>arguments</name>
-          <description>Arguments of type Entity of the relation.</description>
-          <rangeTypeName>uima.cas.FSList</rangeTypeName>
-          <elementType>edu.cmu.lti.oaqa.type.kb.Entity</elementType>
+          <name>subject</name>
+          <description>The subject of the triple - always a URI.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>predicate</name>
+          <description>The predicate of the triple - always a URI.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>object</name>
+          <description>The object of the triple - may be a URI or an xml datatype (string, int, etc.).  See isObjeUri to determine if object is a URI.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>isObjUri</name>
+          <description>Boolean flag - true of object field is a URI, false otherwise.</description>
+          <rangeTypeName>uima.cas.Boolean</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
@@ -555,7 +567,7 @@
         <featureDescription>
           <name>sourceRelation</name>
           <description>The triple from which the search result was generated</description>
-          <rangeTypeName>edu.cmu.lti.oaqa.type.kb.Relation</rangeTypeName>
+          <rangeTypeName>edu.cmu.lti.oaqa.type.kb.Triple</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
@@ -631,7 +643,7 @@
         </featureDescription>
         <featureDescription>
           <name>uris</name>
-          <description>Array of ids that identify this named entity.  There may be more than one id if this named entity is ambiguous.  The ids are typically URIs.</description>
+          <description>Array of uris that identify this named entity.  There may be more than one uri if this named entity is ambiguous.</description>
           <rangeTypeName>uima.cas.StringList</rangeTypeName>
         </featureDescription>
         <featureDescription>
@@ -658,15 +670,7 @@
       <name>edu.cmu.lti.oaqa.type.kb.RelationMention</name>
       <description>A named relation mention that identify or define the named relation concept.</description>
       <supertypeName>edu.cmu.lti.oaqa.type.kb.ConceptMention</supertypeName>
-      <features>
-        <featureDescription>
-          <name>argumentMentions</name>
-          <description>A list of entity mentions being the arguments (e.g. sub, obj, etc.) of the relation mention.</description>
-          <rangeTypeName>uima.cas.FSList</rangeTypeName>
-          <elementType>edu.cmu.lti.oaqa.type.kb.EntityMention</elementType>
-        </featureDescription>
-      </features>
-    </typeDescription>
+      </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.kb.Entity</name>
       <description>An abstract normalized entity, which may have various surface forms (alternative representations).</description>
@@ -725,6 +729,11 @@
           <elementType>edu.cmu.lti.oaqa.type.QueryConcept</elementType>
         </featureDescription>
         </features>
+    </typeDescription>
+  <typeDescription>
+      <name>edu.cmu.lti.oaqa.type.kb.Relation</name>
+      <description/>
+      <supertypeName>edu.cmu.lti.oaqa.type.kb.Concept</supertypeName>
     </typeDescription>
   </types>
 </typeSystemDescription>

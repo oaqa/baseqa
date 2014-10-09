@@ -19,12 +19,12 @@ public class DocumentEvaluateeProvider extends ConfigurableProvider implements
 
   @Override
   public Collection<Document> getGoldStandard(JCas jcas) throws CASException {
-    return TypeUtil.getDocuments(ViewManager.getOrCreateView(jcas, ViewType.FINAL_ANSWER_GS));
+    return TypeUtil.getRankedDocuments(ViewManager.getOrCreateView(jcas, ViewType.FINAL_ANSWER_GS));
   }
 
   @Override
   public Collection<Document> getResults(JCas jcas) throws CASException {
-    return TypeUtil.getDocuments(jcas);
+    return TypeUtil.getRankedDocuments(jcas);
   }
 
   @Override

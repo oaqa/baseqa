@@ -1,6 +1,6 @@
 
 /* First created by JCasGen Sun Oct 05 18:02:25 EDT 2014 */
-package edu.cmu.lti.oaqa.type.kb;
+package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
@@ -11,12 +11,11 @@ import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
-import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** A superclass for EntityMention and RelationMention.
- * Updated by JCasGen Mon Oct 06 20:47:18 EDT 2014
+/** A search result from an ontology.
+ * Updated by JCasGen Mon Oct 06 20:47:19 EDT 2014
  * @generated */
-public class ConceptMention_Type extends Annotation_Type {
+public class ConceptSearchResult_Type extends AnswerSearchResult_Type {
   /** @generated 
    * @return the generator for this type
    */
@@ -26,25 +25,25 @@ public class ConceptMention_Type extends Annotation_Type {
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
-  			 if (ConceptMention_Type.this.useExistingInstance) {
+  			 if (ConceptSearchResult_Type.this.useExistingInstance) {
   			   // Return eq fs instance if already created
-  		     FeatureStructure fs = ConceptMention_Type.this.jcas.getJfsFromCaddr(addr);
+  		     FeatureStructure fs = ConceptSearchResult_Type.this.jcas.getJfsFromCaddr(addr);
   		     if (null == fs) {
-  		       fs = new ConceptMention(addr, ConceptMention_Type.this);
-  			   ConceptMention_Type.this.jcas.putJfsFromCaddr(addr, fs);
+  		       fs = new ConceptSearchResult(addr, ConceptSearchResult_Type.this);
+  			   ConceptSearchResult_Type.this.jcas.putJfsFromCaddr(addr, fs);
   			   return fs;
   		     }
   		     return fs;
-        } else return new ConceptMention(addr, ConceptMention_Type.this);
+        } else return new ConceptSearchResult(addr, ConceptSearchResult_Type.this);
   	  }
     };
   /** @generated */
   @SuppressWarnings ("hiding")
-  public final static int typeIndexID = ConceptMention.typeIndexID;
+  public final static int typeIndexID = ConceptSearchResult.typeIndexID;
   /** @generated 
      @modifiable */
   @SuppressWarnings ("hiding")
-  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("edu.cmu.lti.oaqa.type.kb.ConceptMention");
+  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("edu.cmu.lti.oaqa.type.retrieval.ConceptSearchResult");
  
   /** @generated */
   final Feature casFeat_concept;
@@ -56,7 +55,7 @@ public class ConceptMention_Type extends Annotation_Type {
    */ 
   public int getConcept(int addr) {
         if (featOkTst && casFeat_concept == null)
-      jcas.throwFeatMissing("concept", "edu.cmu.lti.oaqa.type.kb.ConceptMention");
+      jcas.throwFeatMissing("concept", "edu.cmu.lti.oaqa.type.retrieval.ConceptSearchResult");
     return ll_cas.ll_getRefValue(addr, casFeatCode_concept);
   }
   /** @generated
@@ -65,7 +64,7 @@ public class ConceptMention_Type extends Annotation_Type {
    */    
   public void setConcept(int addr, int v) {
         if (featOkTst && casFeat_concept == null)
-      jcas.throwFeatMissing("concept", "edu.cmu.lti.oaqa.type.kb.ConceptMention");
+      jcas.throwFeatMissing("concept", "edu.cmu.lti.oaqa.type.retrieval.ConceptSearchResult");
     ll_cas.ll_setRefValue(addr, casFeatCode_concept, v);}
     
   
@@ -77,7 +76,7 @@ public class ConceptMention_Type extends Annotation_Type {
 	 * @param jcas JCas
 	 * @param casType Type 
 	 */
-  public ConceptMention_Type(JCas jcas, Type casType) {
+  public ConceptSearchResult_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 

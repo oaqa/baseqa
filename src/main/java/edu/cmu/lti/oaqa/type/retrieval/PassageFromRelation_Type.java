@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Tue Aug 05 23:03:53 EDT 2014 */
+/* First created by JCasGen Sun Oct 05 18:02:25 EDT 2014 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A passage search result that was the result of a search from the subject and object of a triple
- * Updated by JCasGen Tue Sep 30 18:21:25 EDT 2014
+ * Updated by JCasGen Mon Oct 06 20:47:19 EDT 2014
  * @generated */
 public class PassageFromRelation_Type extends Passage_Type {
   /** @generated 
@@ -81,7 +81,7 @@ public class PassageFromRelation_Type extends Passage_Type {
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_sourceRelation = jcas.getRequiredFeatureDE(casType, "sourceRelation", "edu.cmu.lti.oaqa.type.kb.Relation", featOkTst);
+    casFeat_sourceRelation = jcas.getRequiredFeatureDE(casType, "sourceRelation", "edu.cmu.lti.oaqa.type.kb.Triple", featOkTst);
     casFeatCode_sourceRelation  = (null == casFeat_sourceRelation) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_sourceRelation).getCode();
 
   }

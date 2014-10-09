@@ -10,16 +10,16 @@ import org.apache.uima.jcas.cas.TOP_Type;
 import edu.cmu.lti.oaqa.type.kb.Triple;
 
 
-/** A passage search result that was the result of a search from the subject and object of a triple
+/** A search result from a triple store, e.g., an RDF store.
  * Updated by JCasGen Mon Oct 06 20:47:19 EDT 2014
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
-public class PassageFromRelation extends Passage {
+public class TripleSearchResult extends AnswerSearchResult {
   /** @generated
    * @ordered 
    */
   @SuppressWarnings ("hiding")
-  public final static int typeIndexID = JCasRegistry.register(PassageFromRelation.class);
+  public final static int typeIndexID = JCasRegistry.register(TripleSearchResult.class);
   /** @generated
    * @ordered 
    */
@@ -33,14 +33,14 @@ public class PassageFromRelation extends Passage {
  
   /** Never called.  Disable default constructor
    * @generated */
-  protected PassageFromRelation() {/* intentionally empty block */}
+  protected TripleSearchResult() {/* intentionally empty block */}
     
   /** Internal - constructor used by generator 
    * @generated
    * @param addr low level Feature Structure reference
    * @param type the type of this Feature Structure 
    */
-  public PassageFromRelation(int addr, TOP_Type type) {
+  public TripleSearchResult(int addr, TOP_Type type) {
     super(addr, type);
     readObject();
   }
@@ -48,7 +48,7 @@ public class PassageFromRelation extends Passage {
   /** @generated
    * @param jcas JCas to which this Feature Structure belongs 
    */
-  public PassageFromRelation(JCas jcas) {
+  public TripleSearchResult(JCas jcas) {
     super(jcas);
     readObject();   
   } 
@@ -65,25 +65,25 @@ public class PassageFromRelation extends Passage {
  
     
   //*--------------*
-  //* Feature: sourceRelation
+  //* Feature: triple
 
-  /** getter for sourceRelation - gets The triple from which the search result was generated
+  /** getter for triple - gets The relevant triple searched in the RDF store.
    * @generated
    * @return value of the feature 
    */
-  public Triple getSourceRelation() {
-    if (PassageFromRelation_Type.featOkTst && ((PassageFromRelation_Type)jcasType).casFeat_sourceRelation == null)
-      jcasType.jcas.throwFeatMissing("sourceRelation", "edu.cmu.lti.oaqa.type.retrieval.PassageFromRelation");
-    return (Triple)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((PassageFromRelation_Type)jcasType).casFeatCode_sourceRelation)));}
+  public Triple getTriple() {
+    if (TripleSearchResult_Type.featOkTst && ((TripleSearchResult_Type)jcasType).casFeat_triple == null)
+      jcasType.jcas.throwFeatMissing("triple", "edu.cmu.lti.oaqa.type.retrieval.TripleSearchResult");
+    return (Triple)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((TripleSearchResult_Type)jcasType).casFeatCode_triple)));}
     
-  /** setter for sourceRelation - sets The triple from which the search result was generated 
+  /** setter for triple - sets The relevant triple searched in the RDF store. 
    * @generated
    * @param v value to set into the feature 
    */
-  public void setSourceRelation(Triple v) {
-    if (PassageFromRelation_Type.featOkTst && ((PassageFromRelation_Type)jcasType).casFeat_sourceRelation == null)
-      jcasType.jcas.throwFeatMissing("sourceRelation", "edu.cmu.lti.oaqa.type.retrieval.PassageFromRelation");
-    jcasType.ll_cas.ll_setRefValue(addr, ((PassageFromRelation_Type)jcasType).casFeatCode_sourceRelation, jcasType.ll_cas.ll_getFSRef(v));}    
+  public void setTriple(Triple v) {
+    if (TripleSearchResult_Type.featOkTst && ((TripleSearchResult_Type)jcasType).casFeat_triple == null)
+      jcasType.jcas.throwFeatMissing("triple", "edu.cmu.lti.oaqa.type.retrieval.TripleSearchResult");
+    jcasType.ll_cas.ll_setRefValue(addr, ((TripleSearchResult_Type)jcasType).casFeatCode_triple, jcasType.ll_cas.ll_getFSRef(v));}    
   }
 
     

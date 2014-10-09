@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Tue Aug 05 23:03:53 EDT 2014 */
+/* First created by JCasGen Sun Oct 05 18:02:25 EDT 2014 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,7 +10,7 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** A search result where the candidate answer is obtained as part of the search process and saved in the text field of the search result.
- * Updated by JCasGen Tue Sep 30 18:21:25 EDT 2014
+ * Updated by JCasGen Mon Oct 06 20:47:18 EDT 2014
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class AnswerSearchResult extends SearchResult {

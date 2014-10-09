@@ -49,8 +49,8 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
   public Map<Measure, Double> calculate(Iterable<T> resultEvaluatees, Iterable<T> gsEvaluatees,
           Comparator<T> comparator, Function<T, String> uniqueIdMapper) {
     List<String> resultArray = StreamSupport.stream(resultEvaluatees.spliterator(), false)
-            .sorted(comparator).map(uniqueIdMapper).distinct().collect(toList());
-    Set<String> gsSet = StreamSupport.stream(gsEvaluatees.spliterator(), true).map(uniqueIdMapper)
+            .sorted(comparator).map(Passage::getUri).distinct().collect(toList());
+    Set<String> gsSet = StreamSupport.stream(gsEvaluatees.spliterator(), true).map(Passage::getUri)
             .collect(toSet());
     double avgDocPrec = calculateAveragePrecision(resultArray, gsSet);
     double avgPsgPrec = calculatePassageAveragePrecision(resultEvaluatees, gsEvaluatees);

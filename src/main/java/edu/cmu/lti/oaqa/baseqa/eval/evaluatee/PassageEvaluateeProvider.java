@@ -19,12 +19,12 @@ public class PassageEvaluateeProvider extends ConfigurableProvider implements
 
   @Override
   public Collection<Passage> getGoldStandard(JCas jcas) throws CASException {
-    return TypeUtil.getPassages(ViewManager.getOrCreateView(jcas, ViewType.FINAL_ANSWER_GS));
+    return TypeUtil.getRankedPassages(ViewManager.getOrCreateView(jcas, ViewType.FINAL_ANSWER_GS));
   }
 
   @Override
   public Collection<Passage> getResults(JCas jcas) throws CASException {
-    return TypeUtil.getPassages(jcas);
+    return TypeUtil.getRankedPassages(jcas);
   }
 
   @Override
@@ -37,7 +37,9 @@ public class PassageEvaluateeProvider extends ConfigurableProvider implements
 
   @Override
   public Function<Passage, String> uniqueIdMapper() {
-    return Passage::getUri;
+    return result -> result.getUri() + "[" + result.getBeginSection() + ":"
+            + result.getOffsetInBeginSection() + "," + result.getEndSection() + ":"
+            + result.getOffsetInEndSection() + "]";
   }
 
 }

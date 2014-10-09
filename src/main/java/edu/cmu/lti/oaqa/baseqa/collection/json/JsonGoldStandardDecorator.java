@@ -2,7 +2,7 @@ package edu.cmu.lti.oaqa.baseqa.collection.json;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.apache.uima.UimaContext;
@@ -23,17 +23,20 @@ public class JsonGoldStandardDecorator extends JCasAnnotator_ImplBase {
 
   private Map<String, TrainingQuestion> id2input;
 
+  private static final Collector<TrainingQuestion, ?, Map<String, TrainingQuestion>> TO_MAP_COLLECTOR = Collectors
+          .groupingBy(TrainingQuestion::getId, Collectors.reducing(null, (x, y) -> y));
+
   @Override
   public void initialize(UimaContext context) throws ResourceInitializationException {
     super.initialize(context);
     Object value = context.getConfigParameterValue("file");
-    if (value instanceof String) {
-      id2input = TrainingSet.load(getClass().getResourceAsStream((String) value)).stream()
-              .collect(Collectors.toMap(TrainingQuestion::getId, Function.identity()));
-    } else if (value instanceof String[]) {
-      id2input = Arrays.stream((String[]) value)
+    if (String.class.isAssignableFrom(value.getClass())) {
+      id2input = TrainingSet.load(getClass().getResourceAsStream(String.class.cast(value)))
+              .stream().collect(TO_MAP_COLLECTOR);
+    } else if (String[].class.isAssignableFrom(value.getClass())) {
+      id2input = Arrays.stream(String[].class.cast(value))
               .flatMap(path -> TrainingSet.load(getClass().getResourceAsStream(path)).stream())
-              .collect(Collectors.toMap(TrainingQuestion::getId, Function.identity()));
+              .collect(TO_MAP_COLLECTOR);
     }
   }
 

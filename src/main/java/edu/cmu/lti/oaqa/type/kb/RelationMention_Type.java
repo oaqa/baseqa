@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Tue Aug 05 23:03:53 EDT 2014 */
+/* First created by JCasGen Sun Oct 05 18:02:25 EDT 2014 */
 package edu.cmu.lti.oaqa.type.kb;
 
 import org.apache.uima.jcas.JCas;
@@ -9,11 +9,9 @@ import org.apache.uima.cas.impl.FSGenerator;
 import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
-import org.apache.uima.cas.impl.FeatureImpl;
-import org.apache.uima.cas.Feature;
 
 /** A named relation mention that identify or define the named relation concept.
- * Updated by JCasGen Tue Sep 30 18:21:24 EDT 2014
+ * Updated by JCasGen Mon Oct 06 20:47:18 EDT 2014
  * @generated */
 public class RelationMention_Type extends ConceptMention_Type {
   /** @generated 
@@ -44,30 +42,6 @@ public class RelationMention_Type extends ConceptMention_Type {
      @modifiable */
   @SuppressWarnings ("hiding")
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("edu.cmu.lti.oaqa.type.kb.RelationMention");
- 
-  /** @generated */
-  final Feature casFeat_argumentMentions;
-  /** @generated */
-  final int     casFeatCode_argumentMentions;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public int getArgumentMentions(int addr) {
-        if (featOkTst && casFeat_argumentMentions == null)
-      jcas.throwFeatMissing("argumentMentions", "edu.cmu.lti.oaqa.type.kb.RelationMention");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_argumentMentions);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setArgumentMentions(int addr, int v) {
-        if (featOkTst && casFeat_argumentMentions == null)
-      jcas.throwFeatMissing("argumentMentions", "edu.cmu.lti.oaqa.type.kb.RelationMention");
-    ll_cas.ll_setRefValue(addr, casFeatCode_argumentMentions, v);}
-    
-  
 
 
 
@@ -79,10 +53,6 @@ public class RelationMention_Type extends ConceptMention_Type {
   public RelationMention_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
-
- 
-    casFeat_argumentMentions = jcas.getRequiredFeatureDE(casType, "argumentMentions", "uima.cas.FSList", featOkTst);
-    casFeatCode_argumentMentions  = (null == casFeat_argumentMentions) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_argumentMentions).getCode();
 
   }
 }

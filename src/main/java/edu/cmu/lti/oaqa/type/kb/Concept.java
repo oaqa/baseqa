@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Tue Aug 05 23:03:53 EDT 2014 */
+/* First created by JCasGen Sun Oct 05 18:02:25 EDT 2014 */
 package edu.cmu.lti.oaqa.type.kb;
 
 import org.apache.uima.jcas.JCas; 
@@ -8,12 +8,12 @@ import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 import org.apache.uima.jcas.cas.FSList;
-import org.apache.uima.jcas.cas.StringList;
 import org.apache.uima.jcas.cas.TOP;
+import org.apache.uima.jcas.cas.StringList;
 
 
 /** A superclass for EntityConcept and RelationConcept.
- * Updated by JCasGen Tue Sep 30 18:21:24 EDT 2014
+ * Updated by JCasGen Mon Oct 06 20:47:17 EDT 2014
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class Concept extends TOP {
@@ -91,7 +91,7 @@ public class Concept extends TOP {
   //*--------------*
   //* Feature: uris
 
-  /** getter for uris - gets Array of ids that identify this named entity.  There may be more than one id if this named entity is ambiguous.  The ids are typically URIs.
+  /** getter for uris - gets Array of uris that identify this named entity.  There may be more than one uri if this named entity is ambiguous.
    * @generated
    * @return value of the feature 
    */
@@ -100,7 +100,7 @@ public class Concept extends TOP {
       jcasType.jcas.throwFeatMissing("uris", "edu.cmu.lti.oaqa.type.kb.Concept");
     return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Concept_Type)jcasType).casFeatCode_uris)));}
     
-  /** setter for uris - sets Array of ids that identify this named entity.  There may be more than one id if this named entity is ambiguous.  The ids are typically URIs. 
+  /** setter for uris - sets Array of uris that identify this named entity.  There may be more than one uri if this named entity is ambiguous. 
    * @generated
    * @param v value to set into the feature 
    */
