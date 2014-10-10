@@ -1,5 +1,8 @@
 package edu.cmu.lti.oaqa.baseqa.collection.json;
 
+import static java.util.stream.Collectors.toList;
+
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,13 +26,17 @@ public class JsonCollectionReader extends IterableCollectionReader {
     super.initialize();
     inputs = Lists.newArrayList();
     Object value = getConfigParameterValue("file");
-    if (value instanceof String) {
-      inputs.addAll(TestSet.load(getClass().getResourceAsStream((String) value)));
-    } else if (value instanceof String[]) {
-      for (String path : (String[]) value) {
-        inputs.addAll(TestSet.load(getClass().getResourceAsStream(path)));
-      }
+    if (String.class.isAssignableFrom(value.getClass())) {
+      inputs = TestSet.load(getClass().getResourceAsStream(String.class.cast(value))).stream()
+              .collect(toList());
+    } else if (String[].class.isAssignableFrom(value.getClass())) {
+      inputs = Arrays.stream(String[].class.cast(value))
+              .flatMap(path -> TestSet.load(getClass().getResourceAsStream(path)).stream())
+              .collect(toList());
     }
+    // trim question texts
+    inputs.stream().filter(input -> input.getBody() != null)
+            .forEach(input -> input.setBody(input.getBody().trim().replaceAll("\\s+", " ")));
   }
 
   private int seqId = -1;
@@ -46,8 +53,7 @@ public class JsonCollectionReader extends IterableCollectionReader {
       @Override
       public DataElement next() {
         TestQuestion input = inputs.get(++seqId);
-        return new DataElement(getDataset(), String.valueOf(seqId), input.getBody().trim()
-                .replaceAll("\\s+", " "), input.getId());
+        return new DataElement(getDataset(), String.valueOf(seqId), input.getBody(), input.getId());
       }
 
       @Override

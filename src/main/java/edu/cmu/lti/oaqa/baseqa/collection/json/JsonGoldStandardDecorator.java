@@ -40,6 +40,9 @@ public class JsonGoldStandardDecorator extends JCasAnnotator_ImplBase {
               .flatMap(path -> TrainingSet.load(getClass().getResourceAsStream(path)).stream())
               .collect(TO_MAP_COLLECTOR);
     }
+    // trim question texts
+    id2input.values().stream().filter(input -> input.getBody() != null)
+            .forEach(input -> input.setBody(input.getBody().trim().replaceAll("\\s+", " ")));
   }
 
   @Override
