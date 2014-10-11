@@ -49,6 +49,9 @@ public class JsonGoldStandardDecorator extends JCasAnnotator_ImplBase {
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     String id = ProcessingStepUtils.getInputElement(jcas).getQuuid();
     String source = TypeUtil.getQuestion(jcas).getSource();
+    if (!id2input.containsKey(id)) {
+      return;
+    }
     try {
       JsonCollectionReaderHelper.addQuestionToIndex(id2input.get(id), source,
               ViewManager.getOrCreateView(jcas, ViewType.FINAL_ANSWER_GS));
