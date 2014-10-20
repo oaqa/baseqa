@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Oct 05 18:02:25 EDT 2014 */
+/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
 package edu.cmu.lti.oaqa.type.kb;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A superclass for EntityMention and RelationMention.
- * Updated by JCasGen Mon Oct 06 20:47:18 EDT 2014
+ * Updated by JCasGen Sun Oct 19 14:47:24 EDT 2014
  * @generated */
 public class ConceptMention_Type extends Annotation_Type {
   /** @generated 

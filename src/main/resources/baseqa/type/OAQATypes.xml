@@ -496,6 +496,16 @@
           <description>A unique identifier for this document.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
+        <featureDescription>
+          <name>sections</name>
+          <description>Content of sections in the document.</description>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>sectionLabels</name>
+          <description>Section labels in the document, e.g. sections.0, sections1, etc.</description>
+          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+        </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>

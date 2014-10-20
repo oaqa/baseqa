@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Oct 05 18:02:25 EDT 2014 */
+/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas;
@@ -11,7 +11,7 @@ import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
 
 /** A search result where the candidate answer is obtained as part of the search process and saved in the text field of the search result.
- * Updated by JCasGen Mon Oct 06 20:47:18 EDT 2014
+ * Updated by JCasGen Sun Oct 19 14:47:24 EDT 2014
  * @generated */
 public class AnswerSearchResult_Type extends SearchResult_Type {
   /** @generated 

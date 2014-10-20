@@ -313,7 +313,7 @@ public class TypeFactory {
 
   public static Document createDocument(JCas jcas, String uri, double score, String text, int rank,
           String queryString, String searchId, Collection<CandidateAnswerVariant> candidateAnswers,
-          String title, String docId) {
+          String title, String docId, List<String> sections, List<String> sectionLabels) {
     Document ret = new Document(jcas);
     ret.setUri(uri);
     ret.setScore(score);
@@ -323,27 +323,24 @@ public class TypeFactory {
     ret.setSearchId(searchId);
     ret.setCandidateAnswers(FSCollectionFactory.createFSArray(jcas, candidateAnswers));
     ret.setTitle(title);
-    ret.setDocId(title);
+    ret.setDocId(docId);
+    ret.setSections((StringArray) FSCollectionFactory.createStringArray(jcas, sections));
+    ret.setSectionLabels((StringArray) FSCollectionFactory.createStringArray(jcas, sectionLabels));
     return ret;
   }
 
   public static Document createDocument(JCas jcas, String uri, String text, int rank,
           String queryString, String title, String docId) {
     return TypeFactory.createDocument(jcas, uri, TypeConstants.SCORE_UNKNOWN, text, rank,
-            queryString, TypeConstants.SEARCH_ID_UNKNOWN, new ArrayList<>(), title, docId);
-  }
-
-  public static Document createDocument(JCas jcas, String uri, String docId) {
-    return createDocument(jcas, uri, TypeConstants.SCORE_UNKNOWN, TypeConstants.TEXT_UNKNOWN,
-            TypeConstants.RANK_UNKNOWN, TypeConstants.QUERY_STRING_UNKNOWN,
-            TypeConstants.SEARCH_ID_UNKNOWN, new ArrayList<>(), TypeConstants.TITLE_UNKNOWN, docId);
+            queryString, TypeConstants.SEARCH_ID_UNKNOWN, new ArrayList<>(), title, docId,
+            new ArrayList<>(), new ArrayList<>());
   }
 
   public static Document createDocument(JCas jcas, String uri) {
     return createDocument(jcas, uri, TypeConstants.SCORE_UNKNOWN, TypeConstants.TEXT_UNKNOWN,
             TypeConstants.RANK_UNKNOWN, TypeConstants.QUERY_STRING_UNKNOWN,
             TypeConstants.SEARCH_ID_UNKNOWN, new ArrayList<>(), TypeConstants.TITLE_UNKNOWN,
-            TypeConstants.DOC_ID_UNKNOWN);
+            TypeConstants.DOC_ID_UNKNOWN, new ArrayList<>(), new ArrayList<>());
   }
 
   public static Passage createPassage(JCas jcas, String uri, double score, String text, int rank,

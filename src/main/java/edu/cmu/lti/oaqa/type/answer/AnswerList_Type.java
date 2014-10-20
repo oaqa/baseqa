@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Oct 05 18:02:25 EDT 2014 */
+/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
 package edu.cmu.lti.oaqa.type.answer;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** A ranked list of candidate answers.
- * Updated by JCasGen Mon Oct 06 20:47:17 EDT 2014
+ * Updated by JCasGen Sun Oct 19 14:47:24 EDT 2014
  * @generated */
 public class AnswerList_Type extends TOP_Type {
   /** @generated 
@@ -79,7 +79,7 @@ public class AnswerList_Type extends TOP_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
-  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_answerList), i);
   }
    
   /** @generated

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 import org.apache.uima.fit.util.FSCollectionFactory;
@@ -95,6 +96,11 @@ public class TypeUtil {
 
   public static Range<Integer> spanRangeInSection(Passage passage) {
     return Range.closedOpen(passage.getOffsetInBeginSection(), passage.getOffsetInEndSection());
+  }
+
+  public static int hash(Passage passage) {
+    return Objects.hash(passage.getUri(), passage.getDocId(), passage.getOffsetInBeginSection(),
+            passage.getOffsetInEndSection(), passage.getBeginSection(), passage.getEndSection());
   }
 
 }
