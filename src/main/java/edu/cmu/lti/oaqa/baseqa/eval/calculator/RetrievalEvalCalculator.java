@@ -4,6 +4,7 @@ import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.AVERA
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.BINARY_RECALL;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.BINARY_RELEVANT;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.F1;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.GMAP;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.MAP;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.PRECISION;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.RECALL;
@@ -14,6 +15,7 @@ import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.RETRI
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +35,7 @@ import edu.cmu.lti.oaqa.ecd.config.ConfigurableProvider;
 public class RetrievalEvalCalculator<T> extends ConfigurableProvider implements EvalCalculator<T> {
 
   @Override
-  public Map<Measure, Double> calculate(Iterable<T> resultEvaluatees, Iterable<T> gsEvaluatees,
+  public Map<Measure, Double> calculate(Collection<T> resultEvaluatees, Collection<T> gsEvaluatees,
           Comparator<T> comparator, Function<T, String> uniqueIdMapper) {
     Set<String> gsSet = StreamSupport.stream(gsEvaluatees.spliterator(), true).map(uniqueIdMapper)
             .collect(toSet());
@@ -49,22 +51,28 @@ public class RetrievalEvalCalculator<T> extends ConfigurableProvider implements 
   }
 
   @Override
-  public Map<Measure, Double> accumulate(Map<Measure, ? extends Iterable<Double>> measure2values) {
+  public Map<Measure, Double> accumulate(Map<Measure, ? extends Collection<Double>> measure2values) {
+    double count = sumMeasurementValues(measure2values.get(RETRIEVAL_COUNT));
     double relevantRetrieved = sumMeasurementValues(measure2values.get(RELEVANT_RETRIEVED));
     double retrieved = sumMeasurementValues(measure2values.get(RETRIEVED));
     double relevant = sumMeasurementValues(measure2values.get(RELEVANT));
-    double sumAvgPrec = sumMeasurementValues(measure2values.get(AVERAGE_PRECISION));
-    double count = sumMeasurementValues(measure2values.get(RETRIEVAL_COUNT));
-    double binaryRelevant = sumMeasurementValues(measure2values.get(BINARY_RELEVANT));
+    double map = sumMeasurementValues(measure2values.get(AVERAGE_PRECISION)) / count;
+    double gmap = Math
+            .exp(sumOfLogMeasurementValues(measure2values.get(AVERAGE_PRECISION)) / count);
+    double binaryRecall = sumMeasurementValues(measure2values.get(BINARY_RELEVANT)) / count;
     double recall = calculateRecall(relevant, relevantRetrieved);
     double precision = calculatePrecision(retrieved, relevantRetrieved);
     return ImmutableMap.<Measure, Double> builder().put(PRECISION, precision).put(RECALL, recall)
-            .put(F1, calculateF1(precision, recall)).put(MAP, sumAvgPrec / count)
-            .put(BINARY_RECALL, binaryRelevant / count).put(RETRIEVAL_COUNT, count).build();
+            .put(F1, calculateF1(precision, recall)).put(MAP, map).put(GMAP, gmap)
+            .put(BINARY_RECALL, binaryRecall).put(RETRIEVAL_COUNT, count).build();
   }
 
-  private static double sumMeasurementValues(Iterable<Double> values) {
-    return StreamSupport.stream(values.spliterator(), true).mapToDouble(Double::doubleValue).sum();
+  private static double sumMeasurementValues(Collection<Double> values) {
+    return values.stream().mapToDouble(Double::doubleValue).sum();
+  }
+
+  private static double sumOfLogMeasurementValues(Collection<Double> values) {
+    return values.stream().mapToDouble(v -> Math.log(v + Double.MIN_NORMAL)).sum();
   }
 
   public static double calculateAveragePrecision(List<String> resultArray, Set<String> gsSet) {
@@ -86,7 +94,7 @@ public class RetrievalEvalCalculator<T> extends ConfigurableProvider implements 
   public static double calculateF1(double precision, double recall) {
     return ((precision + recall) != 0) ? (2 * precision * recall) / (precision + recall) : 0.0;
   }
-  
+
   @Override
   public String getName() {
     return "Retrieval";

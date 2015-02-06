@@ -1,19 +1,20 @@
 package edu.cmu.lti.oaqa.baseqa.eval.calculator;
 
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalCalculator.calculateAveragePrecision;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.ASPECT_AVERAGE_PRECISION;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.ASPECT_MAP;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.DOCUMENT_AVERAGE_PRECISION;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.DOCUMENT_MAP;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.PASSAGE2_AVERAGE_PRECISION;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.PASSAGE2_MAP;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.PASSAGE_AVERAGE_PRECISION;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.PASSAGE_MAP;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_ASPECT_AVERAGE_PRECISION;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_ASPECT_MAP;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_DOCUMENT_AVERAGE_PRECISION;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_DOCUMENT_MAP;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_PASSAGE2_AVERAGE_PRECISION;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_PASSAGE2_MAP;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_PASSAGE_AVERAGE_PRECISION;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_PASSAGE_MAP;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_PASSAGE_MAP_COUNT;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -46,7 +47,7 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
         EvalCalculator<T> {
 
   @Override
-  public Map<Measure, Double> calculate(Iterable<T> resultEvaluatees, Iterable<T> gsEvaluatees,
+  public Map<Measure, Double> calculate(Collection<T> resultEvaluatees, Collection<T> gsEvaluatees,
           Comparator<T> comparator, Function<T, String> uniqueIdMapper) {
     List<String> resultArray = StreamSupport.stream(resultEvaluatees.spliterator(), false)
             .sorted(comparator).map(Passage::getUri).distinct().collect(toList());
@@ -57,34 +58,36 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
     double avgPsg2Prec = calculatePassage2AveragePrecision(resultEvaluatees, gsEvaluatees);
     double avgAspPrec = calculateAspectAveragePrecision(resultEvaluatees, gsEvaluatees);
     return ImmutableMap.<Measure, Double> builder().put(TREC_PASSAGE_MAP_COUNT, 1.0)
-            .put(DOCUMENT_AVERAGE_PRECISION, avgDocPrec).put(PASSAGE_AVERAGE_PRECISION, avgPsgPrec)
-            .put(PASSAGE2_AVERAGE_PRECISION, avgPsg2Prec).put(ASPECT_AVERAGE_PRECISION, avgAspPrec)
-            .build();
+            .put(TREC_DOCUMENT_AVERAGE_PRECISION, avgDocPrec)
+            .put(TREC_PASSAGE_AVERAGE_PRECISION, avgPsgPrec)
+            .put(TREC_PASSAGE2_AVERAGE_PRECISION, avgPsg2Prec)
+            .put(TREC_ASPECT_AVERAGE_PRECISION, avgAspPrec).build();
   }
 
   @Override
-  public Map<Measure, Double> accumulate(Map<Measure, ? extends Iterable<Double>> measure2values) {
+  public Map<Measure, Double> accumulate(Map<Measure, ? extends Collection<Double>> measure2values) {
     double count = sumMeasurementValues(measure2values.get(TREC_PASSAGE_MAP_COUNT));
-    double sumDocPrec = sumMeasurementValues(measure2values.get(DOCUMENT_AVERAGE_PRECISION));
-    double sumPsgPrec = sumMeasurementValues(measure2values.get(PASSAGE_AVERAGE_PRECISION));
-    double sumPsg2Prec = sumMeasurementValues(measure2values.get(PASSAGE2_AVERAGE_PRECISION));
-    double sumAspPrec = sumMeasurementValues(measure2values.get(ASPECT_AVERAGE_PRECISION));
+    double sumDocPrec = sumMeasurementValues(measure2values.get(TREC_DOCUMENT_AVERAGE_PRECISION));
+    double sumPsgPrec = sumMeasurementValues(measure2values.get(TREC_PASSAGE_AVERAGE_PRECISION));
+    double sumPsg2Prec = sumMeasurementValues(measure2values.get(TREC_PASSAGE2_AVERAGE_PRECISION));
+    double sumAspPrec = sumMeasurementValues(measure2values.get(TREC_ASPECT_AVERAGE_PRECISION));
     return ImmutableMap.<Measure, Double> builder().put(TREC_PASSAGE_MAP_COUNT, count)
-            .put(DOCUMENT_MAP, sumDocPrec / count).put(PASSAGE_MAP, sumPsgPrec / count)
-            .put(PASSAGE2_MAP, sumPsg2Prec / count).put(ASPECT_MAP, sumAspPrec / count).build();
+            .put(TREC_DOCUMENT_MAP, sumDocPrec / count).put(TREC_PASSAGE_MAP, sumPsgPrec / count)
+            .put(TREC_PASSAGE2_MAP, sumPsg2Prec / count).put(TREC_ASPECT_MAP, sumAspPrec / count)
+            .build();
   }
 
-  private static double sumMeasurementValues(Iterable<Double> values) {
-    return StreamSupport.stream(values.spliterator(), true).mapToDouble(Double::doubleValue).sum();
+  private static double sumMeasurementValues(Collection<Double> values) {
+    return values.stream().mapToDouble(Double::doubleValue).sum();
   }
 
   public static <T extends Passage> double calculatePassageAveragePrecision(
-          Iterable<T> resultPassages, Iterable<T> gsPassages) {
+          Collection<T> resultPassages, Collection<T> gsPassages) {
     return calculatePassageAveragePrecision(resultPassages, toUriPassages(gsPassages));
   }
 
   public static <T extends Passage> double calculatePassageAveragePrecision(
-          Iterable<T> resultPassages, Multimap<String, T> gsUriPassages) {
+          Collection<T> resultPassages, Multimap<String, T> gsUriPassages) {
     int totalChars = 0;
     int overlapLength = 0;
     double sumPrecision = 0;
@@ -114,17 +117,17 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
     return sumPrecision / (count + numZeros);
   }
 
-  private static <T extends Passage> Multimap<String, T> toUriPassages(Iterable<T> passages) {
+  private static <T extends Passage> Multimap<String, T> toUriPassages(Collection<T> passages) {
     return Multimaps.index(passages, Passage::getUri);
   }
 
   public static double calculatePassage2AveragePrecision(
-          Iterable<? extends Passage> resultPassages, Iterable<? extends Passage> gsPassages) {
+          Collection<? extends Passage> resultPassages, Collection<? extends Passage> gsPassages) {
     return calculatePassage2AveragePrecision(resultPassages, toUriSpans(gsPassages));
   }
 
   public static double calculatePassage2AveragePrecision(
-          Iterable<? extends Passage> resultPassages, Map<String, RangeSet<Integer>> gsUriSpans) {
+          Collection<? extends Passage> resultPassages, Map<String, RangeSet<Integer>> gsUriSpans) {
     Map<String, RangeSet<Integer>> trackGsUriSpans = Maps.newHashMap(gsUriSpans);
     int totalChars = 0;
     int overlapLength = 0;
@@ -156,12 +159,13 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
     return sumPrecision / count;
   }
 
-  private static <T extends Passage> Map<String, RangeSet<Integer>> toUriSpans(Iterable<T> passages) {
+  private static <T extends Passage> Map<String, RangeSet<Integer>> toUriSpans(
+          Collection<T> passages) {
     Characteristics[] characters = new Collector.Characteristics[] {
         Collector.Characteristics.CONCURRENT, Collector.Characteristics.UNORDERED,
         Collector.Characteristics.IDENTITY_FINISH };
     Collector<Passage, RangeSet<Integer>, RangeSet<Integer>> collector = Collector.of(
-            () -> TreeRangeSet.create(), (s, p) -> s.add(TypeUtil.spanRangeInSection(p)),
+            () -> TreeRangeSet.<Integer> create(), (s, p) -> s.add(TypeUtil.spanRangeInSection(p)),
             (s1, s2) -> {
               s1.addAll(s2);
               return s1;
@@ -171,12 +175,12 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
   }
 
   public static <T extends Passage> double calculateAspectAveragePrecision(
-          Iterable<T> resultPassages, Iterable<T> gsPasssages) {
+          Collection<T> resultPassages, Collection<T> gsPasssages) {
     return calculateAspectAveragePrecision(resultPassages, toUriSpanAspects(gsPasssages));
   }
 
   public static <T extends Passage> double calculateAspectAveragePrecision(
-          Iterable<T> resultPassages, Map<String, RangeMap<Integer, String>> gsUriSpanAspects) {
+          Collection<T> resultPassages, Map<String, RangeMap<Integer, String>> gsUriSpanAspects) {
     int numerator = 0;
     int denominator = 0;
     double sumPrecision = 0;
@@ -207,12 +211,12 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
   }
 
   private static <T extends Passage> Map<String, RangeMap<Integer, String>> toUriSpanAspects(
-          Iterable<T> passages) {
+          Collection<T> passages) {
     Characteristics[] characters = new Collector.Characteristics[] {
         Collector.Characteristics.CONCURRENT, Collector.Characteristics.UNORDERED,
         Collector.Characteristics.IDENTITY_FINISH };
     Collector<Passage, RangeMap<Integer, String>, RangeMap<Integer, String>> collector = Collector
-            .of(() -> TreeRangeMap.create(),
+            .of(() -> TreeRangeMap.<Integer, String> create(),
                     (s, p) -> s.put(TypeUtil.spanRangeInSection(p), p.getAspects()), (s1, s2) -> {
                       s1.putAll(s2);
                       return s1;
@@ -221,11 +225,11 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
             .collect(groupingBy(Passage::getUri, collector));
   }
 
-  private static Set<String> toSplitAspects(Iterable<String> aspects) {
+  private static Set<String> toSplitAspects(Collection<String> aspects) {
     return StreamSupport.stream(aspects.spliterator(), true)
             .flatMap(aspect -> Stream.of(aspect.split("\\|"))).collect(toSet());
   }
-  
+
   @Override
   public String getName() {
     return "Trec";

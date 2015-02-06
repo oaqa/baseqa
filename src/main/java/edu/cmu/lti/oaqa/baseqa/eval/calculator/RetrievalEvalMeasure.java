@@ -8,7 +8,7 @@ public enum RetrievalEvalMeasure implements Measure {
   RELEVANT_RETRIEVED, RETRIEVED, RELEVANT, AVERAGE_PRECISION, BINARY_RELEVANT, RETRIEVAL_COUNT,
 
   // ACCUMULATED MEASURES
-  PRECISION, RECALL, F1, MAP, BINARY_RECALL;
+  PRECISION, RECALL, F1, MAP, GMAP, BINARY_RECALL;
 
   static {
     for (RetrievalEvalMeasure measure : values()) {
