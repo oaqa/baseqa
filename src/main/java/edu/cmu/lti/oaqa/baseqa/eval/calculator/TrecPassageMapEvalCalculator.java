@@ -1,6 +1,7 @@
 package edu.cmu.lti.oaqa.baseqa.eval.calculator;
 
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalCalculator.calculateAveragePrecision;
+import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.calculateAveragePrecision;
+import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.sumMeasurementValues;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_ASPECT_AVERAGE_PRECISION;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_ASPECT_MAP;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_DOCUMENT_AVERAGE_PRECISION;
@@ -24,7 +25,6 @@ import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collector.Characteristics;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -49,10 +49,9 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
   @Override
   public Map<Measure, Double> calculate(Collection<T> resultEvaluatees, Collection<T> gsEvaluatees,
           Comparator<T> comparator, Function<T, String> uniqueIdMapper) {
-    List<String> resultArray = StreamSupport.stream(resultEvaluatees.spliterator(), false)
-            .sorted(comparator).map(Passage::getUri).distinct().collect(toList());
-    Set<String> gsSet = StreamSupport.stream(gsEvaluatees.spliterator(), true).map(Passage::getUri)
-            .collect(toSet());
+    List<String> resultArray = resultEvaluatees.stream().sorted(comparator).map(Passage::getUri)
+            .distinct().collect(toList());
+    Set<String> gsSet = gsEvaluatees.parallelStream().map(Passage::getUri).collect(toSet());
     double avgDocPrec = calculateAveragePrecision(resultArray, gsSet);
     double avgPsgPrec = calculatePassageAveragePrecision(resultEvaluatees, gsEvaluatees);
     double avgPsg2Prec = calculatePassage2AveragePrecision(resultEvaluatees, gsEvaluatees);
@@ -75,10 +74,6 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
             .put(TREC_DOCUMENT_MAP, sumDocPrec / count).put(TREC_PASSAGE_MAP, sumPsgPrec / count)
             .put(TREC_PASSAGE2_MAP, sumPsg2Prec / count).put(TREC_ASPECT_MAP, sumAspPrec / count)
             .build();
-  }
-
-  private static double sumMeasurementValues(Collection<Double> values) {
-    return values.stream().mapToDouble(Double::doubleValue).sum();
   }
 
   public static <T extends Passage> double calculatePassageAveragePrecision(
@@ -170,8 +165,7 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
               s1.addAll(s2);
               return s1;
             }, characters);
-    return StreamSupport.stream(passages.spliterator(), true).collect(
-            groupingBy(Passage::getUri, collector));
+    return passages.parallelStream().collect(groupingBy(Passage::getUri, collector));
   }
 
   public static <T extends Passage> double calculateAspectAveragePrecision(
@@ -221,13 +215,13 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
                       s1.putAll(s2);
                       return s1;
                     }, characters);
-    return StreamSupport.stream(passages.spliterator(), true).filter(p -> p.getAspects() != null)
+    return passages.parallelStream().filter(p -> p.getAspects() != null)
             .collect(groupingBy(Passage::getUri, collector));
   }
 
   private static Set<String> toSplitAspects(Collection<String> aspects) {
-    return StreamSupport.stream(aspects.spliterator(), true)
-            .flatMap(aspect -> Stream.of(aspect.split("\\|"))).collect(toSet());
+    return aspects.parallelStream().flatMap(aspect -> Stream.of(aspect.split("\\|")))
+            .collect(toSet());
   }
 
   @Override

@@ -1,11 +1,20 @@
 package edu.cmu.lti.oaqa.baseqa.eval.calculator;
 
+import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.calculateAveragePrecision;
+import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.calculateF1;
+import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.calculatePrecision;
+import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.calculateRecall;
+import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.sumMeasurementValues;
+import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.sumOfLogMeasurementValues;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.AVERAGE_PRECISION;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.BINARY_RECALL;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.BINARY_RELEVANT;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.F1;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.GMAP;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.MAP;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.MEAN_BINARY_RECALL;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.MEAN_F1;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.MEAN_PRECISION;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.MEAN_RECALL;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.PRECISION;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.RECALL;
 import static edu.cmu.lti.oaqa.baseqa.eval.calculator.RetrievalEvalMeasure.RELEVANT;
@@ -22,8 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
@@ -31,68 +38,47 @@ import com.google.common.collect.Sets;
 import edu.cmu.lti.oaqa.baseqa.eval.EvalCalculator;
 import edu.cmu.lti.oaqa.baseqa.eval.Measure;
 import edu.cmu.lti.oaqa.ecd.config.ConfigurableProvider;
+import edu.cmu.lti.oaqa.type.retrieval.Passage;
 
-public class RetrievalEvalCalculator<T> extends ConfigurableProvider implements EvalCalculator<T> {
+public class RetrievalEvalCalculator<T extends Passage> extends ConfigurableProvider implements
+        EvalCalculator<T> {
 
   @Override
   public Map<Measure, Double> calculate(Collection<T> resultEvaluatees, Collection<T> gsEvaluatees,
           Comparator<T> comparator, Function<T, String> uniqueIdMapper) {
-    Set<String> gsSet = StreamSupport.stream(gsEvaluatees.spliterator(), true).map(uniqueIdMapper)
-            .collect(toSet());
-    List<String> resultArray = StreamSupport.stream(resultEvaluatees.spliterator(), false)
-            .sorted(comparator).map(uniqueIdMapper).distinct().collect(toList());
+    Set<String> gsSet = gsEvaluatees.parallelStream().map(uniqueIdMapper).collect(toSet());
+    List<String> resultArray = resultEvaluatees.stream().sorted(comparator).map(uniqueIdMapper)
+            .distinct().collect(toList());
     Set<String> resultSet = new HashSet<>(resultArray);
-    return ImmutableMap.<Measure, Double> builder()
-            .put(RELEVANT_RETRIEVED, (double) Sets.intersection(resultSet, gsSet).size())
-            .put(RETRIEVED, (double) resultSet.size()).put(RELEVANT, (double) gsSet.size())
-            .put(AVERAGE_PRECISION, calculateAveragePrecision(resultArray, gsSet))
-            .put(BINARY_RELEVANT, Sets.intersection(resultSet, gsSet).isEmpty() ? 0.0 : 1.0)
-            .put(RETRIEVAL_COUNT, 1.0).build();
+    double retrieved = (double) resultSet.size();
+    double relevant = (double) gsSet.size();
+    double relevantRetrieved = (double) Sets.intersection(resultSet, gsSet).size();
+    double binaryRelevant = relevantRetrieved > 0 ? 1.0 : 0.0;
+    double precision = calculatePrecision(retrieved, relevantRetrieved);
+    double recall = calculateRecall(relevant, relevantRetrieved);
+    double f1 = calculateF1(precision, recall);
+    double averagePrecision = calculateAveragePrecision(resultArray, gsSet);
+    return ImmutableMap.<Measure, Double> builder().put(RETRIEVAL_COUNT, 1.0)
+            .put(RETRIEVED, retrieved).put(RELEVANT, relevant)
+            .put(RELEVANT_RETRIEVED, relevantRetrieved).put(BINARY_RELEVANT, binaryRelevant)
+            .put(PRECISION, precision).put(RECALL, recall).put(F1, f1)
+            .put(AVERAGE_PRECISION, averagePrecision).build();
   }
 
   @Override
   public Map<Measure, Double> accumulate(Map<Measure, ? extends Collection<Double>> measure2values) {
     double count = sumMeasurementValues(measure2values.get(RETRIEVAL_COUNT));
-    double relevantRetrieved = sumMeasurementValues(measure2values.get(RELEVANT_RETRIEVED));
-    double retrieved = sumMeasurementValues(measure2values.get(RETRIEVED));
-    double relevant = sumMeasurementValues(measure2values.get(RELEVANT));
+    double meanPrecision = sumMeasurementValues(measure2values.get(PRECISION)) / count;
+    double meanRecall = sumMeasurementValues(measure2values.get(RECALL)) / count;
+    double meanBinaryRecall = sumMeasurementValues(measure2values.get(BINARY_RELEVANT)) / count;
+    double meanF1 = sumMeasurementValues(measure2values.get(F1)) / count;
     double map = sumMeasurementValues(measure2values.get(AVERAGE_PRECISION)) / count;
     double gmap = Math
             .exp(sumOfLogMeasurementValues(measure2values.get(AVERAGE_PRECISION)) / count);
-    double binaryRecall = sumMeasurementValues(measure2values.get(BINARY_RELEVANT)) / count;
-    double recall = calculateRecall(relevant, relevantRetrieved);
-    double precision = calculatePrecision(retrieved, relevantRetrieved);
-    return ImmutableMap.<Measure, Double> builder().put(PRECISION, precision).put(RECALL, recall)
-            .put(F1, calculateF1(precision, recall)).put(MAP, map).put(GMAP, gmap)
-            .put(BINARY_RECALL, binaryRecall).put(RETRIEVAL_COUNT, count).build();
-  }
-
-  private static double sumMeasurementValues(Collection<Double> values) {
-    return values.stream().mapToDouble(Double::doubleValue).sum();
-  }
-
-  private static double sumOfLogMeasurementValues(Collection<Double> values) {
-    return values.stream().mapToDouble(v -> Math.log(v + Double.MIN_NORMAL)).sum();
-  }
-
-  public static double calculateAveragePrecision(List<String> resultArray, Set<String> gsSet) {
-    int[] relIndices = IntStream.range(0, resultArray.size())
-            .filter(i -> gsSet.contains(resultArray.get(i))).toArray();
-    double sumPrec = IntStream.range(0, relIndices.length)
-            .mapToDouble(i -> (i + 1.0) / (relIndices[i] + 1.0)).sum();
-    return sumPrec / gsSet.size();
-  }
-
-  public static double calculateRecall(double relevant, double relevantRetrieved) {
-    return (relevant != 0.0) ? relevantRetrieved / relevant : 0.0;
-  }
-
-  public static double calculatePrecision(double retrieved, double relevantRetrieved) {
-    return (retrieved != 0.0) ? relevantRetrieved / retrieved : 0.0;
-  }
-
-  public static double calculateF1(double precision, double recall) {
-    return ((precision + recall) != 0) ? (2 * precision * recall) / (precision + recall) : 0.0;
+    return ImmutableMap.<Measure, Double> builder().put(RETRIEVAL_COUNT, count)
+            .put(MEAN_PRECISION, meanPrecision).put(MEAN_RECALL, meanRecall)
+            .put(MEAN_BINARY_RECALL, meanBinaryRecall).put(MEAN_F1, meanF1).put(MAP, map)
+            .put(GMAP, gmap).build();
   }
 
   @Override
