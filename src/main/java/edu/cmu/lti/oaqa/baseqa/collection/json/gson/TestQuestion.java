@@ -9,7 +9,7 @@ public class TestQuestion extends Question {
   @SerializedName("ideal_answer")
   private String idealAnswer;
 
-  protected TestQuestion(String id, String body, QuestionType type, List<String> documents,
+  public TestQuestion(String id, String body, QuestionType type, List<String> documents,
           List<Snippet> snippets, List<String> concepts, List<Triple> triples, String idealAnswer) {
     super(id, body, type, documents, snippets, concepts, triples);
     this.idealAnswer = idealAnswer;

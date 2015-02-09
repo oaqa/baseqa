@@ -9,7 +9,7 @@ public class TestYesNoQuestion extends TestQuestion {
   @SerializedName("exact_answer")
   private String exactAnswer;
 
-  protected TestYesNoQuestion(String id, String body, QuestionType type, List<String> documents,
+  public TestYesNoQuestion(String id, String body, QuestionType type, List<String> documents,
           List<Snippet> snippets, List<String> concepts, List<Triple> triples, String idealAnswer,
           String exactAnswer) {
     super(id, body, type, documents, snippets, concepts, triples, idealAnswer);

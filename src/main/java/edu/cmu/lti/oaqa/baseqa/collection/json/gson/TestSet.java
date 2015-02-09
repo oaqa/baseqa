@@ -8,6 +8,7 @@ import java.util.List;
 import com.github.julman99.gsonfire.GsonFireBuilder;
 import com.github.julman99.gsonfire.TypeSelector;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
 public class TestSet {
@@ -34,9 +35,6 @@ public class TestSet {
     }
   }
 
-  private static Gson gson = new GsonFireBuilder().registerTypeSelector(TestQuestion.class,
-          new QuestionTypeSelector()).createGson();
-
   private List<? extends TestQuestion> questions;
 
   public TestSet(List<? extends TestQuestion> answers) {
@@ -44,6 +42,8 @@ public class TestSet {
   }
 
   public static List<? extends TestQuestion> load(Reader reader) {
+    Gson gson = new GsonFireBuilder().registerTypeSelector(TestQuestion.class,
+            new QuestionTypeSelector()).createGson();
     TestSet input = gson.fromJson(reader, TestSet.class);
     return input.questions;
   }
@@ -53,6 +53,7 @@ public class TestSet {
   }
 
   public static String dump(List<? extends TestQuestion> answers) {
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
     TestSet output = new TestSet(answers);
     return gson.toJson(output, TestSet.class);
   }

@@ -9,7 +9,7 @@ public class TestFactoidQuestion extends TestQuestion {
   @SerializedName("exact_answer")
   private List<String> exactAnswer;
 
-  protected TestFactoidQuestion(String id, String body, QuestionType type, List<String> documents,
+  public TestFactoidQuestion(String id, String body, QuestionType type, List<String> documents,
           List<Snippet> snippets, List<String> concepts, List<Triple> triples, String idealAnswer,
           List<String> exactAnswer) {
     super(id, body, type, documents, snippets, concepts, triples, idealAnswer);
