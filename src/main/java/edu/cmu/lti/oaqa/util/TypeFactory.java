@@ -20,6 +20,7 @@ import edu.cmu.lti.oaqa.type.kb.EntityMention;
 import edu.cmu.lti.oaqa.type.kb.Relation;
 import edu.cmu.lti.oaqa.type.kb.RelationMention;
 import edu.cmu.lti.oaqa.type.kb.Triple;
+import edu.cmu.lti.oaqa.type.nlp.LexicalAnswerType;
 import edu.cmu.lti.oaqa.type.nlp.Token;
 import edu.cmu.lti.oaqa.type.retrieval.AbstractQuery;
 import edu.cmu.lti.oaqa.type.retrieval.AtomicQueryConcept;
@@ -442,6 +443,13 @@ public class TypeFactory {
     ret.setHitList(FSCollectionFactory.createFSArray(jcas, hitList));
     ret.setAbstractQuery(abstractQuery);
     ret.setSearchId(searchId);
+    return ret;
+  }
+
+  public static LexicalAnswerType createLexicalAnswerType(JCas jcas, Token token, String label) {
+    LexicalAnswerType ret = new LexicalAnswerType(jcas);
+    ret.setToken(token);
+    ret.setLabel(label);
     return ret;
   }
 

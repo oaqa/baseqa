@@ -21,6 +21,7 @@ import com.google.common.collect.Range;
 import edu.cmu.lti.oaqa.type.answer.Answer;
 import edu.cmu.lti.oaqa.type.answer.Summary;
 import edu.cmu.lti.oaqa.type.input.Question;
+import edu.cmu.lti.oaqa.type.nlp.LexicalAnswerType;
 import edu.cmu.lti.oaqa.type.nlp.Token;
 import edu.cmu.lti.oaqa.type.retrieval.AbstractQuery;
 import edu.cmu.lti.oaqa.type.retrieval.ConceptSearchResult;
@@ -86,6 +87,10 @@ public class TypeUtil {
 
   public static Collection<Passage> getRankedPassages(JCas jcas) {
     return rankedSearchResultsByRank(JCasUtil.select(jcas, Passage.class));
+  }
+
+  public static LexicalAnswerType getLexicalAnswerType(JCas jcas) {
+    return JCasUtil.selectSingle(jcas, LexicalAnswerType.class);
   }
 
   public static Collection<Answer> getAnswers(JCas jcas) {
