@@ -3,6 +3,7 @@ package edu.cmu.lti.oaqa.baseqa.collection.json.gson;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import com.github.julman99.gsonfire.GsonFireBuilder;
@@ -10,10 +11,12 @@ import com.github.julman99.gsonfire.TypeSelector;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 public class TestSet {
 
-  public static final class QuestionTypeSelector implements TypeSelector<TestQuestion> {
+  public static class QuestionTypeSelector implements TypeSelector<TestQuestion> {
     @Override
     public Class<? extends TestQuestion> getClassForElement(JsonElement readElement) {
       JsonElement type = readElement.getAsJsonObject().get("type");
@@ -31,6 +34,24 @@ public class TestSet {
         return TestSummaryQuestion.class;
       } else {
         return TestQuestion.class;
+      }
+    }
+  }
+
+  public static class QuestionSerializer implements JsonSerializer<TestQuestion> {
+    @Override
+    public JsonElement serialize(TestQuestion src, Type typeOfSrc, JsonSerializationContext context) {
+      switch (src.getType()) {
+        case factoid:
+          return context.serialize(src, TestFactoidQuestion.class);
+        case yesno:
+          return context.serialize(src, TestYesNoQuestion.class);
+        case list:
+          return context.serialize(src, TestListQuestion.class);
+        case summary:
+          return context.serialize(src, TestSummaryQuestion.class);
+        default:
+          return context.serialize(src, TestQuestion.class);
       }
     }
   }
@@ -53,7 +74,8 @@ public class TestSet {
   }
 
   public static String dump(List<? extends TestQuestion> answers) {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    Gson gson = new GsonBuilder().registerTypeAdapter(TestQuestion.class, new QuestionSerializer())
+            .setPrettyPrinting().create();
     TestSet output = new TestSet(answers);
     return gson.toJson(output, TestSet.class);
   }

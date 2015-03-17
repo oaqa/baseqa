@@ -7,11 +7,11 @@ import com.google.gson.annotations.SerializedName;
 public class TestFactoidQuestion extends TestQuestion {
 
   @SerializedName("exact_answer")
-  private List<String> exactAnswer;
+  private List<List<String>> exactAnswer;
 
   public TestFactoidQuestion(String id, String body, QuestionType type, List<String> documents,
           List<Snippet> snippets, List<String> concepts, List<Triple> triples, String idealAnswer,
-          List<String> exactAnswer) {
+          List<List<String>> exactAnswer) {
     super(id, body, type, documents, snippets, concepts, triples, idealAnswer);
     this.exactAnswer = exactAnswer;
   }
@@ -41,11 +41,11 @@ public class TestFactoidQuestion extends TestQuestion {
     return true;
   }
 
-  public List<String> getExactAnswer() {
+  public List<List<String>> getExactAnswer() {
     return exactAnswer;
   }
 
-  public void setExactAnswer(List<String> exactAnswer) {
+  public void setExactAnswer(List<List<String>> exactAnswer) {
     this.exactAnswer = exactAnswer;
   }
 

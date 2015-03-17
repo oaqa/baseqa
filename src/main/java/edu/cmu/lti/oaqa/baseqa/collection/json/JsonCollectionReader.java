@@ -25,18 +25,24 @@ public class JsonCollectionReader extends IterableCollectionReader {
   public void initialize() throws ResourceInitializationException {
     super.initialize();
     inputs = Lists.newArrayList();
-    Object value = getConfigParameterValue("file");
-    if (String.class.isAssignableFrom(value.getClass())) {
-      inputs = TestSet.load(getClass().getResourceAsStream(String.class.cast(value))).stream()
+    Object file = getConfigParameterValue("file");
+    if (String.class.isAssignableFrom(file.getClass())) {
+      inputs = TestSet.load(getClass().getResourceAsStream(String.class.cast(file))).stream()
               .collect(toList());
-    } else if (String[].class.isAssignableFrom(value.getClass())) {
-      inputs = Arrays.stream(String[].class.cast(value))
+    } else if (String[].class.isAssignableFrom(file.getClass())) {
+      inputs = Arrays.stream(String[].class.cast(file))
               .flatMap(path -> TestSet.load(getClass().getResourceAsStream(path)).stream())
               .collect(toList());
     }
     // trim question texts
     inputs.stream().filter(input -> input.getBody() != null)
             .forEach(input -> input.setBody(input.getBody().trim().replaceAll("\\s+", " ")));
+    // filter by question type
+    String type = (String) getConfigParameterValue("type");
+    if (type != null) {
+      inputs = inputs.stream().filter(input -> input.getType().name().equals(type))
+              .collect(toList());
+    }
   }
 
   private int seqId = -1;

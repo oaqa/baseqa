@@ -2,7 +2,6 @@ package edu.cmu.lti.oaqa.baseqa.collection.json;
 
 import static java.util.stream.Collectors.toList;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -59,13 +58,13 @@ public class JsonCasConsumerHelper {
     String idealAnswer = TypeUtil.getSummary(jcas).stream().map(Summary::getText).findFirst()
             .orElse(null);
     if (QuestionType.factoid.equals(type)) {
-      List<String> exactAnswer = TypeUtil.getAnswers(jcas).stream().limit(factoidAnswerLimit)
-              .map(Answer::getText).collect(toList());
+      List<List<String>> exactAnswer = TypeUtil.getAnswers(jcas).stream().limit(listAnswerLimit)
+              .map(TypeUtil::getAnswerVariants).collect(toList());
       return new TestFactoidQuestion(id, body, type, documents, snippets, concepts, triples,
               idealAnswer, exactAnswer);
     } else if (QuestionType.list.equals(type)) {
       List<List<String>> exactAnswer = TypeUtil.getAnswers(jcas).stream().limit(listAnswerLimit)
-              .map(Answer::getText).map(Arrays::asList).collect(toList());
+              .map(TypeUtil::getAnswerVariants).collect(toList());
       return new TestListQuestion(id, body, type, documents, snippets, concepts, triples,
               idealAnswer, exactAnswer);
     } else if (QuestionType.yesno.equals(type)) {

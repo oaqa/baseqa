@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -93,6 +94,12 @@ public class TypeUtil {
 
   public static Collection<Summary> getSummary(JCas jcas) {
     return JCasUtil.select(jcas, Summary.class);
+  }
+  
+  public static List<String> getAnswerVariants(Answer answer) {
+    List<String> variants = Arrays.asList(answer.getText());
+    variants.addAll(FSCollectionFactory.create(answer.getVariants()));
+    return variants;
   }
 
   public static Range<Integer> spanRange(Annotation annotation) {
