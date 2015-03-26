@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** A document search result.
- * Updated by JCasGen Sun Oct 19 14:47:24 EDT 2014
+ * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
  * @generated */
 public class Document_Type extends SearchResult_Type {
   /** @generated 
@@ -126,7 +126,7 @@ public class Document_Type extends SearchResult_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_sections), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_sections), i);
-	return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_sections), i);
+  return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_sections), i);
   }
    
   /** @generated
@@ -177,7 +177,7 @@ public class Document_Type extends SearchResult_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_sectionLabels), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_sectionLabels), i);
-	return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_sectionLabels), i);
+  return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_sectionLabels), i);
   }
    
   /** @generated

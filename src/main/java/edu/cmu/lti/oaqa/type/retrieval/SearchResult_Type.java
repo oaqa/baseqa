@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** A search result.
- * Updated by JCasGen Sun Oct 19 14:47:24 EDT 2014
+ * Updated by JCasGen Tue Mar 17 14:36:56 EDT 2015
  * @generated */
 public class SearchResult_Type extends TOP_Type {
   /** @generated 
@@ -223,7 +223,7 @@ public class SearchResult_Type extends TOP_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_candidateAnswers), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_candidateAnswers), i);
-	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_candidateAnswers), i);
+  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_candidateAnswers), i);
   }
    
   /** @generated

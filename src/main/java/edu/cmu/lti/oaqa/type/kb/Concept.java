@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** A superclass for EntityConcept and RelationConcept.
- * Updated by JCasGen Sun Oct 19 14:47:24 EDT 2014
+ * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class Concept extends TOP {

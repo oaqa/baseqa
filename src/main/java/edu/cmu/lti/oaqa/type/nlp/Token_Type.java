@@ -13,8 +13,8 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock
- * Updated by JCasGen Sun Oct 19 14:47:24 EDT 2014
+/** Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like.
+ * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
  * @generated */
 public class Token_Type extends Annotation_Type {
   /** @generated 
@@ -47,128 +47,50 @@ public class Token_Type extends Annotation_Type {
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("edu.cmu.lti.oaqa.type.nlp.Token");
  
   /** @generated */
-  final Feature casFeat_arguments;
+  final Feature casFeat_depLabel;
   /** @generated */
-  final int     casFeatCode_arguments;
+  final int     casFeatCode_depLabel;
   /** @generated
    * @param addr low level Feature Structure reference
    * @return the feature value 
    */ 
-  public int getArguments(int addr) {
-        if (featOkTst && casFeat_arguments == null)
-      jcas.throwFeatMissing("arguments", "edu.cmu.lti.oaqa.type.nlp.Token");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_arguments);
+  public String getDepLabel(int addr) {
+        if (featOkTst && casFeat_depLabel == null)
+      jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_depLabel);
   }
   /** @generated
    * @param addr low level Feature Structure reference
    * @param v value to set 
    */    
-  public void setArguments(int addr, int v) {
-        if (featOkTst && casFeat_arguments == null)
-      jcas.throwFeatMissing("arguments", "edu.cmu.lti.oaqa.type.nlp.Token");
-    ll_cas.ll_setRefValue(addr, casFeatCode_arguments, v);}
+  public void setDepLabel(int addr, String v) {
+        if (featOkTst && casFeat_depLabel == null)
+      jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
+    ll_cas.ll_setStringValue(addr, casFeatCode_depLabel, v);}
     
-   /** @generated
-   * @param addr low level Feature Structure reference
-   * @param i index of item in the array
-   * @return value at index i in the array 
-   */
-  public int getArguments(int addr, int i) {
-        if (featOkTst && casFeat_arguments == null)
-      jcas.throwFeatMissing("arguments", "edu.cmu.lti.oaqa.type.nlp.Token");
-    if (lowLevelTypeChecks)
-      return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i);
-	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i);
-  }
-   
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param i index of item in the array
-   * @param v value to set
-   */ 
-  public void setArguments(int addr, int i, int v) {
-        if (featOkTst && casFeat_arguments == null)
-      jcas.throwFeatMissing("arguments", "edu.cmu.lti.oaqa.type.nlp.Token");
-    if (lowLevelTypeChecks)
-      ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i, v, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i);
-    ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_arguments), i, v);
-  }
- 
+  
  
   /** @generated */
-  final Feature casFeat_argumentLabels;
+  final Feature casFeat_head;
   /** @generated */
-  final int     casFeatCode_argumentLabels;
+  final int     casFeatCode_head;
   /** @generated
    * @param addr low level Feature Structure reference
    * @return the feature value 
    */ 
-  public int getArgumentLabels(int addr) {
-        if (featOkTst && casFeat_argumentLabels == null)
-      jcas.throwFeatMissing("argumentLabels", "edu.cmu.lti.oaqa.type.nlp.Token");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels);
+  public int getHead(int addr) {
+        if (featOkTst && casFeat_head == null)
+      jcas.throwFeatMissing("head", "edu.cmu.lti.oaqa.type.nlp.Token");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_head);
   }
   /** @generated
    * @param addr low level Feature Structure reference
    * @param v value to set 
    */    
-  public void setArgumentLabels(int addr, int v) {
-        if (featOkTst && casFeat_argumentLabels == null)
-      jcas.throwFeatMissing("argumentLabels", "edu.cmu.lti.oaqa.type.nlp.Token");
-    ll_cas.ll_setRefValue(addr, casFeatCode_argumentLabels, v);}
-    
-   /** @generated
-   * @param addr low level Feature Structure reference
-   * @param i index of item in the array
-   * @return value at index i in the array 
-   */
-  public String getArgumentLabels(int addr, int i) {
-        if (featOkTst && casFeat_argumentLabels == null)
-      jcas.throwFeatMissing("argumentLabels", "edu.cmu.lti.oaqa.type.nlp.Token");
-    if (lowLevelTypeChecks)
-      return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i);
-	return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i);
-  }
-   
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param i index of item in the array
-   * @param v value to set
-   */ 
-  public void setArgumentLabels(int addr, int i, String v) {
-        if (featOkTst && casFeat_argumentLabels == null)
-      jcas.throwFeatMissing("argumentLabels", "edu.cmu.lti.oaqa.type.nlp.Token");
-    if (lowLevelTypeChecks)
-      ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i, v, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i);
-    ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_argumentLabels), i, v);
-  }
- 
- 
-  /** @generated */
-  final Feature casFeat_parse;
-  /** @generated */
-  final int     casFeatCode_parse;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public int getParse(int addr) {
-        if (featOkTst && casFeat_parse == null)
-      jcas.throwFeatMissing("parse", "edu.cmu.lti.oaqa.type.nlp.Token");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_parse);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setParse(int addr, int v) {
-        if (featOkTst && casFeat_parse == null)
-      jcas.throwFeatMissing("parse", "edu.cmu.lti.oaqa.type.nlp.Token");
-    ll_cas.ll_setRefValue(addr, casFeatCode_parse, v);}
+  public void setHead(int addr, int v) {
+        if (featOkTst && casFeat_head == null)
+      jcas.throwFeatMissing("head", "edu.cmu.lti.oaqa.type.nlp.Token");
+    ll_cas.ll_setRefValue(addr, casFeatCode_head, v);}
     
   
  
@@ -328,16 +250,12 @@ public class Token_Type extends Annotation_Type {
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_arguments = jcas.getRequiredFeatureDE(casType, "arguments", "uima.cas.FSArray", featOkTst);
-    casFeatCode_arguments  = (null == casFeat_arguments) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_arguments).getCode();
+    casFeat_head = jcas.getRequiredFeatureDE(casType, "head", "edu.cmu.lti.oaqa.type.nlp.Token", featOkTst);
+    casFeatCode_head  = (null == casFeat_head) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_head).getCode();
 
  
-    casFeat_argumentLabels = jcas.getRequiredFeatureDE(casType, "argumentLabels", "uima.cas.StringArray", featOkTst);
-    casFeatCode_argumentLabels  = (null == casFeat_argumentLabels) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_argumentLabels).getCode();
-
- 
-    casFeat_parse = jcas.getRequiredFeatureDE(casType, "parse", "edu.cmu.lti.oaqa.type.nlp.Token", featOkTst);
-    casFeatCode_parse  = (null == casFeat_parse) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_parse).getCode();
+    casFeat_depLabel = jcas.getRequiredFeatureDE(casType, "depLabel", "uima.cas.String", featOkTst);
+    casFeatCode_depLabel  = (null == casFeat_depLabel) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_depLabel).getCode();
 
  
     casFeat_semanticType = jcas.getRequiredFeatureDE(casType, "semanticType", "uima.cas.String", featOkTst);

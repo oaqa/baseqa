@@ -7,39 +7,32 @@
   <types>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.nlp.Token</name>
-      <description>Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock</description>
+      <description>Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like.</description>
       <supertypeName>uima.tcas.Annotation</supertypeName>
       <features>
         <featureDescription>
-          <name>arguments</name>
-          <description>The arguments</description>
-          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>edu.cmu.lti.oaqa.type.nlp.Token</elementType>
-          <multipleReferencesAllowed>false</multipleReferencesAllowed>
-        </featureDescription>
-        <featureDescription>
-          <name>argumentLabels</name>
-          <description>The slot labels for the arguments (e.g., subj, obj, objprep)</description>
-          <rangeTypeName>uima.cas.StringArray</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>parse</name>
-          <description>A parse for which this token was a head (if any)</description>
+          <name>head</name>
+          <description>The head of the token in the dependency parse tree.</description>
           <rangeTypeName>edu.cmu.lti.oaqa.type.nlp.Token</rangeTypeName>
         </featureDescription>
         <featureDescription>
+          <name>depLabel</name>
+          <description>The dependency label of the token with respect to its head.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
           <name>semanticType</name>
-          <description>A semantic type, typically the name of an Entity Annotation type</description>
+          <description>A semantic type, typically the name of an Entity Annotation type.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>partOfSpeech</name>
-          <description>Coarse-grained part of speech --- Example: noun, verb, adj, cord</description>
+          <description>Coarse-grained part of speech. --- Example: noun, verb, adj, cord</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>lemmaForm</name>
-          <description>A canonical/lemmatized form of the covered text</description>
+          <description>A canonical/lemmatized form of the covered text.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
@@ -54,7 +47,7 @@
         </featureDescription>
         <featureDescription>
           <name>determiner</name>
-          <description>The determiner attached to the node, if any --- Example: [the] book</description>
+          <description>The determiner attached to the node, if any. --- Example: [the] book</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>

@@ -12,8 +12,8 @@ import org.apache.uima.jcas.cas.StringArray;
 import org.apache.uima.jcas.tcas.Annotation;
 
 
-/** Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like. --- Source: Murdock
- * Updated by JCasGen Sun Oct 19 14:47:24 EDT 2014
+/** Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like.
+ * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class Token extends Annotation {
@@ -79,119 +79,53 @@ public class Token extends Annotation {
  
     
   //*--------------*
-  //* Feature: arguments
+  //* Feature: depLabel
 
-  /** getter for arguments - gets The arguments
+  /** getter for depLabel - gets The dependency label of the token with respect to its head.
    * @generated
    * @return value of the feature 
    */
-  public FSArray getArguments() {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_arguments == null)
-      jcasType.jcas.throwFeatMissing("arguments", "edu.cmu.lti.oaqa.type.nlp.Token");
-    return (FSArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_arguments)));}
+  public String getDepLabel() {
+    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_depLabel == null)
+      jcasType.jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_depLabel);}
     
-  /** setter for arguments - sets The arguments 
+  /** setter for depLabel - sets The dependency label of the token with respect to its head. 
    * @generated
    * @param v value to set into the feature 
    */
-  public void setArguments(FSArray v) {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_arguments == null)
-      jcasType.jcas.throwFeatMissing("arguments", "edu.cmu.lti.oaqa.type.nlp.Token");
-    jcasType.ll_cas.ll_setRefValue(addr, ((Token_Type)jcasType).casFeatCode_arguments, jcasType.ll_cas.ll_getFSRef(v));}    
-    
-  /** indexed getter for arguments - gets an indexed value - The arguments
-   * @generated
-   * @param i index in the array to get
-   * @return value of the element at index i 
-   */
-  public Token getArguments(int i) {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_arguments == null)
-      jcasType.jcas.throwFeatMissing("arguments", "edu.cmu.lti.oaqa.type.nlp.Token");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_arguments), i);
-    return (Token)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_arguments), i)));}
-
-  /** indexed setter for arguments - sets an indexed value - The arguments
-   * @generated
-   * @param i index in the array to set
-   * @param v value to set into the array 
-   */
-  public void setArguments(int i, Token v) { 
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_arguments == null)
-      jcasType.jcas.throwFeatMissing("arguments", "edu.cmu.lti.oaqa.type.nlp.Token");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_arguments), i);
-    jcasType.ll_cas.ll_setRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_arguments), i, jcasType.ll_cas.ll_getFSRef(v));}
+  public void setDepLabel(String v) {
+    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_depLabel == null)
+      jcasType.jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Token_Type)jcasType).casFeatCode_depLabel, v);}    
    
     
   //*--------------*
-  //* Feature: argumentLabels
+  //* Feature: head
 
-  /** getter for argumentLabels - gets The slot labels for the arguments (e.g., subj, obj, objprep)
+  /** getter for head - gets The head of the token in the dependency parse tree.
    * @generated
    * @return value of the feature 
    */
-  public StringArray getArgumentLabels() {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_argumentLabels == null)
-      jcasType.jcas.throwFeatMissing("argumentLabels", "edu.cmu.lti.oaqa.type.nlp.Token");
-    return (StringArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_argumentLabels)));}
+  public Token getHead() {
+    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_head == null)
+      jcasType.jcas.throwFeatMissing("head", "edu.cmu.lti.oaqa.type.nlp.Token");
+    return (Token)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_head)));}
     
-  /** setter for argumentLabels - sets The slot labels for the arguments (e.g., subj, obj, objprep) 
+  /** setter for head - sets The head of the token in the dependency parse tree. 
    * @generated
    * @param v value to set into the feature 
    */
-  public void setArgumentLabels(StringArray v) {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_argumentLabels == null)
-      jcasType.jcas.throwFeatMissing("argumentLabels", "edu.cmu.lti.oaqa.type.nlp.Token");
-    jcasType.ll_cas.ll_setRefValue(addr, ((Token_Type)jcasType).casFeatCode_argumentLabels, jcasType.ll_cas.ll_getFSRef(v));}    
-    
-  /** indexed getter for argumentLabels - gets an indexed value - The slot labels for the arguments (e.g., subj, obj, objprep)
-   * @generated
-   * @param i index in the array to get
-   * @return value of the element at index i 
-   */
-  public String getArgumentLabels(int i) {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_argumentLabels == null)
-      jcasType.jcas.throwFeatMissing("argumentLabels", "edu.cmu.lti.oaqa.type.nlp.Token");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_argumentLabels), i);
-    return jcasType.ll_cas.ll_getStringArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_argumentLabels), i);}
-
-  /** indexed setter for argumentLabels - sets an indexed value - The slot labels for the arguments (e.g., subj, obj, objprep)
-   * @generated
-   * @param i index in the array to set
-   * @param v value to set into the array 
-   */
-  public void setArgumentLabels(int i, String v) { 
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_argumentLabels == null)
-      jcasType.jcas.throwFeatMissing("argumentLabels", "edu.cmu.lti.oaqa.type.nlp.Token");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_argumentLabels), i);
-    jcasType.ll_cas.ll_setStringArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_argumentLabels), i, v);}
-   
-    
-  //*--------------*
-  //* Feature: parse
-
-  /** getter for parse - gets A parse for which this token was a head (if any)
-   * @generated
-   * @return value of the feature 
-   */
-  public Token getParse() {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_parse == null)
-      jcasType.jcas.throwFeatMissing("parse", "edu.cmu.lti.oaqa.type.nlp.Token");
-    return (Token)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_parse)));}
-    
-  /** setter for parse - sets A parse for which this token was a head (if any) 
-   * @generated
-   * @param v value to set into the feature 
-   */
-  public void setParse(Token v) {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_parse == null)
-      jcasType.jcas.throwFeatMissing("parse", "edu.cmu.lti.oaqa.type.nlp.Token");
-    jcasType.ll_cas.ll_setRefValue(addr, ((Token_Type)jcasType).casFeatCode_parse, jcasType.ll_cas.ll_getFSRef(v));}    
+  public void setHead(Token v) {
+    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_head == null)
+      jcasType.jcas.throwFeatMissing("head", "edu.cmu.lti.oaqa.type.nlp.Token");
+    jcasType.ll_cas.ll_setRefValue(addr, ((Token_Type)jcasType).casFeatCode_head, jcasType.ll_cas.ll_getFSRef(v));}    
    
     
   //*--------------*
   //* Feature: semanticType
 
-  /** getter for semanticType - gets A semantic type, typically the name of an Entity Annotation type
+  /** getter for semanticType - gets A semantic type, typically the name of an Entity Annotation type.
    * @generated
    * @return value of the feature 
    */
@@ -200,7 +134,7 @@ public class Token extends Annotation {
       jcasType.jcas.throwFeatMissing("semanticType", "edu.cmu.lti.oaqa.type.nlp.Token");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_semanticType);}
     
-  /** setter for semanticType - sets A semantic type, typically the name of an Entity Annotation type 
+  /** setter for semanticType - sets A semantic type, typically the name of an Entity Annotation type. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -213,7 +147,7 @@ public class Token extends Annotation {
   //*--------------*
   //* Feature: partOfSpeech
 
-  /** getter for partOfSpeech - gets Coarse-grained part of speech --- Example: noun, verb, adj, cord
+  /** getter for partOfSpeech - gets Coarse-grained part of speech. --- Example: noun, verb, adj, cord
    * @generated
    * @return value of the feature 
    */
@@ -222,7 +156,7 @@ public class Token extends Annotation {
       jcasType.jcas.throwFeatMissing("partOfSpeech", "edu.cmu.lti.oaqa.type.nlp.Token");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_partOfSpeech);}
     
-  /** setter for partOfSpeech - sets Coarse-grained part of speech --- Example: noun, verb, adj, cord 
+  /** setter for partOfSpeech - sets Coarse-grained part of speech. --- Example: noun, verb, adj, cord 
    * @generated
    * @param v value to set into the feature 
    */
@@ -235,7 +169,7 @@ public class Token extends Annotation {
   //*--------------*
   //* Feature: lemmaForm
 
-  /** getter for lemmaForm - gets A canonical/lemmatized form of the covered text
+  /** getter for lemmaForm - gets A canonical/lemmatized form of the covered text.
    * @generated
    * @return value of the feature 
    */
@@ -244,7 +178,7 @@ public class Token extends Annotation {
       jcasType.jcas.throwFeatMissing("lemmaForm", "edu.cmu.lti.oaqa.type.nlp.Token");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_lemmaForm);}
     
-  /** setter for lemmaForm - sets A canonical/lemmatized form of the covered text 
+  /** setter for lemmaForm - sets A canonical/lemmatized form of the covered text. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -301,7 +235,7 @@ public class Token extends Annotation {
   //*--------------*
   //* Feature: determiner
 
-  /** getter for determiner - gets The determiner attached to the node, if any --- Example: [the] book
+  /** getter for determiner - gets The determiner attached to the node, if any. --- Example: [the] book
    * @generated
    * @return value of the feature 
    */
@@ -310,7 +244,7 @@ public class Token extends Annotation {
       jcasType.jcas.throwFeatMissing("determiner", "edu.cmu.lti.oaqa.type.nlp.Token");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_determiner);}
     
-  /** setter for determiner - sets The determiner attached to the node, if any --- Example: [the] book 
+  /** setter for determiner - sets The determiner attached to the node, if any. --- Example: [the] book 
    * @generated
    * @param v value to set into the feature 
    */

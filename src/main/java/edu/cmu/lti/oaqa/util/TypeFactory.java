@@ -48,15 +48,14 @@ public class TypeFactory {
     return ret;
   }
 
-  public static Token createToken(JCas jcas, int begin, int end, List<Token> arguments,
-          List<String> argumentLabels, Token parse, String semanticType, String partOfSpeech,
-          String lemmaForm, boolean isMainReference, boolean isVariable, String determiner) {
+  public static Token createToken(JCas jcas, int begin, int end, Token head, String depLabel,
+          String semanticType, String partOfSpeech, String lemmaForm, boolean isMainReference,
+          boolean isVariable, String determiner) {
     Token ret = new Token(jcas);
     ret.setBegin(begin);
     ret.setEnd(end);
-    ret.setArguments(FSCollectionFactory.createFSArray(jcas, arguments));
-    ret.setArgumentLabels((StringArray) FSCollectionFactory.createStringArray(jcas, argumentLabels));
-    ret.setParse(parse);
+    ret.setHead(head);
+    ret.setDepLabel(depLabel);
     ret.setSemanticType(semanticType);
     ret.setPartOfSpeech(partOfSpeech);
     ret.setLemmaForm(lemmaForm);
@@ -67,8 +66,8 @@ public class TypeFactory {
   }
 
   public static Token createToken(JCas jcas, int begin, int end) {
-    return createToken(jcas, begin, end, new ArrayList<>(), new ArrayList<>(),
-            TypeConstants.PARSE_UNKNOWN, TypeConstants.SEMANTIC_TYPE_UNKNOWN,
+    return createToken(jcas, begin, end, TypeConstants.HEAD_UNKNOWN,
+            TypeConstants.DEPLABEL_UNKNOWN, TypeConstants.SEMANTIC_TYPE_UNKNOWN,
             TypeConstants.PART_OF_SPEECH_UNKNOWN, TypeConstants.LEMMA_FORM_UNKNOWN,
             TypeConstants.IS_MAIN_REFERENCE_UNKNOWN, TypeConstants.IS_VARIABLE_UNKNOWN,
             TypeConstants.DETERMINER_UNKNOWN);
@@ -446,11 +445,16 @@ public class TypeFactory {
     return ret;
   }
 
-  public static LexicalAnswerType createLexicalAnswerType(JCas jcas, Token token, String label) {
-    LexicalAnswerType ret = new LexicalAnswerType(jcas);
+  public static LexicalAnswerType createLexicalAnswerType(JCas jcas, int begin, int end,
+          Token token, String label) {
+    LexicalAnswerType ret = new LexicalAnswerType(jcas, begin, end);
     ret.setToken(token);
     ret.setLabel(label);
     return ret;
+  }
+
+  public static LexicalAnswerType createLexicalAnswerType(JCas jcas, Token token, String label) {
+    return createLexicalAnswerType(jcas, token.getBegin(), token.getEnd(), token, label);
   }
 
 }

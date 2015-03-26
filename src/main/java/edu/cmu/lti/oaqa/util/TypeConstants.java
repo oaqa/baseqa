@@ -31,8 +31,10 @@ public class TypeConstants {
   public static final String URI_UNKNOWN = null;
 
   public static final String DOC_ID_UNKNOWN = null;
+  
+  public static final Token HEAD_UNKNOWN = null;
 
-  public static final Token PARSE_UNKNOWN = null;
+  public static final String DEPLABEL_UNKNOWN = null;
 
   public static final String SEMANTIC_TYPE_UNKNOWN = null;
 
