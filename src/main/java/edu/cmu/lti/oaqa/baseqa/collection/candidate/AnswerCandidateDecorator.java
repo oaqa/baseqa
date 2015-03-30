@@ -8,8 +8,8 @@ import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import edu.cmu.lti.oaqa.baseqa.util.ProviderCache;
 import edu.cmu.lti.oaqa.baseqa.util.UimaContextHelper;
-import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.type.answer.Answer;
 import edu.cmu.lti.oaqa.util.TypeUtil;
 
@@ -21,8 +21,7 @@ public class AnswerCandidateDecorator extends JCasAnnotator_ImplBase {
   public void initialize(UimaContext context) throws ResourceInitializationException {
     super.initialize(context);
     String pp = UimaContextHelper.getConfigParameterStringValue(context, "persistence-provider");
-    this.persistence = BaseExperimentBuilder.loadProvider(pp,
-            AnswerCandidatePersistenceProvider.class);
+    this.persistence = ProviderCache.getProvider(pp, AnswerCandidatePersistenceProvider.class);
   }
 
   @Override

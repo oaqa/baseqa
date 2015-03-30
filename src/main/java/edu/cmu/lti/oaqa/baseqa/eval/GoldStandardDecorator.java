@@ -11,8 +11,8 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.resource.ResourceInitializationException;
 
+import edu.cmu.lti.oaqa.baseqa.util.ProviderCache;
 import edu.cmu.lti.oaqa.baseqa.util.UimaContextHelper;
-import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.framework.ViewManager;
 import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
 import edu.cmu.lti.oaqa.framework.types.InputElement;
@@ -25,7 +25,7 @@ public class GoldStandardDecorator<T extends TOP> extends JCasAnnotator_ImplBase
   @Override
   public void initialize(UimaContext context) throws ResourceInitializationException {
     String pp = UimaContextHelper.getConfigParameterStringValue(context, "persistence-provider");
-    persistence = BaseExperimentBuilder.loadProvider(pp, GoldStandardPersistenceProvider.class);
+    persistence = ProviderCache.getProvider(pp, GoldStandardPersistenceProvider.class);
   }
 
   @Override

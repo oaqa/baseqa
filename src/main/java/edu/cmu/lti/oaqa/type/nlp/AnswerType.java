@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.nlp;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,8 +10,9 @@ import org.apache.uima.jcas.cas.TOP_Type;
 import org.apache.uima.jcas.tcas.Annotation;
 
 
-/** A Named Entity type that represents the type of the answer being sought.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+/** A Named Entity type that represents the type of the
+        answer being sought.
+ * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class AnswerType extends Annotation {

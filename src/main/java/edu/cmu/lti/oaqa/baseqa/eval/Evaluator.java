@@ -17,8 +17,8 @@ import org.apache.uima.resource.ResourceInitializationException;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
 
+import edu.cmu.lti.oaqa.baseqa.util.ProviderCache;
 import edu.cmu.lti.oaqa.baseqa.util.UimaContextHelper;
-import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.ecd.phase.ProcessingStepUtils;
 import edu.cmu.lti.oaqa.ecd.phase.Trace;
 import edu.cmu.lti.oaqa.framework.eval.ExperimentKey;
@@ -44,13 +44,13 @@ public final class Evaluator<T> extends JCasConsumer_ImplBase {
   public void initialize(UimaContext context) throws ResourceInitializationException {
     super.initialize(context);
     String c = UimaContextHelper.getConfigParameterStringValue(context, "calculator");
-    calculator = BaseExperimentBuilder.loadProvider(c, EvalCalculator.class);
+    calculator = ProviderCache.getProvider(c, EvalCalculator.class);
     calculatorName = calculator.getName();
     String ep = UimaContextHelper.getConfigParameterStringValue(context, "evaluatee-provider");
-    evaluatee = BaseExperimentBuilder.loadProvider(ep, EvaluateeProvider.class);
+    evaluatee = ProviderCache.getProvider(ep, EvaluateeProvider.class);
     evaluateeName = evaluatee.getName();
     String pp = UimaContextHelper.getConfigParameterStringValue(context, "persistence-provider");
-    persistence = BaseExperimentBuilder.loadProvider(pp, EvalPeristenceProvider.class);
+    persistence = ProviderCache.getProvider(pp, EvalPeristenceProvider.class);
   }
 
   @Override
@@ -92,8 +92,8 @@ public final class Evaluator<T> extends JCasConsumer_ImplBase {
       part.rowKeySet().forEach(key -> {
         Map<Measure, Double> accu = calculator.accumulate(part.row(key));
         persistence.insertAccumulatedMeasurements(key, calculatorName, evaluateeName, accu);
-      });
-    });
+      } );
+    } );
   }
 
 }

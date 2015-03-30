@@ -15,10 +15,7 @@ import edu.cmu.lti.oaqa.type.answer.Summary;
 import edu.cmu.lti.oaqa.type.input.Question;
 import edu.cmu.lti.oaqa.type.kb.Concept;
 import edu.cmu.lti.oaqa.type.kb.ConceptMention;
-import edu.cmu.lti.oaqa.type.kb.Entity;
-import edu.cmu.lti.oaqa.type.kb.EntityMention;
-import edu.cmu.lti.oaqa.type.kb.Relation;
-import edu.cmu.lti.oaqa.type.kb.RelationMention;
+import edu.cmu.lti.oaqa.type.kb.ConceptType;
 import edu.cmu.lti.oaqa.type.kb.Triple;
 import edu.cmu.lti.oaqa.type.nlp.LexicalAnswerType;
 import edu.cmu.lti.oaqa.type.nlp.Token;
@@ -66,114 +63,71 @@ public class TypeFactory {
   }
 
   public static Token createToken(JCas jcas, int begin, int end) {
-    return createToken(jcas, begin, end, TypeConstants.HEAD_UNKNOWN,
-            TypeConstants.DEPLABEL_UNKNOWN, TypeConstants.SEMANTIC_TYPE_UNKNOWN,
-            TypeConstants.PART_OF_SPEECH_UNKNOWN, TypeConstants.LEMMA_FORM_UNKNOWN,
-            TypeConstants.IS_MAIN_REFERENCE_UNKNOWN, TypeConstants.IS_VARIABLE_UNKNOWN,
-            TypeConstants.DETERMINER_UNKNOWN);
+    return createToken(jcas, begin, end, TypeConstants.HEAD_UNKNOWN, TypeConstants.DEPLABEL_UNKNOWN,
+            TypeConstants.SEMANTIC_TYPE_UNKNOWN, TypeConstants.PART_OF_SPEECH_UNKNOWN,
+            TypeConstants.LEMMA_FORM_UNKNOWN, TypeConstants.IS_MAIN_REFERENCE_UNKNOWN,
+            TypeConstants.IS_VARIABLE_UNKNOWN, TypeConstants.DETERMINER_UNKNOWN);
   }
 
-  public static Concept createConcept(JCas jcas, String name, List<String> uris,
-          List<ConceptMention> mentions) {
+  public static Concept createConcept(JCas jcas, String name, List<String> uris, List<String> ids,
+          List<ConceptMention> mentions, List<ConceptType> types) {
     Concept ret = new Concept(jcas);
     ret.setName(name);
     ret.setUris(FSCollectionFactory.createStringList(jcas, uris));
+    ret.setIds(FSCollectionFactory.createStringList(jcas, ids));
     ret.setMentions(FSCollectionFactory.createFSList(jcas, mentions));
+    ret.setTypes(FSCollectionFactory.createFSList(jcas, types));
     return ret;
   }
 
+  public static Concept createConcept(JCas jcas, String name, String id, List<ConceptType> types) {
+    return createConcept(jcas, name, new ArrayList<>(), Arrays.asList(id), new ArrayList<>(),
+            types);
+  }
+
   public static Concept createConcept(JCas jcas, String name, String uri) {
-    return createConcept(jcas, name, Arrays.asList(uri), new ArrayList<>());
+    return createConcept(jcas, name, Arrays.asList(uri), new ArrayList<>(), new ArrayList<>(),
+            new ArrayList<>());
   }
 
   public static Concept createConcept(JCas jcas, String uri) {
-    return createConcept(jcas, TypeConstants.NAME_UNKNOWN, Arrays.asList(uri), new ArrayList<>());
+    return createConcept(jcas, TypeConstants.NAME_UNKNOWN, Arrays.asList(uri), new ArrayList<>(),
+            new ArrayList<>(), new ArrayList<>());
   }
 
-  public static ConceptMention createConceptMention(JCas jcas, int begin, int end, Concept concept) {
+  public static Concept createConcept(JCas jcas, ConceptType type) {
+    return createConcept(jcas, TypeConstants.NAME_UNKNOWN, new ArrayList<>(), new ArrayList<>(),
+            new ArrayList<>(), Arrays.asList(type));
+  }
+
+  public static ConceptType createConceptType(JCas jcas, String id, String name,
+          String abbreviation) {
+    ConceptType ret = new ConceptType(jcas);
+    ret.setId(id);
+    ret.setName(name);
+    ret.setAbbreviation(abbreviation);
+    return ret;
+  }
+
+  public static ConceptType createConceptType(JCas jcas, String name) {
+    return createConceptType(jcas, TypeConstants.CONCEPT_TYPE_ID_UNKNOWN, name, name);
+  }
+
+  public static ConceptMention createConceptMention(JCas jcas, int begin, int end, Concept concept,
+          String matchedName, double score) {
     ConceptMention ret = new ConceptMention(jcas);
     ret.setBegin(begin);
     ret.setEnd(end);
     ret.setConcept(concept);
+    ret.setMatchedName(matchedName);
+    ret.setScore(score);
     return ret;
   }
 
-  public static ConceptMention createConceptMention(JCas jcas, int begin, int end, String name,
-          List<String> ids) {
-    ConceptMention ret = new ConceptMention(jcas);
-    ret.setBegin(begin);
-    ret.setEnd(end);
-    ret.setConcept(createConcept(jcas, name, ids, Arrays.asList(ret)));
-    return ret;
-  }
-
-  public static Entity createEntity(JCas jcas, String name, List<String> uris,
-          List<EntityMention> mentions) {
-    Entity ret = new Entity(jcas);
-    ret.setName(name);
-    ret.setUris(FSCollectionFactory.createStringList(jcas, uris));
-    ret.setMentions(FSCollectionFactory.createFSList(jcas, mentions));
-    return ret;
-  }
-
-  public static Entity createEntity(JCas jcas, String name, String uri) {
-    return createEntity(jcas, name, Arrays.asList(uri), new ArrayList<>());
-  }
-
-  public static Entity createEntity(JCas jcas, String uri) {
-    return createEntity(jcas, TypeConstants.NAME_UNKNOWN, Arrays.asList(uri), new ArrayList<>());
-  }
-
-  public static EntityMention createEntityMention(JCas jcas, int begin, int end, Entity entity) {
-    EntityMention ret = new EntityMention(jcas);
-    ret.setBegin(begin);
-    ret.setEnd(end);
-    ret.setConcept(entity);
-    return ret;
-  }
-
-  public static EntityMention createEntityMention(JCas jcas, int begin, int end, String name,
-          List<String> ids) {
-    EntityMention ret = new EntityMention(jcas);
-    ret.setBegin(begin);
-    ret.setEnd(end);
-    ret.setConcept(createEntity(jcas, name, ids, Arrays.asList(ret)));
-    return ret;
-  }
-
-  public static Relation createRelation(JCas jcas, String name, List<String> uris,
-          List<RelationMention> mentions) {
-    Relation ret = new Relation(jcas);
-    ret.setName(name);
-    ret.setUris(FSCollectionFactory.createStringList(jcas, uris));
-    ret.setMentions(FSCollectionFactory.createFSList(jcas, mentions));
-    return ret;
-  }
-
-  public static Relation createRelation(JCas jcas, String name, String uri) {
-    return createRelation(jcas, name, Arrays.asList(uri), new ArrayList<>());
-  }
-
-  public static Relation createRelation(JCas jcas, String uri) {
-    return createRelation(jcas, TypeConstants.NAME_UNKNOWN, Arrays.asList(uri), new ArrayList<>());
-  }
-
-  public static RelationMention createRelationMention(JCas jcas, int begin, int end,
-          Relation relation) {
-    RelationMention ret = new RelationMention(jcas);
-    ret.setBegin(begin);
-    ret.setEnd(end);
-    ret.setConcept(relation);
-    return ret;
-  }
-
-  public static RelationMention createRelationMention(JCas jcas, int begin, int end, String name,
-          List<String> uris) {
-    RelationMention ret = new RelationMention(jcas);
-    ret.setBegin(begin);
-    ret.setEnd(end);
-    ret.setConcept(createRelation(jcas, name, uris, Arrays.asList(ret)));
-    return ret;
+  public static ConceptMention createConceptMention(JCas jcas, int begin, int end,
+          Concept concept) {
+    return createConceptMention(jcas, begin, end, concept, TypeConstants.NAME_UNKNOWN,
+            TypeConstants.SCORE_UNKNOWN);
   }
 
   public static Triple createTriple(JCas jcas, String subject, String predicate, String object,
@@ -222,7 +176,8 @@ public class TypeFactory {
     return createAnswer(jcas, text, variants, TypeConstants.RANK_UNKNOWN);
   }
 
-  public static AbstractQuery createAbstractQuery(JCas jcas, List<? extends QueryConcept> concepts) {
+  public static AbstractQuery createAbstractQuery(JCas jcas,
+          List<? extends QueryConcept> concepts) {
     AbstractQuery ret = new AbstractQuery(jcas);
     ret.setConcepts(FSCollectionFactory.createFSList(jcas, concepts));
     return ret;
@@ -366,7 +321,8 @@ public class TypeFactory {
   }
 
   public static Passage createPassage(JCas jcas, String uri, String text, String docId,
-          int offsetInBeginSection, int offsetInEndSection, String beginSection, String endSection) {
+          int offsetInBeginSection, int offsetInEndSection, String beginSection,
+          String endSection) {
     return createPassage(jcas, uri, TypeConstants.SCORE_UNKNOWN, text, TypeConstants.RANK_UNKNOWN,
             TypeConstants.QUERY_STRING_UNKNOWN, TypeConstants.SEARCH_ID_UNKNOWN, new ArrayList<>(),
             TypeConstants.TITLE_UNKNOWN, docId, offsetInBeginSection, offsetInEndSection,
@@ -402,7 +358,8 @@ public class TypeFactory {
             queryString, TypeConstants.SEARCH_ID_UNKNOWN, new ArrayList<>());
   }
 
-  public static ConceptSearchResult createConceptSearchResult(JCas jcas, Concept concept, String uri) {
+  public static ConceptSearchResult createConceptSearchResult(JCas jcas, Concept concept,
+          String uri) {
     return createConceptSearchResult(jcas, concept, uri, TypeConstants.SCORE_UNKNOWN,
             TypeConstants.TEXT_UNKNOWN, TypeConstants.QUERY_STRING_UNKNOWN);
   }

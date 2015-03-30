@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.kb;
 
 import org.apache.uima.jcas.JCas; 
@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** A superclass for EntityConcept and RelationConcept.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+ * Updated by JCasGen Sun Mar 29 18:53:35 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class Concept extends TOP {
@@ -69,7 +69,8 @@ public class Concept extends TOP {
   //*--------------*
   //* Feature: name
 
-  /** getter for name - gets The name of the concept.
+  /** getter for name - gets The name (or preferred/default name) of the
+            concept.
    * @generated
    * @return value of the feature 
    */
@@ -78,7 +79,8 @@ public class Concept extends TOP {
       jcasType.jcas.throwFeatMissing("name", "edu.cmu.lti.oaqa.type.kb.Concept");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Concept_Type)jcasType).casFeatCode_name);}
     
-  /** setter for name - sets The name of the concept. 
+  /** setter for name - sets The name (or preferred/default name) of the
+            concept. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -91,7 +93,9 @@ public class Concept extends TOP {
   //*--------------*
   //* Feature: uris
 
-  /** getter for uris - gets Array of uris that identify this named entity.  There may be more than one uri if this named entity is ambiguous.
+  /** getter for uris - gets Array of uris that identify this named entity.
+            There may be more than one uri if this named entity is
+            ambiguous.
    * @generated
    * @return value of the feature 
    */
@@ -100,7 +104,9 @@ public class Concept extends TOP {
       jcasType.jcas.throwFeatMissing("uris", "edu.cmu.lti.oaqa.type.kb.Concept");
     return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Concept_Type)jcasType).casFeatCode_uris)));}
     
-  /** setter for uris - sets Array of uris that identify this named entity.  There may be more than one uri if this named entity is ambiguous. 
+  /** setter for uris - sets Array of uris that identify this named entity.
+            There may be more than one uri if this named entity is
+            ambiguous. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -111,9 +117,34 @@ public class Concept extends TOP {
    
     
   //*--------------*
+  //* Feature: ids
+
+  /** getter for ids - gets A list of IDs (e.g. UI in UMLS) associated with
+            this concept.
+   * @generated
+   * @return value of the feature 
+   */
+  public StringList getIds() {
+    if (Concept_Type.featOkTst && ((Concept_Type)jcasType).casFeat_ids == null)
+      jcasType.jcas.throwFeatMissing("ids", "edu.cmu.lti.oaqa.type.kb.Concept");
+    return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Concept_Type)jcasType).casFeatCode_ids)));}
+    
+  /** setter for ids - sets A list of IDs (e.g. UI in UMLS) associated with
+            this concept. 
+   * @generated
+   * @param v value to set into the feature 
+   */
+  public void setIds(StringList v) {
+    if (Concept_Type.featOkTst && ((Concept_Type)jcasType).casFeat_ids == null)
+      jcasType.jcas.throwFeatMissing("ids", "edu.cmu.lti.oaqa.type.kb.Concept");
+    jcasType.ll_cas.ll_setRefValue(addr, ((Concept_Type)jcasType).casFeatCode_ids, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
   //* Feature: mentions
 
-  /** getter for mentions - gets A list of ConceptMentions (text spans) that might be surface forms to this concept.
+  /** getter for mentions - gets A list of ConceptMentions (text spans) that might
+            be surface forms to this concept.
    * @generated
    * @return value of the feature 
    */
@@ -122,7 +153,8 @@ public class Concept extends TOP {
       jcasType.jcas.throwFeatMissing("mentions", "edu.cmu.lti.oaqa.type.kb.Concept");
     return (FSList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Concept_Type)jcasType).casFeatCode_mentions)));}
     
-  /** setter for mentions - sets A list of ConceptMentions (text spans) that might be surface forms to this concept. 
+  /** setter for mentions - sets A list of ConceptMentions (text spans) that might
+            be surface forms to this concept. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -130,6 +162,30 @@ public class Concept extends TOP {
     if (Concept_Type.featOkTst && ((Concept_Type)jcasType).casFeat_mentions == null)
       jcasType.jcas.throwFeatMissing("mentions", "edu.cmu.lti.oaqa.type.kb.Concept");
     jcasType.ll_cas.ll_setRefValue(addr, ((Concept_Type)jcasType).casFeatCode_mentions, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
+  //* Feature: types
+
+  /** getter for types - gets A list of concept types that the concept belongs
+            to.
+   * @generated
+   * @return value of the feature 
+   */
+  public FSList getTypes() {
+    if (Concept_Type.featOkTst && ((Concept_Type)jcasType).casFeat_types == null)
+      jcasType.jcas.throwFeatMissing("types", "edu.cmu.lti.oaqa.type.kb.Concept");
+    return (FSList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Concept_Type)jcasType).casFeatCode_types)));}
+    
+  /** setter for types - sets A list of concept types that the concept belongs
+            to. 
+   * @generated
+   * @param v value to set into the feature 
+   */
+  public void setTypes(FSList v) {
+    if (Concept_Type.featOkTst && ((Concept_Type)jcasType).casFeat_types == null)
+      jcasType.jcas.throwFeatMissing("types", "edu.cmu.lti.oaqa.type.kb.Concept");
+    jcasType.ll_cas.ll_setRefValue(addr, ((Concept_Type)jcasType).casFeatCode_types, jcasType.ll_cas.ll_getFSRef(v));}    
   }
 
     

@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.answer;
 
 import org.apache.uima.jcas.JCas; 
@@ -12,7 +12,7 @@ import org.apache.uima.jcas.cas.TOP;
 
 
 /** A ranked list of candidate answers.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+ * Updated by JCasGen Sun Mar 29 18:53:35 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class AnswerList extends TOP {
@@ -68,7 +68,8 @@ public class AnswerList extends TOP {
   //*--------------*
   //* Feature: answerList
 
-  /** getter for answerList - gets Hit list of candidate answers, rank ordered, with highest scoring answer first.
+  /** getter for answerList - gets Hit list of candidate answers, rank ordered, with
+            highest scoring answer first.
    * @generated
    * @return value of the feature 
    */
@@ -77,7 +78,8 @@ public class AnswerList extends TOP {
       jcasType.jcas.throwFeatMissing("answerList", "edu.cmu.lti.oaqa.type.answer.AnswerList");
     return (FSArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_answerList)));}
     
-  /** setter for answerList - sets Hit list of candidate answers, rank ordered, with highest scoring answer first. 
+  /** setter for answerList - sets Hit list of candidate answers, rank ordered, with
+            highest scoring answer first. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -86,7 +88,8 @@ public class AnswerList extends TOP {
       jcasType.jcas.throwFeatMissing("answerList", "edu.cmu.lti.oaqa.type.answer.AnswerList");
     jcasType.ll_cas.ll_setRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_answerList, jcasType.ll_cas.ll_getFSRef(v));}    
     
-  /** indexed getter for answerList - gets an indexed value - Hit list of candidate answers, rank ordered, with highest scoring answer first.
+  /** indexed getter for answerList - gets an indexed value - Hit list of candidate answers, rank ordered, with
+            highest scoring answer first.
    * @generated
    * @param i index in the array to get
    * @return value of the element at index i 
@@ -97,7 +100,8 @@ public class AnswerList extends TOP {
     jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_answerList), i);
     return (Answer)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((AnswerList_Type)jcasType).casFeatCode_answerList), i)));}
 
-  /** indexed setter for answerList - sets an indexed value - Hit list of candidate answers, rank ordered, with highest scoring answer first.
+  /** indexed setter for answerList - sets an indexed value - Hit list of candidate answers, rank ordered, with
+            highest scoring answer first.
    * @generated
    * @param i index in the array to set
    * @param v value to set into the array 

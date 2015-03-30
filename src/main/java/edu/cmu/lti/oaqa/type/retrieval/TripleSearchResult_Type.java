@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas;
@@ -12,8 +12,9 @@ import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
-/** A search result from a triple store, e.g., an RDF store.
- * Updated by JCasGen Tue Mar 17 14:36:56 EDT 2015
+/** A search result from a triple store, e.g., an RDF
+        store.
+ * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
  * @generated */
 public class TripleSearchResult_Type extends AnswerSearchResult_Type {
   /** @generated 

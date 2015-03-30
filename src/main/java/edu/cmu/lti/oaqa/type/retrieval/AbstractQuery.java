@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,8 +11,10 @@ import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.jcas.cas.TOP;
 
 
-/** An abstract search query for the question that represents query concepts and query operators over those concepts.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+/** An abstract search query for the question that
+        represents query concepts and query operators over those
+        concepts.
+ * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class AbstractQuery extends TOP {
@@ -68,7 +70,8 @@ public class AbstractQuery extends TOP {
   //*--------------*
   //* Feature: concepts
 
-  /** getter for concepts - gets The list of query concepts that make up this abstract query.  The list is ordered.
+  /** getter for concepts - gets The list of query concepts that make up this
+            abstract query. The list is ordered.
    * @generated
    * @return value of the feature 
    */
@@ -77,7 +80,8 @@ public class AbstractQuery extends TOP {
       jcasType.jcas.throwFeatMissing("concepts", "edu.cmu.lti.oaqa.type.retrieval.AbstractQuery");
     return (FSList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((AbstractQuery_Type)jcasType).casFeatCode_concepts)));}
     
-  /** setter for concepts - sets The list of query concepts that make up this abstract query.  The list is ordered. 
+  /** setter for concepts - sets The list of query concepts that make up this
+            abstract query. The list is ordered. 
    * @generated
    * @param v value to set into the feature 
    */

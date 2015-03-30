@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.answer;
 
 import org.apache.uima.jcas.JCas; 
@@ -12,8 +12,10 @@ import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.jcas.cas.StringList;
 
 
-/** A variant of a candidate answer.  A variant may have multiple occurrences, all of which are collected in a variant object.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+/** A variant of a candidate answer. A variant may have
+        multiple occurrences, all of which are collected in a variant
+        object.
+ * Updated by JCasGen Sun Mar 29 18:53:35 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class CandidateAnswerVariant extends TOP {
@@ -135,7 +137,9 @@ public class CandidateAnswerVariant extends TOP {
   //*--------------*
   //* Feature: alternativeNames
 
-  /** getter for alternativeNames - gets alternative names for a given candidate answer variant, e.g. Tandy, Tandy Inc. for candidate answer Variant Tandy Incorporated
+  /** getter for alternativeNames - gets alternative names for a given candidate answer
+            variant, e.g. Tandy, Tandy Inc. for candidate answer Variant
+            Tandy Incorporated
    * @generated
    * @return value of the feature 
    */
@@ -144,7 +148,9 @@ public class CandidateAnswerVariant extends TOP {
       jcasType.jcas.throwFeatMissing("alternativeNames", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
     return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_alternativeNames)));}
     
-  /** setter for alternativeNames - sets alternative names for a given candidate answer variant, e.g. Tandy, Tandy Inc. for candidate answer Variant Tandy Incorporated 
+  /** setter for alternativeNames - sets alternative names for a given candidate answer
+            variant, e.g. Tandy, Tandy Inc. for candidate answer Variant
+            Tandy Incorporated 
    * @generated
    * @param v value to set into the feature 
    */
@@ -157,7 +163,11 @@ public class CandidateAnswerVariant extends TOP {
   //*--------------*
   //* Feature: uri
 
-  /** getter for uri - gets A unique identifier for this candidate.  All candidate answers in the same candidate answer group will have the same uri.  A candidate answer group is formed at candidate generation time when additional derived candidate answers are created from the root candidate answer.
+  /** getter for uri - gets A unique identifier for this candidate. All
+            candidate answers in the same candidate answer group will
+            have the same uri. A candidate answer group is formed at
+            candidate generation time when additional derived candidate
+            answers are created from the root candidate answer.
    * @generated
    * @return value of the feature 
    */
@@ -166,7 +176,11 @@ public class CandidateAnswerVariant extends TOP {
       jcasType.jcas.throwFeatMissing("uri", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
     return jcasType.ll_cas.ll_getStringValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_uri);}
     
-  /** setter for uri - sets A unique identifier for this candidate.  All candidate answers in the same candidate answer group will have the same uri.  A candidate answer group is formed at candidate generation time when additional derived candidate answers are created from the root candidate answer. 
+  /** setter for uri - sets A unique identifier for this candidate. All
+            candidate answers in the same candidate answer group will
+            have the same uri. A candidate answer group is formed at
+            candidate generation time when additional derived candidate
+            answers are created from the root candidate answer. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -179,7 +193,8 @@ public class CandidateAnswerVariant extends TOP {
   //*--------------*
   //* Feature: docId
 
-  /** getter for docId - gets The unique id of the document (if any) from which this candidate answer was generated.
+  /** getter for docId - gets The unique id of the document (if any) from which
+            this candidate answer was generated.
    * @generated
    * @return value of the feature 
    */
@@ -188,7 +203,8 @@ public class CandidateAnswerVariant extends TOP {
       jcasType.jcas.throwFeatMissing("docId", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
     return jcasType.ll_cas.ll_getStringValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_docId);}
     
-  /** setter for docId - sets The unique id of the document (if any) from which this candidate answer was generated. 
+  /** setter for docId - sets The unique id of the document (if any) from which
+            this candidate answer was generated. 
    * @generated
    * @param v value to set into the feature 
    */

@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** A query concept in the abstract search query model.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+ * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
  * @generated */
 public class QueryConcept_Type extends TOP_Type {
   /** @generated 

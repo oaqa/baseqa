@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.kb;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** A superclass for EntityMention and RelationMention.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+ * Updated by JCasGen Sun Mar 29 18:53:35 EDT 2015
  * @generated */
 public class ConceptMention_Type extends Annotation_Type {
   /** @generated 
@@ -69,6 +69,54 @@ public class ConceptMention_Type extends Annotation_Type {
     ll_cas.ll_setRefValue(addr, casFeatCode_concept, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_matchedName;
+  /** @generated */
+  final int     casFeatCode_matchedName;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getMatchedName(int addr) {
+        if (featOkTst && casFeat_matchedName == null)
+      jcas.throwFeatMissing("matchedName", "edu.cmu.lti.oaqa.type.kb.ConceptMention");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_matchedName);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setMatchedName(int addr, String v) {
+        if (featOkTst && casFeat_matchedName == null)
+      jcas.throwFeatMissing("matchedName", "edu.cmu.lti.oaqa.type.kb.ConceptMention");
+    ll_cas.ll_setStringValue(addr, casFeatCode_matchedName, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_score;
+  /** @generated */
+  final int     casFeatCode_score;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public double getScore(int addr) {
+        if (featOkTst && casFeat_score == null)
+      jcas.throwFeatMissing("score", "edu.cmu.lti.oaqa.type.kb.ConceptMention");
+    return ll_cas.ll_getDoubleValue(addr, casFeatCode_score);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setScore(int addr, double v) {
+        if (featOkTst && casFeat_score == null)
+      jcas.throwFeatMissing("score", "edu.cmu.lti.oaqa.type.kb.ConceptMention");
+    ll_cas.ll_setDoubleValue(addr, casFeatCode_score, v);}
+    
+  
 
 
 
@@ -84,6 +132,14 @@ public class ConceptMention_Type extends Annotation_Type {
  
     casFeat_concept = jcas.getRequiredFeatureDE(casType, "concept", "edu.cmu.lti.oaqa.type.kb.Concept", featOkTst);
     casFeatCode_concept  = (null == casFeat_concept) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_concept).getCode();
+
+ 
+    casFeat_matchedName = jcas.getRequiredFeatureDE(casType, "matchedName", "uima.cas.String", featOkTst);
+    casFeatCode_matchedName  = (null == casFeat_matchedName) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_matchedName).getCode();
+
+ 
+    casFeat_score = jcas.getRequiredFeatureDE(casType, "score", "uima.cas.Double", featOkTst);
+    casFeatCode_score  = (null == casFeat_score) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_score).getCode();
 
   }
 }

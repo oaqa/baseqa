@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.input;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** The Question and any associated meta-data.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+ * Updated by JCasGen Sun Mar 29 18:53:35 EDT 2015
  * @generated */
 public class Question_Type extends Annotation_Type {
   /** @generated 

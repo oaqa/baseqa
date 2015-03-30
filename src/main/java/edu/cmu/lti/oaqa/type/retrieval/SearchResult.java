@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas; 
@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.TOP;
 
 
 /** A search result.
- * Updated by JCasGen Tue Mar 17 14:36:56 EDT 2015
+ * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class SearchResult extends TOP {
@@ -69,7 +69,10 @@ public class SearchResult extends TOP {
   //*--------------*
   //* Feature: uri
 
-  /** getter for uri - gets An identifier for the source of this search result, e.g., the name of the file that this result is drawn from, which, when combined with offset and length, uniquely identifies the span of text for this result.
+  /** getter for uri - gets An identifier for the source of this search
+            result, e.g., the name of the file that this result is drawn
+            from, which, when combined with offset and length, uniquely
+            identifies the span of text for this result.
    * @generated
    * @return value of the feature 
    */
@@ -78,7 +81,10 @@ public class SearchResult extends TOP {
       jcasType.jcas.throwFeatMissing("uri", "edu.cmu.lti.oaqa.type.retrieval.SearchResult");
     return jcasType.ll_cas.ll_getStringValue(addr, ((SearchResult_Type)jcasType).casFeatCode_uri);}
     
-  /** setter for uri - sets An identifier for the source of this search result, e.g., the name of the file that this result is drawn from, which, when combined with offset and length, uniquely identifies the span of text for this result. 
+  /** setter for uri - sets An identifier for the source of this search
+            result, e.g., the name of the file that this result is drawn
+            from, which, when combined with offset and length, uniquely
+            identifies the span of text for this result. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -91,7 +97,8 @@ public class SearchResult extends TOP {
   //*--------------*
   //* Feature: score
 
-  /** getter for score - gets Relevance score associated with the search result.
+  /** getter for score - gets Relevance score associated with the search
+            result.
    * @generated
    * @return value of the feature 
    */
@@ -100,7 +107,8 @@ public class SearchResult extends TOP {
       jcasType.jcas.throwFeatMissing("score", "edu.cmu.lti.oaqa.type.retrieval.SearchResult");
     return jcasType.ll_cas.ll_getDoubleValue(addr, ((SearchResult_Type)jcasType).casFeatCode_score);}
     
-  /** setter for score - sets Relevance score associated with the search result. 
+  /** setter for score - sets Relevance score associated with the search
+            result. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -179,7 +187,9 @@ public class SearchResult extends TOP {
   //*--------------*
   //* Feature: searchId
 
-  /** getter for searchId - gets ID of the search object to which this search result belongs (matches the searchId field in the Search object).
+  /** getter for searchId - gets ID of the search object to which this search
+            result belongs (matches the searchId field in the Search
+            object).
    * @generated
    * @return value of the feature 
    */
@@ -188,7 +198,9 @@ public class SearchResult extends TOP {
       jcasType.jcas.throwFeatMissing("searchId", "edu.cmu.lti.oaqa.type.retrieval.SearchResult");
     return jcasType.ll_cas.ll_getStringValue(addr, ((SearchResult_Type)jcasType).casFeatCode_searchId);}
     
-  /** setter for searchId - sets ID of the search object to which this search result belongs (matches the searchId field in the Search object). 
+  /** setter for searchId - sets ID of the search object to which this search
+            result belongs (matches the searchId field in the Search
+            object). 
    * @generated
    * @param v value to set into the feature 
    */
@@ -201,7 +213,8 @@ public class SearchResult extends TOP {
   //*--------------*
   //* Feature: candidateAnswers
 
-  /** getter for candidateAnswers - gets CandidateAnswerVariants generated from this SearchResult.
+  /** getter for candidateAnswers - gets CandidateAnswerVariants generated from this
+            SearchResult.
    * @generated
    * @return value of the feature 
    */
@@ -210,7 +223,8 @@ public class SearchResult extends TOP {
       jcasType.jcas.throwFeatMissing("candidateAnswers", "edu.cmu.lti.oaqa.type.retrieval.SearchResult");
     return (FSArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((SearchResult_Type)jcasType).casFeatCode_candidateAnswers)));}
     
-  /** setter for candidateAnswers - sets CandidateAnswerVariants generated from this SearchResult. 
+  /** setter for candidateAnswers - sets CandidateAnswerVariants generated from this
+            SearchResult. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -219,7 +233,8 @@ public class SearchResult extends TOP {
       jcasType.jcas.throwFeatMissing("candidateAnswers", "edu.cmu.lti.oaqa.type.retrieval.SearchResult");
     jcasType.ll_cas.ll_setRefValue(addr, ((SearchResult_Type)jcasType).casFeatCode_candidateAnswers, jcasType.ll_cas.ll_getFSRef(v));}    
     
-  /** indexed getter for candidateAnswers - gets an indexed value - CandidateAnswerVariants generated from this SearchResult.
+  /** indexed getter for candidateAnswers - gets an indexed value - CandidateAnswerVariants generated from this
+            SearchResult.
    * @generated
    * @param i index in the array to get
    * @return value of the element at index i 
@@ -230,7 +245,8 @@ public class SearchResult extends TOP {
     jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((SearchResult_Type)jcasType).casFeatCode_candidateAnswers), i);
     return (CandidateAnswerVariant)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((SearchResult_Type)jcasType).casFeatCode_candidateAnswers), i)));}
 
-  /** indexed setter for candidateAnswers - sets an indexed value - CandidateAnswerVariants generated from this SearchResult.
+  /** indexed setter for candidateAnswers - sets an indexed value - CandidateAnswerVariants generated from this
+            SearchResult.
    * @generated
    * @param i index in the array to set
    * @param v value to set into the array 

@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.kb;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** A superclass for EntityConcept and RelationConcept.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+ * Updated by JCasGen Sun Mar 29 18:53:35 EDT 2015
  * @generated */
 public class Concept_Type extends TOP_Type {
   /** @generated 
@@ -95,6 +95,30 @@ public class Concept_Type extends TOP_Type {
   
  
   /** @generated */
+  final Feature casFeat_ids;
+  /** @generated */
+  final int     casFeatCode_ids;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public int getIds(int addr) {
+        if (featOkTst && casFeat_ids == null)
+      jcas.throwFeatMissing("ids", "edu.cmu.lti.oaqa.type.kb.Concept");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_ids);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setIds(int addr, int v) {
+        if (featOkTst && casFeat_ids == null)
+      jcas.throwFeatMissing("ids", "edu.cmu.lti.oaqa.type.kb.Concept");
+    ll_cas.ll_setRefValue(addr, casFeatCode_ids, v);}
+    
+  
+ 
+  /** @generated */
   final Feature casFeat_mentions;
   /** @generated */
   final int     casFeatCode_mentions;
@@ -115,6 +139,30 @@ public class Concept_Type extends TOP_Type {
         if (featOkTst && casFeat_mentions == null)
       jcas.throwFeatMissing("mentions", "edu.cmu.lti.oaqa.type.kb.Concept");
     ll_cas.ll_setRefValue(addr, casFeatCode_mentions, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_types;
+  /** @generated */
+  final int     casFeatCode_types;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public int getTypes(int addr) {
+        if (featOkTst && casFeat_types == null)
+      jcas.throwFeatMissing("types", "edu.cmu.lti.oaqa.type.kb.Concept");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_types);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setTypes(int addr, int v) {
+        if (featOkTst && casFeat_types == null)
+      jcas.throwFeatMissing("types", "edu.cmu.lti.oaqa.type.kb.Concept");
+    ll_cas.ll_setRefValue(addr, casFeatCode_types, v);}
     
   
 
@@ -138,8 +186,16 @@ public class Concept_Type extends TOP_Type {
     casFeatCode_uris  = (null == casFeat_uris) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_uris).getCode();
 
  
+    casFeat_ids = jcas.getRequiredFeatureDE(casType, "ids", "uima.cas.StringList", featOkTst);
+    casFeatCode_ids  = (null == casFeat_ids) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_ids).getCode();
+
+ 
     casFeat_mentions = jcas.getRequiredFeatureDE(casType, "mentions", "uima.cas.FSList", featOkTst);
     casFeatCode_mentions  = (null == casFeat_mentions) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_mentions).getCode();
+
+ 
+    casFeat_types = jcas.getRequiredFeatureDE(casType, "types", "uima.cas.FSList", featOkTst);
+    casFeatCode_types  = (null == casFeat_types) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_types).getCode();
 
   }
 }

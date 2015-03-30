@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.answer;
 
 import org.apache.uima.jcas.JCas;
@@ -13,8 +13,10 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
-/** A variant of a candidate answer.  A variant may have multiple occurrences, all of which are collected in a variant object.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+/** A variant of a candidate answer. A variant may have
+        multiple occurrences, all of which are collected in a variant
+        object.
+ * Updated by JCasGen Sun Mar 29 18:53:35 EDT 2015
  * @generated */
 public class CandidateAnswerVariant_Type extends TOP_Type {
   /** @generated 

@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.input;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** The Question and any associated meta-data.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+ * Updated by JCasGen Sun Mar 29 18:53:35 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class Question extends Annotation {
@@ -101,7 +101,8 @@ public class Question extends Annotation {
   //*--------------*
   //* Feature: source
 
-  /** getter for source - gets The source of the question, e.g., TREC11, Jeopardy, etc.
+  /** getter for source - gets The source of the question, e.g., TREC11,
+            Jeopardy, etc.
    * @generated
    * @return value of the feature 
    */
@@ -110,7 +111,8 @@ public class Question extends Annotation {
       jcasType.jcas.throwFeatMissing("source", "edu.cmu.lti.oaqa.type.input.Question");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Question_Type)jcasType).casFeatCode_source);}
     
-  /** setter for source - sets The source of the question, e.g., TREC11, Jeopardy, etc. 
+  /** setter for source - sets The source of the question, e.g., TREC11,
+            Jeopardy, etc. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -123,7 +125,9 @@ public class Question extends Annotation {
   //*--------------*
   //* Feature: questionType
 
-  /** getter for questionType - gets The class of the question, determined by either an automatic question classification process or human judgment.
+  /** getter for questionType - gets The class of the question, determined by either
+            an automatic question classification process or human
+            judgment.
    * @generated
    * @return value of the feature 
    */
@@ -132,7 +136,9 @@ public class Question extends Annotation {
       jcasType.jcas.throwFeatMissing("questionType", "edu.cmu.lti.oaqa.type.input.Question");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Question_Type)jcasType).casFeatCode_questionType);}
     
-  /** setter for questionType - sets The class of the question, determined by either an automatic question classification process or human judgment. 
+  /** setter for questionType - sets The class of the question, determined by either
+            an automatic question classification process or human
+            judgment. 
    * @generated
    * @param v value to set into the feature 
    */

@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.nlp;
 
 import org.apache.uima.jcas.JCas;
@@ -13,8 +13,11 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+/** Annotation on a token, which may have arguments if
+        they are predicates; useful in transforming text into a "logical
+        form", with affordances similar to the ones provided in Extended
+        WordNet and the like.
+ * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
  * @generated */
 public class Token_Type extends Annotation_Type {
   /** @generated 
@@ -47,30 +50,6 @@ public class Token_Type extends Annotation_Type {
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("edu.cmu.lti.oaqa.type.nlp.Token");
  
   /** @generated */
-  final Feature casFeat_depLabel;
-  /** @generated */
-  final int     casFeatCode_depLabel;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public String getDepLabel(int addr) {
-        if (featOkTst && casFeat_depLabel == null)
-      jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_depLabel);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setDepLabel(int addr, String v) {
-        if (featOkTst && casFeat_depLabel == null)
-      jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
-    ll_cas.ll_setStringValue(addr, casFeatCode_depLabel, v);}
-    
-  
- 
-  /** @generated */
   final Feature casFeat_head;
   /** @generated */
   final int     casFeatCode_head;
@@ -91,6 +70,30 @@ public class Token_Type extends Annotation_Type {
         if (featOkTst && casFeat_head == null)
       jcas.throwFeatMissing("head", "edu.cmu.lti.oaqa.type.nlp.Token");
     ll_cas.ll_setRefValue(addr, casFeatCode_head, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_depLabel;
+  /** @generated */
+  final int     casFeatCode_depLabel;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getDepLabel(int addr) {
+        if (featOkTst && casFeat_depLabel == null)
+      jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_depLabel);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setDepLabel(int addr, String v) {
+        if (featOkTst && casFeat_depLabel == null)
+      jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
+    ll_cas.ll_setStringValue(addr, casFeatCode_depLabel, v);}
     
   
  

@@ -1,19 +1,20 @@
 
 
-/* First created by JCasGen Sun Oct 19 14:47:24 EDT 2014 */
+/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.nlp;
 
 import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
 
-import org.apache.uima.jcas.cas.FSArray;
-import org.apache.uima.jcas.cas.StringArray;
 import org.apache.uima.jcas.tcas.Annotation;
 
 
-/** Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like.
- * Updated by JCasGen Tue Mar 17 14:36:55 EDT 2015
+/** Annotation on a token, which may have arguments if
+        they are predicates; useful in transforming text into a "logical
+        form", with affordances similar to the ones provided in Extended
+        WordNet and the like.
+ * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class Token extends Annotation {
@@ -79,31 +80,10 @@ public class Token extends Annotation {
  
     
   //*--------------*
-  //* Feature: depLabel
-
-  /** getter for depLabel - gets The dependency label of the token with respect to its head.
-   * @generated
-   * @return value of the feature 
-   */
-  public String getDepLabel() {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_depLabel == null)
-      jcasType.jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
-    return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_depLabel);}
-    
-  /** setter for depLabel - sets The dependency label of the token with respect to its head. 
-   * @generated
-   * @param v value to set into the feature 
-   */
-  public void setDepLabel(String v) {
-    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_depLabel == null)
-      jcasType.jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
-    jcasType.ll_cas.ll_setStringValue(addr, ((Token_Type)jcasType).casFeatCode_depLabel, v);}    
-   
-    
-  //*--------------*
   //* Feature: head
 
-  /** getter for head - gets The head of the token in the dependency parse tree.
+  /** getter for head - gets The head of the token in the dependency parse
+            tree.
    * @generated
    * @return value of the feature 
    */
@@ -112,7 +92,8 @@ public class Token extends Annotation {
       jcasType.jcas.throwFeatMissing("head", "edu.cmu.lti.oaqa.type.nlp.Token");
     return (Token)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Token_Type)jcasType).casFeatCode_head)));}
     
-  /** setter for head - sets The head of the token in the dependency parse tree. 
+  /** setter for head - sets The head of the token in the dependency parse
+            tree. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -123,9 +104,34 @@ public class Token extends Annotation {
    
     
   //*--------------*
+  //* Feature: depLabel
+
+  /** getter for depLabel - gets The dependency label of the token with respect to
+            its head.
+   * @generated
+   * @return value of the feature 
+   */
+  public String getDepLabel() {
+    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_depLabel == null)
+      jcasType.jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_depLabel);}
+    
+  /** setter for depLabel - sets The dependency label of the token with respect to
+            its head. 
+   * @generated
+   * @param v value to set into the feature 
+   */
+  public void setDepLabel(String v) {
+    if (Token_Type.featOkTst && ((Token_Type)jcasType).casFeat_depLabel == null)
+      jcasType.jcas.throwFeatMissing("depLabel", "edu.cmu.lti.oaqa.type.nlp.Token");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Token_Type)jcasType).casFeatCode_depLabel, v);}    
+   
+    
+  //*--------------*
   //* Feature: semanticType
 
-  /** getter for semanticType - gets A semantic type, typically the name of an Entity Annotation type.
+  /** getter for semanticType - gets A semantic type, typically the name of an Entity
+            Annotation type.
    * @generated
    * @return value of the feature 
    */
@@ -134,7 +140,8 @@ public class Token extends Annotation {
       jcasType.jcas.throwFeatMissing("semanticType", "edu.cmu.lti.oaqa.type.nlp.Token");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_semanticType);}
     
-  /** setter for semanticType - sets A semantic type, typically the name of an Entity Annotation type. 
+  /** setter for semanticType - sets A semantic type, typically the name of an Entity
+            Annotation type. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -147,7 +154,8 @@ public class Token extends Annotation {
   //*--------------*
   //* Feature: partOfSpeech
 
-  /** getter for partOfSpeech - gets Coarse-grained part of speech. --- Example: noun, verb, adj, cord
+  /** getter for partOfSpeech - gets Coarse-grained part of speech. --- Example: noun,
+            verb, adj, cord
    * @generated
    * @return value of the feature 
    */
@@ -156,7 +164,8 @@ public class Token extends Annotation {
       jcasType.jcas.throwFeatMissing("partOfSpeech", "edu.cmu.lti.oaqa.type.nlp.Token");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_partOfSpeech);}
     
-  /** setter for partOfSpeech - sets Coarse-grained part of speech. --- Example: noun, verb, adj, cord 
+  /** setter for partOfSpeech - sets Coarse-grained part of speech. --- Example: noun,
+            verb, adj, cord 
    * @generated
    * @param v value to set into the feature 
    */
@@ -191,7 +200,9 @@ public class Token extends Annotation {
   //*--------------*
   //* Feature: isMainReference
 
-  /** getter for isMainReference - gets If true, then this is the main reference to the first argument.  Modifiers and anaphoric references do not have isMainReference set. --- Example: "A dark blue [hat]"
+  /** getter for isMainReference - gets If true, then this is the main reference to the
+            first argument. Modifiers and anaphoric references do not
+            have isMainReference set. --- Example: "A dark blue [hat]"
    * @generated
    * @return value of the feature 
    */
@@ -200,7 +211,9 @@ public class Token extends Annotation {
       jcasType.jcas.throwFeatMissing("isMainReference", "edu.cmu.lti.oaqa.type.nlp.Token");
     return jcasType.ll_cas.ll_getBooleanValue(addr, ((Token_Type)jcasType).casFeatCode_isMainReference);}
     
-  /** setter for isMainReference - sets If true, then this is the main reference to the first argument.  Modifiers and anaphoric references do not have isMainReference set. --- Example: "A dark blue [hat]" 
+  /** setter for isMainReference - sets If true, then this is the main reference to the
+            first argument. Modifiers and anaphoric references do not
+            have isMainReference set. --- Example: "A dark blue [hat]" 
    * @generated
    * @param v value to set into the feature 
    */
@@ -213,7 +226,9 @@ public class Token extends Annotation {
   //*--------------*
   //* Feature: isVariable
 
-  /** getter for isVariable - gets True iff the token expresses some unknown entity, typically the focus of a question:  --- Example: "[Who] shot JR?", "What [city] was JR born in?"
+  /** getter for isVariable - gets True iff the token expresses some unknown entity,
+            typically the focus of a question: --- Example: "[Who] shot
+            JR?", "What [city] was JR born in?"
    * @generated
    * @return value of the feature 
    */
@@ -222,7 +237,9 @@ public class Token extends Annotation {
       jcasType.jcas.throwFeatMissing("isVariable", "edu.cmu.lti.oaqa.type.nlp.Token");
     return jcasType.ll_cas.ll_getBooleanValue(addr, ((Token_Type)jcasType).casFeatCode_isVariable);}
     
-  /** setter for isVariable - sets True iff the token expresses some unknown entity, typically the focus of a question:  --- Example: "[Who] shot JR?", "What [city] was JR born in?" 
+  /** setter for isVariable - sets True iff the token expresses some unknown entity,
+            typically the focus of a question: --- Example: "[Who] shot
+            JR?", "What [city] was JR born in?" 
    * @generated
    * @param v value to set into the feature 
    */
@@ -235,7 +252,8 @@ public class Token extends Annotation {
   //*--------------*
   //* Feature: determiner
 
-  /** getter for determiner - gets The determiner attached to the node, if any. --- Example: [the] book
+  /** getter for determiner - gets The determiner attached to the node, if any. ---
+            Example: [the] book
    * @generated
    * @return value of the feature 
    */
@@ -244,7 +262,8 @@ public class Token extends Annotation {
       jcasType.jcas.throwFeatMissing("determiner", "edu.cmu.lti.oaqa.type.nlp.Token");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Token_Type)jcasType).casFeatCode_determiner);}
     
-  /** setter for determiner - sets The determiner attached to the node, if any. --- Example: [the] book 
+  /** setter for determiner - sets The determiner attached to the node, if any. ---
+            Example: [the] book 
    * @generated
    * @param v value to set into the feature 
    */
