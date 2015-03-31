@@ -21,6 +21,8 @@ import com.google.common.collect.Range;
 import edu.cmu.lti.oaqa.type.answer.Answer;
 import edu.cmu.lti.oaqa.type.answer.Summary;
 import edu.cmu.lti.oaqa.type.input.Question;
+import edu.cmu.lti.oaqa.type.kb.Concept;
+import edu.cmu.lti.oaqa.type.kb.ConceptMention;
 import edu.cmu.lti.oaqa.type.nlp.LexicalAnswerType;
 import edu.cmu.lti.oaqa.type.nlp.Token;
 import edu.cmu.lti.oaqa.type.retrieval.AbstractQuery;
@@ -38,14 +40,24 @@ public class TypeUtil {
   }
 
   public static List<Token> getOrderedTokens(JCas jcas) {
-    return JCasUtil.select(jcas, Token.class).stream()
-            .sorted(Comparator.comparing(Token::getBegin)).collect(toList());
+    return JCasUtil.select(jcas, Token.class).stream().sorted(Comparator.comparing(Token::getBegin))
+            .collect(toList());
+  }
+
+  public static Collection<Concept> getConcepts(JCas jcas) {
+    return JCasUtil.select(jcas, Concept.class);
+  }
+
+  public static List<ConceptMention> getOrderedConceptMentions(JCas jcas) {
+    return JCasUtil.select(jcas, ConceptMention.class).stream()
+            .sorted(Comparator.comparing(ConceptMention::getBegin)).collect(toList());
   }
 
   public static Collection<AbstractQuery> getAbstractQueries(JCas jcas) {
     return JCasUtil.select(jcas, AbstractQuery.class);
   }
 
+  @Deprecated
   public static AbstractQuery getAbstractQueriesCombined(JCas jcas) {
     List<QueryConcept> conceptsCombined = getAbstractQueries(jcas).stream()
             .flatMap(a -> FSCollectionFactory.create(a.getConcepts(), QueryConcept.class).stream())
@@ -100,7 +112,7 @@ public class TypeUtil {
   public static Collection<Summary> getSummary(JCas jcas) {
     return JCasUtil.select(jcas, Summary.class);
   }
-  
+
   public static List<String> getAnswerVariants(Answer answer) {
     List<String> variants = Arrays.asList(answer.getText());
     variants.addAll(FSCollectionFactory.create(answer.getVariants()));

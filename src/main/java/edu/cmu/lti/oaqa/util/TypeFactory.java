@@ -1,5 +1,7 @@
 package edu.cmu.lti.oaqa.util;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -209,9 +211,20 @@ public class TypeFactory {
     return createAtomicQueryConcept(jcas, new ArrayList<>(), conceptType, text, originalText);
   }
 
+  public static AtomicQueryConcept createAtomicQueryConcept(JCas jcas, String text,
+          String originalText) {
+    return createAtomicQueryConcept(jcas, new ArrayList<>(), TypeConstants.ConceptType.KEYWORD_TYPE,
+            text, originalText);
+  }
+
+  public static AtomicQueryConcept createAtomicQueryConcept(JCas jcas, String text) {
+    return createAtomicQueryConcept(jcas, new ArrayList<>(), TypeConstants.ConceptType.KEYWORD_TYPE,
+            text, text);
+  }
+
   public static ComplexQueryConcept createComplexQueryConcept(JCas jcas,
           List<String> namedEntityTypes, TypeConstants.ConceptType conceptType,
-          QueryOperator operator, List<QueryConcept> operatorArgs) {
+          QueryOperator operator, List<? extends QueryConcept> operatorArgs) {
     ComplexQueryConcept ret = new ComplexQueryConcept(jcas);
     ret.setNamedEntityTypes(FSCollectionFactory.createStringList(jcas, namedEntityTypes));
     ret.setConceptType(conceptType.name());
@@ -229,7 +242,7 @@ public class TypeFactory {
 
   public static ComplexQueryConcept createComplexQueryConcept(JCas jcas, String namedEntityType,
           TypeConstants.ConceptType conceptType, QueryOperator operator,
-          List<QueryConcept> operatorArgs) {
+          List<? extends QueryConcept> operatorArgs) {
     return createComplexQueryConcept(jcas, Arrays.asList(namedEntityType), conceptType, operator,
             operatorArgs);
   }
@@ -243,8 +256,14 @@ public class TypeFactory {
 
   public static ComplexQueryConcept createComplexQueryConcept(JCas jcas,
           TypeConstants.ConceptType conceptType, QueryOperator operator,
-          List<QueryConcept> operatorArgs) {
+          List<? extends QueryConcept> operatorArgs) {
     return createComplexQueryConcept(jcas, new ArrayList<>(), conceptType, operator, operatorArgs);
+  }
+
+  public static ComplexQueryConcept createComplexQueryConcept(JCas jcas, QueryOperator operator,
+          List<? extends QueryConcept> operatorArgs) {
+    return createComplexQueryConcept(jcas, new ArrayList<>(),
+            TypeConstants.ConceptType.KEYWORD_TYPE, operator, operatorArgs);
   }
 
   public static ComplexQueryConcept createComplexQueryConcept(JCas jcas,
@@ -253,16 +272,23 @@ public class TypeFactory {
     return createComplexQueryConcept(jcas, conceptType, operator, Arrays.asList(operatorArgs));
   }
 
+  public static ComplexQueryConcept createComplexQueryConcept(JCas jcas, QueryOperator operator,
+          QueryConcept... operatorArgs) {
+    return createComplexQueryConcept(jcas, TypeConstants.ConceptType.KEYWORD_TYPE, operator,
+            Arrays.asList(operatorArgs));
+  }
+
   public static QueryOperator createQueryOperator(JCas jcas, TypeConstants.QueryOperatorName name,
-          List<String> args) {
+          List<Object> args) {
     QueryOperator ret = new QueryOperator(jcas);
     ret.setName(name.name());
-    ret.setArgs(FSCollectionFactory.createStringList(jcas, args));
+    List<String> argStrings = args.stream().map(Object::toString).collect(toList());
+    ret.setArgs(FSCollectionFactory.createStringList(jcas, argStrings));
     return ret;
   }
 
   public static QueryOperator createQueryOperator(JCas jcas, TypeConstants.QueryOperatorName name,
-          String... args) {
+          Object... args) {
     return createQueryOperator(jcas, name, Arrays.asList(args));
   }
 
