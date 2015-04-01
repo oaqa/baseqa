@@ -23,6 +23,7 @@ import edu.cmu.lti.oaqa.type.answer.Summary;
 import edu.cmu.lti.oaqa.type.input.Question;
 import edu.cmu.lti.oaqa.type.kb.Concept;
 import edu.cmu.lti.oaqa.type.kb.ConceptMention;
+import edu.cmu.lti.oaqa.type.kb.ConceptType;
 import edu.cmu.lti.oaqa.type.nlp.LexicalAnswerType;
 import edu.cmu.lti.oaqa.type.nlp.Token;
 import edu.cmu.lti.oaqa.type.retrieval.AbstractQuery;
@@ -44,10 +45,54 @@ public class TypeUtil {
             .collect(toList());
   }
 
+  public static Token getHeadTokenOfAnnotation(JCas jcas, Annotation annotation) {
+    return getHeadTokenInRange(jcas, annotation.getBegin(), annotation.getEnd());
+  }
+
+  public static Token getHeadTokenInRange(JCas jcas, int begin, int end) {
+    List<Token> tokens = JCasUtil.selectCovered(jcas, Token.class, begin, end);
+    if (tokens.isEmpty()) {
+      return null;
+    }
+    // get path to root for the first token
+    List<Token> pathToRoot = new ArrayList<>();
+    Token hop = tokens.get(0);
+    do {
+      pathToRoot.add(hop);
+    } while ((hop = hop.getHead()) != null);
+    // prune the path to contain only the common sub path to the root of each remaining token
+    for (Token token : tokens) {
+      hop = token;
+      do {
+        int index;
+        if ((index = pathToRoot.indexOf(hop)) >= 0) {
+          pathToRoot = pathToRoot.subList(index, pathToRoot.size());
+          break;
+        }
+      } while ((hop = hop.getHead()) != null);
+      assert false;
+    }
+    // get the head of the resulting path to root
+    assert!pathToRoot.isEmpty();
+    return pathToRoot.get(0);
+  }
+
   public static Collection<Concept> getConcepts(JCas jcas) {
     return JCasUtil.select(jcas, Concept.class);
   }
 
+  public static Collection<ConceptType> getConceptTypes(Concept concept) {
+    return FSCollectionFactory.create(concept.getTypes(), ConceptType.class);
+  }
+
+  public static String getFirstConceptId(Concept concept) {
+    return FSCollectionFactory.create(concept.getIds()).stream().findFirst().get();
+  }
+
+  public static Collection<ConceptMention> getConceptMentions(Concept concept) {
+    return FSCollectionFactory.create(concept.getMentions(), ConceptMention.class);
+  }
+  
   public static List<ConceptMention> getOrderedConceptMentions(JCas jcas) {
     return JCasUtil.select(jcas, ConceptMention.class).stream()
             .sorted(Comparator.comparing(ConceptMention::getBegin)).collect(toList());
