@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
+import org.apache.uima.cas.CASException;
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -45,8 +46,13 @@ public class TypeUtil {
             .collect(toList());
   }
 
-  public static Token getHeadTokenOfAnnotation(JCas jcas, Annotation annotation) {
-    return getHeadTokenInRange(jcas, annotation.getBegin(), annotation.getEnd());
+  public static Token getHeadTokenOfAnnotation(Annotation annotation) {
+    try {
+      return getHeadTokenInRange(annotation.getCAS().getJCas(), annotation.getBegin(),
+              annotation.getEnd());
+    } catch (CASException e) {
+      return null;
+    }
   }
 
   public static Token getHeadTokenInRange(JCas jcas, int begin, int end) {
@@ -81,10 +87,14 @@ public class TypeUtil {
     return JCasUtil.select(jcas, Concept.class);
   }
 
+  public static Collection<ConceptType> getConceptTypes(JCas jcas) {
+    return JCasUtil.select(jcas, ConceptType.class);
+  }
+
   public static Collection<ConceptType> getConceptTypes(Concept concept) {
     return FSCollectionFactory.create(concept.getTypes(), ConceptType.class);
   }
-
+  
   public static String getFirstConceptId(Concept concept) {
     return FSCollectionFactory.create(concept.getIds()).stream().findFirst().get();
   }
@@ -92,7 +102,7 @@ public class TypeUtil {
   public static Collection<ConceptMention> getConceptMentions(Concept concept) {
     return FSCollectionFactory.create(concept.getMentions(), ConceptMention.class);
   }
-  
+
   public static List<ConceptMention> getOrderedConceptMentions(JCas jcas) {
     return JCasUtil.select(jcas, ConceptMention.class).stream()
             .sorted(Comparator.comparing(ConceptMention::getBegin)).collect(toList());

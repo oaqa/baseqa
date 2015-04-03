@@ -10,7 +10,7 @@ import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 
 public class ProviderCache {
 
-  public static final Map<String, Resource> provider2resource = new HashMap<>();
+  private static final Map<String, Resource> provider2resource = new HashMap<>();
 
   public static <T extends Resource> T getProvider(String provider, Class<T> type)
           throws ResourceInitializationException {
