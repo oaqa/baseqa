@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -17,6 +16,7 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Range;
 
 import edu.cmu.lti.oaqa.type.answer.Answer;
@@ -56,7 +56,9 @@ public class TypeUtil {
   }
 
   public static Token getHeadTokenInRange(JCas jcas, int begin, int end) {
-    List<Token> tokens = JCasUtil.selectCovered(jcas, Token.class, begin, end);
+    // check if the span is smaller than a single token. If yes, return the covering token
+    List<Token> tokens = firstNotEmpty(JCasUtil.selectCovered(jcas, Token.class, begin, end),
+            JCasUtil.selectCovering(jcas, Token.class, begin, end));
     if (tokens.isEmpty()) {
       return null;
     }
@@ -83,6 +85,14 @@ public class TypeUtil {
     return pathToRoot.get(0);
   }
 
+  public static <T extends Collection<?>> T firstNotEmpty(T first, T second) {
+    if (first.isEmpty()) {
+      return second;
+    } else {
+      return first;
+    }
+  }
+
   public static Collection<Concept> getConcepts(JCas jcas) {
     return JCasUtil.select(jcas, Concept.class);
   }
@@ -94,7 +104,7 @@ public class TypeUtil {
   public static Collection<ConceptType> getConceptTypes(Concept concept) {
     return FSCollectionFactory.create(concept.getTypes(), ConceptType.class);
   }
-  
+
   public static String getFirstConceptId(Concept concept) {
     return FSCollectionFactory.create(concept.getIds()).stream().findFirst().get();
   }
@@ -169,7 +179,7 @@ public class TypeUtil {
   }
 
   public static List<String> getAnswerVariants(Answer answer) {
-    List<String> variants = Arrays.asList(answer.getText());
+    List<String> variants = Lists.newArrayList(answer.getText());
     variants.addAll(FSCollectionFactory.create(answer.getVariants()));
     return variants;
   }
