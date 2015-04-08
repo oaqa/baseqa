@@ -38,9 +38,9 @@ import com.google.common.collect.Sets;
 import edu.cmu.lti.oaqa.baseqa.eval.EvalCalculator;
 import edu.cmu.lti.oaqa.baseqa.eval.Measure;
 import edu.cmu.lti.oaqa.ecd.config.ConfigurableProvider;
-import edu.cmu.lti.oaqa.type.retrieval.Passage;
+import edu.cmu.lti.oaqa.type.retrieval.SearchResult;
 
-public class RetrievalEvalCalculator<T extends Passage> extends ConfigurableProvider implements
+public class RetrievalEvalCalculator<T extends SearchResult> extends ConfigurableProvider implements
         EvalCalculator<T> {
 
   @Override

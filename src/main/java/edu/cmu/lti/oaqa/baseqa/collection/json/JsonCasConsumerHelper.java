@@ -37,38 +37,33 @@ public class JsonCasConsumerHelper {
     // retrieve documents, snippets, concepts, and triples from CAS
     List<String> documents = TypeUtil.getRankedDocuments(jcas).stream().limit(documentLimit)
             .map(Document::getUri).collect(toList());
-    List<Snippet> snippets = TypeUtil
-            .getRankedPassages(jcas)
-            .stream()
-            .limit(snippetLimit)
-            .map(passage -> new Snippet(passage.getUri(), passage.getText(), passage
-                    .getOffsetInBeginSection(), passage.getOffsetInEndSection(), passage
-                    .getBeginSection(), passage.getEndSection())).collect(toList());
+    List<Snippet> snippets = TypeUtil.getRankedPassages(jcas).stream().limit(snippetLimit)
+            .map(passage -> new Snippet(passage.getUri(), passage.getText(),
+                    passage.getOffsetInBeginSection(), passage.getOffsetInEndSection(),
+                    passage.getBeginSection(), passage.getEndSection()))
+            .collect(toList());
     List<String> concepts = TypeUtil.getRankedConceptSearchResults(jcas).stream()
             .limit(conceptLimit).map(ConceptSearchResult::getConcept).map(Concept::getUris)
             .map(FSCollectionFactory::create).flatMap(Collection::stream).collect(toList());
-    List<Triple> triples = TypeUtil
-            .getRankedTripleSearchResults(jcas)
-            .stream()
-            .limit(tripleLimit)
-            .map(TripleSearchResult::getTriple)
-            .map(triple -> new Triple(triple.getSubject(), triple.getPredicate(), triple
-                    .getObject())).collect(toList());
+    List<Triple> triples = TypeUtil.getRankedTripleSearchResults(jcas).stream().limit(tripleLimit)
+            .map(TripleSearchResult::getTriple).map(triple -> new Triple(triple.getSubject(),
+                    triple.getPredicate(), triple.getObject()))
+            .collect(toList());
     // retrieve answers from CAS
-    String idealAnswer = TypeUtil.getSummary(jcas).stream().map(Summary::getText).findFirst()
+    String idealAnswer = TypeUtil.getRankedSummary(jcas).stream().map(Summary::getText).findFirst()
             .orElse(null);
     if (QuestionType.factoid.equals(type)) {
-      List<List<String>> exactAnswer = TypeUtil.getAnswers(jcas).stream().limit(listAnswerLimit)
-              .map(TypeUtil::getAnswerVariants).collect(toList());
+      List<List<String>> exactAnswer = TypeUtil.getRankedAnswers(jcas).stream()
+              .limit(listAnswerLimit).map(TypeUtil::getAnswerVariants).collect(toList());
       return new TestFactoidQuestion(id, body, type, documents, snippets, concepts, triples,
               idealAnswer, exactAnswer);
     } else if (QuestionType.list.equals(type)) {
-      List<List<String>> exactAnswer = TypeUtil.getAnswers(jcas).stream().limit(listAnswerLimit)
-              .map(TypeUtil::getAnswerVariants).collect(toList());
+      List<List<String>> exactAnswer = TypeUtil.getRankedAnswers(jcas).stream()
+              .limit(listAnswerLimit).map(TypeUtil::getAnswerVariants).collect(toList());
       return new TestListQuestion(id, body, type, documents, snippets, concepts, triples,
               idealAnswer, exactAnswer);
     } else if (QuestionType.yesno.equals(type)) {
-      String exactAnswer = TypeUtil.getAnswers(jcas).stream().limit(1).map(Answer::getText)
+      String exactAnswer = TypeUtil.getRankedAnswers(jcas).stream().limit(1).map(Answer::getText)
               .findFirst().orElse(null);
       return new TestYesNoQuestion(id, body, type, documents, snippets, concepts, triples,
               idealAnswer, exactAnswer);

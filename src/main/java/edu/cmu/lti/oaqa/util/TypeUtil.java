@@ -1,6 +1,5 @@
 package edu.cmu.lti.oaqa.util;
 
-import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
@@ -144,25 +143,23 @@ public class TypeUtil {
   public static final Comparator<SearchResult> SEARCH_RESULT_RANK_COMPARATOR = Comparator
           .comparing(SearchResult::getRank);
 
-  private static <T extends SearchResult> Collection<T> rankedSearchResultsByRank(
-          Collection<T> results) {
-    return results.stream().sorted(SEARCH_RESULT_RANK_COMPARATOR)
-            .collect(toCollection(ArrayList::new));
+  private static <T extends SearchResult> List<T> rankedSearchResultsByRank(Collection<T> results) {
+    return results.stream().sorted(SEARCH_RESULT_RANK_COMPARATOR).collect(toList());
   }
 
-  public static Collection<ConceptSearchResult> getRankedConceptSearchResults(JCas jcas) {
+  public static List<ConceptSearchResult> getRankedConceptSearchResults(JCas jcas) {
     return rankedSearchResultsByRank(JCasUtil.select(jcas, ConceptSearchResult.class));
   }
 
-  public static Collection<TripleSearchResult> getRankedTripleSearchResults(JCas jcas) {
+  public static List<TripleSearchResult> getRankedTripleSearchResults(JCas jcas) {
     return rankedSearchResultsByRank(JCasUtil.select(jcas, TripleSearchResult.class));
   }
 
-  public static Collection<Document> getRankedDocuments(JCas jcas) {
+  public static List<Document> getRankedDocuments(JCas jcas) {
     return rankedSearchResultsByRank(JCasUtil.select(jcas, Document.class));
   }
 
-  public static Collection<Passage> getRankedPassages(JCas jcas) {
+  public static List<Passage> getRankedPassages(JCas jcas) {
     return rankedSearchResultsByRank(JCasUtil.select(jcas, Passage.class));
   }
 
@@ -170,12 +167,14 @@ public class TypeUtil {
     return JCasUtil.selectSingle(jcas, LexicalAnswerType.class);
   }
 
-  public static Collection<Answer> getAnswers(JCas jcas) {
-    return JCasUtil.select(jcas, Answer.class);
+  public static List<Answer> getRankedAnswers(JCas jcas) {
+    return JCasUtil.select(jcas, Answer.class).stream()
+            .sorted(Comparator.comparing(Answer::getRank)).collect(toList());
   }
 
-  public static Collection<Summary> getSummary(JCas jcas) {
-    return JCasUtil.select(jcas, Summary.class);
+  public static List<Summary> getRankedSummary(JCas jcas) {
+    return JCasUtil.select(jcas, Summary.class).stream()
+            .sorted(Comparator.comparing(Summary::getRank)).collect(toList());
   }
 
   public static List<String> getAnswerVariants(Answer answer) {
@@ -195,6 +194,10 @@ public class TypeUtil {
   public static int hash(Passage passage) {
     return Objects.hash(passage.getUri(), passage.getDocId(), passage.getOffsetInBeginSection(),
             passage.getOffsetInEndSection(), passage.getBeginSection(), passage.getEndSection());
+  }
+  
+  public static String getCoveredTextOf(Annotation annotation, String text) {
+    return text.substring(annotation.getBegin(), annotation.getEnd());
   }
 
 }

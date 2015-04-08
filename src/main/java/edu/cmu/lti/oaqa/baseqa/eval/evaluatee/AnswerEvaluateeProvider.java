@@ -14,17 +14,17 @@ import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
 import edu.cmu.lti.oaqa.type.answer.Answer;
 import edu.cmu.lti.oaqa.util.TypeUtil;
 
-public class AnswerEvaluateeProvider extends ConfigurableProvider implements
-        EvaluateeProvider<Answer> {
+public class AnswerEvaluateeProvider extends ConfigurableProvider
+        implements EvaluateeProvider<Answer> {
 
   @Override
   public Collection<Answer> getGoldStandard(JCas jcas) throws CASException {
-    return TypeUtil.getAnswers(ViewManager.getOrCreateView(jcas, ViewType.FINAL_ANSWER_GS));
+    return TypeUtil.getRankedAnswers(ViewManager.getOrCreateView(jcas, ViewType.FINAL_ANSWER_GS));
   }
 
   @Override
   public Collection<Answer> getResults(JCas jcas) throws CASException {
-    return TypeUtil.getAnswers(jcas);
+    return TypeUtil.getRankedAnswers(jcas);
   }
 
   @Override
