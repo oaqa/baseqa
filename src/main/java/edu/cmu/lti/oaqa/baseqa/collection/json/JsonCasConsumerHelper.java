@@ -54,7 +54,7 @@ public class JsonCasConsumerHelper {
             .orElse(null);
     if (QuestionType.factoid.equals(type)) {
       List<List<String>> exactAnswer = TypeUtil.getRankedAnswers(jcas).stream()
-              .limit(listAnswerLimit).map(TypeUtil::getAnswerVariants).collect(toList());
+              .limit(factoidAnswerLimit).map(TypeUtil::getAnswerVariants).collect(toList());
       return new TestFactoidQuestion(id, body, type, documents, snippets, concepts, triples,
               idealAnswer, exactAnswer);
     } else if (QuestionType.list.equals(type)) {
