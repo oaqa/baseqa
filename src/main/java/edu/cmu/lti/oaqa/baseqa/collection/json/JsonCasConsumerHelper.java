@@ -51,7 +51,7 @@ public class JsonCasConsumerHelper {
             .collect(toList());
     // retrieve answers from CAS
     String idealAnswer = TypeUtil.getRankedSummary(jcas).stream().map(Summary::getText).findFirst()
-            .orElse(null);
+            .orElse("");
     if (QuestionType.factoid.equals(type)) {
       List<List<String>> exactAnswer = TypeUtil.getRankedAnswers(jcas).stream()
               .limit(factoidAnswerLimit).map(TypeUtil::getAnswerVariants).collect(toList());
@@ -64,7 +64,7 @@ public class JsonCasConsumerHelper {
               idealAnswer, exactAnswer);
     } else if (QuestionType.yesno.equals(type)) {
       String exactAnswer = TypeUtil.getRankedAnswers(jcas).stream().limit(1).map(Answer::getText)
-              .findFirst().orElse(null);
+              .findFirst().orElse("");
       return new TestYesNoQuestion(id, body, type, documents, snippets, concepts, triples,
               idealAnswer, exactAnswer);
     } else if (QuestionType.summary.equals(type)) {

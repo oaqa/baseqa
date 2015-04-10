@@ -440,4 +440,11 @@ public class TypeFactory {
     return createLexicalAnswerType(jcas, token.getBegin(), token.getEnd(), token, label);
   }
 
+  public static LexicalAnswerType createLexicalAnswerType(JCas jcas, String label) {
+    LexicalAnswerType ret = new LexicalAnswerType(jcas, 0, jcas.getDocumentText().length());
+    ret.setToken(null);
+    ret.setLabel(label);
+    return ret;
+  }
+
 }

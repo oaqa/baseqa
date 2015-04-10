@@ -163,8 +163,8 @@ public class TypeUtil {
     return rankedSearchResultsByRank(JCasUtil.select(jcas, Passage.class));
   }
 
-  public static LexicalAnswerType getLexicalAnswerType(JCas jcas) {
-    return JCasUtil.selectSingle(jcas, LexicalAnswerType.class);
+  public static Collection<LexicalAnswerType> getLexicalAnswerTypes(JCas jcas) {
+    return JCasUtil.select(jcas, LexicalAnswerType.class);
   }
 
   public static List<Answer> getRankedAnswers(JCas jcas) {
@@ -196,7 +196,7 @@ public class TypeUtil {
             passage.getOffsetInEndSection(), passage.getBeginSection(), passage.getEndSection());
   }
   
-  public static String getCoveredTextOf(Annotation annotation, String text) {
+  public static String getCoveredTextOf(String text, Annotation annotation) {
     return text.substring(annotation.getBegin(), annotation.getEnd());
   }
 
