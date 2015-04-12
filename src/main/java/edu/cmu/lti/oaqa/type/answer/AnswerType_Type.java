@@ -1,6 +1,6 @@
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
-package edu.cmu.lti.oaqa.type.nlp;
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
+package edu.cmu.lti.oaqa.type.answer;
 
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
@@ -13,9 +13,8 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** A Named Entity type that represents the type of the
-        answer being sought.
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+/** A Named Entity type that represents the type of the answer being sought.
+ * Updated by JCasGen Mon Apr 13 16:42:07 EDT 2015
  * @generated */
 public class AnswerType_Type extends Annotation_Type {
   /** @generated 
@@ -45,7 +44,7 @@ public class AnswerType_Type extends Annotation_Type {
   /** @generated 
      @modifiable */
   @SuppressWarnings ("hiding")
-  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("edu.cmu.lti.oaqa.type.nlp.AnswerType");
+  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("edu.cmu.lti.oaqa.type.answer.AnswerType");
  
   /** @generated */
   final Feature casFeat_label;
@@ -57,7 +56,7 @@ public class AnswerType_Type extends Annotation_Type {
    */ 
   public String getLabel(int addr) {
         if (featOkTst && casFeat_label == null)
-      jcas.throwFeatMissing("label", "edu.cmu.lti.oaqa.type.nlp.AnswerType");
+      jcas.throwFeatMissing("label", "edu.cmu.lti.oaqa.type.answer.AnswerType");
     return ll_cas.ll_getStringValue(addr, casFeatCode_label);
   }
   /** @generated
@@ -66,7 +65,7 @@ public class AnswerType_Type extends Annotation_Type {
    */    
   public void setLabel(int addr, String v) {
         if (featOkTst && casFeat_label == null)
-      jcas.throwFeatMissing("label", "edu.cmu.lti.oaqa.type.nlp.AnswerType");
+      jcas.throwFeatMissing("label", "edu.cmu.lti.oaqa.type.answer.AnswerType");
     ll_cas.ll_setStringValue(addr, casFeatCode_label, v);}
     
   
@@ -81,7 +80,7 @@ public class AnswerType_Type extends Annotation_Type {
    */ 
   public int getTargetType(int addr) {
         if (featOkTst && casFeat_targetType == null)
-      jcas.throwFeatMissing("targetType", "edu.cmu.lti.oaqa.type.nlp.AnswerType");
+      jcas.throwFeatMissing("targetType", "edu.cmu.lti.oaqa.type.answer.AnswerType");
     return ll_cas.ll_getRefValue(addr, casFeatCode_targetType);
   }
   /** @generated
@@ -90,7 +89,7 @@ public class AnswerType_Type extends Annotation_Type {
    */    
   public void setTargetType(int addr, int v) {
         if (featOkTst && casFeat_targetType == null)
-      jcas.throwFeatMissing("targetType", "edu.cmu.lti.oaqa.type.nlp.AnswerType");
+      jcas.throwFeatMissing("targetType", "edu.cmu.lti.oaqa.type.answer.AnswerType");
     ll_cas.ll_setRefValue(addr, casFeatCode_targetType, v);}
     
   

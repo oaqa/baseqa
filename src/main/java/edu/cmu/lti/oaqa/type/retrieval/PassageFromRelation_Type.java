@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas;
@@ -12,9 +12,8 @@ import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
-/** A passage search result that was the result of a
-        search from the subject and object of a triple
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+/** A passage search result that was the result of a search from the subject and object of a triple
+ * Updated by JCasGen Mon Apr 13 16:42:08 EDT 2015
  * @generated */
 public class PassageFromRelation_Type extends Passage_Type {
   /** @generated 

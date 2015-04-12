@@ -54,12 +54,12 @@ public class JsonCasConsumerHelper {
             .orElse("");
     if (QuestionType.factoid.equals(type)) {
       List<List<String>> exactAnswer = TypeUtil.getRankedAnswers(jcas).stream()
-              .limit(factoidAnswerLimit).map(TypeUtil::getAnswerVariants).collect(toList());
+              .limit(factoidAnswerLimit).map(TypeUtil::getAnswerVariantNames).collect(toList());
       return new TestFactoidQuestion(id, body, type, documents, snippets, concepts, triples,
               idealAnswer, exactAnswer);
     } else if (QuestionType.list.equals(type)) {
       List<List<String>> exactAnswer = TypeUtil.getRankedAnswers(jcas).stream()
-              .limit(listAnswerLimit).map(TypeUtil::getAnswerVariants).collect(toList());
+              .limit(listAnswerLimit).map(TypeUtil::getAnswerVariantNames).collect(toList());
       return new TestListQuestion(id, body, type, documents, snippets, concepts, triples,
               idealAnswer, exactAnswer);
     } else if (QuestionType.yesno.equals(type)) {

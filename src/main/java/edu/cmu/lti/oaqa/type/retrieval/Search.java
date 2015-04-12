@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,9 +11,8 @@ import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.TOP;
 
 
-/** An object that holds a query and results for a search
-        (text search, fact search, KB search, etc.)
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+/** An object that holds a query and results for a search (text search, fact search, KB search, etc.)
+ * Updated by JCasGen Mon Apr 13 16:42:08 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class Search extends TOP {
@@ -69,8 +68,7 @@ public class Search extends TOP {
   //*--------------*
   //* Feature: query
 
-  /** getter for query - gets The query in the native syntax of the
-            corresponding search engine.
+  /** getter for query - gets The query in the native syntax of the corresponding search engine.
    * @generated
    * @return value of the feature 
    */
@@ -79,8 +77,7 @@ public class Search extends TOP {
       jcasType.jcas.throwFeatMissing("query", "edu.cmu.lti.oaqa.type.retrieval.Search");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Search_Type)jcasType).casFeatCode_query);}
     
-  /** setter for query - sets The query in the native syntax of the
-            corresponding search engine. 
+  /** setter for query - sets The query in the native syntax of the corresponding search engine. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -93,8 +90,7 @@ public class Search extends TOP {
   //*--------------*
   //* Feature: hitList
 
-  /** getter for hitList - gets Hit list of search results, sorted in descreasing
-            order of relevance score.
+  /** getter for hitList - gets Hit list of search results, sorted in descreasing order of relevance score.
    * @generated
    * @return value of the feature 
    */
@@ -103,8 +99,7 @@ public class Search extends TOP {
       jcasType.jcas.throwFeatMissing("hitList", "edu.cmu.lti.oaqa.type.retrieval.Search");
     return (FSArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Search_Type)jcasType).casFeatCode_hitList)));}
     
-  /** setter for hitList - sets Hit list of search results, sorted in descreasing
-            order of relevance score. 
+  /** setter for hitList - sets Hit list of search results, sorted in descreasing order of relevance score. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -113,8 +108,7 @@ public class Search extends TOP {
       jcasType.jcas.throwFeatMissing("hitList", "edu.cmu.lti.oaqa.type.retrieval.Search");
     jcasType.ll_cas.ll_setRefValue(addr, ((Search_Type)jcasType).casFeatCode_hitList, jcasType.ll_cas.ll_getFSRef(v));}    
     
-  /** indexed getter for hitList - gets an indexed value - Hit list of search results, sorted in descreasing
-            order of relevance score.
+  /** indexed getter for hitList - gets an indexed value - Hit list of search results, sorted in descreasing order of relevance score.
    * @generated
    * @param i index in the array to get
    * @return value of the element at index i 
@@ -125,8 +119,7 @@ public class Search extends TOP {
     jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Search_Type)jcasType).casFeatCode_hitList), i);
     return (SearchResult)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Search_Type)jcasType).casFeatCode_hitList), i)));}
 
-  /** indexed setter for hitList - sets an indexed value - Hit list of search results, sorted in descreasing
-            order of relevance score.
+  /** indexed setter for hitList - sets an indexed value - Hit list of search results, sorted in descreasing order of relevance score.
    * @generated
    * @param i index in the array to set
    * @param v value to set into the array 
@@ -141,8 +134,7 @@ public class Search extends TOP {
   //*--------------*
   //* Feature: abstractQuery
 
-  /** getter for abstractQuery - gets The abstract query from which this actual query
-            was generated.
+  /** getter for abstractQuery - gets The abstract query from which this actual query was generated.
    * @generated
    * @return value of the feature 
    */
@@ -151,8 +143,7 @@ public class Search extends TOP {
       jcasType.jcas.throwFeatMissing("abstractQuery", "edu.cmu.lti.oaqa.type.retrieval.Search");
     return (AbstractQuery)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Search_Type)jcasType).casFeatCode_abstractQuery)));}
     
-  /** setter for abstractQuery - sets The abstract query from which this actual query
-            was generated. 
+  /** setter for abstractQuery - sets The abstract query from which this actual query was generated. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -165,10 +156,7 @@ public class Search extends TOP {
   //*--------------*
   //* Feature: searchId
 
-  /** getter for searchId - gets An identifier for this search result. Used to
-            collect hit-list objects that belong to this search result
-            after they've been split out for parallel processing then
-            gathered up again.
+  /** getter for searchId - gets An identifier for this search result. Used to collect hit-list objects that belong to this search result after they've been split out for parallel processing then gathered up again.
    * @generated
    * @return value of the feature 
    */
@@ -177,10 +165,7 @@ public class Search extends TOP {
       jcasType.jcas.throwFeatMissing("searchId", "edu.cmu.lti.oaqa.type.retrieval.Search");
     return jcasType.ll_cas.ll_getStringValue(addr, ((Search_Type)jcasType).casFeatCode_searchId);}
     
-  /** setter for searchId - sets An identifier for this search result. Used to
-            collect hit-list objects that belong to this search result
-            after they've been split out for parallel processing then
-            gathered up again. 
+  /** setter for searchId - sets An identifier for this search result. Used to collect hit-list objects that belong to this search result after they've been split out for parallel processing then gathered up again. 
    * @generated
    * @param v value to set into the feature 
    */

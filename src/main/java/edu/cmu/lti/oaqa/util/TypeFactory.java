@@ -12,6 +12,7 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.StringArray;
 
 import edu.cmu.lti.oaqa.type.answer.Answer;
+import edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence;
 import edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant;
 import edu.cmu.lti.oaqa.type.answer.Summary;
 import edu.cmu.lti.oaqa.type.input.Question;
@@ -146,36 +147,90 @@ public class TypeFactory {
     return createTriple(jcas, subject, predicate, object, true);
   }
 
-  public static Summary createSummary(JCas jcas, String text, List<String> variants, int rank) {
+  public static Summary createSummary(JCas jcas, String text, double score, List<String> variants) {
     Summary ret = new Summary(jcas);
     ret.setText(text);
+    ret.setScore(score);
     ret.setVariants(FSCollectionFactory.createStringList(jcas, variants));
-    ret.setRank(rank);
     return ret;
   }
 
   public static Summary createSummary(JCas jcas, List<String> alternatives) {
     String text = alternatives.get(0);
     List<String> variants = alternatives.subList(1, alternatives.size());
-    return createSummary(jcas, text, variants, TypeConstants.RANK_UNKNOWN);
+    return createSummary(jcas, text, TypeConstants.SCORE_UNKNOWN, variants);
   }
 
-  public static Answer createAnswer(JCas jcas, String text, List<String> variants, int rank) {
+  public static LexicalAnswerType createLexicalAnswerType(JCas jcas, Token token, String label) {
+    LexicalAnswerType ret = new LexicalAnswerType(jcas);
+    ret.setToken(token);
+    ret.setLabel(label);
+    return ret;
+  }
+
+  public static LexicalAnswerType createLexicalAnswerType(JCas jcas, String label) {
+    return createLexicalAnswerType(jcas, TypeConstants.TOKEN_UNKNOWN, label);
+  }
+
+  public static Answer createAnswer(JCas jcas, String text, double score,
+          List<CandidateAnswerVariant> variants) {
     Answer ret = new Answer(jcas);
     ret.setText(text);
-    ret.setVariants(FSCollectionFactory.createStringList(jcas, variants));
-    ret.setRank(rank);
+    ret.setScore(score);
+    ret.setVariants(FSCollectionFactory.createFSList(jcas, variants));
     return ret;
   }
 
   public static Answer createAnswer(JCas jcas, String text) {
-    return createAnswer(jcas, text, new ArrayList<>(), TypeConstants.RANK_UNKNOWN);
+    return createAnswer(jcas, Arrays.asList(text));
   }
 
-  public static Answer createAnswer(JCas jcas, List<String> alternatives) {
-    String text = alternatives.get(0);
-    List<String> variants = alternatives.subList(1, alternatives.size());
-    return createAnswer(jcas, text, variants, TypeConstants.RANK_UNKNOWN);
+  public static Answer createAnswer(JCas jcas, List<String> avariantTexts) {
+    String text = avariantTexts.get(0);
+    List<CandidateAnswerVariant> variants = avariantTexts.stream()
+            .map(avariantText -> createCandidateAnswerVariant(jcas, avariantText))
+            .collect(toList());
+    return createAnswer(jcas, text, TypeConstants.RANK_UNKNOWN, variants);
+  }
+
+  public static CandidateAnswerVariant createCandidateAnswerVariant(JCas jcas,
+          List<CandidateAnswerOccurrence> occurrences, List<String> names, String docId) {
+    CandidateAnswerVariant ret = new CandidateAnswerVariant(jcas);
+    ret.setOccurrences(FSCollectionFactory.createFSList(jcas, occurrences));
+    ret.setNames(FSCollectionFactory.createStringList(jcas, names));
+    ret.setDocId(docId);
+    return ret;
+  }
+
+  public static CandidateAnswerVariant createCandidateAnswerVariant(JCas jcas,
+          List<CandidateAnswerOccurrence> occurrences, List<String> names) {
+    return createCandidateAnswerVariant(jcas, occurrences, names, TypeConstants.DOC_ID_UNKNOWN);
+  }
+  
+  public static CandidateAnswerVariant createCandidateAnswerVariant(JCas jcas,
+          List<CandidateAnswerOccurrence> occurrences) {
+    return createCandidateAnswerVariant(jcas, occurrences,
+            occurrences.stream().map(CandidateAnswerOccurrence::getCoveredText).collect(toList()));
+  }
+
+  public static CandidateAnswerVariant createCandidateAnswerVariant(JCas jcas, String text) {
+    return createCandidateAnswerVariant(jcas, new ArrayList<>(), Arrays.asList(text));
+  }
+
+  public static CandidateAnswerOccurrence createCandidateAnswerOccurrence(JCas jcas, int begin,
+          int end, String text, String mentionType) {
+    CandidateAnswerOccurrence ret = new CandidateAnswerOccurrence(jcas, begin, end);
+    ret.setText(text);
+    ret.setMentionType(mentionType);
+    return ret;
+  }
+
+  public static CandidateAnswerOccurrence createCandidateAnswerOccurrence(JCas jcas, int begin,
+          int end) {
+    CandidateAnswerOccurrence ret = new CandidateAnswerOccurrence(jcas, begin, end);
+    ret.setText(ret.getCoveredText());
+    ret.setMentionType("NAME");
+    return ret;
   }
 
   public static AbstractQuery createAbstractQuery(JCas jcas,
@@ -425,25 +480,6 @@ public class TypeFactory {
     ret.setHitList(FSCollectionFactory.createFSArray(jcas, hitList));
     ret.setAbstractQuery(abstractQuery);
     ret.setSearchId(searchId);
-    return ret;
-  }
-
-  public static LexicalAnswerType createLexicalAnswerType(JCas jcas, int begin, int end,
-          Token token, String label) {
-    LexicalAnswerType ret = new LexicalAnswerType(jcas, begin, end);
-    ret.setToken(token);
-    ret.setLabel(label);
-    return ret;
-  }
-
-  public static LexicalAnswerType createLexicalAnswerType(JCas jcas, Token token, String label) {
-    return createLexicalAnswerType(jcas, token.getBegin(), token.getEnd(), token, label);
-  }
-
-  public static LexicalAnswerType createLexicalAnswerType(JCas jcas, String label) {
-    LexicalAnswerType ret = new LexicalAnswerType(jcas, 0, jcas.getDocumentText().length());
-    ret.setToken(null);
-    ret.setLabel(label);
     return ret;
   }
 

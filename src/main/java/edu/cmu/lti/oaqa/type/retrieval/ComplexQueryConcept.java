@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,9 +10,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 import org.apache.uima.jcas.cas.FSList;
 
 
-/** A hierarchical query concept represented by a query
-        operation on a list of concepts
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+/** A hierarchical query concept represented by a query operation on a list of concepts
+ * Updated by JCasGen Mon Apr 13 16:42:08 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class ComplexQueryConcept extends QueryConcept {
@@ -90,8 +89,7 @@ public class ComplexQueryConcept extends QueryConcept {
   //*--------------*
   //* Feature: operatorArgs
 
-  /** getter for operatorArgs - gets The operator arguments in a complex query
-            concept.
+  /** getter for operatorArgs - gets The operator arguments in a complex query concept.
    * @generated
    * @return value of the feature 
    */
@@ -100,8 +98,7 @@ public class ComplexQueryConcept extends QueryConcept {
       jcasType.jcas.throwFeatMissing("operatorArgs", "edu.cmu.lti.oaqa.type.retrieval.ComplexQueryConcept");
     return (FSList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((ComplexQueryConcept_Type)jcasType).casFeatCode_operatorArgs)));}
     
-  /** setter for operatorArgs - sets The operator arguments in a complex query
-            concept. 
+  /** setter for operatorArgs - sets The operator arguments in a complex query concept. 
    * @generated
    * @param v value to set into the feature 
    */

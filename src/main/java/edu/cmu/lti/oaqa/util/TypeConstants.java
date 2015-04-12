@@ -50,4 +50,6 @@ public class TypeConstants {
 
   public static final String CONCEPT_TYPE_ID_UNKNOWN = null;
 
+  public static final Token TOKEN_UNKNOWN = null;
+
 }

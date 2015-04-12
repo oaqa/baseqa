@@ -9,16 +9,14 @@ import java.util.stream.Collector;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.CASException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingQuestion;
 import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingSet;
+import edu.cmu.lti.oaqa.baseqa.util.ViewType;
 import edu.cmu.lti.oaqa.ecd.phase.ProcessingStepUtils;
-import edu.cmu.lti.oaqa.framework.ViewManager;
-import edu.cmu.lti.oaqa.framework.ViewManager.ViewType;
 import edu.cmu.lti.oaqa.util.TypeUtil;
 
 public class JsonGoldStandardDecorator extends JCasAnnotator_ImplBase {
@@ -33,8 +31,8 @@ public class JsonGoldStandardDecorator extends JCasAnnotator_ImplBase {
     super.initialize(context);
     Object value = context.getConfigParameterValue("file");
     if (String.class.isAssignableFrom(value.getClass())) {
-      id2input = TrainingSet.load(getClass().getResourceAsStream(String.class.cast(value)))
-              .stream().collect(TO_MAP_COLLECTOR);
+      id2input = TrainingSet.load(getClass().getResourceAsStream(String.class.cast(value))).stream()
+              .collect(TO_MAP_COLLECTOR);
     } else if (String[].class.isAssignableFrom(value.getClass())) {
       id2input = Arrays.stream(String[].class.cast(value))
               .flatMap(path -> TrainingSet.load(getClass().getResourceAsStream(path)).stream())
@@ -52,12 +50,8 @@ public class JsonGoldStandardDecorator extends JCasAnnotator_ImplBase {
     if (!id2input.containsKey(id)) {
       return;
     }
-    try {
-      JsonCollectionReaderHelper.addQuestionToIndex(id2input.get(id), source,
-              ViewManager.getOrCreateView(jcas, ViewType.FINAL_ANSWER_GS));
-    } catch (CASException e) {
-      throw new AnalysisEngineProcessException(e);
-    }
+    JsonCollectionReaderHelper.addQuestionToIndex(id2input.get(id), source,
+            ViewType.getGsView(jcas));
   }
 
 }

@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.nlp;
 
 import org.apache.uima.jcas.JCas;
@@ -13,11 +13,8 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** Annotation on a token, which may have arguments if
-        they are predicates; useful in transforming text into a "logical
-        form", with affordances similar to the ones provided in Extended
-        WordNet and the like.
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+/** Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like.
+ * Updated by JCasGen Mon Apr 13 16:42:08 EDT 2015
  * @generated */
 public class Token_Type extends Annotation_Type {
   /** @generated 

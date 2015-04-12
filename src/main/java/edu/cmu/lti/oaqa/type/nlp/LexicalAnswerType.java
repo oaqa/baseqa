@@ -1,20 +1,20 @@
 
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.nlp;
 
 import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
 
-import org.apache.uima.jcas.tcas.Annotation;
+import org.apache.uima.jcas.cas.TOP;
 
 
 /** The lexical answer type found in the question.
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+ * Updated by JCasGen Mon Apr 13 16:42:08 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
-public class LexicalAnswerType extends Annotation {
+public class LexicalAnswerType extends TOP {
   /** @generated
    * @ordered 
    */
@@ -53,18 +53,6 @@ public class LexicalAnswerType extends Annotation {
     readObject();   
   } 
 
-  /** @generated
-   * @param jcas JCas to which this Feature Structure belongs
-   * @param begin offset to the begin spot in the SofA
-   * @param end offset to the end spot in the SofA 
-  */  
-  public LexicalAnswerType(JCas jcas, int begin, int end) {
-    super(jcas);
-    setBegin(begin);
-    setEnd(end);
-    readObject();
-  }   
-
   /** 
    * <!-- begin-user-doc -->
    * Write your own initialization here
@@ -79,7 +67,7 @@ public class LexicalAnswerType extends Annotation {
   //*--------------*
   //* Feature: token
 
-  /** getter for token - gets The corresponding token for the LAT.
+  /** getter for token - gets The corresponding token for the LAT (if any).
    * @generated
    * @return value of the feature 
    */
@@ -88,7 +76,7 @@ public class LexicalAnswerType extends Annotation {
       jcasType.jcas.throwFeatMissing("token", "edu.cmu.lti.oaqa.type.nlp.LexicalAnswerType");
     return (Token)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((LexicalAnswerType_Type)jcasType).casFeatCode_token)));}
     
-  /** setter for token - sets The corresponding token for the LAT. 
+  /** setter for token - sets The corresponding token for the LAT (if any). 
    * @generated
    * @param v value to set into the feature 
    */

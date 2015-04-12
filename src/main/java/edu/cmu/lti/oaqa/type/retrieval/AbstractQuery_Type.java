@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas;
@@ -13,10 +13,8 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
-/** An abstract search query for the question that
-        represents query concepts and query operators over those
-        concepts.
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+/** An abstract search query for the question that represents query concepts and query operators over those concepts.
+ * Updated by JCasGen Mon Apr 13 16:42:08 EDT 2015
  * @generated */
 public class AbstractQuery_Type extends TOP_Type {
   /** @generated 

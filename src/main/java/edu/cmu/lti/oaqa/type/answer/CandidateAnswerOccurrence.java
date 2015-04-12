@@ -1,7 +1,7 @@
 
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
-package edu.cmu.lti.oaqa.type.nlp;
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
+package edu.cmu.lti.oaqa.type.answer;
 
 import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
@@ -10,9 +10,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 import org.apache.uima.jcas.tcas.Annotation;
 
 
-/** Annotates a span of text identified as a candidate
-        answer.
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+/** Annotates a span of text identified as a candidate answer.
+ * Updated by JCasGen Mon Apr 13 16:42:07 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class CandidateAnswerOccurrence extends Annotation {
@@ -86,7 +85,7 @@ public class CandidateAnswerOccurrence extends Annotation {
    */
   public String getText() {
     if (CandidateAnswerOccurrence_Type.featOkTst && ((CandidateAnswerOccurrence_Type)jcasType).casFeat_text == null)
-      jcasType.jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.nlp.CandidateAnswerOccurrence");
+      jcasType.jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence");
     return jcasType.ll_cas.ll_getStringValue(addr, ((CandidateAnswerOccurrence_Type)jcasType).casFeatCode_text);}
     
   /** setter for text - sets The candidate answer string. 
@@ -95,31 +94,29 @@ public class CandidateAnswerOccurrence extends Annotation {
    */
   public void setText(String v) {
     if (CandidateAnswerOccurrence_Type.featOkTst && ((CandidateAnswerOccurrence_Type)jcasType).casFeat_text == null)
-      jcasType.jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.nlp.CandidateAnswerOccurrence");
+      jcasType.jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence");
     jcasType.ll_cas.ll_setStringValue(addr, ((CandidateAnswerOccurrence_Type)jcasType).casFeatCode_text, v);}    
    
     
   //*--------------*
   //* Feature: mentionType
 
-  /** getter for mentionType - gets The manner in which covered text refers to some
-            entity, e.g. NAME, NOMINAL, PRONOUN
+  /** getter for mentionType - gets The manner in which covered text refers to some entity, e.g. NAME, NOMINAL, PRONOUN
    * @generated
    * @return value of the feature 
    */
   public String getMentionType() {
     if (CandidateAnswerOccurrence_Type.featOkTst && ((CandidateAnswerOccurrence_Type)jcasType).casFeat_mentionType == null)
-      jcasType.jcas.throwFeatMissing("mentionType", "edu.cmu.lti.oaqa.type.nlp.CandidateAnswerOccurrence");
+      jcasType.jcas.throwFeatMissing("mentionType", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence");
     return jcasType.ll_cas.ll_getStringValue(addr, ((CandidateAnswerOccurrence_Type)jcasType).casFeatCode_mentionType);}
     
-  /** setter for mentionType - sets The manner in which covered text refers to some
-            entity, e.g. NAME, NOMINAL, PRONOUN 
+  /** setter for mentionType - sets The manner in which covered text refers to some entity, e.g. NAME, NOMINAL, PRONOUN 
    * @generated
    * @param v value to set into the feature 
    */
   public void setMentionType(String v) {
     if (CandidateAnswerOccurrence_Type.featOkTst && ((CandidateAnswerOccurrence_Type)jcasType).casFeat_mentionType == null)
-      jcasType.jcas.throwFeatMissing("mentionType", "edu.cmu.lti.oaqa.type.nlp.CandidateAnswerOccurrence");
+      jcasType.jcas.throwFeatMissing("mentionType", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence");
     jcasType.ll_cas.ll_setStringValue(addr, ((CandidateAnswerOccurrence_Type)jcasType).casFeatCode_mentionType, v);}    
   }
 

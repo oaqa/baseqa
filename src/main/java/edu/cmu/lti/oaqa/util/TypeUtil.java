@@ -15,10 +15,10 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Range;
 
 import edu.cmu.lti.oaqa.type.answer.Answer;
+import edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant;
 import edu.cmu.lti.oaqa.type.answer.Summary;
 import edu.cmu.lti.oaqa.type.input.Question;
 import edu.cmu.lti.oaqa.type.kb.Concept;
@@ -130,7 +130,7 @@ public class TypeUtil {
   }
 
   public static final Comparator<SearchResult> SEARCH_RESULT_SCORE_COMPARATOR = Comparator
-          .comparing(SearchResult::getScore).reversed();
+          .comparing(SearchResult::getScore, Comparator.reverseOrder());
 
   public static <T extends SearchResult> List<T> rankedSearchResultsByScore(Collection<T> results,
           int hitSize) {
@@ -167,20 +167,33 @@ public class TypeUtil {
     return JCasUtil.select(jcas, LexicalAnswerType.class);
   }
 
+  public static final Comparator<Answer> ANSWER_SCORE_COMPARATOR = Comparator
+          .comparing(Answer::getScore, Comparator.reverseOrder());
+
   public static List<Answer> getRankedAnswers(JCas jcas) {
-    return JCasUtil.select(jcas, Answer.class).stream()
-            .sorted(Comparator.comparing(Answer::getRank)).collect(toList());
+    return JCasUtil.select(jcas, Answer.class).stream().sorted(ANSWER_SCORE_COMPARATOR)
+            .collect(toList());
   }
+
+  public static final Comparator<Summary> SUMMARY_SCORE_COMPARATOR = Comparator
+          .comparing(Summary::getScore, Comparator.reverseOrder());
 
   public static List<Summary> getRankedSummary(JCas jcas) {
-    return JCasUtil.select(jcas, Summary.class).stream()
-            .sorted(Comparator.comparing(Summary::getRank)).collect(toList());
+    return JCasUtil.select(jcas, Summary.class).stream().sorted(SUMMARY_SCORE_COMPARATOR)
+            .collect(toList());
   }
 
-  public static List<String> getAnswerVariants(Answer answer) {
-    List<String> variants = Lists.newArrayList(answer.getText());
-    variants.addAll(FSCollectionFactory.create(answer.getVariants()));
-    return variants;
+  public static Collection<CandidateAnswerVariant> getAnswerVariants(Answer answer) {
+    return FSCollectionFactory.create(answer.getVariants(), CandidateAnswerVariant.class);
+  }
+
+  public static List<String> getAnswerVariantNames(Answer answer) {
+    return getAnswerVariants(answer).stream().map(TypeUtil::getAnswerVariantNames)
+            .flatMap(Collection::stream).collect(toList());
+  }
+
+  public static Collection<String> getAnswerVariantNames(CandidateAnswerVariant avariant) {
+    return FSCollectionFactory.create(avariant.getNames());
   }
 
   public static Range<Integer> spanRange(Annotation annotation) {
@@ -194,10 +207,6 @@ public class TypeUtil {
   public static int hash(Passage passage) {
     return Objects.hash(passage.getUri(), passage.getDocId(), passage.getOffsetInBeginSection(),
             passage.getOffsetInEndSection(), passage.getBeginSection(), passage.getEndSection());
-  }
-  
-  public static String getCoveredTextOf(String text, Annotation annotation) {
-    return text.substring(annotation.getBegin(), annotation.getEnd());
   }
 
 }

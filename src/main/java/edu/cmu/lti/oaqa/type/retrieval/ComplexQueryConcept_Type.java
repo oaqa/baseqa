@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas;
@@ -12,9 +12,8 @@ import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
-/** A hierarchical query concept represented by a query
-        operation on a list of concepts
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+/** A hierarchical query concept represented by a query operation on a list of concepts
+ * Updated by JCasGen Mon Apr 13 16:42:08 EDT 2015
  * @generated */
 public class ComplexQueryConcept_Type extends QueryConcept_Type {
   /** @generated 

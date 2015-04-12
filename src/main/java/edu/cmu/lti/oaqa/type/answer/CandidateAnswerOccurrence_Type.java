@@ -1,6 +1,6 @@
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
-package edu.cmu.lti.oaqa.type.nlp;
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
+package edu.cmu.lti.oaqa.type.answer;
 
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
@@ -13,9 +13,8 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
-/** Annotates a span of text identified as a candidate
-        answer.
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+/** Annotates a span of text identified as a candidate answer.
+ * Updated by JCasGen Mon Apr 13 16:42:07 EDT 2015
  * @generated */
 public class CandidateAnswerOccurrence_Type extends Annotation_Type {
   /** @generated 
@@ -45,7 +44,7 @@ public class CandidateAnswerOccurrence_Type extends Annotation_Type {
   /** @generated 
      @modifiable */
   @SuppressWarnings ("hiding")
-  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("edu.cmu.lti.oaqa.type.nlp.CandidateAnswerOccurrence");
+  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence");
  
   /** @generated */
   final Feature casFeat_text;
@@ -57,7 +56,7 @@ public class CandidateAnswerOccurrence_Type extends Annotation_Type {
    */ 
   public String getText(int addr) {
         if (featOkTst && casFeat_text == null)
-      jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.nlp.CandidateAnswerOccurrence");
+      jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence");
     return ll_cas.ll_getStringValue(addr, casFeatCode_text);
   }
   /** @generated
@@ -66,7 +65,7 @@ public class CandidateAnswerOccurrence_Type extends Annotation_Type {
    */    
   public void setText(int addr, String v) {
         if (featOkTst && casFeat_text == null)
-      jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.nlp.CandidateAnswerOccurrence");
+      jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence");
     ll_cas.ll_setStringValue(addr, casFeatCode_text, v);}
     
   
@@ -81,7 +80,7 @@ public class CandidateAnswerOccurrence_Type extends Annotation_Type {
    */ 
   public String getMentionType(int addr) {
         if (featOkTst && casFeat_mentionType == null)
-      jcas.throwFeatMissing("mentionType", "edu.cmu.lti.oaqa.type.nlp.CandidateAnswerOccurrence");
+      jcas.throwFeatMissing("mentionType", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence");
     return ll_cas.ll_getStringValue(addr, casFeatCode_mentionType);
   }
   /** @generated
@@ -90,7 +89,7 @@ public class CandidateAnswerOccurrence_Type extends Annotation_Type {
    */    
   public void setMentionType(int addr, String v) {
         if (featOkTst && casFeat_mentionType == null)
-      jcas.throwFeatMissing("mentionType", "edu.cmu.lti.oaqa.type.nlp.CandidateAnswerOccurrence");
+      jcas.throwFeatMissing("mentionType", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence");
     ll_cas.ll_setStringValue(addr, casFeatCode_mentionType, v);}
     
   

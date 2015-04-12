@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.cas.StringArray;
 
 
 /** A document search result.
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+ * Updated by JCasGen Mon Apr 13 16:42:08 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class Document extends SearchResult {
@@ -155,8 +155,7 @@ public class Document extends SearchResult {
   //*--------------*
   //* Feature: sectionLabels
 
-  /** getter for sectionLabels - gets Section labels in the document, e.g. sections.0,
-            sections1, etc.
+  /** getter for sectionLabels - gets Section labels in the document, e.g. sections.0, sections1, etc.
    * @generated
    * @return value of the feature 
    */
@@ -165,8 +164,7 @@ public class Document extends SearchResult {
       jcasType.jcas.throwFeatMissing("sectionLabels", "edu.cmu.lti.oaqa.type.retrieval.Document");
     return (StringArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Document_Type)jcasType).casFeatCode_sectionLabels)));}
     
-  /** setter for sectionLabels - sets Section labels in the document, e.g. sections.0,
-            sections1, etc. 
+  /** setter for sectionLabels - sets Section labels in the document, e.g. sections.0, sections1, etc. 
    * @generated
    * @param v value to set into the feature 
    */
@@ -175,8 +173,7 @@ public class Document extends SearchResult {
       jcasType.jcas.throwFeatMissing("sectionLabels", "edu.cmu.lti.oaqa.type.retrieval.Document");
     jcasType.ll_cas.ll_setRefValue(addr, ((Document_Type)jcasType).casFeatCode_sectionLabels, jcasType.ll_cas.ll_getFSRef(v));}    
     
-  /** indexed getter for sectionLabels - gets an indexed value - Section labels in the document, e.g. sections.0,
-            sections1, etc.
+  /** indexed getter for sectionLabels - gets an indexed value - Section labels in the document, e.g. sections.0, sections1, etc.
    * @generated
    * @param i index in the array to get
    * @return value of the element at index i 
@@ -187,8 +184,7 @@ public class Document extends SearchResult {
     jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((Document_Type)jcasType).casFeatCode_sectionLabels), i);
     return jcasType.ll_cas.ll_getStringArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((Document_Type)jcasType).casFeatCode_sectionLabels), i);}
 
-  /** indexed setter for sectionLabels - sets an indexed value - Section labels in the document, e.g. sections.0,
-            sections1, etc.
+  /** indexed setter for sectionLabels - sets an indexed value - Section labels in the document, e.g. sections.0, sections1, etc.
    * @generated
    * @param i index in the array to set
    * @param v value to set into the array 

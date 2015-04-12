@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.answer;
 
 import org.apache.uima.jcas.JCas; 
@@ -12,10 +12,8 @@ import org.apache.uima.jcas.cas.TOP;
 import org.apache.uima.jcas.cas.StringList;
 
 
-/** A variant of a candidate answer. A variant may have
-        multiple occurrences, all of which are collected in a variant
-        object.
- * Updated by JCasGen Sun Mar 29 18:53:35 EDT 2015
+/** A variant of a candidate answer. A variant may have multiple occurrences, all of which are collected in a variant object.
+ * Updated by JCasGen Mon Apr 13 16:42:07 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class CandidateAnswerVariant extends TOP {
@@ -91,110 +89,31 @@ public class CandidateAnswerVariant extends TOP {
    
     
   //*--------------*
-  //* Feature: candidateId
+  //* Feature: names
 
-  /** getter for candidateId - gets Unique id of this candidate answer variant.
+  /** getter for names - gets Names for a given candidate answer variant, e.g. Tandy, Tandy Inc. for candidate answer Variant Tandy Incorporated.
    * @generated
    * @return value of the feature 
    */
-  public String getCandidateId() {
-    if (CandidateAnswerVariant_Type.featOkTst && ((CandidateAnswerVariant_Type)jcasType).casFeat_candidateId == null)
-      jcasType.jcas.throwFeatMissing("candidateId", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    return jcasType.ll_cas.ll_getStringValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_candidateId);}
+  public StringList getNames() {
+    if (CandidateAnswerVariant_Type.featOkTst && ((CandidateAnswerVariant_Type)jcasType).casFeat_names == null)
+      jcasType.jcas.throwFeatMissing("names", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
+    return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_names)));}
     
-  /** setter for candidateId - sets Unique id of this candidate answer variant. 
+  /** setter for names - sets Names for a given candidate answer variant, e.g. Tandy, Tandy Inc. for candidate answer Variant Tandy Incorporated. 
    * @generated
    * @param v value to set into the feature 
    */
-  public void setCandidateId(String v) {
-    if (CandidateAnswerVariant_Type.featOkTst && ((CandidateAnswerVariant_Type)jcasType).casFeat_candidateId == null)
-      jcasType.jcas.throwFeatMissing("candidateId", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    jcasType.ll_cas.ll_setStringValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_candidateId, v);}    
-   
-    
-  //*--------------*
-  //* Feature: text
-
-  /** getter for text - gets The candidate answer string.
-   * @generated
-   * @return value of the feature 
-   */
-  public String getText() {
-    if (CandidateAnswerVariant_Type.featOkTst && ((CandidateAnswerVariant_Type)jcasType).casFeat_text == null)
-      jcasType.jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    return jcasType.ll_cas.ll_getStringValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_text);}
-    
-  /** setter for text - sets The candidate answer string. 
-   * @generated
-   * @param v value to set into the feature 
-   */
-  public void setText(String v) {
-    if (CandidateAnswerVariant_Type.featOkTst && ((CandidateAnswerVariant_Type)jcasType).casFeat_text == null)
-      jcasType.jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    jcasType.ll_cas.ll_setStringValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_text, v);}    
-   
-    
-  //*--------------*
-  //* Feature: alternativeNames
-
-  /** getter for alternativeNames - gets alternative names for a given candidate answer
-            variant, e.g. Tandy, Tandy Inc. for candidate answer Variant
-            Tandy Incorporated
-   * @generated
-   * @return value of the feature 
-   */
-  public StringList getAlternativeNames() {
-    if (CandidateAnswerVariant_Type.featOkTst && ((CandidateAnswerVariant_Type)jcasType).casFeat_alternativeNames == null)
-      jcasType.jcas.throwFeatMissing("alternativeNames", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_alternativeNames)));}
-    
-  /** setter for alternativeNames - sets alternative names for a given candidate answer
-            variant, e.g. Tandy, Tandy Inc. for candidate answer Variant
-            Tandy Incorporated 
-   * @generated
-   * @param v value to set into the feature 
-   */
-  public void setAlternativeNames(StringList v) {
-    if (CandidateAnswerVariant_Type.featOkTst && ((CandidateAnswerVariant_Type)jcasType).casFeat_alternativeNames == null)
-      jcasType.jcas.throwFeatMissing("alternativeNames", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    jcasType.ll_cas.ll_setRefValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_alternativeNames, jcasType.ll_cas.ll_getFSRef(v));}    
-   
-    
-  //*--------------*
-  //* Feature: uri
-
-  /** getter for uri - gets A unique identifier for this candidate. All
-            candidate answers in the same candidate answer group will
-            have the same uri. A candidate answer group is formed at
-            candidate generation time when additional derived candidate
-            answers are created from the root candidate answer.
-   * @generated
-   * @return value of the feature 
-   */
-  public String getUri() {
-    if (CandidateAnswerVariant_Type.featOkTst && ((CandidateAnswerVariant_Type)jcasType).casFeat_uri == null)
-      jcasType.jcas.throwFeatMissing("uri", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    return jcasType.ll_cas.ll_getStringValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_uri);}
-    
-  /** setter for uri - sets A unique identifier for this candidate. All
-            candidate answers in the same candidate answer group will
-            have the same uri. A candidate answer group is formed at
-            candidate generation time when additional derived candidate
-            answers are created from the root candidate answer. 
-   * @generated
-   * @param v value to set into the feature 
-   */
-  public void setUri(String v) {
-    if (CandidateAnswerVariant_Type.featOkTst && ((CandidateAnswerVariant_Type)jcasType).casFeat_uri == null)
-      jcasType.jcas.throwFeatMissing("uri", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    jcasType.ll_cas.ll_setStringValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_uri, v);}    
+  public void setNames(StringList v) {
+    if (CandidateAnswerVariant_Type.featOkTst && ((CandidateAnswerVariant_Type)jcasType).casFeat_names == null)
+      jcasType.jcas.throwFeatMissing("names", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
+    jcasType.ll_cas.ll_setRefValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_names, jcasType.ll_cas.ll_getFSRef(v));}    
    
     
   //*--------------*
   //* Feature: docId
 
-  /** getter for docId - gets The unique id of the document (if any) from which
-            this candidate answer was generated.
+  /** getter for docId - gets The unique id of the document (if any) from which this candidate answer was generated.
    * @generated
    * @return value of the feature 
    */
@@ -203,8 +122,7 @@ public class CandidateAnswerVariant extends TOP {
       jcasType.jcas.throwFeatMissing("docId", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
     return jcasType.ll_cas.ll_getStringValue(addr, ((CandidateAnswerVariant_Type)jcasType).casFeatCode_docId);}
     
-  /** setter for docId - sets The unique id of the document (if any) from which
-            this candidate answer was generated. 
+  /** setter for docId - sets The unique id of the document (if any) from which this candidate answer was generated. 
    * @generated
    * @param v value to set into the feature 
    */

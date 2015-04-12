@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.answer;
 
 import org.apache.uima.jcas.JCas;
@@ -13,10 +13,8 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
-/** A variant of a candidate answer. A variant may have
-        multiple occurrences, all of which are collected in a variant
-        object.
- * Updated by JCasGen Sun Mar 29 18:53:35 EDT 2015
+/** A variant of a candidate answer. A variant may have multiple occurrences, all of which are collected in a variant object.
+ * Updated by JCasGen Mon Apr 13 16:42:07 EDT 2015
  * @generated */
 public class CandidateAnswerVariant_Type extends TOP_Type {
   /** @generated 
@@ -73,98 +71,26 @@ public class CandidateAnswerVariant_Type extends TOP_Type {
   
  
   /** @generated */
-  final Feature casFeat_candidateId;
+  final Feature casFeat_names;
   /** @generated */
-  final int     casFeatCode_candidateId;
+  final int     casFeatCode_names;
   /** @generated
    * @param addr low level Feature Structure reference
    * @return the feature value 
    */ 
-  public String getCandidateId(int addr) {
-        if (featOkTst && casFeat_candidateId == null)
-      jcas.throwFeatMissing("candidateId", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_candidateId);
+  public int getNames(int addr) {
+        if (featOkTst && casFeat_names == null)
+      jcas.throwFeatMissing("names", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_names);
   }
   /** @generated
    * @param addr low level Feature Structure reference
    * @param v value to set 
    */    
-  public void setCandidateId(int addr, String v) {
-        if (featOkTst && casFeat_candidateId == null)
-      jcas.throwFeatMissing("candidateId", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    ll_cas.ll_setStringValue(addr, casFeatCode_candidateId, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_text;
-  /** @generated */
-  final int     casFeatCode_text;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public String getText(int addr) {
-        if (featOkTst && casFeat_text == null)
-      jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_text);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setText(int addr, String v) {
-        if (featOkTst && casFeat_text == null)
-      jcas.throwFeatMissing("text", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    ll_cas.ll_setStringValue(addr, casFeatCode_text, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_alternativeNames;
-  /** @generated */
-  final int     casFeatCode_alternativeNames;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public int getAlternativeNames(int addr) {
-        if (featOkTst && casFeat_alternativeNames == null)
-      jcas.throwFeatMissing("alternativeNames", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_alternativeNames);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setAlternativeNames(int addr, int v) {
-        if (featOkTst && casFeat_alternativeNames == null)
-      jcas.throwFeatMissing("alternativeNames", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    ll_cas.ll_setRefValue(addr, casFeatCode_alternativeNames, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_uri;
-  /** @generated */
-  final int     casFeatCode_uri;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public String getUri(int addr) {
-        if (featOkTst && casFeat_uri == null)
-      jcas.throwFeatMissing("uri", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_uri);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setUri(int addr, String v) {
-        if (featOkTst && casFeat_uri == null)
-      jcas.throwFeatMissing("uri", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
-    ll_cas.ll_setStringValue(addr, casFeatCode_uri, v);}
+  public void setNames(int addr, int v) {
+        if (featOkTst && casFeat_names == null)
+      jcas.throwFeatMissing("names", "edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant");
+    ll_cas.ll_setRefValue(addr, casFeatCode_names, v);}
     
   
  
@@ -208,20 +134,8 @@ public class CandidateAnswerVariant_Type extends TOP_Type {
     casFeatCode_occurrences  = (null == casFeat_occurrences) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_occurrences).getCode();
 
  
-    casFeat_candidateId = jcas.getRequiredFeatureDE(casType, "candidateId", "uima.cas.String", featOkTst);
-    casFeatCode_candidateId  = (null == casFeat_candidateId) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_candidateId).getCode();
-
- 
-    casFeat_text = jcas.getRequiredFeatureDE(casType, "text", "uima.cas.String", featOkTst);
-    casFeatCode_text  = (null == casFeat_text) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_text).getCode();
-
- 
-    casFeat_alternativeNames = jcas.getRequiredFeatureDE(casType, "alternativeNames", "uima.cas.StringList", featOkTst);
-    casFeatCode_alternativeNames  = (null == casFeat_alternativeNames) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_alternativeNames).getCode();
-
- 
-    casFeat_uri = jcas.getRequiredFeatureDE(casType, "uri", "uima.cas.String", featOkTst);
-    casFeatCode_uri  = (null == casFeat_uri) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_uri).getCode();
+    casFeat_names = jcas.getRequiredFeatureDE(casType, "names", "uima.cas.StringList", featOkTst);
+    casFeatCode_names  = (null == casFeat_names) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_names).getCode();
 
  
     casFeat_docId = jcas.getRequiredFeatureDE(casType, "docId", "uima.cas.String", featOkTst);

@@ -7,34 +7,27 @@
   <types>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.nlp.Token</name>
-      <description>Annotation on a token, which may have arguments if
-        they are predicates; useful in transforming text into a "logical
-        form", with affordances similar to the ones provided in Extended
-        WordNet and the like.</description>
+      <description>Annotation on a token, which may have arguments if they are predicates; useful in transforming text into a "logical form", with affordances similar to the ones provided in Extended WordNet and the like.</description>
       <supertypeName>uima.tcas.Annotation</supertypeName>
       <features>
         <featureDescription>
           <name>head</name>
-          <description>The head of the token in the dependency parse
-            tree.</description>
+          <description>The head of the token in the dependency parse tree.</description>
           <rangeTypeName>edu.cmu.lti.oaqa.type.nlp.Token</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>depLabel</name>
-          <description>The dependency label of the token with respect to
-            its head.</description>
+          <description>The dependency label of the token with respect to its head.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>semanticType</name>
-          <description>A semantic type, typically the name of an Entity
-            Annotation type.</description>
+          <description>A semantic type, typically the name of an Entity Annotation type.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>partOfSpeech</name>
-          <description>Coarse-grained part of speech. --- Example: noun,
-            verb, adj, cord</description>
+          <description>Coarse-grained part of speech. --- Example: noun, verb, adj, cord</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
@@ -44,30 +37,24 @@
         </featureDescription>
         <featureDescription>
           <name>isMainReference</name>
-          <description>If true, then this is the main reference to the
-            first argument. Modifiers and anaphoric references do not
-            have isMainReference set. --- Example: "A dark blue [hat]"</description>
+          <description>If true, then this is the main reference to the first argument. Modifiers and anaphoric references do not have isMainReference set. --- Example: "A dark blue [hat]"</description>
           <rangeTypeName>uima.cas.Boolean</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>isVariable</name>
-          <description>True iff the token expresses some unknown entity,
-            typically the focus of a question: --- Example: "[Who] shot
-            JR?", "What [city] was JR born in?"</description>
+          <description>True iff the token expresses some unknown entity, typically the focus of a question: --- Example: "[Who] shot JR?", "What [city] was JR born in?"</description>
           <rangeTypeName>uima.cas.Boolean</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>determiner</name>
-          <description>The determiner attached to the node, if any. ---
-            Example: [the] book</description>
+          <description>The determiner attached to the node, if any --- Example: [the] book</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.nlp.Focus</name>
-      <description>The phrase in the question that indicates the answer
-        variable.</description>
+      <description>The phrase in the question that indicates the answer variable.</description>
       <supertypeName>uima.tcas.Annotation</supertypeName>
       <features>
         <featureDescription>
@@ -85,11 +72,11 @@
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.nlp.LexicalAnswerType</name>
       <description>The lexical answer type found in the question.</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <supertypeName>uima.cas.TOP</supertypeName>
       <features>
         <featureDescription>
           <name>token</name>
-          <description>The corresponding token for the LAT.</description>
+          <description>The corresponding token for the LAT (if any).</description>
           <rangeTypeName>edu.cmu.lti.oaqa.type.nlp.Token</rangeTypeName>
         </featureDescription>
         <featureDescription>
@@ -100,9 +87,8 @@
       </features>
     </typeDescription>
     <typeDescription>
-      <name>edu.cmu.lti.oaqa.type.nlp.AnswerType</name>
-      <description>A Named Entity type that represents the type of the
-        answer being sought.</description>
+      <name>edu.cmu.lti.oaqa.type.answer.AnswerType</name>
+      <description>A Named Entity type that represents the type of the answer being sought.</description>
       <supertypeName>uima.tcas.Annotation</supertypeName>
       <features>
         <featureDescription>
@@ -141,15 +127,12 @@
         </featureDescription>
         <featureDescription>
           <name>source</name>
-          <description>The source of the question, e.g., TREC11,
-            Jeopardy, etc.</description>
+          <description>The source of the question, e.g., TREC11, Jeopardy, etc.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>questionType</name>
-          <description>The class of the question, determined by either
-            an automatic question classification process or human
-            judgment.</description>
+          <description>The class of the question, determined by either an automatic question classification process or human judgment.</description>
           <rangeTypeName>edu.cmu.lti.oaqa.type.input.QuestionType</rangeTypeName>
         </featureDescription>
         <featureDescription>
@@ -166,16 +149,12 @@
       <features>
         <featureDescription>
           <name>uri</name>
-          <description>An identifier for the source of this search
-            result, e.g., the name of the file that this result is drawn
-            from, which, when combined with offset and length, uniquely
-            identifies the span of text for this result.</description>
+          <description>An identifier for the source of this search result, e.g., the name of the file that this result is drawn from, which, when combined with offset and length, uniquely identifies the span of text for this result.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>score</name>
-          <description>Relevance score associated with the search
-            result.</description>
+          <description>Relevance score associated with the search result.</description>
           <rangeTypeName>uima.cas.Double</rangeTypeName>
         </featureDescription>
         <featureDescription>
@@ -195,15 +174,12 @@
         </featureDescription>
         <featureDescription>
           <name>searchId</name>
-          <description>ID of the search object to which this search
-            result belongs (matches the searchId field in the Search
-            object).</description>
+          <description>ID of the search object to which this search result belongs (matches the searchId field in the Search object).</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>candidateAnswers</name>
-          <description>CandidateAnswerVariants generated from this
-            SearchResult.</description>
+          <description>CandidateAnswerVariants generated from this SearchResult.</description>
           <rangeTypeName>uima.cas.FSArray</rangeTypeName>
           <elementType>edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant</elementType>
         </featureDescription>
@@ -220,22 +196,21 @@
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>variants</name>
-          <description>List of candidate answer variant ids that were
-            merged into this final answer.</description>
-          <rangeTypeName>uima.cas.StringList</rangeTypeName>
+          <name>score</name>
+          <description>The score associated with the answer.</description>
+          <rangeTypeName>uima.cas.Double</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>rank</name>
-          <description>Rank of this result in the original hit-list.</description>
-          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+          <name>variants</name>
+          <description>List of candidate answer variants that were merged into this final answer.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant</elementType>
         </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.answer.Summary</name>
-      <description>A short summary of ideal answer generated by the QA
-        system.</description>
+      <description>A short summary of ideal answer generated by the QA system.</description>
       <supertypeName>uima.cas.TOP</supertypeName>
       <features>
         <featureDescription>
@@ -243,16 +218,15 @@
           <description>The actual answer string.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
-        <featureDescription>
-          <name>variants</name>
-          <description>List of candidate answer variant ids that were
-            merged into this final answer.</description>
-          <rangeTypeName>uima.cas.StringList</rangeTypeName>
+      <featureDescription>
+          <name>score</name>
+          <description>The score associated with the answer.</description>
+          <rangeTypeName>uima.cas.Double</rangeTypeName>
         </featureDescription>
-        <featureDescription>
-          <name>rank</name>
-          <description>Rank of this result in the original hit-list.</description>
-          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+      <featureDescription>
+          <name>variants</name>
+          <description>List of alternative answer summaries.</description>
+          <rangeTypeName>uima.cas.StringList</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
@@ -263,38 +237,32 @@
       <features>
         <featureDescription>
           <name>title</name>
-          <description>The title of the document that contains this
-            passage.</description>
+          <description>The title of the document that contains this passage.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>docId</name>
-          <description>A unique identifier for the document that
-            conatins this passage.</description>
+          <description>A unique identifier for the document that conatins this passage.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>offsetInBeginSection</name>
-          <description>Character offset of the start of this passage
-            within the section that contains this passage.</description>
+          <description>Character offset of the start of this passage within the section that contains this passage.</description>
           <rangeTypeName>uima.cas.Integer</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>offsetInEndSection</name>
-          <description>Character offset of the end of this passage
-            within the section that contains this passage.</description>
+          <description>Character offset of the end of this passage within the section that contains this passage.</description>
           <rangeTypeName>uima.cas.Integer</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>beginSection</name>
-          <description>The start section of this passage within the
-            document that contains this passage.</description>
+          <description>The start section of this passage within the document that contains this passage.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>endSection</name>
-          <description>The end section of this passage within the
-            document that contains this passage.</description>
+          <description>The end section of this passage within the document that contains this passage.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
@@ -305,9 +273,8 @@
       </features>
     </typeDescription>
     <typeDescription>
-      <name>edu.cmu.lti.oaqa.type.nlp.CandidateAnswerOccurrence</name>
-      <description>Annotates a span of text identified as a candidate
-        answer.</description>
+      <name>edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence</name>
+      <description>Annotates a span of text identified as a candidate answer.</description>
       <supertypeName>uima.tcas.Annotation</supertypeName>
       <features>
         <featureDescription>
@@ -317,63 +284,37 @@
         </featureDescription>
         <featureDescription>
           <name>mentionType</name>
-          <description>The manner in which covered text refers to some
-            entity, e.g. NAME, NOMINAL, PRONOUN</description>
+          <description>The manner in which covered text refers to some entity, e.g. NAME, NOMINAL, PRONOUN</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant</name>
-      <description>A variant of a candidate answer. A variant may have
-        multiple occurrences, all of which are collected in a variant
-        object.</description>
+      <description>A variant of a candidate answer. A variant may have multiple occurrences, all of which are collected in a variant object.</description>
       <supertypeName>uima.cas.TOP</supertypeName>
       <features>
         <featureDescription>
           <name>occurrences</name>
           <description>The occurrences of this variant.</description>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
-          <elementType>edu.cmu.lti.oaqa.type.nlp.CandidateAnswerOccurrence</elementType>
+          <elementType>edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence</elementType>
         </featureDescription>
         <featureDescription>
-          <name>candidateId</name>
-          <description>Unique id of this candidate answer variant.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>text</name>
-          <description>The candidate answer string.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>alternativeNames</name>
-          <description>alternative names for a given candidate answer
-            variant, e.g. Tandy, Tandy Inc. for candidate answer Variant
-            Tandy Incorporated</description>
+          <name>names</name>
+          <description>Names for a given candidate answer variant, e.g. Tandy, Tandy Inc. for candidate answer Variant Tandy Incorporated.</description>
           <rangeTypeName>uima.cas.StringList</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>uri</name>
-          <description>A unique identifier for this candidate. All
-            candidate answers in the same candidate answer group will
-            have the same uri. A candidate answer group is formed at
-            candidate generation time when additional derived candidate
-            answers are created from the root candidate answer.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
           <name>docId</name>
-          <description>The unique id of the document (if any) from which
-            this candidate answer was generated.</description>
+          <description>The unique id of the document (if any) from which this candidate answer was generated.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.input.QuestionType</name>
-      <description>Enumeration of the possible values for the question
-        class.</description>
+      <description>Enumeration of the possible values for the question class.</description>
       <supertypeName>uima.cas.String</supertypeName>
       <allowedValues>
         <value>
@@ -382,23 +323,19 @@
         </value>
         <value>
           <string>DEFINITION</string>
-          <description>A question that contains a definition of the
-            answer or is asking for a definition.</description>
+          <description>A question that contains a definition of the answer or is asking for a definition.</description>
         </value>
         <value>
           <string>MULTI_SENTENCE</string>
-          <description>There are two or more sentences in the question,
-            separated by a period or a semicolon.</description>
+          <description>There are two or more sentences in the question, separated by a period or a semicolon.</description>
         </value>
         <value>
           <string>COMPOUND</string>
-          <description>There are two or more distinct definitions of the
-            same answer term.</description>
+          <description>There are two or more distinct definitions of the same answer term.</description>
         </value>
         <value>
           <string>ABBREVIATION</string>
-          <description>The answer is either an abbreviation or an
-            abbreviation expansion from the question.</description>
+          <description>The answer is either an abbreviation or an abbreviation expansion from the question.</description>
         </value>
         <value>
           <string>UNCLASSIFIED</string>
@@ -418,8 +355,7 @@
         </value>
         <value>
           <string>SUMMARY</string>
-          <description>The answer is a short passage to summarize an
-            ideal answer.</description>
+          <description>The answer is a short passage to summarize an ideal answer.</description>
         </value>
       </allowedValues>
     </typeDescription>
@@ -430,8 +366,7 @@
       <features>
         <featureDescription>
           <name>namedEntityTypes</name>
-          <description>List of Named Entity types associated with this
-            concept.</description>
+          <description>List of Named Entity types associated with this concept.</description>
           <rangeTypeName>uima.cas.StringList</rangeTypeName>
         </featureDescription>
         <featureDescription>
@@ -460,15 +395,12 @@
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.retrieval.AbstractQuery</name>
-      <description>An abstract search query for the question that
-        represents query concepts and query operators over those
-        concepts.</description>
+      <description>An abstract search query for the question that represents query concepts and query operators over those concepts.</description>
       <supertypeName>uima.cas.TOP</supertypeName>
       <features>
         <featureDescription>
           <name>concepts</name>
-          <description>The list of query concepts that make up this
-            abstract query. The list is ordered.</description>
+          <description>The list of query concepts that make up this abstract query. The list is ordered.</description>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>edu.cmu.lti.oaqa.type.QueryConcept</elementType>
         </featureDescription>
@@ -476,8 +408,7 @@
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.retrieval.ConceptType</name>
-      <description>An enumeration of the allowed abstract query concept
-        types.</description>
+      <description>An enumeration of the allowed abstract query concept types.</description>
       <supertypeName>uima.cas.String</supertypeName>
       <allowedValues>
         <value>
@@ -490,8 +421,7 @@
         </value>
         <value>
           <string>ANSWER_TYPE</string>
-          <description>Answer candidate suggestion, used mostly in
-            Virtual Annotation.</description>
+          <description>Answer candidate suggestion, used mostly in Virtual Annotation.</description>
         </value>
       </allowedValues>
     </typeDescription>
@@ -502,8 +432,7 @@
       <allowedValues>
         <value>
           <string>SYNONYM</string>
-          <description>all query concepts underneath are synonyms of
-            each other</description>
+          <description>all query concepts underneath are synonyms of each other</description>
         </value>
         <value>
           <string>PHRASE</string>
@@ -511,27 +440,19 @@
         </value>
         <value>
           <string>TIE</string>
-          <description>An "or", i.e., a disjunction of the argument
-            nodes.</description>
+          <description>An "or", i.e., a disjunction of the argument nodes.</description>
         </value>
         <value>
           <string>WEIGHT</string>
-          <description>the concepts underneath are weighted per the
-            float stored in the operator</description>
+          <description>the concepts underneath are weighted per the float stored in the operator</description>
         </value>
         <value>
           <string>REQUIRED</string>
-          <description>the concepts underneath are all required, if
-            possible</description>
+          <description>the concepts underneath are all required, if possible</description>
         </value>
         <value>
           <string>RELATION</string>
-          <description>the concepts underneath are below a relation,
-            which is stored within the operator</description>
-        </value>
-        <value>
-          <string>QUOTEDPHRASE</string>
-          <description/>
+          <description>the concepts underneath are below a relation, which is stored within the operator</description>
         </value>
       </allowedValues>
     </typeDescription>
@@ -557,23 +478,19 @@
         </featureDescription>
         <featureDescription>
           <name>sectionLabels</name>
-          <description>Section labels in the document, e.g. sections.0,
-            sections1, etc.</description>
+          <description>Section labels in the document, e.g. sections.0, sections1, etc.</description>
           <rangeTypeName>uima.cas.StringArray</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.retrieval.AnswerSearchResult</name>
-      <description>A search result where the candidate answer is
-        obtained as part of the search process and saved in the text
-        field of the search result.</description>
+      <description>A search result where the candidate answer is obtained as part of the search process and saved in the text field of the search result.</description>
       <supertypeName>edu.cmu.lti.oaqa.type.retrieval.SearchResult</supertypeName>
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.retrieval.TripleSearchResult</name>
-      <description>A search result from a triple store, e.g., an RDF
-        store.</description>
+      <description>A search result from a triple store, e.g., an RDF store.</description>
       <supertypeName>edu.cmu.lti.oaqa.type.retrieval.AnswerSearchResult</supertypeName>
       <features>
         <featureDescription>
@@ -612,79 +529,53 @@
         </featureDescription>
         <featureDescription>
           <name>object</name>
-          <description>The object of the triple - may be a URI or an xml
-            datatype (string, int, etc.). See isObjeUri to determine if
-            object is a URI.</description>
+          <description>The object of the triple - may be a URI or an xml datatype (string, int, etc.). See isObjeUri to determine if object is a URI.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>isObjUri</name>
-          <description>Boolean flag - true of object field is a URI,
-            false otherwise.</description>
+          <description>Boolean flag - true of object field is a URI, false otherwise.</description>
           <rangeTypeName>uima.cas.Boolean</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.retrieval.PassageFromRelation</name>
-      <description>A passage search result that was the result of a
-        search from the subject and object of a triple</description>
+      <description>A passage search result that was the result of a search from the subject and object of a triple</description>
       <supertypeName>edu.cmu.lti.oaqa.type.retrieval.Passage</supertypeName>
       <features>
         <featureDescription>
           <name>sourceRelation</name>
-          <description>The triple from which the search result was
-            generated</description>
+          <description>The triple from which the search result was generated</description>
           <rangeTypeName>edu.cmu.lti.oaqa.type.kb.Triple</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.retrieval.Search</name>
-      <description>An object that holds a query and results for a search
-        (text search, fact search, KB search, etc.)</description>
+      <description>An object that holds a query and results for a search (text search, fact search, KB search, etc.)</description>
       <supertypeName>uima.cas.TOP</supertypeName>
       <features>
         <featureDescription>
           <name>query</name>
-          <description>The query in the native syntax of the
-            corresponding search engine.</description>
+          <description>The query in the native syntax of the corresponding search engine.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>hitList</name>
-          <description>Hit list of search results, sorted in descreasing
-            order of relevance score.</description>
+          <description>Hit list of search results, sorted in descreasing order of relevance score.</description>
           <rangeTypeName>uima.cas.FSArray</rangeTypeName>
           <elementType>edu.cmu.lti.oaqa.type.retrieval.SearchResult</elementType>
         </featureDescription>
         <featureDescription>
           <name>abstractQuery</name>
-          <description>The abstract query from which this actual query
-            was generated.</description>
+          <description>The abstract query from which this actual query was generated.</description>
           <rangeTypeName>edu.cmu.lti.oaqa.type.retrieval.AbstractQuery</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>searchId</name>
-          <description>An identifier for this search result. Used to
-            collect hit-list objects that belong to this search result
-            after they've been split out for parallel processing then
-            gathered up again.</description>
+          <description>An identifier for this search result. Used to collect hit-list objects that belong to this search result after they've been split out for parallel processing then gathered up again.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
-        </featureDescription>
-      </features>
-    </typeDescription>
-    <typeDescription>
-      <name>edu.cmu.lti.oaqa.type.answer.AnswerList</name>
-      <description>A ranked list of candidate answers.</description>
-      <supertypeName>uima.cas.TOP</supertypeName>
-      <features>
-        <featureDescription>
-          <name>answerList</name>
-          <description>Hit list of candidate answers, rank ordered, with
-            highest scoring answer first.</description>
-          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
-          <elementType>edu.cmu.lti.oaqa.type.answer.Answer</elementType>
         </featureDescription>
       </features>
     </typeDescription>
@@ -695,34 +586,28 @@
       <features>
         <featureDescription>
           <name>name</name>
-          <description>The name (or preferred/default name) of the
-            concept.</description>
+          <description>The name (or preferred/default name) of the concept.</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>uris</name>
-          <description>Array of uris that identify this named entity.
-            There may be more than one uri if this named entity is
-            ambiguous.</description>
+          <description>Array of uris that identify this named entity. There may be more than one uri if this named entity is ambiguous.</description>
           <rangeTypeName>uima.cas.StringList</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>ids</name>
-          <description>A list of IDs (e.g. UI in UMLS) associated with
-            this concept.</description>
+          <description>A list of IDs (e.g. UI in UMLS) associated with this concept.</description>
           <rangeTypeName>uima.cas.StringList</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>mentions</name>
-          <description>A list of ConceptMentions (text spans) that might
-            be surface forms to this concept.</description>
+          <description>A list of ConceptMentions (text spans) that might be surface forms to this concept.</description>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>edu.cmu.lti.oaqa.type.neal.ConceptMention</elementType>
         </featureDescription>
         <featureDescription>
           <name>types</name>
-          <description>A list of concept types that the concept belongs
-            to.</description>
+          <description>A list of concept types that the concept belongs to.</description>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>edu.cmu.lti.oaqa.kb.ConceptType</elementType>
         </featureDescription>
@@ -762,8 +647,7 @@
         </featureDescription>
         <featureDescription>
           <name>matchedName</name>
-          <description>A synonym of the concept that best matches the
-            concept mention (similar to conceptMatched in metamap).</description>
+          <description>A synonym of the concept that best matches the concept mention (similar to conceptMatched in metamap).</description>
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
         <featureDescription>
@@ -775,8 +659,7 @@
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.retrieval.AtomicQueryConcept</name>
-      <description>A primitive query concept represented by a single
-        text string</description>
+      <description>A primitive query concept represented by a single text string</description>
       <supertypeName>edu.cmu.lti.oaqa.type.retrieval.QueryConcept</supertypeName>
       <features>
         <featureDescription>
@@ -793,8 +676,7 @@
     </typeDescription>
     <typeDescription>
       <name>edu.cmu.lti.oaqa.type.retrieval.ComplexQueryConcept</name>
-      <description>A hierarchical query concept represented by a query
-        operation on a list of concepts</description>
+      <description>A hierarchical query concept represented by a query operation on a list of concepts</description>
       <supertypeName>edu.cmu.lti.oaqa.type.retrieval.QueryConcept</supertypeName>
       <features>
         <featureDescription>
@@ -804,8 +686,7 @@
         </featureDescription>
         <featureDescription>
           <name>operatorArgs</name>
-          <description>The operator arguments in a complex query
-            concept.</description>
+          <description>The operator arguments in a complex query concept.</description>
           <rangeTypeName>uima.cas.FSList</rangeTypeName>
           <elementType>edu.cmu.lti.oaqa.type.QueryConcept</elementType>
         </featureDescription>

@@ -9,7 +9,6 @@ import java.util.function.Function;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.CASException;
 import org.apache.uima.fit.component.JCasConsumer_ImplBase;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -57,15 +56,10 @@ public final class Evaluator<T> extends JCasConsumer_ImplBase {
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     // prepare evaluatees
     Collection<T> gs;
-    Collection<T> results;
-    try {
-      if ((gs = evaluatee.getGoldStandard(jcas)).isEmpty()) {
-        return;
-      }
-      results = evaluatee.getResults(jcas);
-    } catch (CASException e) {
-      throw new AnalysisEngineProcessException(e);
+    if ((gs = evaluatee.getGoldStandard(jcas)).isEmpty()) {
+      return;
     }
+    Collection<T> results = evaluatee.getResults(jcas);
     Comparator<T> comparator = evaluatee.comparator();
     Function<T, String> uniqueIdMapper = evaluatee.uniqueIdMapper();
     // calculate evaluator

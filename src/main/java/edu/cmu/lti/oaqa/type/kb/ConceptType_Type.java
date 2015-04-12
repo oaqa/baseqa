@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Mar 29 18:53:35 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.kb;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** The type/category the concept belongs to.
- * Updated by JCasGen Sun Mar 29 18:53:35 EDT 2015
+ * Updated by JCasGen Mon Apr 13 16:42:08 EDT 2015
  * @generated */
 public class ConceptType_Type extends TOP_Type {
   /** @generated 

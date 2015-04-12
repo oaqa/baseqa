@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas; 
@@ -12,7 +12,7 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** A query concept in the abstract search query model.
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+ * Updated by JCasGen Mon Apr 13 16:42:08 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class QueryConcept extends TOP {
@@ -68,8 +68,7 @@ public class QueryConcept extends TOP {
   //*--------------*
   //* Feature: namedEntityTypes
 
-  /** getter for namedEntityTypes - gets List of Named Entity types associated with this
-            concept.
+  /** getter for namedEntityTypes - gets List of Named Entity types associated with this concept.
    * @generated
    * @return value of the feature 
    */
@@ -78,8 +77,7 @@ public class QueryConcept extends TOP {
       jcasType.jcas.throwFeatMissing("namedEntityTypes", "edu.cmu.lti.oaqa.type.retrieval.QueryConcept");
     return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((QueryConcept_Type)jcasType).casFeatCode_namedEntityTypes)));}
     
-  /** setter for namedEntityTypes - sets List of Named Entity types associated with this
-            concept. 
+  /** setter for namedEntityTypes - sets List of Named Entity types associated with this concept. 
    * @generated
    * @param v value to set into the feature 
    */

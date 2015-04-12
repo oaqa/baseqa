@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Mar 28 16:16:33 EDT 2015 */
+/* First created by JCasGen Sat Apr 11 19:49:33 EDT 2015 */
 package edu.cmu.lti.oaqa.type.retrieval;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,9 +10,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 import edu.cmu.lti.oaqa.type.kb.Triple;
 
 
-/** A passage search result that was the result of a
-        search from the subject and object of a triple
- * Updated by JCasGen Sun Mar 29 18:53:36 EDT 2015
+/** A passage search result that was the result of a search from the subject and object of a triple
+ * Updated by JCasGen Mon Apr 13 16:42:08 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class PassageFromRelation extends Passage {
@@ -68,8 +67,7 @@ public class PassageFromRelation extends Passage {
   //*--------------*
   //* Feature: sourceRelation
 
-  /** getter for sourceRelation - gets The triple from which the search result was
-            generated
+  /** getter for sourceRelation - gets The triple from which the search result was generated
    * @generated
    * @return value of the feature 
    */
@@ -78,8 +76,7 @@ public class PassageFromRelation extends Passage {
       jcasType.jcas.throwFeatMissing("sourceRelation", "edu.cmu.lti.oaqa.type.retrieval.PassageFromRelation");
     return (Triple)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((PassageFromRelation_Type)jcasType).casFeatCode_sourceRelation)));}
     
-  /** setter for sourceRelation - sets The triple from which the search result was
-            generated 
+  /** setter for sourceRelation - sets The triple from which the search result was generated 
    * @generated
    * @param v value to set into the feature 
    */
