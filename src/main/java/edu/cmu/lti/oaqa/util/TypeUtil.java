@@ -18,6 +18,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 import com.google.common.collect.Range;
 
 import edu.cmu.lti.oaqa.type.answer.Answer;
+import edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence;
 import edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant;
 import edu.cmu.lti.oaqa.type.answer.Summary;
 import edu.cmu.lti.oaqa.type.input.Question;
@@ -183,17 +184,26 @@ public class TypeUtil {
             .collect(toList());
   }
 
-  public static Collection<CandidateAnswerVariant> getAnswerVariants(Answer answer) {
+  public static Collection<CandidateAnswerVariant> getCandidateAnswerVariants(JCas jcas) {
+    return JCasUtil.select(jcas, CandidateAnswerVariant.class);
+  }
+
+  public static Collection<CandidateAnswerVariant> getCandidateAnswerVariants(Answer answer) {
     return FSCollectionFactory.create(answer.getVariants(), CandidateAnswerVariant.class);
   }
 
-  public static List<String> getAnswerVariantNames(Answer answer) {
-    return getAnswerVariants(answer).stream().map(TypeUtil::getAnswerVariantNames)
+  public static List<String> getCandidateAnswerVariantNames(Answer answer) {
+    return getCandidateAnswerVariants(answer).stream().map(TypeUtil::getCandidateAnswerVariantNames)
             .flatMap(Collection::stream).collect(toList());
   }
 
-  public static Collection<String> getAnswerVariantNames(CandidateAnswerVariant avariant) {
-    return FSCollectionFactory.create(avariant.getNames());
+  public static Collection<String> getCandidateAnswerVariantNames(CandidateAnswerVariant cav) {
+    return FSCollectionFactory.create(cav.getNames());
+  }
+
+  public static Collection<CandidateAnswerOccurrence> getCandidateAnswerOccurrences(
+          CandidateAnswerVariant cav) {
+    return FSCollectionFactory.create(cav.getOccurrences(), CandidateAnswerOccurrence.class);
   }
 
   public static Range<Integer> spanRange(Annotation annotation) {

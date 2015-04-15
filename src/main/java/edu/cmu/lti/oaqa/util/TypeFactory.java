@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.uima.fit.util.FSCollectionFactory;
 import org.apache.uima.jcas.JCas;
@@ -173,11 +174,23 @@ public class TypeFactory {
   }
 
   public static Answer createAnswer(JCas jcas, String text, double score,
-          List<CandidateAnswerVariant> variants) {
+          List<CandidateAnswerVariant> cavs) {
     Answer ret = new Answer(jcas);
     ret.setText(text);
     ret.setScore(score);
-    ret.setVariants(FSCollectionFactory.createFSList(jcas, variants));
+    ret.setVariants(FSCollectionFactory.createFSList(jcas, cavs));
+    return ret;
+  }
+
+  public static Answer createAnswer(JCas jcas, double score, List<CandidateAnswerVariant> cavs) {
+    Answer ret = new Answer(jcas);
+    Optional<String> name = cavs.stream().map(TypeUtil::getCandidateAnswerVariantNames)
+            .flatMap(Collection::stream).findFirst();
+    if (name.isPresent()) {
+      ret.setText(name.get());
+    }
+    ret.setScore(score);
+    ret.setVariants(FSCollectionFactory.createFSList(jcas, cavs));
     return ret;
   }
 
@@ -185,32 +198,32 @@ public class TypeFactory {
     return createAnswer(jcas, Arrays.asList(text));
   }
 
-  public static Answer createAnswer(JCas jcas, List<String> avariantTexts) {
-    String text = avariantTexts.get(0);
-    List<CandidateAnswerVariant> variants = avariantTexts.stream()
+  public static Answer createAnswer(JCas jcas, List<String> names) {
+    String text = names.get(0);
+    List<CandidateAnswerVariant> variants = names.stream()
             .map(avariantText -> createCandidateAnswerVariant(jcas, avariantText))
             .collect(toList());
     return createAnswer(jcas, text, TypeConstants.RANK_UNKNOWN, variants);
   }
 
   public static CandidateAnswerVariant createCandidateAnswerVariant(JCas jcas,
-          List<CandidateAnswerOccurrence> occurrences, List<String> names, String docId) {
+          List<CandidateAnswerOccurrence> caos, List<String> names, String docId) {
     CandidateAnswerVariant ret = new CandidateAnswerVariant(jcas);
-    ret.setOccurrences(FSCollectionFactory.createFSList(jcas, occurrences));
+    ret.setOccurrences(FSCollectionFactory.createFSList(jcas, caos));
     ret.setNames(FSCollectionFactory.createStringList(jcas, names));
     ret.setDocId(docId);
     return ret;
   }
 
   public static CandidateAnswerVariant createCandidateAnswerVariant(JCas jcas,
-          List<CandidateAnswerOccurrence> occurrences, List<String> names) {
-    return createCandidateAnswerVariant(jcas, occurrences, names, TypeConstants.DOC_ID_UNKNOWN);
+          List<CandidateAnswerOccurrence> caos, List<String> names) {
+    return createCandidateAnswerVariant(jcas, caos, names, TypeConstants.DOC_ID_UNKNOWN);
   }
-  
+
   public static CandidateAnswerVariant createCandidateAnswerVariant(JCas jcas,
-          List<CandidateAnswerOccurrence> occurrences) {
-    return createCandidateAnswerVariant(jcas, occurrences,
-            occurrences.stream().map(CandidateAnswerOccurrence::getCoveredText).collect(toList()));
+          List<CandidateAnswerOccurrence> caos) {
+    return createCandidateAnswerVariant(jcas, caos,
+            caos.stream().map(CandidateAnswerOccurrence::getCoveredText).collect(toList()));
   }
 
   public static CandidateAnswerVariant createCandidateAnswerVariant(JCas jcas, String text) {

@@ -31,23 +31,21 @@ public class JsonCollectionReaderHelper {
               .forEach(Document::addToIndexes);
     }
     if (input.getSnippets() != null) {
-      input.getSnippets()
-              .stream()
+      input.getSnippets().stream()
               .map(snippet -> TypeFactory.createPassage(jcas, snippet.getDocument(),
                       snippet.getText(), snippet.getOffsetInBeginSection(),
                       snippet.getOffsetInEndSection(), snippet.getBeginSection(),
-                      snippet.getEndSection())).forEach(Passage::addToIndexes);
+                      snippet.getEndSection()))
+              .forEach(Passage::addToIndexes);
     }
     if (input.getConcepts() != null) {
-      input.getConcepts()
-              .stream()
+      input.getConcepts().stream()
               .map(concept -> TypeFactory.createConceptSearchResult(jcas,
                       TypeFactory.createConcept(jcas, concept), concept))
               .forEach(ConceptSearchResult::addToIndexes);
     }
     if (input.getTriples() != null) {
-      input.getTriples()
-              .stream()
+      input.getTriples().stream()
               .map(triple -> TypeFactory.createTripleSearchResult(jcas,
                       TypeFactory.createTriple(jcas, triple.getS(), triple.getP(), triple.getO())))
               .forEach(TripleSearchResult::addToIndexes);
