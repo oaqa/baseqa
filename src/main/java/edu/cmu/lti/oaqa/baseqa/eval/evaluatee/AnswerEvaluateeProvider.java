@@ -1,7 +1,10 @@
 package edu.cmu.lti.oaqa.baseqa.eval.evaluatee;
 
+import static java.util.stream.Collectors.joining;
+
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.Function;
 
 import org.apache.uima.jcas.JCas;
@@ -17,7 +20,10 @@ public class AnswerEvaluateeProvider extends ConfigurableProvider
 
   @Override
   public Collection<Answer> getGoldStandard(JCas jcas) {
-    return TypeUtil.getRankedAnswers(ViewType.getGsView(jcas));
+    List<Answer> answers = TypeUtil.getRankedAnswers(ViewType.getGsView(jcas));
+    System.out.println(answers.stream().map(TypeUtil::getCandidateAnswerVariantNames)
+            .map(Object::toString).collect(joining(", ")));
+    return answers;
   }
 
   @Override

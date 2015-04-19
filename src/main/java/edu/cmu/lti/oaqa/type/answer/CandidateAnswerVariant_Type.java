@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** A variant of a candidate answer. A variant may have multiple occurrences, all of which are collected in a variant object.
- * Updated by JCasGen Mon Apr 13 16:42:07 EDT 2015
+ * Updated by JCasGen Sun Apr 19 19:46:49 EDT 2015
  * @generated */
 public class CandidateAnswerVariant_Type extends TOP_Type {
   /** @generated 

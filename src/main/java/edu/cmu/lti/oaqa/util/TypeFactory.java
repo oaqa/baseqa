@@ -73,10 +73,10 @@ public class TypeFactory {
             TypeConstants.IS_VARIABLE_UNKNOWN, TypeConstants.DETERMINER_UNKNOWN);
   }
 
-  public static Concept createConcept(JCas jcas, String name, List<String> uris, List<String> ids,
-          List<ConceptMention> mentions, List<ConceptType> types) {
+  public static Concept createConcept(JCas jcas, List<String> names, List<String> uris,
+          List<String> ids, List<ConceptMention> mentions, List<ConceptType> types) {
     Concept ret = new Concept(jcas);
-    ret.setName(name);
+    ret.setNames(FSCollectionFactory.createStringList(jcas, names));
     ret.setUris(FSCollectionFactory.createStringList(jcas, uris));
     ret.setIds(FSCollectionFactory.createStringList(jcas, ids));
     ret.setMentions(FSCollectionFactory.createFSList(jcas, mentions));
@@ -86,18 +86,21 @@ public class TypeFactory {
   }
 
   public static Concept createConcept(JCas jcas, String name, String id, List<ConceptType> types) {
-    return createConcept(jcas, name, new ArrayList<>(), Arrays.asList(id), new ArrayList<>(),
-            types);
+    return createConcept(jcas, Arrays.asList(name), new ArrayList<>(), Arrays.asList(id),
+            new ArrayList<>(), types);
+  }
+
+  public static Concept createConcept(JCas jcas, String name, ConceptType type) {
+    return createConcept(jcas, name, name, Arrays.asList(type));
   }
 
   public static Concept createConcept(JCas jcas, String name, String uri) {
-    return createConcept(jcas, name, Arrays.asList(uri), new ArrayList<>(), new ArrayList<>(),
-            new ArrayList<>());
+    return createConcept(jcas, Arrays.asList(name), Arrays.asList(uri), new ArrayList<>(),
+            new ArrayList<>(), new ArrayList<>());
   }
 
   public static Concept createConcept(JCas jcas, String uri) {
-    return createConcept(jcas, TypeConstants.NAME_UNKNOWN, Arrays.asList(uri), new ArrayList<>(),
-            new ArrayList<>(), new ArrayList<>());
+    return createConcept(jcas, TypeConstants.NAME_UNKNOWN, uri);
   }
 
   public static ConceptType createConceptType(JCas jcas, String id, String name,

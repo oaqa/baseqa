@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.StringList;
 
 
 /** A superclass for EntityConcept and RelationConcept.
- * Updated by JCasGen Mon Apr 13 16:42:07 EDT 2015
+ * Updated by JCasGen Sun Apr 19 19:46:50 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class Concept extends TOP {
@@ -67,25 +67,25 @@ public class Concept extends TOP {
  
     
   //*--------------*
-  //* Feature: name
+  //* Feature: names
 
-  /** getter for name - gets The name (or preferred/default name) of the concept.
+  /** getter for names - gets All name variants (preferred/default name, synonyms, lexicial variants, etc) of the concept.
    * @generated
    * @return value of the feature 
    */
-  public String getName() {
-    if (Concept_Type.featOkTst && ((Concept_Type)jcasType).casFeat_name == null)
-      jcasType.jcas.throwFeatMissing("name", "edu.cmu.lti.oaqa.type.kb.Concept");
-    return jcasType.ll_cas.ll_getStringValue(addr, ((Concept_Type)jcasType).casFeatCode_name);}
+  public StringList getNames() {
+    if (Concept_Type.featOkTst && ((Concept_Type)jcasType).casFeat_names == null)
+      jcasType.jcas.throwFeatMissing("names", "edu.cmu.lti.oaqa.type.kb.Concept");
+    return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Concept_Type)jcasType).casFeatCode_names)));}
     
-  /** setter for name - sets The name (or preferred/default name) of the concept. 
+  /** setter for names - sets All name variants (preferred/default name, synonyms, lexicial variants, etc) of the concept. 
    * @generated
    * @param v value to set into the feature 
    */
-  public void setName(String v) {
-    if (Concept_Type.featOkTst && ((Concept_Type)jcasType).casFeat_name == null)
-      jcasType.jcas.throwFeatMissing("name", "edu.cmu.lti.oaqa.type.kb.Concept");
-    jcasType.ll_cas.ll_setStringValue(addr, ((Concept_Type)jcasType).casFeatCode_name, v);}    
+  public void setNames(StringList v) {
+    if (Concept_Type.featOkTst && ((Concept_Type)jcasType).casFeat_names == null)
+      jcasType.jcas.throwFeatMissing("names", "edu.cmu.lti.oaqa.type.kb.Concept");
+    jcasType.ll_cas.ll_setRefValue(addr, ((Concept_Type)jcasType).casFeatCode_names, jcasType.ll_cas.ll_getFSRef(v));}    
    
     
   //*--------------*

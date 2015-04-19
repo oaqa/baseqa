@@ -585,9 +585,9 @@
       <supertypeName>uima.cas.TOP</supertypeName>
       <features>
         <featureDescription>
-          <name>name</name>
-          <description>The name (or preferred/default name) of the concept.</description>
-          <rangeTypeName>uima.cas.String</rangeTypeName>
+          <name>names</name>
+          <description>All name variants (preferred/default name, synonyms, lexicial variants, etc) of the concept.</description>
+          <rangeTypeName>uima.cas.StringList</rangeTypeName>
         </featureDescription>
         <featureDescription>
           <name>uris</name>

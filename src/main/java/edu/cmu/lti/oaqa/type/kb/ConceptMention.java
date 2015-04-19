@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A superclass for EntityMention and RelationMention.
- * Updated by JCasGen Mon Apr 13 16:42:07 EDT 2015
+ * Updated by JCasGen Sun Apr 19 19:46:50 EDT 2015
  * XML source: /home/yangzi/QA/baseqa/src/main/resources/baseqa/type/OAQATypes.xml
  * @generated */
 public class ConceptMention extends Annotation {

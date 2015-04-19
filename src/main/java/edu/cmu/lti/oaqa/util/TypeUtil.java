@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.apache.uima.cas.CASException;
 import org.apache.uima.fit.util.FSCollectionFactory;
@@ -105,16 +106,44 @@ public class TypeUtil {
     return FSCollectionFactory.create(concept.getTypes(), ConceptType.class);
   }
 
-  public static Collection<String> getconceptUris(Concept concept) {
+  public static Collection<String> getConceptNames(Concept concept) {
+    return FSCollectionFactory.create(concept.getNames());
+  }
+
+  public static String getConceptPreferredName(Concept concept) {
+    return concept.getNames().getNthElement(0);
+  }
+
+  public static Collection<String> getConceptUris(Concept concept) {
     return FSCollectionFactory.create(concept.getUris());
   }
 
   public static Collection<String> getConceptIds(Concept concept) {
     return FSCollectionFactory.create(concept.getIds());
   }
-  
+
   public static String getFirstConceptId(Concept concept) {
     return getConceptIds(concept).stream().findFirst().get();
+  }
+
+  public static void mergeConcept(JCas jcas, Concept dst, Concept src) {
+    List<String> names = Stream.concat(getConceptNames(dst).stream(), getConceptNames(dst).stream())
+            .filter(Objects::nonNull).distinct().collect(toList());
+    dst.setNames(FSCollectionFactory.createStringList(jcas, names));
+    List<String> ids = Stream.concat(getConceptIds(dst).stream(), getConceptIds(dst).stream())
+            .filter(Objects::nonNull).distinct().collect(toList());
+    dst.setIds(FSCollectionFactory.createStringList(jcas, ids));
+    List<String> uris = Stream.concat(getConceptUris(dst).stream(), getConceptUris(dst).stream())
+            .filter(Objects::nonNull).distinct().collect(toList());
+    dst.setUris(FSCollectionFactory.createStringList(jcas, uris));
+    List<ConceptType> types = Stream
+            .concat(getConceptTypes(dst).stream(), getConceptTypes(dst).stream())
+            .filter(Objects::nonNull).distinct().collect(toList());
+    dst.setTypes(FSCollectionFactory.createFSList(jcas, types));
+    List<ConceptMention> mentions = Stream
+            .concat(getConceptMentions(dst).stream(), getConceptMentions(dst).stream())
+            .filter(Objects::nonNull).distinct().collect(toList());
+    dst.setMentions(FSCollectionFactory.createFSList(jcas, mentions));
   }
 
   public static Collection<ConceptMention> getConceptMentions(JCas jcas) {
@@ -124,7 +153,7 @@ public class TypeUtil {
   public static Collection<ConceptMention> getConceptMentions(Concept concept) {
     return FSCollectionFactory.create(concept.getMentions(), ConceptMention.class);
   }
-  
+
   public static List<ConceptMention> getOrderedConceptMentions(JCas jcas) {
     return JCasUtil.select(jcas, ConceptMention.class).stream()
             .sorted(Comparator.comparing(ConceptMention::getBegin)).collect(toList());
