@@ -80,6 +80,7 @@ public class TypeFactory {
     ret.setUris(FSCollectionFactory.createStringList(jcas, uris));
     ret.setIds(FSCollectionFactory.createStringList(jcas, ids));
     ret.setMentions(FSCollectionFactory.createFSList(jcas, mentions));
+    mentions.stream().forEach(mention -> mention.setConcept(ret));
     ret.setTypes(FSCollectionFactory.createFSList(jcas, types));
     return ret;
   }
@@ -97,11 +98,6 @@ public class TypeFactory {
   public static Concept createConcept(JCas jcas, String uri) {
     return createConcept(jcas, TypeConstants.NAME_UNKNOWN, Arrays.asList(uri), new ArrayList<>(),
             new ArrayList<>(), new ArrayList<>());
-  }
-
-  public static Concept createConcept(JCas jcas, ConceptType type) {
-    return createConcept(jcas, TypeConstants.NAME_UNKNOWN, new ArrayList<>(), new ArrayList<>(),
-            new ArrayList<>(), Arrays.asList(type));
   }
 
   public static ConceptType createConceptType(JCas jcas, String id, String name,

@@ -105,14 +105,26 @@ public class TypeUtil {
     return FSCollectionFactory.create(concept.getTypes(), ConceptType.class);
   }
 
+  public static Collection<String> getconceptUris(Concept concept) {
+    return FSCollectionFactory.create(concept.getUris());
+  }
+
+  public static Collection<String> getConceptIds(Concept concept) {
+    return FSCollectionFactory.create(concept.getIds());
+  }
+  
   public static String getFirstConceptId(Concept concept) {
-    return FSCollectionFactory.create(concept.getIds()).stream().findFirst().get();
+    return getConceptIds(concept).stream().findFirst().get();
+  }
+
+  public static Collection<ConceptMention> getConceptMentions(JCas jcas) {
+    return JCasUtil.select(jcas, ConceptMention.class);
   }
 
   public static Collection<ConceptMention> getConceptMentions(Concept concept) {
     return FSCollectionFactory.create(concept.getMentions(), ConceptMention.class);
   }
-
+  
   public static List<ConceptMention> getOrderedConceptMentions(JCas jcas) {
     return JCasUtil.select(jcas, ConceptMention.class).stream()
             .sorted(Comparator.comparing(ConceptMention::getBegin)).collect(toList());
