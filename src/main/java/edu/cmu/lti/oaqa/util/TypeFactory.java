@@ -85,13 +85,20 @@ public class TypeFactory {
     return ret;
   }
 
+  public static Concept createConcept(JCas jcas, List<String> names, String id,
+          ConceptMention mentions, List<ConceptType> types) {
+    return createConcept(jcas, names, new ArrayList<>(), Arrays.asList(id), Arrays.asList(mentions),
+            types);
+  }
+
+  public static Concept createConcept(JCas jcas, ConceptMention mention, ConceptType type) {
+    String name = mention.getCoveredText();
+    return createConcept(jcas, Arrays.asList(name), name, mention, Arrays.asList(type));
+  }
+
   public static Concept createConcept(JCas jcas, String name, String id, List<ConceptType> types) {
     return createConcept(jcas, Arrays.asList(name), new ArrayList<>(), Arrays.asList(id),
             new ArrayList<>(), types);
-  }
-
-  public static Concept createConcept(JCas jcas, String name, ConceptType type) {
-    return createConcept(jcas, name, name, Arrays.asList(type));
   }
 
   public static Concept createConcept(JCas jcas, String name, String uri) {
@@ -128,9 +135,13 @@ public class TypeFactory {
   }
 
   public static ConceptMention createConceptMention(JCas jcas, int begin, int end,
-          Concept concept) {
-    return createConceptMention(jcas, begin, end, concept, TypeConstants.NAME_UNKNOWN,
-            TypeConstants.SCORE_UNKNOWN);
+          String matchedName, double score) {
+    return createConceptMention(jcas, begin, end, null, matchedName, score);
+  }
+
+  public static ConceptMention createConceptMention(JCas jcas, int begin, int end) {
+    return createConceptMention(jcas, begin, end, null,
+            jcas.getDocumentText().substring(begin, end), TypeConstants.SCORE_UNKNOWN);
   }
 
   public static Triple createTriple(JCas jcas, String subject, String predicate, String object,
