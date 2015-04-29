@@ -32,6 +32,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
+import org.apache.uima.jcas.JCas;
+
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 
@@ -40,12 +42,13 @@ import edu.cmu.lti.oaqa.baseqa.eval.Measure;
 import edu.cmu.lti.oaqa.ecd.config.ConfigurableProvider;
 import edu.cmu.lti.oaqa.type.retrieval.SearchResult;
 
-public class RetrievalEvalCalculator<T extends SearchResult> extends ConfigurableProvider implements
-        EvalCalculator<T> {
+public class RetrievalEvalCalculator<T extends SearchResult> extends ConfigurableProvider
+        implements EvalCalculator<T> {
 
   @Override
-  public Map<Measure, Double> calculate(Collection<T> resultEvaluatees, Collection<T> gsEvaluatees,
-          Comparator<T> comparator, Function<T, String> uniqueIdMapper) {
+  public Map<Measure, Double> calculate(JCas jcas, Collection<T> resultEvaluatees,
+          Collection<T> gsEvaluatees, Comparator<T> comparator,
+          Function<T, String> uniqueIdMapper) {
     Set<String> gsSet = gsEvaluatees.parallelStream().map(uniqueIdMapper).collect(toSet());
     List<String> resultArray = resultEvaluatees.stream().sorted(comparator).map(uniqueIdMapper)
             .distinct().collect(toList());
@@ -66,7 +69,8 @@ public class RetrievalEvalCalculator<T extends SearchResult> extends Configurabl
   }
 
   @Override
-  public Map<Measure, Double> accumulate(Map<Measure, ? extends Collection<Double>> measure2values) {
+  public Map<Measure, Double> accumulate(
+          Map<Measure, ? extends Collection<Double>> measure2values) {
     double count = sumMeasurementValues(measure2values.get(RETRIEVAL_COUNT));
     double meanPrecision = sumMeasurementValues(measure2values.get(PRECISION)) / count;
     double meanRecall = sumMeasurementValues(measure2values.get(RECALL)) / count;

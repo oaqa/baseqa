@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.apache.uima.jcas.JCas;
+
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Range;
 import com.google.common.collect.RangeSet;
@@ -33,16 +35,17 @@ import edu.cmu.lti.oaqa.baseqa.eval.Measure;
 import edu.cmu.lti.oaqa.ecd.config.ConfigurableProvider;
 import edu.cmu.lti.oaqa.type.retrieval.Passage;
 
-public class PassageMapEvalCalculator<T extends Passage> extends ConfigurableProvider implements
-        EvalCalculator<T> {
+public class PassageMapEvalCalculator<T extends Passage> extends ConfigurableProvider
+        implements EvalCalculator<T> {
 
   @Override
-  public Map<Measure, Double> calculate(Collection<T> resultEvaluatees, Collection<T> gsEvaluatees,
-          Comparator<T> comparator, Function<T, String> uniqueIdMapper) {
+  public Map<Measure, Double> calculate(JCas jcas, Collection<T> resultEvaluatees,
+          Collection<T> gsEvaluatees, Comparator<T> comparator,
+          Function<T, String> uniqueIdMapper) {
     List<Range<CharacterPosition>> resultList = resultEvaluatees.stream().sorted(comparator)
             .map(CharacterPosition::toRange).collect(toList());
-    RangeSet<CharacterPosition> resultSet = resultList.stream().collect(
-            () -> TreeRangeSet.create(), RangeSet::add, RangeSet::addAll);
+    RangeSet<CharacterPosition> resultSet = resultList.stream().collect(() -> TreeRangeSet.create(),
+            RangeSet::add, RangeSet::addAll);
     resultList.forEach(resultSet::add);
     RangeSet<CharacterPosition> gsSet = gsEvaluatees.stream().map(CharacterPosition::toRange)
             .collect(() -> TreeRangeSet.create(), RangeSet::add, RangeSet::addAll);
@@ -59,14 +62,15 @@ public class PassageMapEvalCalculator<T extends Passage> extends ConfigurablePro
   }
 
   @Override
-  public Map<Measure, Double> accumulate(Map<Measure, ? extends Collection<Double>> measure2values) {
+  public Map<Measure, Double> accumulate(
+          Map<Measure, ? extends Collection<Double>> measure2values) {
     double count = sumMeasurementValues(measure2values.get(PASSAGE_MAP_COUNT));
     double meanPrecision = sumMeasurementValues(measure2values.get(PASSAGE_PRECISION)) / count;
     double meanRecall = sumMeasurementValues(measure2values.get(PASSAGE_RECALL)) / count;
     double meanF1 = sumMeasurementValues(measure2values.get(PASSAGE_F1)) / count;
     double map = sumMeasurementValues(measure2values.get(PASSAGE_AVERAGE_PRECISION)) / count;
-    double gmap = Math.exp(sumOfLogMeasurementValues(measure2values.get(PASSAGE_AVERAGE_PRECISION))
-            / count);
+    double gmap = Math
+            .exp(sumOfLogMeasurementValues(measure2values.get(PASSAGE_AVERAGE_PRECISION)) / count);
     return ImmutableMap.<Measure, Double> builder().put(PASSAGE_MAP_COUNT, count)
             .put(PASSAGE_MEAN_PRECISION, meanPrecision).put(PASSAGE_MEAN_RECALL, meanRecall)
             .put(PASSAGE_MEAN_F1, meanF1).put(PASSAGE_MAP, map).put(PASSAGE_GMAP, gmap).build();
@@ -128,10 +132,10 @@ public class PassageMapEvalCalculator<T extends Passage> extends ConfigurablePro
 
     private static Range<CharacterPosition> toRange(Passage passage) {
       return Range.closedOpen(
-              new CharacterPosition(passage.getUri(), passage.getBeginSection(), passage
-                      .getOffsetInBeginSection()),
-              new CharacterPosition(passage.getUri(), passage.getEndSection(), passage
-                      .getOffsetInEndSection()));
+              new CharacterPosition(passage.getUri(), passage.getBeginSection(),
+                      passage.getOffsetInBeginSection()),
+              new CharacterPosition(passage.getUri(), passage.getEndSection(),
+                      passage.getOffsetInEndSection()));
     }
 
     private static Comparator<CharacterPosition> passageSetComparator = Comparator

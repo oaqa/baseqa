@@ -26,6 +26,8 @@ import java.util.stream.Collector;
 import java.util.stream.Collector.Characteristics;
 import java.util.stream.Stream;
 
+import org.apache.uima.jcas.JCas;
+
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
@@ -43,12 +45,13 @@ import edu.cmu.lti.oaqa.ecd.config.ConfigurableProvider;
 import edu.cmu.lti.oaqa.type.retrieval.Passage;
 import edu.cmu.lti.oaqa.util.TypeUtil;
 
-public class TrecPassageMapEvalCalculator<T extends Passage> extends ConfigurableProvider implements
-        EvalCalculator<T> {
+public class TrecPassageMapEvalCalculator<T extends Passage> extends ConfigurableProvider
+        implements EvalCalculator<T> {
 
   @Override
-  public Map<Measure, Double> calculate(Collection<T> resultEvaluatees, Collection<T> gsEvaluatees,
-          Comparator<T> comparator, Function<T, String> uniqueIdMapper) {
+  public Map<Measure, Double> calculate(JCas jcas, Collection<T> resultEvaluatees,
+          Collection<T> gsEvaluatees, Comparator<T> comparator,
+          Function<T, String> uniqueIdMapper) {
     List<String> resultArray = resultEvaluatees.stream().sorted(comparator).map(Passage::getUri)
             .distinct().collect(toList());
     Set<String> gsSet = gsEvaluatees.parallelStream().map(Passage::getUri).collect(toSet());
@@ -64,7 +67,8 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
   }
 
   @Override
-  public Map<Measure, Double> accumulate(Map<Measure, ? extends Collection<Double>> measure2values) {
+  public Map<Measure, Double> accumulate(
+          Map<Measure, ? extends Collection<Double>> measure2values) {
     double count = sumMeasurementValues(measure2values.get(TREC_PASSAGE_MAP_COUNT));
     double sumDocPrec = sumMeasurementValues(measure2values.get(TREC_DOCUMENT_AVERAGE_PRECISION));
     double sumPsgPrec = sumMeasurementValues(measure2values.get(TREC_PASSAGE_AVERAGE_PRECISION));
@@ -134,7 +138,8 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
         totalChars += resultRange.upperEndpoint() - resultRange.lowerEndpoint();
         continue;
       }
-      for (int offset = resultRange.lowerEndpoint(); offset < resultRange.upperEndpoint(); offset++) {
+      for (int offset = resultRange.lowerEndpoint(); offset < resultRange
+              .upperEndpoint(); offset++) {
         if (gsUriSpans.get(resultUri).contains(offset)) {
           if (trackGsUriSpans.get(resultUri).contains(offset)) {
             trackGsUriSpans.get(resultUri).remove(Range.singleton(offset));
@@ -164,7 +169,7 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
             (s1, s2) -> {
               s1.addAll(s2);
               return s1;
-            }, characters);
+            } , characters);
     return passages.parallelStream().collect(groupingBy(Passage::getUri, collector));
   }
 
@@ -214,7 +219,7 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
                     (s, p) -> s.put(TypeUtil.spanRangeInSection(p), p.getAspects()), (s1, s2) -> {
                       s1.putAll(s2);
                       return s1;
-                    }, characters);
+                    } , characters);
     return passages.parallelStream().filter(p -> p.getAspects() != null)
             .collect(groupingBy(Passage::getUri, collector));
   }

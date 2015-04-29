@@ -26,7 +26,8 @@ import edu.cmu.lti.oaqa.framework.DataStoreImpl;
 import edu.cmu.lti.oaqa.framework.report.ReportComponent;
 import edu.cmu.lti.oaqa.framework.report.ReportComponentBuilder;
 
-public class JdbcReportComponentBuilder extends Resource_ImplBase implements ReportComponentBuilder {
+public class JdbcReportComponentBuilder extends Resource_ImplBase
+        implements ReportComponentBuilder {
 
   private List<String> idFields;
 
@@ -62,19 +63,18 @@ public class JdbcReportComponentBuilder extends Resource_ImplBase implements Rep
         for (String idField : idFields) {
           field2id.put(idField, rs.getString(idField));
         }
-        String id = idFields.stream().map(key -> field2id.get(key)).collect(joining("/"));
+        String id = idFields.stream().map(field2id::get).collect(joining("/"));
         // retrieve measures
         Map<String, String> field2measure = new HashMap<>();
         for (String measureField : measureFields) {
           field2measure.put(measureField, rs.getString(measureField));
         }
-        String measure = measureFields.stream().map(key -> field2measure.get(key))
-                .collect(joining("/"));
+        String measure = measureFields.stream().map(field2measure::get).collect(joining("/"));
         // add measure name to header
         measures.add(measure);
         // add keys/values to table
         if (!ids.contains(id)) {
-          idFields.stream().forEach(key -> builder.put(id, key, field2id.get(key)));
+          idFields.forEach(key -> builder.put(id, key, field2id.get(key)));
           ids.add(id);
         }
         // add measure name/value to table
@@ -98,7 +98,7 @@ public class JdbcReportComponentBuilder extends Resource_ImplBase implements Rep
       @Override
       public List<String> getHeaders() {
         List<String> headers = new ArrayList<>(idFields);
-        measures.stream().sorted().forEach(m -> headers.add(m));
+        measures.stream().sorted().forEach(headers::add);
         return headers;
       }
     };

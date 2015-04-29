@@ -63,7 +63,7 @@ public final class Evaluator<T> extends JCasConsumer_ImplBase {
     Comparator<T> comparator = evaluatee.comparator();
     Function<T, String> uniqueIdMapper = evaluatee.uniqueIdMapper();
     // calculate evaluator
-    Map<Measure, Double> measurements = calculator.calculate(results, gs, comparator,
+    Map<Measure, Double> measurements = calculator.calculate(jcas, results, gs, comparator,
             uniqueIdMapper);
     // persist evaluation results
     ExperimentUUID experiment = ProcessingStepUtils.getCurrentExperiment(jcas);
@@ -74,6 +74,7 @@ public final class Evaluator<T> extends JCasConsumer_ImplBase {
     persistence.deletePartialMeasurements(key, sequenceId, calculatorName, evaluateeName);
     persistence.insertPartialMeasurements(key, sequenceId, calculatorName, evaluateeName,
             measurements);
+    System.out.println(measurements);
   }
 
   @Override

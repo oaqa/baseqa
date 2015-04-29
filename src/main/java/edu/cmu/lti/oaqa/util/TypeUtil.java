@@ -26,6 +26,7 @@ import edu.cmu.lti.oaqa.type.input.Question;
 import edu.cmu.lti.oaqa.type.kb.Concept;
 import edu.cmu.lti.oaqa.type.kb.ConceptMention;
 import edu.cmu.lti.oaqa.type.kb.ConceptType;
+import edu.cmu.lti.oaqa.type.nlp.Focus;
 import edu.cmu.lti.oaqa.type.nlp.LexicalAnswerType;
 import edu.cmu.lti.oaqa.type.nlp.Token;
 import edu.cmu.lti.oaqa.type.retrieval.AbstractQuery;
@@ -45,6 +46,10 @@ public class TypeUtil {
   public static List<Token> getOrderedTokens(JCas jcas) {
     return JCasUtil.select(jcas, Token.class).stream().sorted(Comparator.comparing(Token::getBegin))
             .collect(toList());
+  }
+
+  public static Focus getFocus(JCas jcas) {
+    return JCasUtil.select(jcas, Focus.class).stream().findAny().orElse(null);
   }
 
   public static Token getHeadTokenOfAnnotation(Annotation annotation) {

@@ -21,6 +21,7 @@ import edu.cmu.lti.oaqa.type.kb.Concept;
 import edu.cmu.lti.oaqa.type.kb.ConceptMention;
 import edu.cmu.lti.oaqa.type.kb.ConceptType;
 import edu.cmu.lti.oaqa.type.kb.Triple;
+import edu.cmu.lti.oaqa.type.nlp.Focus;
 import edu.cmu.lti.oaqa.type.nlp.LexicalAnswerType;
 import edu.cmu.lti.oaqa.type.nlp.Token;
 import edu.cmu.lti.oaqa.type.retrieval.AbstractQuery;
@@ -71,6 +72,13 @@ public class TypeFactory {
             TypeConstants.SEMANTIC_TYPE_UNKNOWN, TypeConstants.PART_OF_SPEECH_UNKNOWN,
             TypeConstants.LEMMA_FORM_UNKNOWN, TypeConstants.IS_MAIN_REFERENCE_UNKNOWN,
             TypeConstants.IS_VARIABLE_UNKNOWN, TypeConstants.DETERMINER_UNKNOWN);
+  }
+  
+  public static Focus createFocus(JCas jcas, Token token, String label) {
+    Focus ret = new Focus(jcas);
+    ret.setToken(token);
+    ret.setLabel(label);
+    return ret;
   }
 
   public static Concept createConcept(JCas jcas, List<String> names, List<String> uris,
