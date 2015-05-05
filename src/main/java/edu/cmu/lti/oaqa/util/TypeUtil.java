@@ -247,6 +247,10 @@ public class TypeUtil {
     return FSCollectionFactory.create(cav.getNames());
   }
 
+  public static Collection<CandidateAnswerOccurrence> getCandidateAnswerOccurrences(JCas jcas) {
+    return JCasUtil.select(jcas, CandidateAnswerOccurrence.class);
+  }
+
   public static Collection<CandidateAnswerOccurrence> getCandidateAnswerOccurrences(
           CandidateAnswerVariant cav) {
     return FSCollectionFactory.create(cav.getOccurrences(), CandidateAnswerOccurrence.class);
