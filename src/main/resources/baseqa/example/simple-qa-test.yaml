@@ -1,0 +1,49 @@
+# execute
+#      mvn exec:exec -Dconfig=baseqa.example.simple-qa-test
+# to test the pipeline
+
+configuration:
+  name: simple-qa-test
+  author: ziy
+
+persistence-provider:
+  inherit: baseqa.persistence.local-sqlite-persistence-provider
+
+collection-reader:
+  inherit: baseqa.collection.json.json-collection-reader
+  dataset: SIMPLE-QA
+  file: /input/simple-qa-input.json
+  decorators: |
+    - inherit: baseqa.example.simple-qa-gs-decorator
+  persistence-provider: |
+    inherit: baseqa.persistence.local-sqlite-persistence-provider
+
+pipeline:
+  - inherit: jdbc.sqlite.cse.phase
+    name: keyterm-extractor
+    options: |
+      - inherit: base.noop
+
+post-process:
+  # document evaluation
+  - inherit: baseqa.eval.base
+    calculator: |
+      inherit: baseqa.eval.calculator.retrieval-eval-calculator
+    evaluatee-provider: |
+      inherit: baseqa.eval.evaluatee.document-evaluatee-provider
+    persistence-provider: |
+      inherit: baseqa.eval.persistence.jdbc-eval-persistence-provider
+
+  # passage evaluation
+  - inherit: baseqa.eval.base
+    calculator: |
+      inherit: baseqa.eval.calculator.trec-passage-map-eval-calculator
+    evaluatee-provider: |
+      inherit: baseqa.eval.evaluatee.passage-evaluatee-provider
+    persistence-provider: |
+      inherit: baseqa.eval.persistence.jdbc-eval-persistence-provider
+
+  # report
+  - inherit: report.csv-report-generator
+    builders: |
+      - inherit: baseqa.report.accumulated-measurements-report-component

@@ -1,0 +1,4 @@
+class: edu.cmu.lti.oaqa.baseqa.collection.json.JsonCasConsumer
+
+# need parameters "document-limit", "snippet-limit", "concept-limit", 
+# "triple-limit", "factoid-answer-limit", "list-answer-limit", "result-dir"

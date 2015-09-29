@@ -1,0 +1,3 @@
+inherit: baseqa.collection.json.json-gs-decorator
+
+file: /input/simple-qa-gs.json

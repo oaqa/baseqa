@@ -1,0 +1,11 @@
+class: edu.cmu.lti.oaqa.baseqa.eval.Evaluator
+
+# please specify values for the following parameters:
+#
+#   PARAMETER               VALUE
+#    calculator              EvalCalculator, e.g. 
+#                              inherit: baseqa.eval.calculator.retrieval-eval-calculator
+#    evaluatee-provider      EvaluateeProvider, e.g.
+#                              inherit: baseqa.eval.evaluatee.document-evaluatee-provider
+#    persistence-provider    EvalPersistenceProvider, e.g.
+#                              inherit: baseqa.eval.persistence.jdbc-persistence-provider

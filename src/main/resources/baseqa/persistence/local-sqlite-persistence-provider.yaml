@@ -1,0 +1,6 @@
+inherit: jdbc.sqlite.db.experiment-persistence-provider
+
+url: jdbc:sqlite:persistence/oaqa-cse.db3
+driver: org.sqlite.JDBC
+username: admin
+password: admin
