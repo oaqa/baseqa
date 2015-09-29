@@ -5,11 +5,11 @@ import edu.cmu.lti.oaqa.type.nlp.Token;
 public class TypeConstants {
 
   public enum QueryOperatorName {
-    SYNONYM, PHRASE, TIE, WEIGHT, REQUIRED, RELATION, QUOTEDPHRASE;
+    SYNONYM, PHRASE, TIE, WEIGHT, REQUIRED, RELATION, QUOTEDPHRASE
   }
 
   public enum ConceptType {
-    KEYWORD_TYPE, QATOKEN_TYPE, ANSWER_TYPE;
+    KEYWORD_TYPE, QATOKEN_TYPE, ANSWER_TYPE
   }
 
   public static final int RANK_UNKNOWN = -1;

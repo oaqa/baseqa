@@ -1,17 +1,5 @@
 package edu.cmu.lti.oaqa.util;
 
-import static java.util.stream.Collectors.toList;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
-import org.apache.uima.fit.util.FSCollectionFactory;
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.StringArray;
-
 import edu.cmu.lti.oaqa.type.answer.Answer;
 import edu.cmu.lti.oaqa.type.answer.CandidateAnswerOccurrence;
 import edu.cmu.lti.oaqa.type.answer.CandidateAnswerVariant;
@@ -24,17 +12,14 @@ import edu.cmu.lti.oaqa.type.kb.Triple;
 import edu.cmu.lti.oaqa.type.nlp.Focus;
 import edu.cmu.lti.oaqa.type.nlp.LexicalAnswerType;
 import edu.cmu.lti.oaqa.type.nlp.Token;
-import edu.cmu.lti.oaqa.type.retrieval.AbstractQuery;
-import edu.cmu.lti.oaqa.type.retrieval.AtomicQueryConcept;
-import edu.cmu.lti.oaqa.type.retrieval.ComplexQueryConcept;
-import edu.cmu.lti.oaqa.type.retrieval.ConceptSearchResult;
-import edu.cmu.lti.oaqa.type.retrieval.Document;
-import edu.cmu.lti.oaqa.type.retrieval.Passage;
-import edu.cmu.lti.oaqa.type.retrieval.QueryConcept;
-import edu.cmu.lti.oaqa.type.retrieval.QueryOperator;
-import edu.cmu.lti.oaqa.type.retrieval.Search;
-import edu.cmu.lti.oaqa.type.retrieval.SearchResult;
-import edu.cmu.lti.oaqa.type.retrieval.TripleSearchResult;
+import edu.cmu.lti.oaqa.type.retrieval.*;
+import org.apache.uima.fit.util.FSCollectionFactory;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.StringArray;
+
+import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 public class TypeFactory {
 
@@ -73,7 +58,7 @@ public class TypeFactory {
             TypeConstants.LEMMA_FORM_UNKNOWN, TypeConstants.IS_MAIN_REFERENCE_UNKNOWN,
             TypeConstants.IS_VARIABLE_UNKNOWN, TypeConstants.DETERMINER_UNKNOWN);
   }
-  
+
   public static Focus createFocus(JCas jcas, Token token, String label) {
     Focus ret = new Focus(jcas);
     ret.setToken(token);
@@ -95,23 +80,24 @@ public class TypeFactory {
 
   public static Concept createConcept(JCas jcas, List<String> names, String id,
           ConceptMention mentions, List<ConceptType> types) {
-    return createConcept(jcas, names, new ArrayList<>(), Arrays.asList(id), Arrays.asList(mentions),
-            types);
+    return createConcept(jcas, names, new ArrayList<>(), Collections.singletonList(id),
+            Collections.singletonList(mentions), types);
   }
 
   public static Concept createConcept(JCas jcas, ConceptMention mention, ConceptType type) {
     String name = mention.getCoveredText();
-    return createConcept(jcas, Arrays.asList(name), name, mention, Arrays.asList(type));
+    return createConcept(jcas, Collections.singletonList(name), name, mention,
+            Collections.singletonList(type));
   }
 
   public static Concept createConcept(JCas jcas, String name, String id, List<ConceptType> types) {
-    return createConcept(jcas, Arrays.asList(name), new ArrayList<>(), Arrays.asList(id),
-            new ArrayList<>(), types);
+    return createConcept(jcas, Collections.singletonList(name), new ArrayList<>(),
+            Collections.singletonList(id), new ArrayList<>(), types);
   }
 
   public static Concept createConcept(JCas jcas, String name, String uri) {
-    return createConcept(jcas, Arrays.asList(name), Arrays.asList(uri), new ArrayList<>(),
-            new ArrayList<>(), new ArrayList<>());
+    return createConcept(jcas, Collections.singletonList(name), Collections.singletonList(uri),
+            new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
   }
 
   public static Concept createConcept(JCas jcas, String uri) {
@@ -213,7 +199,7 @@ public class TypeFactory {
   }
 
   public static Answer createAnswer(JCas jcas, String text) {
-    return createAnswer(jcas, Arrays.asList(text));
+    return createAnswer(jcas, Collections.singletonList(text));
   }
 
   public static Answer createAnswer(JCas jcas, List<String> names) {
@@ -245,7 +231,7 @@ public class TypeFactory {
   }
 
   public static CandidateAnswerVariant createCandidateAnswerVariant(JCas jcas, String text) {
-    return createCandidateAnswerVariant(jcas, new ArrayList<>(), Arrays.asList(text));
+    return createCandidateAnswerVariant(jcas, new ArrayList<>(), Collections.singletonList(text));
   }
 
   public static CandidateAnswerOccurrence createCandidateAnswerOccurrence(JCas jcas, int begin,
@@ -288,8 +274,8 @@ public class TypeFactory {
 
   public static AtomicQueryConcept createAtomicQueryConcept(JCas jcas, String namedEntityType,
           TypeConstants.ConceptType conceptType, String text, String originalText) {
-    return createAtomicQueryConcept(jcas, Arrays.asList(namedEntityType), conceptType, text,
-            originalText);
+    return createAtomicQueryConcept(jcas, Collections.singletonList(namedEntityType), conceptType,
+            text, originalText);
   }
 
   public static AtomicQueryConcept createAtomicQueryConcept(JCas jcas,
@@ -329,8 +315,8 @@ public class TypeFactory {
   public static ComplexQueryConcept createComplexQueryConcept(JCas jcas, String namedEntityType,
           TypeConstants.ConceptType conceptType, QueryOperator operator,
           List<? extends QueryConcept> operatorArgs) {
-    return createComplexQueryConcept(jcas, Arrays.asList(namedEntityType), conceptType, operator,
-            operatorArgs);
+    return createComplexQueryConcept(jcas, Collections.singletonList(namedEntityType), conceptType,
+            operator, operatorArgs);
   }
 
   public static ComplexQueryConcept createComplexQueryConcept(JCas jcas, String namedEntityType,

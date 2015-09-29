@@ -1,10 +1,10 @@
 package edu.cmu.lti.oaqa.baseqa.util;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-
 import org.apache.uima.UimaContext;
 import org.apache.uima.resource.ResourceInitializationException;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 public class UimaContextHelper {
 
@@ -90,7 +90,7 @@ public class UimaContextHelper {
       return value;
     } else {
       System.out.println(" * Parameter \"" + paramName + "\" cannot be found, use default value \""
-              + defaultValue + "\" instead.");
+              + Arrays.asList(defaultValue) + "\" instead.");
       return defaultValue;
     }
   }
@@ -107,8 +107,7 @@ public class UimaContextHelper {
 
   public static <T> Class<? extends T> getConfigParameterClassValue(UimaContext aContext,
           String paramName, Class<? extends T> defaultValue, Class<T> superClass) {
-    String className = (String) getConfigParameterStringValue(aContext, paramName,
-            defaultValue.getName());
+    String className = getConfigParameterStringValue(aContext, paramName, defaultValue.getName());
     try {
       return Class.forName(className).asSubclass(superClass);
     } catch (Exception e) {

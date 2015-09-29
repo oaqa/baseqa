@@ -1,23 +1,15 @@
 package edu.cmu.lti.oaqa.baseqa.collection.json;
 
-import java.util.List;
-
-import org.apache.uima.jcas.JCas;
-
-import edu.cmu.lti.oaqa.baseqa.collection.json.gson.Question;
-import edu.cmu.lti.oaqa.baseqa.collection.json.gson.QuestionType;
-import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TestQuestion;
-import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TestSummaryQuestion;
-import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingFactoidQuestion;
-import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingListQuestion;
-import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingQuestion;
-import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingYesNoQuestion;
+import edu.cmu.lti.oaqa.baseqa.collection.json.gson.*;
 import edu.cmu.lti.oaqa.type.answer.Answer;
 import edu.cmu.lti.oaqa.type.retrieval.ConceptSearchResult;
 import edu.cmu.lti.oaqa.type.retrieval.Document;
 import edu.cmu.lti.oaqa.type.retrieval.Passage;
 import edu.cmu.lti.oaqa.type.retrieval.TripleSearchResult;
 import edu.cmu.lti.oaqa.util.TypeFactory;
+import org.apache.uima.jcas.JCas;
+
+import java.util.List;
 
 public class JsonCollectionReaderHelper {
 
@@ -75,7 +67,7 @@ public class JsonCollectionReaderHelper {
         if (answer != null) {
           TypeFactory.createAnswer(jcas, answer).addToIndexes();
         }
-      } else if (input instanceof TestSummaryQuestion) {
+      } else if (input instanceof TrainingSummaryQuestion) {
         // summary questions do not have exact answers
       }
     }

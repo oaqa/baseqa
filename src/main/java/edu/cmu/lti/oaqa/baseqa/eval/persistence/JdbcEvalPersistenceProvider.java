@@ -1,19 +1,7 @@
 package edu.cmu.lti.oaqa.baseqa.eval.persistence;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.PreparedStatementSetter;
-import org.springframework.jdbc.core.RowCallbackHandler;
-
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-
 import edu.cmu.lti.oaqa.baseqa.eval.EvalPeristenceProvider;
 import edu.cmu.lti.oaqa.baseqa.eval.Measure;
 import edu.cmu.lti.oaqa.ecd.config.ConfigurableProvider;
@@ -21,6 +9,16 @@ import edu.cmu.lti.oaqa.ecd.phase.Trace;
 import edu.cmu.lti.oaqa.framework.DataStoreImpl;
 import edu.cmu.lti.oaqa.framework.eval.ExperimentKey;
 import edu.cmu.lti.oaqa.framework.eval.Key;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class JdbcEvalPersistenceProvider extends ConfigurableProvider implements
         EvalPeristenceProvider {
@@ -64,7 +62,7 @@ public class JdbcEvalPersistenceProvider extends ConfigurableProvider implements
                 rs.getInt("stage"));
         Measure measure = Measure.forName(rs.getString("measure"));
         if (!counts.contains(key, measure)) {
-          counts.put(key, measure, new ArrayList<Double>());
+          counts.put(key, measure, new ArrayList<>());
         }
         counts.get(key, measure).add(rs.getDouble("value"));
       }
