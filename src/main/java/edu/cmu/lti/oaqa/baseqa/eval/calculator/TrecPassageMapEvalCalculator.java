@@ -1,49 +1,23 @@
 package edu.cmu.lti.oaqa.baseqa.eval.calculator;
 
-import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.calculateAveragePrecision;
-import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.sumMeasurementValues;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_ASPECT_AVERAGE_PRECISION;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_ASPECT_MAP;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_DOCUMENT_AVERAGE_PRECISION;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_DOCUMENT_MAP;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_PASSAGE2_AVERAGE_PRECISION;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_PASSAGE2_MAP;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_PASSAGE_AVERAGE_PRECISION;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_PASSAGE_MAP;
-import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.TREC_PASSAGE_MAP_COUNT;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
-
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collector;
-import java.util.stream.Collector.Characteristics;
-import java.util.stream.Stream;
-
-import org.apache.uima.jcas.JCas;
-
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
-import com.google.common.collect.Range;
-import com.google.common.collect.RangeMap;
-import com.google.common.collect.RangeSet;
-import com.google.common.collect.Sets;
-import com.google.common.collect.TreeRangeMap;
-import com.google.common.collect.TreeRangeSet;
-
+import com.google.common.collect.*;
 import edu.cmu.lti.oaqa.baseqa.eval.EvalCalculator;
 import edu.cmu.lti.oaqa.baseqa.eval.Measure;
 import edu.cmu.lti.oaqa.ecd.config.ConfigurableProvider;
 import edu.cmu.lti.oaqa.type.retrieval.Passage;
 import edu.cmu.lti.oaqa.util.TypeUtil;
+import org.apache.uima.jcas.JCas;
+
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collector.Characteristics;
+import java.util.stream.Stream;
+
+import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.calculateAveragePrecision;
+import static edu.cmu.lti.oaqa.baseqa.eval.EvalCalculatorUtil.sumMeasurementValues;
+import static edu.cmu.lti.oaqa.baseqa.eval.calculator.TrecPassageMapEvalMeasure.*;
+import static java.util.stream.Collectors.*;
 
 public class TrecPassageMapEvalCalculator<T extends Passage> extends ConfigurableProvider
         implements EvalCalculator<T> {
@@ -164,18 +138,20 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
     Characteristics[] characters = new Collector.Characteristics[] {
         Collector.Characteristics.CONCURRENT, Collector.Characteristics.UNORDERED,
         Collector.Characteristics.IDENTITY_FINISH };
-    Collector<Passage, RangeSet<Integer>, RangeSet<Integer>> collector = Collector.of(
-            () -> TreeRangeSet.<Integer> create(), (s, p) -> s.add(TypeUtil.spanRangeInSection(p)),
-            (s1, s2) -> {
-              s1.addAll(s2);
-              return s1;
-            } , characters);
+    Collector<Passage, RangeSet<Integer>, RangeSet<Integer>> collector = Collector
+            .<Passage, RangeSet<Integer>>of(
+                    () -> TreeRangeSet.create(),
+                    (s, p) -> s.add(TypeUtil.spanRangeInSection(p)),
+                    (s1, s2) -> {
+                      s1.addAll(s2);
+                      return s1;
+                    }, characters);
     return passages.parallelStream().collect(groupingBy(Passage::getUri, collector));
   }
 
   public static <T extends Passage> double calculateAspectAveragePrecision(
-          Collection<T> resultPassages, Collection<T> gsPasssages) {
-    return calculateAspectAveragePrecision(resultPassages, toUriSpanAspects(gsPasssages));
+          Collection<T> resultPassages, Collection<T> gsPassages) {
+    return calculateAspectAveragePrecision(resultPassages, toUriSpanAspects(gsPassages));
   }
 
   public static <T extends Passage> double calculateAspectAveragePrecision(
@@ -183,7 +159,7 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
     int numerator = 0;
     int denominator = 0;
     double sumPrecision = 0;
-    HashSet<String> foundAspects = new HashSet<String>();
+    Set<String> foundAspects = new HashSet<>();
     for (Passage resultPassage : resultPassages) {
       Range<Integer> resultRange = TypeUtil.spanRangeInSection(resultPassage);
       if (!gsUriSpanAspects.containsKey(resultPassage.getUri())) {
@@ -215,11 +191,13 @@ public class TrecPassageMapEvalCalculator<T extends Passage> extends Configurabl
         Collector.Characteristics.CONCURRENT, Collector.Characteristics.UNORDERED,
         Collector.Characteristics.IDENTITY_FINISH };
     Collector<Passage, RangeMap<Integer, String>, RangeMap<Integer, String>> collector = Collector
-            .of(() -> TreeRangeMap.<Integer, String> create(),
-                    (s, p) -> s.put(TypeUtil.spanRangeInSection(p), p.getAspects()), (s1, s2) -> {
+            .<Passage, RangeMap<Integer, String>> of(
+                    () -> TreeRangeMap.create(),
+                    (s, p) -> s.put(TypeUtil.spanRangeInSection(p), p.getAspects()),
+                    (s1, s2) -> {
                       s1.putAll(s2);
                       return s1;
-                    } , characters);
+                    }, characters);
     return passages.parallelStream().filter(p -> p.getAspects() != null)
             .collect(groupingBy(Passage::getUri, collector));
   }

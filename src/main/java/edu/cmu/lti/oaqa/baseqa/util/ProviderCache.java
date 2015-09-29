@@ -1,15 +1,14 @@
 package edu.cmu.lti.oaqa.baseqa.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import org.apache.uima.resource.Resource;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.yaml.snakeyaml.Yaml;
 
-import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ProviderCache {
 

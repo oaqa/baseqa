@@ -1,18 +1,14 @@
 package edu.cmu.lti.oaqa.baseqa.collection.json.gson;
 
+import com.google.gson.*;
+import io.gsonfire.GsonFireBuilder;
+import io.gsonfire.TypeSelector;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.List;
-
-import com.github.julman99.gsonfire.GsonFireBuilder;
-import com.github.julman99.gsonfire.TypeSelector;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 
 public class TestSet {
 

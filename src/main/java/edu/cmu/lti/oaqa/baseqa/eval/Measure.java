@@ -7,7 +7,7 @@ public interface Measure {
 
   String getName();
 
-  static Map<String, Measure> name2measure = new HashMap<>();
+  Map<String, Measure> name2measure = new HashMap<>();
 
   static Measure forName(String name) {
     return name2measure.get(name);
