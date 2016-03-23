@@ -1,46 +1,51 @@
 package edu.cmu.lti.oaqa.baseqa.collection.json;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.reducing;
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collector;
-
-import org.apache.uima.UimaContext;
-import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.resource.ResourceInitializationException;
-
 import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingQuestion;
 import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingSet;
 import edu.cmu.lti.oaqa.baseqa.util.ViewType;
 import edu.cmu.lti.oaqa.ecd.phase.ProcessingStepUtils;
 import edu.cmu.lti.oaqa.util.TypeUtil;
+import org.apache.uima.UimaContext;
+import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.resource.ResourceAccessException;
+import org.apache.uima.resource.ResourceInitializationException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class JsonGoldStandardDecorator extends JCasAnnotator_ImplBase {
 
   private Map<String, TrainingQuestion> id2input;
 
-  private static final Collector<TrainingQuestion, ?, Map<String, TrainingQuestion>> TO_MAP_COLLECTOR = groupingBy(
-          TrainingQuestion::getId, reducing(null, (x, y) -> y));
-
   @Override
   public void initialize(UimaContext context) throws ResourceInitializationException {
     super.initialize(context);
     Object value = context.getConfigParameterValue("file");
+    List<String> paths = new ArrayList<>();
     if (String.class.isAssignableFrom(value.getClass())) {
-      id2input = TrainingSet.load(getClass().getResourceAsStream(String.class.cast(value))).stream()
-              .collect(TO_MAP_COLLECTOR);
+      paths.add(String.class.cast(value));
     } else if (String[].class.isAssignableFrom(value.getClass())) {
-      id2input = Arrays.stream(String[].class.cast(value))
-              .flatMap(path -> TrainingSet.load(getClass().getResourceAsStream(path)).stream())
-              .collect(TO_MAP_COLLECTOR);
+      paths.addAll(Arrays.asList(String[].class.cast(value)));
+    }
+    List<TrainingQuestion> inputs = new ArrayList<>();
+    for (String path : paths) {
+      try {
+        inputs.addAll(TrainingSet.load(context.getResourceAsStream(path)));
+      } catch (ResourceAccessException e) {
+        throw new ResourceInitializationException(e);
+      }
     }
     // trim question texts
-    id2input.values().stream().filter(input -> input.getBody() != null)
+    inputs.stream().filter(input -> input.getBody() != null)
             .forEach(input -> input.setBody(input.getBody().trim().replaceAll("\\s+", " ")));
+    id2input = inputs.stream()
+            .collect(Collectors.toMap(TrainingQuestion::getId, Function.identity(), (x, y) -> x));
   }
 
   @Override

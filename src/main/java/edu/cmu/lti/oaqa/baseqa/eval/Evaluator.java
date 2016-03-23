@@ -74,7 +74,6 @@ public final class Evaluator<T> extends JCasConsumer_ImplBase {
     persistence.deletePartialMeasurements(key, sequenceId, calculatorName, evaluateeName);
     persistence.insertPartialMeasurements(key, sequenceId, calculatorName, evaluateeName,
             measurements);
-    System.out.println(measurements);
   }
 
   @Override

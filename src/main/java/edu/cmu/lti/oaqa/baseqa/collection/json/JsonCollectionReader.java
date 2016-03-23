@@ -2,13 +2,12 @@ package edu.cmu.lti.oaqa.baseqa.collection.json;
 
 import static java.util.stream.Collectors.toList;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+import edu.cmu.lti.oaqa.baseqa.collection.json.gson.TrainingSet;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.resource.ResourceAccessException;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import com.google.common.collect.Lists;
@@ -27,14 +26,19 @@ public class JsonCollectionReader extends IterableCollectionReader {
   public void initialize() throws ResourceInitializationException {
     super.initialize();
     inputs = Lists.newArrayList();
-    Object file = getConfigParameterValue("file");
-    if (String.class.isAssignableFrom(file.getClass())) {
-      inputs = TestSet.load(getClass().getResourceAsStream(String.class.cast(file))).stream()
-              .collect(toList());
-    } else if (String[].class.isAssignableFrom(file.getClass())) {
-      inputs = Arrays.stream(String[].class.cast(file))
-              .flatMap(path -> TestSet.load(getClass().getResourceAsStream(path)).stream())
-              .collect(toList());
+    Object value = getConfigParameterValue("file");
+    List<String> paths = new ArrayList<>();
+    if (String.class.isAssignableFrom(value.getClass())) {
+      paths.add(String.class.cast(value));
+    } else if (String[].class.isAssignableFrom(value.getClass())) {
+      paths.addAll(Arrays.asList(String[].class.cast(value)));
+    }
+    for (String path : paths) {
+      try {
+        inputs.addAll(TestSet.load(getUimaContext().getResourceAsStream(path)));
+      } catch (ResourceAccessException e) {
+        throw new ResourceInitializationException(e);
+      }
     }
     // trim question texts
     inputs.stream().filter(input -> input.getBody() != null)
