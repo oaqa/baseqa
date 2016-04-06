@@ -1,5 +1,6 @@
 package edu.cmu.lti.oaqa.util;
 
+import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
@@ -103,12 +104,22 @@ public class TypeUtil {
     return JCasUtil.select(jcas, Concept.class);
   }
 
+  public static String toString(Concept concept) {
+    return TypeUtil.getConceptNames(concept) + " " + TypeUtil.getConceptIds(concept) + " " +
+            TypeUtil.getConceptTypeNames(concept);
+  }
+
   public static Collection<ConceptType> getConceptTypes(JCas jcas) {
     return JCasUtil.select(jcas, ConceptType.class);
   }
 
   public static Collection<ConceptType> getConceptTypes(Concept concept) {
     return FSCollectionFactory.create(concept.getTypes(), ConceptType.class);
+  }
+
+  public static Collection<String> getConceptTypeNames(Concept concept) {
+    return getConceptTypes(concept).stream().map(ConceptType::getName)
+            .collect(toCollection(ArrayList::new));
   }
 
   public static Collection<String> getConceptNames(Concept concept) {
@@ -176,6 +187,10 @@ public class TypeUtil {
     return TypeFactory.createAbstractQuery(jcas, conceptsCombined);
   }
 
+  public static Collection<QueryConcept> getQueryConcepts(AbstractQuery aquery) {
+    return FSCollectionFactory.create(aquery.getConcepts(), QueryConcept.class);
+  }
+
   public static final Comparator<SearchResult> SEARCH_RESULT_SCORE_COMPARATOR = Comparator
           .comparing(SearchResult::getScore, Comparator.reverseOrder());
 
@@ -196,6 +211,10 @@ public class TypeUtil {
 
   public static List<ConceptSearchResult> getRankedConceptSearchResults(JCas jcas) {
     return rankedSearchResultsByRank(JCasUtil.select(jcas, ConceptSearchResult.class));
+  }
+
+  public static String toString(ConceptSearchResult result) {
+    return result.getScore() + " " + result.getUri() + " " + toString(result.getConcept());
   }
 
   public static List<TripleSearchResult> getRankedTripleSearchResults(JCas jcas) {

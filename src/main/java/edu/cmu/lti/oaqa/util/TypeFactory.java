@@ -304,7 +304,7 @@ public class TypeFactory {
   }
 
   public synchronized static ComplexQueryConcept createComplexQueryConcept(JCas jcas,
-          List<String> namedEntityTypes, TypeConstants.ConceptType conceptType,
+          Collection<String> namedEntityTypes, TypeConstants.ConceptType conceptType,
           QueryOperator operator, List<? extends QueryConcept> operatorArgs) {
     ComplexQueryConcept ret = new ComplexQueryConcept(jcas);
     ret.setNamedEntityTypes(FSCollectionFactory.createStringList(jcas, namedEntityTypes));
@@ -357,6 +357,36 @@ public class TypeFactory {
           QueryOperator operator, QueryConcept... operatorArgs) {
     return createComplexQueryConcept(jcas, TypeConstants.ConceptType.KEYWORD_TYPE, operator,
             Arrays.asList(operatorArgs));
+  }
+
+  public synchronized static ComplexQueryConcept createPhraseQueryConcept(JCas jcas,
+          QueryConcept operatorArg) {
+    return TypeFactory.createComplexQueryConcept(jcas,
+            TypeFactory.createQueryOperator(jcas, TypeConstants.QueryOperatorName.PHRASE),
+            operatorArg);
+  }
+
+  public synchronized static ComplexQueryConcept createSynonymQueryConcept(JCas jcas,
+          Collection<String> types, List<? extends QueryConcept> operatorArgs) {
+    QueryOperator synonymOp = TypeFactory
+            .createQueryOperator(jcas, TypeConstants.QueryOperatorName.SYNONYM);
+    return TypeFactory
+            .createComplexQueryConcept(jcas, types, TypeConstants.ConceptType.KEYWORD_TYPE,
+                    synonymOp, operatorArgs);
+  }
+
+  public synchronized static ComplexQueryConcept createSynonymQueryConcept(JCas jcas,
+          List<? extends QueryConcept> operatorArgs) {
+    QueryOperator synonymOp = TypeFactory
+            .createQueryOperator(jcas, TypeConstants.QueryOperatorName.SYNONYM);
+    return TypeFactory.createComplexQueryConcept(jcas, synonymOp, operatorArgs);
+  }
+
+  public synchronized static ComplexQueryConcept createWeightQueryConcept(JCas jcas, double weight,
+          QueryConcept... operatorArgs) {
+    QueryOperator weightOp = TypeFactory
+            .createQueryOperator(jcas, TypeConstants.QueryOperatorName.WEIGHT, weight);
+    return TypeFactory.createComplexQueryConcept(jcas, weightOp, operatorArgs);
   }
 
   public synchronized static QueryOperator createQueryOperator(JCas jcas,
@@ -463,15 +493,17 @@ public class TypeFactory {
   }
 
   public synchronized static ConceptSearchResult createConceptSearchResult(JCas jcas,
-          Concept concept, String uri, double score, String text, String queryString) {
+          Concept concept, String uri, double score, String text, String queryString,
+          String searchId) {
     return createConceptSearchResult(jcas, concept, uri, score, text, TypeConstants.RANK_UNKNOWN,
-            queryString, TypeConstants.SEARCH_ID_UNKNOWN, new ArrayList<>());
+            queryString, searchId, new ArrayList<>());
   }
 
   public synchronized static ConceptSearchResult createConceptSearchResult(JCas jcas,
           Concept concept, String uri) {
     return createConceptSearchResult(jcas, concept, uri, TypeConstants.SCORE_UNKNOWN,
-            TypeConstants.TEXT_UNKNOWN, TypeConstants.QUERY_STRING_UNKNOWN);
+            TypeConstants.TEXT_UNKNOWN, TypeConstants.QUERY_STRING_UNKNOWN,
+            TypeConstants.SEARCH_ID_UNKNOWN);
   }
 
   public synchronized static TripleSearchResult createTripleSearchResult(JCas jcas, Triple triple,

@@ -66,6 +66,8 @@ public class JsonCollectionReader extends IterableCollectionReader {
       @Override
       public DataElement next() {
         TestQuestion input = inputs.get(++seqId);
+        System.out.println("Input ID: " + input.getId());
+        System.out.println("Input Body: " + input.getBody());
         return new DataElement(getDataset(), String.valueOf(seqId), input.getBody(), input.getId());
       }
 
