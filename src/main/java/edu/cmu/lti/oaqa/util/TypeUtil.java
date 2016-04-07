@@ -225,6 +225,10 @@ public class TypeUtil {
     return rankedSearchResultsByRank(JCasUtil.select(jcas, Document.class));
   }
 
+  public static String toString(Document result) {
+    return  result.getScore() + " " + result.getUri() + " " + result.getTitle();
+  }
+
   public static List<Passage> getRankedPassages(JCas jcas) {
     return rankedSearchResultsByRank(JCasUtil.select(jcas, Passage.class));
   }

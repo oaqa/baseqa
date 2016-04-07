@@ -79,26 +79,26 @@ public class TypeFactory {
   }
 
   public synchronized static Concept createConcept(JCas jcas, List<String> names, String id,
-          ConceptMention mentions, List<ConceptType> types) {
-    return createConcept(jcas, names, new ArrayList<>(), Collections.singletonList(id),
-            Collections.singletonList(mentions), types);
+          ConceptMention mention, List<ConceptType> types) {
+    return createConcept(jcas, names, new ArrayList<>(), emptyOrSingletonList(id),
+            emptyOrSingletonList(mention), types);
   }
 
   public synchronized static Concept createConcept(JCas jcas, ConceptMention mention,
           ConceptType type) {
     String name = mention.getCoveredText();
-    return createConcept(jcas, Collections.singletonList(name), name, mention,
-            Collections.singletonList(type));
+    return createConcept(jcas, emptyOrSingletonList(name), TypeConstants.CONCEPT_ID_UNKNOWN,
+            mention, emptyOrSingletonList(type));
   }
 
   public synchronized static Concept createConcept(JCas jcas, String name, String id,
           List<ConceptType> types) {
-    return createConcept(jcas, Collections.singletonList(name), new ArrayList<>(),
-            Collections.singletonList(id), new ArrayList<>(), types);
+    return createConcept(jcas, emptyOrSingletonList(name), new ArrayList<>(),
+            emptyOrSingletonList(id), new ArrayList<>(), types);
   }
 
   public synchronized static Concept createConcept(JCas jcas, String name, String uri) {
-    return createConcept(jcas, Collections.singletonList(name), Collections.singletonList(uri),
+    return createConcept(jcas, emptyOrSingletonList(name), emptyOrSingletonList(uri),
             new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
   }
 
@@ -205,7 +205,7 @@ public class TypeFactory {
   }
 
   public synchronized static Answer createAnswer(JCas jcas, String text) {
-    return createAnswer(jcas, Collections.singletonList(text));
+    return createAnswer(jcas, emptyOrSingletonList(text));
   }
 
   public synchronized static Answer createAnswer(JCas jcas, List<String> names) {
@@ -238,7 +238,7 @@ public class TypeFactory {
 
   public synchronized static CandidateAnswerVariant createCandidateAnswerVariant(JCas jcas,
           String text) {
-    return createCandidateAnswerVariant(jcas, new ArrayList<>(), Collections.singletonList(text));
+    return createCandidateAnswerVariant(jcas, new ArrayList<>(), emptyOrSingletonList(text));
   }
 
   public synchronized static CandidateAnswerOccurrence createCandidateAnswerOccurrence(JCas jcas,
@@ -283,7 +283,7 @@ public class TypeFactory {
   public synchronized static AtomicQueryConcept createAtomicQueryConcept(JCas jcas,
           String namedEntityType, TypeConstants.ConceptType conceptType, String text,
           String originalText) {
-    return createAtomicQueryConcept(jcas, Collections.singletonList(namedEntityType), conceptType,
+    return createAtomicQueryConcept(jcas, emptyOrSingletonList(namedEntityType), conceptType,
             text, originalText);
   }
 
@@ -324,7 +324,7 @@ public class TypeFactory {
   public synchronized static ComplexQueryConcept createComplexQueryConcept(JCas jcas,
           String namedEntityType, TypeConstants.ConceptType conceptType, QueryOperator operator,
           List<? extends QueryConcept> operatorArgs) {
-    return createComplexQueryConcept(jcas, Collections.singletonList(namedEntityType), conceptType,
+    return createComplexQueryConcept(jcas, emptyOrSingletonList(namedEntityType), conceptType,
             operator, operatorArgs);
   }
 
@@ -422,11 +422,17 @@ public class TypeFactory {
     return ret;
   }
 
+  public synchronized static Document createDocument(JCas jcas, String uri, double score,
+          String text, int rank, String queryString, String title, String docId) {
+    return TypeFactory.createDocument(jcas, uri, score, text, rank,
+            queryString, TypeConstants.SEARCH_ID_UNKNOWN, new ArrayList<>(), title, docId,
+            new ArrayList<>(), new ArrayList<>());
+  }
+
   public synchronized static Document createDocument(JCas jcas, String uri, String text, int rank,
           String queryString, String title, String docId) {
     return TypeFactory.createDocument(jcas, uri, TypeConstants.SCORE_UNKNOWN, text, rank,
-            queryString, TypeConstants.SEARCH_ID_UNKNOWN, new ArrayList<>(), title, docId,
-            new ArrayList<>(), new ArrayList<>());
+            queryString, title, docId);
   }
 
   public synchronized static Document createDocument(JCas jcas, String uri) {
@@ -542,6 +548,10 @@ public class TypeFactory {
     ret.setAbstractQuery(abstractQuery);
     ret.setSearchId(searchId);
     return ret;
+  }
+
+  private static <E> List<E> emptyOrSingletonList(E element) {
+    return element == null ? new ArrayList<>() : Collections.singletonList(element);
   }
 
 }
