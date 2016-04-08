@@ -143,21 +143,21 @@ public class TypeUtil {
   }
 
   public static void mergeConcept(JCas jcas, Concept dst, Concept src) {
-    List<String> names = Stream.concat(getConceptNames(dst).stream(), getConceptNames(dst).stream())
+    List<String> names = Stream.concat(getConceptNames(dst).stream(), getConceptNames(src).stream())
             .filter(Objects::nonNull).distinct().collect(toList());
     dst.setNames(FSCollectionFactory.createStringList(jcas, names));
-    List<String> ids = Stream.concat(getConceptIds(dst).stream(), getConceptIds(dst).stream())
+    List<String> ids = Stream.concat(getConceptIds(dst).stream(), getConceptIds(src).stream())
             .filter(Objects::nonNull).distinct().collect(toList());
     dst.setIds(FSCollectionFactory.createStringList(jcas, ids));
-    List<String> uris = Stream.concat(getConceptUris(dst).stream(), getConceptUris(dst).stream())
+    List<String> uris = Stream.concat(getConceptUris(dst).stream(), getConceptUris(src).stream())
             .filter(Objects::nonNull).distinct().collect(toList());
     dst.setUris(FSCollectionFactory.createStringList(jcas, uris));
     List<ConceptType> types = Stream
-            .concat(getConceptTypes(dst).stream(), getConceptTypes(dst).stream())
+            .concat(getConceptTypes(dst).stream(), getConceptTypes(src).stream())
             .filter(Objects::nonNull).distinct().collect(toList());
     dst.setTypes(FSCollectionFactory.createFSList(jcas, types));
     List<ConceptMention> mentions = Stream
-            .concat(getConceptMentions(dst).stream(), getConceptMentions(dst).stream())
+            .concat(getConceptMentions(dst).stream(), getConceptMentions(src).stream())
             .filter(Objects::nonNull).distinct().collect(toList());
     dst.setMentions(FSCollectionFactory.createFSList(jcas, mentions));
   }
