@@ -84,6 +84,12 @@ public class TypeFactory {
             emptyOrSingletonList(mention), types);
   }
 
+  public synchronized static Concept createConcept(JCas jcas, String name,
+          List<ConceptMention> mentions, ConceptType type) {
+    return createConcept(jcas, emptyOrSingletonList(name), new ArrayList<>(), new ArrayList<>(),
+            mentions, emptyOrSingletonList(type));
+  }
+
   public synchronized static Concept createConcept(JCas jcas, ConceptMention mention,
           ConceptType type) {
     String name = mention.getCoveredText();
@@ -364,6 +370,13 @@ public class TypeFactory {
     return TypeFactory.createComplexQueryConcept(jcas,
             TypeFactory.createQueryOperator(jcas, TypeConstants.QueryOperatorName.PHRASE),
             operatorArg);
+  }
+
+  public synchronized static ComplexQueryConcept createRequiredQueryConcept(JCas jcas,
+          List<QueryConcept> operatorArgs) {
+    return TypeFactory.createComplexQueryConcept(jcas,
+            TypeFactory.createQueryOperator(jcas, TypeConstants.QueryOperatorName.REQUIRED),
+            operatorArgs);
   }
 
   public synchronized static ComplexQueryConcept createSynonymQueryConcept(JCas jcas,
