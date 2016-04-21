@@ -478,6 +478,15 @@ public class TypeFactory {
     return ret;
   }
 
+  public synchronized static Passage createPassage(JCas jcas, String uri, double score, String text,
+          int rank, String docId, int offsetInBeginSection, int offsetInEndSection,
+          String beginSection, String endSection) {
+    return createPassage(jcas, uri, score, text, rank, TypeConstants.QUERY_STRING_UNKNOWN,
+            TypeConstants.SEARCH_ID_UNKNOWN, new ArrayList<>(), TypeConstants.TITLE_UNKNOWN, docId,
+            offsetInBeginSection, offsetInEndSection, beginSection, endSection,
+            TypeConstants.ASPECTS_UNKNOWN);
+  }
+
   public synchronized static Passage createPassage(JCas jcas, String uri, String text, String docId,
           int offsetInBeginSection, int offsetInEndSection, String beginSection,
           String endSection) {

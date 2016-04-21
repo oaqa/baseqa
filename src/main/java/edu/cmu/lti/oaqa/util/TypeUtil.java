@@ -233,6 +233,16 @@ public class TypeUtil {
     return rankedSearchResultsByRank(JCasUtil.select(jcas, Passage.class));
   }
 
+  public static String getUriOffsets(Passage result, String delim) {
+    return String.join(delim, result.getUri(), result.getBeginSection(), result.getEndSection(),
+            String.valueOf(result.getOffsetInBeginSection()),
+            String.valueOf(result.getOffsetInEndSection()));
+  }
+
+  public static String toString(Passage result) {
+    return result.getScore() + " " + getUriOffsets(result, " ");
+  }
+
   public static Collection<LexicalAnswerType> getLexicalAnswerTypes(JCas jcas) {
     return JCasUtil.select(jcas, LexicalAnswerType.class);
   }
