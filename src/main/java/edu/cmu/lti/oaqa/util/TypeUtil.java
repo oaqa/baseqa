@@ -302,4 +302,9 @@ public class TypeUtil {
             passage.getOffsetInEndSection(), passage.getBeginSection(), passage.getEndSection());
   }
 
+  public static String annotationOffset(Annotation annotation) {
+    return annotation.getView().getViewName() + ":" + annotation.getBegin() + ":" +
+            annotation.getEnd();
+  }
+
 }
